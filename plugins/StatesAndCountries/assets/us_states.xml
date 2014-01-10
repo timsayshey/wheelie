@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<states xml:lang="EN">
+  <state><name>Alabama</name><abbreviation>AL</abbreviation></state>
+  <state><name>Alaska</name><abbreviation>AK</abbreviation></state>
+  <state><name>Arizona</name><abbreviation>AZ</abbreviation></state>
+  <state><name>Arkansas</name><abbreviation>AR</abbreviation></state>
+  <state><name>California</name><abbreviation>CA</abbreviation></state>
+  <state><name>Colorado</name><abbreviation>CO</abbreviation></state>
+  <state><name>Connecticut</name><abbreviation>CT</abbreviation></state>
+  <state><name>Delaware</name><abbreviation>DE</abbreviation></state>
+  <state><name>Florida</name><abbreviation>FL</abbreviation></state>
+  <state><name>Georgia</name><abbreviation>GA</abbreviation></state>
+  <state><name>Hawaii</name><abbreviation>HI</abbreviation></state>
+  <state><name>Idaho</name><abbreviation>ID</abbreviation></state>
+  <state><name>Illinois</name><abbreviation>IL</abbreviation></state>
+  <state><name>Indiana</name><abbreviation>IN</abbreviation></state>
+  <state><name>Iowa</name><abbreviation>IA</abbreviation></state>
+  <state><name>Kansas</name><abbreviation>KS</abbreviation></state>
+  <state><name>Kentucky</name><abbreviation>KY</abbreviation></state>
+  <state><name>Louisiana</name><abbreviation>LA</abbreviation></state>
+  <state><name>Maine</name><abbreviation>ME</abbreviation></state>
+  <state><name>Maryland</name><abbreviation>MD</abbreviation></state>
+  <state><name>Massachusetts</name><abbreviation>MA</abbreviation></state>
+  <state><name>Michigan</name><abbreviation>MI</abbreviation></state>
+  <state><name>Minnesota</name><abbreviation>MN</abbreviation></state>
+  <state><name>Mississippi</name><abbreviation>MS</abbreviation></state>
+  <state><name>Missouri</name><abbreviation>MO</abbreviation></state>
+  <state><name>Montana</name><abbreviation>MT</abbreviation></state>
+  <state><name>Nebraska</name><abbreviation>NE</abbreviation></state>
+  <state><name>Nevada</name><abbreviation>NV</abbreviation></state>
+  <state><name>New Hampshire</name><abbreviation>NH</abbreviation></state>
+  <state><name>New Jersey</name><abbreviation>NJ</abbreviation></state>
+  <state><name>New Mexico</name><abbreviation>NM</abbreviation></state>
+  <state><name>New York</name><abbreviation>NY</abbreviation></state>
+  <state><name>North Carolina</name><abbreviation>NC</abbreviation></state>
+  <state><name>North Dakota</name><abbreviation>ND</abbreviation></state>
+  <state><name>Ohio</name><abbreviation>OH</abbreviation></state>
+  <state><name>Oklahoma</name><abbreviation>OK</abbreviation></state>
+  <state><name>Oregon</name><abbreviation>OR</abbreviation></state>
+  <state><name>Pennsylvania</name><abbreviation>PA</abbreviation></state>
+  <state><name>Rhode Island</name><abbreviation>RI</abbreviation></state>
+  <state><name>South Carolina</name><abbreviation>SC</abbreviation></state>
+  <state><name>South Dakota</name><abbreviation>SD</abbreviation></state>
+  <state><name>Tennessee</name><abbreviation>TN</abbreviation></state>
+  <state><name>Texas</name><abbreviation>TX</abbreviation></state>
+  <state><name>Utah</name><abbreviation>UT</abbreviation></state>
+  <state><name>Vermont</name><abbreviation>VT</abbreviation></state>
+  <state><name>Virginia</name><abbreviation>VA</abbreviation></state>
+  <state><name>Washington</name><abbreviation>WA</abbreviation></state>
+  <state><name>West Virginia</name><abbreviation>WV</abbreviation></state>
+  <state><name>Wisconsin</name><abbreviation>WI</abbreviation></state>
+  <state><name>Wyoming</name><abbreviation>WY</abbreviation></state>
+</states>
