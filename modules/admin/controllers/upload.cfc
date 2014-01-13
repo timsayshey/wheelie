@@ -215,7 +215,7 @@
 						VideoFilePath = renamedfilepath,
 						ThumbFolder	  = "/videos/thumbs/"
 					); 
-				} catch(e) {
+				} catch(any e) {
 					
 				}
 				

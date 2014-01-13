@@ -15,7 +15,7 @@ component extends="_main" output="false"
 		loc.menuId = !isNull(params.id) ? params.id : "primary";
 		params.id = loc.menuId;
 		menuitems = model("MenuItem").findAll(where="menuid = '#loc.menuId#'", order="sortOrder ASC, name ASC");
-		videocategories = model("VideoCategory").findAll(order="sortOrder ASC, name ASC", select="id, urlid, name, parentid", distinct=true);	
+		videocategories = model("VideoCategory").findAll(order="sortOrder ASC, name ASC", select="id, urlid, name, parentid, sortOrder", distinct=true);	
 		pages = model("Page").findAll(where=wherePermission("Page"), order=session.pages.sortby & " " & session.pages.order);			
 		getOptions();	
 	}

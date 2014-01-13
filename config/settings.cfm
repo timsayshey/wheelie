@@ -2,6 +2,8 @@
 	// Settings
 	set(passwordSalt			= "LKjx1/Yp+xy28SlcEh4EUQ==");	// AES HEX Key // passcrypt(type="generateKey");
 	set(errorEmailAddress		= "changethis@wheelie.com");
+	
+	set(youtubeDevKey			= "AI39si5Gl_pMyZrVaqGJclgsuSe9V3W5w8ZKdcO7hjqtFWQElYF92bBxo6dUfVdpNvKBHHq0dgB3as_F9UvZXfmNt_grvdsO6w"); // CHANGE THIS DEVKEY!!! ITS CONNECTED TO TIM'S ACCOUNT (For testing)
 	//set(reloadPassword		= "changethis");	
 	set(dataSourceName			= "remotetest");
 	set(URLRewriting			= "On");

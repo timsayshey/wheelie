@@ -54,7 +54,7 @@
 				
 				<cfset homeid = getOption(qOptions,'home_id').content>
 				
-				<cfloop query="qPages" startrow="#pagination.getStartRow()#" maxrows="#pagination.getMaxRows()#">		
+				<cfloop query="qPages" startrow="#pagination.getStartRow()#" endrow="#pagination.getendrow()#">		
 											
 					<cfsavecontent variable="tags">
 						<cfif qPages.id eq homeid><span class="elusive icon-home color-danger" title="Homepage"></span></cfif>						

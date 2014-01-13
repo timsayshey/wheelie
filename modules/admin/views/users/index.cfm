@@ -53,7 +53,7 @@
 					<br /><br />
 				</cfif>
 				
-				<cfloop query="qUsers" startrow="#pagination.getStartRow()#" maxrows="#pagination.getMaxRows()#">		
+				<cfloop query="qUsers" startrow="#pagination.getStartRow()#" endrow="#pagination.getendrow()#">		
 											
 					<cfsavecontent variable="tags">
 						<cfset roleIcons = {

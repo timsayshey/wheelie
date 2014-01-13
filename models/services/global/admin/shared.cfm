@@ -1,119 +1,207 @@
 <cfoutput>
 
-	<!--- Nestable --->
-	<cffunction name="getNestable">
-		<cfargument name="query">
-		<cfargument name="templateType" default="menu">		
+<!--- Script functions --->
+	<cfscript>
 		
-		<cfsavecontent variable="returnNest">	
-			<cfloop query="arguments.query">
-				<cfif parentid eq 0 OR !len(parentid)>
-					<cfif arguments.templateType eq "category">
-						#categoryNestTemplate(
-							query		 = arguments.query,
-							name		 = name,
-							id			 = id
-						)#	
-					<cfelseif arguments.templateType eq "menu">
-						#menuNestTemplate(
-							query		 = arguments.query,
-							name		 = name,
-							id			 = id,
-							url			 = urlPath,
-							parentid	 = parentid,
-							sortOrder	 = sortOrder
-						)#	
-					</cfif>					
-				</cfif>
-			</cfloop>		
-		</cfsavecontent>
+		function colStruct(modelName)
+		{
+			return listToStruct(arrayToList(model(modelName).columns()));	
+		}
 		
-		<cfreturn returnNest>
+		function listToStruct(list)
+		{
+			var myStruct = StructNew();
+			var i = 0;
+			var delimiter = ",";
+			var tempList = arrayNew(1);
+			if (ArrayLen(arguments) gt 1) {delimiter = arguments[2];}
+			
+			tempList = listToArray(list, delimiter);
+			
+			for (i=1; i LTE ArrayLen(tempList); i=i+1)
+			{
+				   if (not structkeyexists(myStruct, trim(ListFirst(tempList[i], "=")))) 
+				   {
+						   StructInsert(myStruct, trim(ListFirst(tempList[i], "=")), "");
+				   }
+			}
+			return myStruct;
+		}
+		
+	</cfscript>
+	
+	<!--- Tag functions --->	
+	<cffunction name="queryOfQueries" output="no">
+		<cfargument name="query" type="string">
+		<cfargument name="where" type="string" default="">
+		<cfargument name="select" type="string" default="*">
+		<cfargument name="order" type="string" default="">
+		
+		<cfquery dbtype="query" name="qQuery">
+			SELECT #arguments.select# FROM #arguments.query# 
+			<cfif len(arguments.where)>WHERE #Replace(arguments.where,'"',"'","ALL")#</cfif>
+			<cfif len(arguments.order)>ORDER BY #arguments.order#</cfif>
+		</cfquery>
+		
+		<cfreturn qQuery>
 	</cffunction>
 	
-	<cffunction name="getNestableChildren">
-		<cfargument name="query">
-		<cfargument name="templateType" default="menu">	
-		<cfargument name="parentsid">
+	<cffunction name="paramThis" output="no">
+		<cfargument name="varString">
 		
-		<cfsavecontent variable="returnChildren">
-			<cfloop query="arguments.query">				
-				<cfif parentid eq arguments.parentsid>
-					<cfif arguments.templateType eq "category">
-						#categoryNestTemplate(
-							query		 = arguments.query,
-							name		 = name,
-							id			 = id
-						)#	
-					<cfelseif arguments.templateType eq "menu">
-						#menuNestTemplate(
-							query		 = arguments.query,
-							name		 = name,
-							id			 = id,
-							url			 = urlPath,
-							parentid	 = parentid,
-							sortOrder	 = sortOrder
-						)#	
-					</cfif>						
-				</cfif>
-			</cfloop>
-		</cfsavecontent>
-		
-		<cfset returnChildren = trim(returnChildren)>
-		
-		<cfif len(returnChildren)>
-			<cfreturn '<ul>#returnChildren#</ul>'>
+		<cfif isDefined(varString)>
+			<cfreturn Evaluate(varString)>
+		<cfelse>
+			<cfreturn "">
 		</cfif>
 	</cffunction>
 	
-	<cffunction name="categoryNestTemplate">
-		<cfargument name="query">	
-		<cfargument name="name">	
-		<cfargument name="id">	
-			
-		<li id="menu-#arguments.id#" data-id="#arguments.id#" class="sortable">						
-			<div class="ns-row">
-				<div class="ns-title">#arguments.name#</div>
-				<div class="ns-actions">
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="editcategory" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletecategory" class="delete-menu confirmDelete" title="Delete"><span class="elusive icon-trash"></span></a>							
-				</div>
-			</div>		
-			#getNestableChildren(
-				query		 = arguments.query,
-				parentsid	 = arguments.id,
-				templateType = "category"
-			)#	
-		</li>
+	<cffunction name="formatOptionName" output="no">
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = replace(dirtystring,"_"," ","ALL");			
+			cleanstring = capitalize(lcase(cleanstring));
+		</cfscript>
+		
+		<cfreturn cleanstring>
 	</cffunction>
 	
-	<cffunction name="menuNestTemplate">
-		<cfargument name="query">	
-		<cfargument name="name">	
-		<cfargument name="id">	
-		<cfargument name="url">	
-		<cfargument name="parentid">	
-		<cfargument name="sortOrder">	
-		<li id="menu-#arguments.id#" data-id="#arguments.id#" class="sortable">						
-			<div class="ns-row">
-				<div class="ns-title">#arguments.name#</div>
-				<div class="ns-actions">
-					<a href="javascript:void(0)" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" class="delete-menu" title="Delete"><span class="elusive icon-trash"></span></a>
-				</div>
-			</div>		
-			<div class="ns-form">
-				Name: <input type="text" class="itemname" name="itemname" value="#arguments.name#" />
-				URL: <input type="text" class="urlpath" name="urlpath" value="#arguments.url#" />
-				<input type="hidden" class="parentid" name="parentid" value="#arguments.parentid#" />
-				<input type="hidden" class="sortOrder" name="sortOrder" value="#arguments.sortOrder#" />
-			</div>		
-			#getNestableChildren(
-				query		= arguments.query,
-				parentsid	= arguments.id,
-				templateType = "menu"
-			)#	
-		</li>
-	</cffunction>	
+	<cffunction name="listSearch" output="no">
+		<cfargument name="list">
+		<cfargument name="substring">
+		<cfargument name="substring2">
+		
+		<cfloop list="#arguments.list#" index="listitem">
+			<cfif Find(arguments.substring, listitem) AND Find(arguments.substring2, listitem)>
+				<cfreturn listitem>
+			</cfif>
+		</cfloop>
+		
+		<cfreturn "">
+	</cffunction>
+	
+	<cffunction name="fixFilePathSlashes" output="no">		
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = replace(dirtystring,"\/","\","ALL");	
+			cleanstring = replace(cleanstring,"\\","\","ALL");	
+			cleanstring = replace(cleanstring,"//","\","ALL");	
+			cleanstring = replace(cleanstring,"/","\","ALL");	
+		</cfscript>
+		
+		<cfreturn cleanstring>
+	</cffunction>
+	
+	<cffunction name="bytesToMegabytes" output="no">		
+		<cfargument name="byteInput">
+		
+		<cfscript>
+			convertedOutput = byteInput;
+			if(isNumeric(convertedOutput))
+			{
+				convertedOutput = convertedOutput / 1024 / 1024;
+				convertedOutput = NumberFormat( convertedOutput, "0.00" );
+			}
+		</cfscript>
+		
+		<cfreturn convertedOutput>
+	</cffunction>
+	
+	<cffunction name="arrayToUL"  output="no">
+		<cfargument name="inArray" type="array">
+		
+		<cfsavecontent variable="convertedArray">
+			<cfloop array="#arguments.inArray#" index="item">
+				<li>#item#</li>
+			</cfloop>
+		</cfsavecontent>
+		
+		<cfreturn convertedArray>
+	</cffunction>
+	
+	<cffunction name="paramVal"  output="no">
+		<cfargument name="varString" type="string">
+		<cfargument name="varVariable">
+		
+		<cfreturn event.getValue(varString,paramThis(varVariable))>
+	</cffunction>
+	
+	<cffunction name="removehtml" output="no">
+		<cfargument name="dirtystring">
+		<cfreturn REReplace(dirtystring,'<[^>]*>','','all')>
+	</cffunction>
+	
+	<!--- Cleans strings of html and special chars --->
+	<cffunction name="sanitize" output="no">
+		<cfargument name="dirtystring">
+		
+		<cfset sanitized = removehtml(dirtystring)>
+		<cfset sanitized = REReplace(sanitized,"[^0-9A-Za-z ]","","all")>
+		<cfreturn sanitized>
+	</cffunction>
+	
+	<cffunction name="cleanseFilename" output="no">
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = REReplace(dirtystring,"[^0-9A-Za-z ]","","all");
+			cleanstring = replace(cleanstring," ","_","ALL");	
+		</cfscript>
+		
+		<cfreturn trim(cleanstring)>
+	</cffunction>
+	
+	<cffunction name="cleanUrlId" output="no">
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = removehtml(dirtystring);
+			cleanstring = REReplace(cleanstring,"[^0-9A-Za-z -]","","all");
+			cleanstring = replace(trim(cleanstring)," ","-","ALL");	
+		</cfscript>
+		
+		<cfreturn trim(cleanstring)>
+	</cffunction>
+	
+	<cffunction name="logEntry" output="no">
+		<cfargument name="subject" default="WebPanel Error">
+		<cfargument name="varDump1" default="">
+		<cfargument name="varDump2" default="">
+		<cfargument name="varDump3" default="">
+		
+		<cfsavecontent variable="errorInfo">
+			<cfoutput>
+				<br><br>
+				<h1>#subject# - #now()#</h1>
+				<cfdump var="#varDump1#">
+				<cfdump var="#varDump2#">
+				<cfdump var="#varDump3#">
+			</cfoutput>
+		</cfsavecontent>
+		
+		<cfset cleantime = REReplace(now(),"[^0-9 ]","","all")>
+		
+		<cffile action = "append" file = "#expandPath('\errors\')##cleantime#-log-#subject#.html" attributes = normal output = "#errorInfo#">
+		
+		<!--- <cfmail from="timbadolato@gmail.com" to="tim@dreamstonemedia.com" subject="#subject#" type="html">
+			#errorInfo#
+		</cfmail> --->
+	</cffunction>
+	
+	<cffunction name="getOption" output="no">
+		<cfargument name="optionQuery">
+		<cfargument name="optionId">
+		
+		<cfset var loc = {}>
+		
+		<cfquery name="loc.getOption" dbtype="query">
+			SELECT * FROM arguments.optionQuery
+			WHERE id = '#arguments.optionId#'
+		</cfquery>
+		
+		<cfreturn loc.getOption>
+	</cffunction>
 
 </cfoutput>

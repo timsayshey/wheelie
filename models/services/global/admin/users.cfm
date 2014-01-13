@@ -1,17 +1,23 @@
-<cffunction name="setPermissions">
-	<cfif isNull(application.rbs.permissionsQuery) or !isNull(url.reload)>
-		<cfset application.rbs.permissionsQuery = db.getRecords("Permissions")>
-		<cfloop query="application.rbs.permissionsQuery">
-			<cfscript>
-				application.rbs.permission["#id#"]				= {};
-				application.rbs.permission["#id#"]["admin"]		= application.rbs.permissionsQuery["admin"];
-				application.rbs.permission["#id#"]["editor"]	= application.rbs.permissionsQuery["editor"];
-				application.rbs.permission["#id#"]["author"]	= application.rbs.permissionsQuery["author"];
-				application.rbs.permission["#id#"]["user"]		= application.rbs.permissionsQuery["user"];
-				application.rbs.permission["#id#"]["guest"]		= application.rbs.permissionsQuery["guest"];
-			</cfscript>
-		</cfloop>
-	</cfif>
+<cffunction name="checkPermission" hint="Checks a permission against permissions loaded into application scope for the user">
+	<cfargument name="permission" required="true" hint="The permission name to check against">
+	<cfscript>
+		if(_permissionsSetup() AND structKeyExists(application.rbs.permission, arguments.permission))
+		{			
+			var permissionVal = application.rbs.permission[arguments.permission][_returnUserRole()];
+			
+			if(IsNumeric(permissionVal))
+			{
+				return permissionVal eq 1 ? "true" : "false";
+			}
+			else 
+			{
+				return permissionVal;
+			}
+			
+		} else {
+			return true;
+		}
+	</cfscript>
 </cffunction>
 
 <cffunction name="wherePermission">
@@ -33,17 +39,6 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="checkPermission" hint="Checks a permission against permissions loaded into application scope for the user" returntype="boolean">
-	<cfargument name="permission" required="true" hint="The permission name to check against">
-	<cfscript>
-		if(_permissionsSetup() AND structKeyExists(application.rbs.permission, arguments.permission)){
-			return application.rbs.permission[arguments.permission][_returnUserRole()];
-		} else {
-			return true;
-		}
-	</cfscript>
-</cffunction>
- 
 <cffunction name="checkPermissionAndRedirect" hint="Checks a permission and redirects away to access denied, useful for use in filters etc">
 	<cfargument name="permission" required="true" hint="The permission name to check against">
 	<cfscript>
@@ -67,7 +62,7 @@
  
 <cffunction name="_returnUserRole" hint="Looks for user role in session, returns guest otherwise">
 	<cfscript>
-		if(_permissionsSetup() AND structKeyExists(session, "user") AND structKeyExists(session.user, "role")){
+		if(_permissionsSetup() AND structKeyExists(session, "user") AND structKeyExists(session.user, "role") AND len(session.user.role)){
 			return session.user.role;
 		} else {
 			return "guest";
@@ -91,7 +86,7 @@
 			else if (arguments.type eq "generateKey") {
 				writeDump(generateSecretKey("AES")); abort;
 			}
-		try {} catch(e) {
+		try {} catch(any e) {
 			return "";
 		}
 	</cfscript>

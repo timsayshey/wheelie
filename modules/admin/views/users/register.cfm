@@ -27,13 +27,13 @@
 		)#
 	</div>
 
-	<!--- Password --->
+	<!--- Password 
+	,"#passrequired#" = "" --->
 	<div class="col-sm-6 clearleft">	
 		#bPasswordFieldTag(
 			name			 = "user[password]",
 			label			 = passwordLabel,
-			placeholder		 = "Password",									
-			"#passrequired#" = ""
+			placeholder		 = "Password"			
 		)#
 	</div>
 	
@@ -41,8 +41,7 @@
 		#bPasswordFieldTag(
 			label		= "Confirm Password", 
 			placeholder	= "Confirm Password",
-			name		= "user[passwordConfirmation]",
-			"#passrequired#" = ""
+			name		= "user[passwordConfirmation]"
 		)#
 	</div>	
 				

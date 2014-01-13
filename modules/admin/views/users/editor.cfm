@@ -76,7 +76,7 @@
 			name			 = "user[password]",
 			label			 = passwordLabel,
 			placeholder		 = "Password",									
-			"#passrequired#" = ""
+			colclass		 = passrequired
 		)#
 	</div>
 	
@@ -85,7 +85,7 @@
 			label		= "Confirm Password", 
 			placeholder	= "Confirm Password",
 			name		= "user[passwordConfirmation]",
-			"#passrequired#" = ""
+			colclass	= passrequired
 		)#
 	</div>
 	

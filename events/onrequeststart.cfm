@@ -1,3 +1,5 @@
+<cfinclude template="/models/services/global/global.cfm">
+
 <!--- Remove beginning/ending whitespace from params --->
 <cfif StructCount(form)>
     <cfloop collection="#form#" item="key">

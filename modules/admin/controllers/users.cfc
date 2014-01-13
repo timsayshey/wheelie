@@ -258,7 +258,7 @@
 		
 		function sharedObjects(userid)
 		{					
-			usStates = getUSStates();
+			usStates = getStatesAndProvinces();
 			countries = getCountries();	
 			usertags = model("UserTag").findAll();
 			selectedusertags = model("userTagJoin").findAll(where="userid = #arguments.userid#",include="User,UserTag");

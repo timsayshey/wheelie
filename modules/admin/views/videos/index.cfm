@@ -52,7 +52,7 @@
 					<br /><br />
 				</cfif>
 				
-				<cfloop query="qVideos" startrow="#pagination.getStartRow()#" maxrows="#pagination.getMaxRows()#">		
+				<cfloop query="qVideos" startrow="#pagination.getStartRow()#" endrow="#pagination.getendrow()#">		
 					
 					#includePartial(
 						partial="/_partials/videoListing", 

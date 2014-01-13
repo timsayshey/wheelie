@@ -8,7 +8,7 @@ component extends="_main" output="false"
 	
 	function index()
 	{		
-		home = model("Page").findAll(where="id = #homeid#");
+		home = model("Page").findAll(where="id = '#homeid#'");
 	}
 	
 	function page()

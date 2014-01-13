@@ -87,7 +87,7 @@ component output="false" extends="controllers.Controller"
 		}
 	}
 	
-	private function statusTabs(modelName, prepend)
+	private function statusTabs(modelName, prepend="")
 	{
 		count = {};
 		

@@ -6,7 +6,7 @@
 	<p>The plugin comes with three asset files: us_states.xml, canadian_provinces.xml, and countries.xml. When one of the four methods (below) are called for the first time, the relevant XML file is read and a query is created, stored in the application scope and returned. Subsequent calls to the same method will pull the query from the application scope rather than recreating it time and again.</p>
 	<h2>Usage</h2>                                                                                                                          
 	<p>
-		This plugin provides four methods for use in your controllers: <tt>getUSStates()</tt>, <tt>getCanadianProvinces()</tt>, <tt>getUSStatesAndCanadianProvinces()</tt> <tt>getCountries()</tt>. All methods do not accept parameters and all return a query. Each row in the returned query has two columns: <tt>name</tt> and <tt>abbreviation</tt>. 
+		This plugin provides four methods for use in your controllers: <tt>getStatesAndProvinces()</tt>, <tt>getCanadianProvinces()</tt>, <tt>getStatesAndProvincesAndCanadianProvinces()</tt> <tt>getCountries()</tt>. All methods do not accept parameters and all return a query. Each row in the returned query has two columns: <tt>name</tt> and <tt>abbreviation</tt>. 
 	</p>                                                                                                                                                           
 	<h2>Examples</h2>
 	<p>Once installed, the plugin is quite easy to use. In the desired controller(s), call the plugin method you want to access.</p>
@@ -14,7 +14,7 @@
 &lt;cfscript&gt;
 	// this is an excerpt from a controller called Users
 	function new(){
-	    usStates = getUSStates();
+	    usStates = getStatesAndProvinces();
 		countries = getCountries();
 		user = model("User").new();
 		renderView(layout="admin");

@@ -42,7 +42,7 @@ component extends="_main" output="false"
 			} else {
 				writeOutput('{ "Message" : "", "Success" : false }');
 			}
-		} catch(e) {
+		} catch(any e) {
 			writeOutput('{ "Message" : "", "Success" : false }');
 		}
 		abort;
@@ -71,7 +71,7 @@ component extends="_main" output="false"
 	{
 		sharedData();
 		
-		categories = model(getCategoryType()).findAll(order="sortOrder ASC, name ASC", select="id, name, parentid", distinct=true);
+		categories = model(getCategoryType()).findAll(order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder", distinct=true);
 	}
 	
 	function saveRearrange()

@@ -29,7 +29,7 @@
 		response['saved']	= result.fileWasSaved;
 		
 		// reassemble chunked file
-		if (structKeyExists(arguments, 'CHUNKS') && arguments.CHUNK + 1 == arguments.CHUNKS)
+		if (structKeyExists(arguments, 'CHUNKS') && arguments.CHUNK + 1 eq arguments.CHUNKS)
 		{
 			try 
 			{
@@ -56,7 +56,7 @@
 				{
 					for (var i = 1; i <= arrayLen(d); i++)
 					{
-						if (listFirst(d[i]) == arguments.NAME && val(listLast(d[i])) != 0)
+						if (listFirst(d[i]) eq arguments.NAME && val(listLast(d[i])) != 0)
 						{
 							fileDelete('#uploadDir##d[i]#');
 						}

@@ -14,7 +14,7 @@ component extends="_main" output="false"
 		selectedvideocategories = ValueList(selectedvideocategories.videocategoryid);
 		
 		sites = model("Site").findAll();
-		usStates = getUSStates();
+		usStates = getStatesAndProvinces();
 		countries = getCountries();	
 	}
 	

@@ -56,15 +56,14 @@
 	<cfargument name="audioQuality" type="string" default="44k"> <!---  44k --->
 
 	<!--- %%TODO: Provide variable bitrates dependent on client bandwidth --->
-
+	<cfset variables.scale = Replace(arguments.scale,"x",":","ALL")>
 	<cfset var command = "">
 	<cfset var sConvertedFileInfo = StructNew()>
 	<cfset var VideoInfo = getVideoInfo(file=arguments.VideoFilePath)>
 	<cfset var bitrate = "64k">
 	<cfset var audiobitrate = arguments.audioQuality>
 	<cfset var framerate = "24">
-	<cfset var ExePath = getExecutablePath()>
-	<cfset var scale = Replace(arguments.scale,"x",":","ALL")>
+	<cfset var ExePath = getExecutablePath()>	
 	<cfset var qmin = arguments.videoCompression - 3>
 	<cfset var qmax = arguments.videoCompression>
 	
@@ -100,7 +99,7 @@
 		<cfset command = ["#ExePath#","-i","#arguments.VideoFilePath#","-g","300","-y","-b:v","#bitrate#","-b:a","#audiobitrate#","-r","#framerate#","-ar","44100","-strict","-2","#outputFilePath#"]><!---  -s qvga --->
 	</cfcase>
 	<cfcase value="ogg,ogv">
-		<cfif getPlatform().os == "Windows">
+		<cfif getPlatform().os eq "Windows">
 			<cfset ExePath = "#Variables.LibraryPath#ffmpeg2theora.exe">
 			<cfset command = ["#ExePath#","-o","#outputFilePath#","#arguments.VideoFilePath#"]>
 		<cfelse>

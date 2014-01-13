@@ -56,7 +56,7 @@
 				this.zip 		= htmlEditFormat(this.zip);
 				this.country 	= htmlEditFormat(this.country);
 				this.phone 		= htmlEditFormat(this.phone);
-			} catch(e) {}
+			} catch(any e) {}
 		}
 		
 		// Security

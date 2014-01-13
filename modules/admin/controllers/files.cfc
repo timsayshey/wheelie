@@ -75,16 +75,14 @@ component extends="_main" output="false"
 			} else {
 				writeOutput('{ "Message" : "", "Success" : false }');
 			}
-		} catch(e) {
+		} catch(any e) {
 			writeOutput('{ "Message" : "", "Success" : false }');
 		}
 		abort;
 	}
 
 	function save()
-	{							
-		param name="params.video.id" default="";
-		
+	{									
 		// If submit button was trash then delete it
 		if(!isNull(params.submit) and params.submit eq "trash")
 		{

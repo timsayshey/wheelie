@@ -50,7 +50,7 @@ component extends="Wheels"
 	private function checkForPermission(string type="", checkid="")
 	{		
 		var permissionType = arguments.type;
-		var checkid = arguments.checkid;
+		variables.checkid = arguments.checkid;
 		
 		if(checkPermission("#getModelName()#_#permissionType#_others"))
 		{
@@ -79,7 +79,7 @@ component extends="Wheels"
 	{
 		try {
 			return ListLast(getMetaData(this).fullname,".");
-		} catch(e) {
+		} catch(any e) {
 			return "";
 		}
 	}
