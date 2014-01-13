@@ -29,7 +29,7 @@
 		
 		// Setup DataMgr
 		if (!structKeyExists(application, 'db') or !isNull(url.reload)) {
-			application.db = CreateObject("component","models.services.datamgr.DataMgr").init("remotetest");		
+			application.db = CreateObject("component","models.services.datamgr.DataMgr").init(application.wheels.dataSourceName);		
 		}
 		
 		// Setup Underscore.cfc

@@ -1,7 +1,7 @@
 <cfscript>
 	// Settings
 	set(passwordSalt			= "LKjx1/Yp+xy28SlcEh4EUQ==");	// AES HEX Key // passcrypt(type="generateKey");
-	set(errorEmailAddress		= "tim@dreamstonemedia.com");
+	set(errorEmailAddress		= "changethis@wheelie.com");
 	//set(reloadPassword		= "changethis");	
 	set(dataSourceName			= "remotetest");
 	set(URLRewriting			= "On");
