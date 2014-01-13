@@ -1,12 +1,13 @@
-# Wheelie CMS v0.0.1 (Pre-Alpha 0.1)
-
+# Wheelie CMS
+v0.0.1 (Pre-Alpha 0.1)
+ 
 A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi
 
 ## [Quick video tour](http://youtu.be/7AAMkGP-y3E)
 
 ## Compatibility
 
-Heads up. I have only tested this on Railo 4/Windows 7. I will test on CF10 soon.
+Tested on Railo 4, Coldfusion 10, MySQL and MSSQL.
 
 ## Installation
 
