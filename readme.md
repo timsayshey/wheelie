@@ -11,7 +11,8 @@ Tested on Railo 4, Coldfusion 10, MySQL and MSSQL.
 
 ## Installation
 
-Extract the contents to the root of your site. Set up a mysql datasource and import the wheelie.sql file. Then edit the config/settings.cfm and set the name of your datasource and any other settings. You should be up in running. Keep in mind we are in pre-alpha so you will most likely hit a few snags. 
+Extract the contents to the root of your site. Set up a mysql datasource and import the wheelie.sql file. Then edit the config/settings.cfm and set the name of your datasource and any other settings. You should be up in running. Keep in mind we are in pre-alpha so you will most likely hit a few snags. If using Railo, make sure you Log into your server admin:
+http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
 
 ## Other tips
 
