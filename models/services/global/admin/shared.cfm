@@ -183,11 +183,8 @@
 		
 		<cfset cleantime = REReplace(now(),"[^0-9 ]","","all")>
 		
-		<cffile action = "append" file = "#expandPath('\errors\')##cleantime#-log-#subject#.html" attributes = normal output = "#errorInfo#">
+		<cffile action = "append" file = "#expandPath('.\errors\')##cleantime#-log-#subject#.html" attributes = normal output = "#errorInfo#">
 		
-		<!--- <cfmail from="timbadolato@gmail.com" to="tim@dreamstonemedia.com" subject="#subject#" type="html">
-			#errorInfo#
-		</cfmail> --->
 	</cffunction>
 	
 	<cffunction name="getOption" output="no">

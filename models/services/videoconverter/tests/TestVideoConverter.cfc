@@ -179,16 +179,10 @@
 
 <cffunction name="shouldModifyXmlBeCorrect" access="public" returntype="any" output="no"
 	hint="The modifyXml method should return the correct XML (this is a shortcut for several tests)."
->
-	
+>	
 	<cfset var ConvertedXml = trim(rereplace(getConvertedXml(),">[\n|\s|\r]+<","><","all"))>
 	<cfset var SolvedXml = trim(rereplace(getSolvedXml(),">[\n|\s|\r]+<","><","all"))>
 	<cfset shouldModifyXmlReturnValidXml()>
-	
-	<cfmail to="tim@dreamstonemedia.com" from="timbadolato@gmail.com" subject="Test" type="html">
-		<cfdump var="#ToString(XmlParse(SolvedXml))#" label="ToString(XmlParse(SolvedXml))">
-		<cfdump var="#ToString(XmlParse(ConvertedXml))#" label="ToString(XmlParse(ConvertedXml))">
-	</cfmail>
 	
 	<cfset assertEquals(ToString(XmlParse(SolvedXml)),ToString(XmlParse(ConvertedXml)),"modifyXml did not return the correct XML.")>
 	
