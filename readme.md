@@ -7,7 +7,7 @@ A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi
 
 ## Compatibility
 
-Tested on Railo 4, Coldfusion 10, MySQL and MSSQL.
+Tested on Tomcat Railo 4 with MySQL and Coldfusion 10 with MSSQL.
 
 ## Installation
 
