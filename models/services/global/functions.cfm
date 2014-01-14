@@ -6,8 +6,8 @@
 <cfinclude template="/models/services/global/admin/users.cfm">
 
 <cfscript>
-	/* Globlal data */		
-	fileroot = "#expandPath(".")#";
+	/* Globlal data */
+	fileroot = expandPath(".");
 	
 	info.rootPath    = "/";
 	info.assetsPath  = "/assets/";
@@ -22,6 +22,11 @@
 	info.fileuploads = fixFilePathSlashes("#fileroot##info.uploadsPath#");		
 	info.filevideos  = fixFilePathSlashes("#fileroot##info.videosPath#");	
 	info.filemedia	 = fixFilePathSlashes("#fileroot##info.mediaPath#");	
+	
+	if (isNull(Application.info))
+	{	
+		Application.info = info; // Set for ckeditor filemanager
+	}
 	
 	// Table name reference
 	tn = {
