@@ -5,10 +5,10 @@
 	<cfset passwordLabel 			= "Password">
 	<cfset passrequired 			= "required">		
 		
-	#startFormTag(route="moduleAction", module="admin", controller="users", action="registerPost", enctype="multipart/form-data", id="fileupload")#		
+	#startFormTag(route="admin~Action", module="admin", controller="users", action="registerPost", enctype="multipart/form-data", id="fileupload")#		
 					
 	<!--- Email --->	
-	<div class="col-sm-6 clearleft">	
+	<div class="col-sm-12 clearleft">	
 		#btextfield(
 			objectName		= 'user', 
 			property		= 'email', 
@@ -17,16 +17,6 @@
 		)#
 	</div>
 	
-	<div class="col-sm-6">	
-		<cfparam name="user.portrait" default="">
-		#bImageUploadTag(
-			name			= "portrait",
-			value			= user.portrait, 	
-			filepath		= user.portrait,
-			label			= 'Portrait'
-		)#
-	</div>
-
 	<!--- Password 
 	,"#passrequired#" = "" --->
 	<div class="col-sm-6 clearleft">	
@@ -64,10 +54,20 @@
 		)#
 	</div>
 	
+	<div class="col-sm-6">	
+		<cfparam name="user.portrait" default="">
+		#bImageUploadTag(
+			name			= "portrait",
+			value			= user.portrait, 	
+			filepath		= user.portrait,
+			label			= 'Portrait'
+		)#
+	</div>
+	
 	<br class="clear">
 	
 	#bsubmittag(name="submit",value="Register", class="btn-lg btn-primary")#
-	<a class="lost-password pull-right" href='#urlFor(route="moduleAction", module="admin", controller="users", action="login")#'>Back to login</a>	
+	<a class="lost-password pull-right" href='#urlFor(route="admin~Action", module="admin", controller="users", action="login")#'>Back to login</a>	
 	
 	#endFormTag()#	
 		

@@ -1,17 +1,75 @@
-<cfscript>
+3<cfscript>
 	component extends="_main" 
 	{
 		function init() 
 		{
 			super.init();
+			//filters(through="requireEmailMatchDomain");
+		}
+		
+		function requireEmailMatchDomain()
+		{
+			var loc = {};
+			if(!isNull(params.user.email))
+			{
+				loc.domain = ListLast(trim(params.user.email),"@");
+				if(loc.domain NEQ request.site.domain)
+				{ 
+					flashInsert(error="Sorry, you entered an invalid email address. We only accept #request.site.domain# email addresses.");
+					redirectTo(route="admin~action", action="login", controller="users");
+				}
+			}			
+		}
+		
+		function rearrange()
+		{
+			sortusers = model("User").findAll(where=wherePermission("User"),order="sortorder ASC");
+		}
+		
+		function updateOrder()
+		{
+			orderValues = DeserializeJSON(params.orderValues);
+					
+			for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
+			{
+				sortuserVal = orderValues[i];
+				
+				sortuser = model("User").findOne(where="id = #sortuserVal.fieldId#");
+						
+				if(isObject(sortuser))
+				{
+					sortuser.update(sortorder=sortuserVal.newIndex);
+				}
+			}
+			abort;
 		}
 		
 		function index()
-		{			
-			statusTabs("user");
+		{									
+			param name="params.currentGroup" default="0";
+			whereType = "";
+			sharedObjects();
 			
-			qUsers = model("User").findAll(where=buildWhereStatement("User"), order=session.users.sortby & " " & session.users.order);			
-			filterResults();
+			whereType = "usergroupid = '#params.currentGroup#' AND";
+			
+			if(!checkPermission("user_save_role_admin"))
+			{
+				whereType = "#whereType# status = 'published' AND";
+			}
+			
+			if(isNull(params.rearrange))
+			{
+				statusTabs(modelname="UserGroupJoin",prepend=whereType,include="User,UserGroup");				
+				qUsers = model("UserGroupJoin").findAll(where=buildWhereStatement("User",whereType), order=session.users.sortby & " " & session.users.order, include="User,UserGroup");			
+				filterResults();
+			}
+			else 
+			{
+				qUsers = model("User").findAll(
+					where	= buildWhereStatement("User"), 
+					order	= "sortorder ASC"
+				);
+			}
 			
 			// Paginate me batman
 			pagination.setQueryToPaginate(qUsers);	
@@ -19,13 +77,44 @@
 			paginator = pagination.getRenderedHTML();
 		}
 		
+		function approval()
+		{
+			users = model("User").findAll(where="approval_flag = 1#wherePermission("User","AND")#");
+		}
+		
 		function edit()
-		{						
-			if(isDefined("params.id")) 
+		{									
+			if(!isNull(params.id) AND isNumeric(params.id)) 
 			{
-				// Queries
-				sharedObjects(params.id);
+				// Queries				
 				user = model("User").findAll(where="id = '#params.id#'#wherePermission("User","AND")#", maxRows=1, returnAs="Object");
+				selectedusergroup = model("UserGroupJoin").findAll(
+					where	= "userid = '#params.id#'"
+				);
+				
+				if(!selectedusergroup.recordcount)
+				{
+					model("UsergroupJoin").create(usergroupid = 1, userid = params.id);
+					selectedusergroup = model("UserGroupJoin").findAll(
+						where	= "userid = '#params.id#'"
+					);
+				}
+				
+				params.currentGroup = selectedusergroup.usergroupid;
+				sharedObjects(params.id);
+				
+				dataFields = model("FieldData").getAllFieldsAndUserData(
+					modelid = selectedusergroup.usergroupid,
+					foreignid = params.id,
+					metafieldType = "usergroupfield" 
+				);
+				
+				/* Doesn't work, need to add where userid id to join instead of where clause				
+				dataFields = model("Usergroupfield").findAll(
+					where="usergroupid = '#selectedusergroup.usergroupid#' AND (userid = '#params.id#' OR userid IS NULL)",
+					include="fielddatas",
+					order="sortorder ASC"
+				);*/
 				
 				if(ArrayLen(user))
 				{				
@@ -36,39 +125,36 @@
 				if (!IsObject(user))
 				{
 					flashInsert(error="Not found");
-					redirectTo(route="moduleIndex", module="admin", controller="users");
+					redirectTo(route="admin~Index", module="admin", controller="users");
 				}			
 			}
 			
-			renderView(action="editor");		
+			renderPage(action="editor");		
 		}
 		
 		function new()
 		{
+			param name="selectedusergroup.usergroupid" default="0";
+			sharedObjects();
+			
 			// Queries
-			sharedObjects(0);
 			user = model("User").new(colStruct("User"));	
 				
 			// If not allowed redirect
 			wherePermission("User");
 			
 			// Show page
-			renderView(action="editor");
+			renderPage(action="editor");
 		}
 		
 		function register()
-		{
-			usesLayout("/layouts/layout.admin.misc");
-			
+		{			
 			// Queries
-			sharedObjects(0);
 			user = model("User").new(colStruct("User"));
 		}
 		
 		function registerPost()
 		{				
-			usesLayout("/layouts/layout.admin.misc");
-			
 			request.newRegistration = true;
 			
 			// Save Portrait
@@ -82,27 +168,52 @@
 				}
 			}
 			
+			
+			// Sync Unapproved Fields
+			params.user.zx_firstname = params.user.firstname;				
+			params.user.zx_lastname = params.user.lastname;
+			
 			// Save user
 			user = model("User").new(params.user);
-			saveResult = user.save();
+			saveResult = user.save(); 
 			
 			// Insert or update user object with properties
 			if (saveResult)
 			{			
-				flashInsert(success="You have registered successfully!");
-				redirectTo(route="moduleAction", module="admin", controller="users", action="login");									
+				// Default usergroup to staff ("1")
+				defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
+				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
+				flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
+				mailgun(
+					mailTo	= application.wheels.adminEmail,
+					from	= application.wheels.adminFromEmail,
+					subject	= "New User awaiting approval",
+					html	= "#params.user.firstname# #params.user.lastname#"
+				);
+				
+				userVerifyUrl = 'http://#request.site.domain#/#application.wheels.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
+				mailgun(
+					mailTo	= user.email,
+					from	= application.wheels.adminFromEmail,
+					subject	= "Verify your email address",
+					html	= "Click the link below to verify your email address:<br>
+							   <a href='#userVerifyUrl#'>#userVerifyUrl#</a>"
+				);
+				redirectTo(route="admin~Action", module="admin", controller="users", action="login");									
 			} 
 			else 
 			{
 				errorMessagesName = "user";
 				flashInsert(error="There was an error.");
-				renderView(route="moduleAction", module="admin", controller="users", action="register");		
+				renderPage(route="admin~Action", module="admin", controller="users", action="register");		
 			}		
 		}
 		
 		function delete()
 		{
 			user = model("User").findByKey(params.id);
+			
+			param name="params.currentGroup" default="staff";
 			
 			if(user.delete())
 			{
@@ -113,15 +224,53 @@
 			}
 			
 			redirectTo(
-				route="moduleIndex",
-				module="admin",
-				controller="users"
+				route="admin~peopleTypes", currentGroup=params.currentGroup
 			);
 		}
-	
+		
+		function uploadUserImage(field,user)
+		{
+			var loc = {};
+			loc.user = arguments.user;
+			
+			if(!isNull(loc.user.id))
+			{				
+				var approvalToggle = "_pending";
+				if(checkPermission("user_noApprovalNeeded") OR loc.user.showOnSite eq 0)
+				{
+					approvalToggle = "";
+				}
+				
+				var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
+				if(result.fileWasSaved) {
+					var theFile = result.serverdirectory & "/" & result.serverFile;
+					var newFile = expandPath("/assets/userpics#approvalToggle#/#loc.user.id#.jpg");
+					var fullFile = expandPath("/assets/userpics_full/#loc.user.id#.jpg");
+					if(!isImageFile(thefile)) {
+						fileDelete(theFile);
+						return false;
+					} else {					
+						var img = imageRead(thefile);
+						try {
+							imageWrite(img,fullFile,1);
+							imageScaleToFit(img, 250, 250);
+							imageWrite(img,newFile,1);
+							fileDelete(theFile);
+						} catch(e) {
+							return false;
+						}
+						return true;
+					}
+				} else return false;			
+			}
+		}
+		
 		function save()
-		{				
-			param name="params.usertags" default="";			
+		{							
+			param name="params.usertags" default="";		
+			param name="params.usergroups" default="";		
+			
+			try{	
 			
 			// Handle submit button type (publish,draft,trash,etc)
 			if(!isNull(params.submit))
@@ -129,47 +278,104 @@
 				params.user.status = handleSubmitType("user", params.submit);	
 			}
 			
-			// Save Portrait
-			if(len(form.portrait) AND FileExists(form.portrait))
-			{				
-				uploadResult = fileMgr.uploadFile(FieldName="portrait", NameConflict="MakeUnique");	
-				
-				if(StructKeyExists(uploadResult,"filewassaved") AND uploadResult.filewassaved)
-				{
-					params.user.portrait = fileMgr.getFileURL(uploadResult.serverfile);
-				}
+			if(!isNull(params.user.approval_flag) AND params.user.approval_flag eq 1)
+			{
+				mailgun(
+					mailTo	= application.wheels.adminEmail,
+					from	= application.wheels.adminFromEmail,
+					subject	= "User Changes Pending",
+					html	= "#params.user.firstname# #params.user.lastname#"
+				);
 			}
+			
+			syncApprovedFields();
 			
 			// Get user object
 			if(!isNull(params.user.id)) 
 			{
 				user = model("User").findByKey(params.user.id);
 				saveResult = user.update(params.user);
-				
-				// Clear existing video category associations
-				model("userTagJoin").deleteAll(where="userid = #params.user.id#");
 			} else {
 				user = model("User").new(params.user);
 				saveResult = user.save();
 			}
 			
+			
 			// Insert or update user object with properties
-			if (saveResult)
+			if (saveResult)   
 			{				
-				if(StructKeyExists(params,"isHome"))
+				// Approve Portrait
+				pendingPortraitPath = expandPath("/assets/userpics_pending/#user.id#.jpg");
+				if(!isNull(params.handlePortrait) AND fileExists(pendingPortraitPath))
 				{
+					if(params.handlePortrait eq "live")
+					{					
+						FileMove(
+							pendingPortraitPath,
+							expandPath("/assets/userpics/#user.id#.jpg")
+						);
+					}
+					else if(params.handlePortrait eq "delete")
+					{
+						FileDelete(pendingPortraitPath);
+					}
+				}
+				
+				// Save Portrait
+				if(!isNull(form.portrait) AND len(form.portrait) AND FileExists(form.portrait))
+				{								
+					if(uploadUserImage("portrait",user))
+					{
+						params.user.portrait = "";
+					}
+				}
+				
+				if(StructKeyExists(params,"isHome"))
+				{  
 					option = model("Option").findByKey("home_id");
 					option.update(content=user.id);
-				}			
+				}				
 				
-				// Insert new user category associations			
-				for(id in ListToArray(params.usertags))
-				{				
-					model("userTagJoin").create(categoryid = id, userid = user.id);				
+				// Clear existing user category associations
+				if(!isNull(params.fromEditor))
+				{
+					model("userTagJoin").deleteAll(where="userid = #user.id#");	
+				}				
+				if(len(params.usertags))
+				{		
+					// Insert new user category associations	
+					for(id in ListToArray(params.usertags))
+					{				
+						model("userTagJoin").create(categoryid = id, userid = user.id);				
+					}
+				}
+				
+				// Clear existing usergroups associations
+				if(!isNull(params.fromEditor))
+				{
+					model("UsergroupJoin").deleteAll(where="userid = #user.id#");	
+				}
+				
+				if(len(params.usergroups))
+				{		
+					// Insert usergroups associations	
+					for(id in ListToArray(params.usergroups))
+					{				
+						model("UsergroupJoin").create(usergroupid = id, userid = user.id);			
+					}
+				}
+				
+				// Save custom metafeild data
+				if(!isNull(params.fielddata))
+				{ 
+					model("FieldData").saveFielddata(
+						fields		= params.fielddata,
+						foreignid	= user.id
+					);
 				}
 				
 				flashInsert(success="User saved.");
-				redirectTo(route="moduleId", module="admin", controller="users", action="edit", id=user.id);			
+				redirectTo(route="admin~Id", module="admin", controller="users", action="edit", id=user.id);			
 						
 			} else {						
 				
@@ -178,91 +384,134 @@
 				sharedObjects(user.id);
 				
 				flashInsert(error="There was an error.");
-				renderView(route="moduleAction", module="admin", controller="users", action="editor");		
-			}		
+				renderPage(route="admin~Action", module="admin", controller="users", action="editor");		
+			}	
+			
+			} catch(e) {
+				writeDump(e); abort;
+			}
 		}
 		
 		function login()
 		{
-			usesLayout("/layouts/layout.admin.login");
+			
 		}
 		
 		function logout()
 		{
 			StructDelete(session,"user");
-			redirectTo(route="moduleAction", module="admin", controller="users", action="login");
+			redirectTo(route="admin~Action", module="admin", controller="users", action="login");
 		}
 		
 		function loginPost()
 		{
 			param name="params.email" default="";
 			
-			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#'");
+			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#' AND #siteIdEqualsCheck()#");
 			
-			if(user.recordcount)
+			if(user.recordcount AND user.securityApproval eq 1)
 			{
 				session.user.id = user.id;
 				setUserInfo();
-				redirectTo(route="moduleAction", module="admin", controller="main", action="home");					
-				
+				redirectTo(route="admin~Action", module="admin", controller="main", action="home");	
+			} else if(user.recordcount AND user.securityApproval eq 0) {	
+				flashInsert(error="We sent you an email to verify your account, check your spam or contact support.");	
+				renderPage(route="admin~Action", controller="users", action="login");	
 			} else {			
-				flashInsert(error="No account was found with that email and password combination.");		
-				redirectTo(route="moduleAction", module="admin", controller="users", action="login");	
+				flashInsert(error="No account was found with that email and password combination.");	
+				renderPage(route="admin~Action", controller="users", action="login");		
 			}
 		}
 		
 		function recovery()
 		{
-			usesLayout("/layouts/layout.admin.misc");
+			
+		}
+		
+		function sendLoginInfoToAllUsers()
+		{
+			var users = model("User").findAll(where="email = '#application.wheels.adminEmail#' AND #siteIdEqualsCheck()#");
+			for(user in users)
+			{
+				mailgun(
+					mailTo	= user.email,
+					bcc		= application.wheels.adminEmail,
+					from	= application.wheels.errorEmailAddress,
+					subject	= "Your Account",
+					html	= 
+					"<span style='font-family:Arial'>
+						<h1>Welcome to the website!</h1>
+						
+						<strong>Please see your login details below:</strong><br> 
+						Email: #user.email#<br>
+						Password: #passcrypt(user.password, "decrypt")#<br><br>
+						
+						Log in anytime at 
+						<a href='http://#request.site.domain#/#application.wheels.adminUrlPath#'>http://#request.site.domain#/#application.wheels.adminUrlPath#</a><br><br>
+						
+						Don't forget to update your profile and upload your portrait.<br><br>
+						
+						Keep this email for your records.<br><br>
+						
+						Please email <a href='mailto:#application.wheels.adminEmail#'>#application.wheels.adminEmail#</a> if you have any questions or need help.<br><br>
+						
+						Thanks!
+					</span>"
+				);
+			}
+			
+			writeOutput("Huzzah!");
+			abort;			
 		}
 		
 		function recoveryPost()
 		{
 			param name="params.email" default="";
 			
-			var user = model("User").findAll(where="email = '#params.email#'");
+			var user = model("User").findAll(where="email = '#params.email#' AND #siteIdEqualsCheck()#");
 			
 			if(user.recordcount)
 			{
 				mailgun(
 					mailTo	= user.email,
+					bcc		= application.wheels.adminEmail,
 					from	= application.wheels.errorEmailAddress,
 					subject	= "Account Recovery",
-					html	= "Your password is #passcrypt(user.password, "decrypt")#"
+					html	= 
+					"Your password is:<br> 
+					#passcrypt(user.password, "decrypt")#<br><br>
+					Login at:<br> 
+					http://#request.site.domain#/#application.wheels.adminUrlPath#"
 				);
 				
 				flashInsert(success="Your account information has been emailed to you. (Check your spam if you don't see it)");		
-				redirectTo(route="moduleAction", module="admin", controller="users", action="login");	
+				redirectTo(route="admin~Action", module="admin", controller="users", action="login");	
 			} else
 			{
 				flashInsert(error="No account for #params.email# found.");		
-				redirectTo(route="moduleAction", module="admin", controller="users", action="recovery");	
+				redirectTo(route="admin~Action", module="admin", controller="users", action="recovery");	
 			}		
 		}
 		
-		// Override the parent function here, because we also need to check to see if it's the owner's id
-		function wherePermission(modelName="", prepend="")
-		{
-			if(checkPermission("#arguments.modelName#_read_others"))
-			{
-				return "";
-			} else if (checkPermission("#arguments.modelName#_read") OR (!isNull(params.id) AND params.id eq session.user.id)) 
-			{
-				return " #arguments.prepend# (id = '#session.user.id#' OR createdby = '#session.user.id#')";
-			} else 
-			{
-				flashInsert(error="Sorry, you don't have permission to do that.213");
-				redirectTo(route="moduleAction", module="admin", controller="main", action="home");
-			}
-		}
-		
-		function sharedObjects(userid)
+		function sharedObjects(userid=0)
 		{					
 			usStates = getStatesAndProvinces();
 			countries = getCountries();	
-			usertags = model("UserTag").findAll();
-			selectedusertags = model("userTagJoin").findAll(where="userid = #arguments.userid#",include="User,UserTag");
+			usertags = model("UserTag").findAll(where="categoryType = 'user'#wherePermission("User","AND")#");
+			usergroups = model("Usergroup").findAll(wherePermission("User"));
+			selectedusertags = model("userTagJoin").findAll(where="userid = #arguments.userid##wherePermission("User","AND")#",include="User,UserTag");
 			selectedusertags = ValueList(selectedusertags.categoryid);
+			if(!isNull(params.currentGroup))
+			{
+				if(isNull(selectedusergroup.usergroupid))
+				{
+					selectedusergroup.usergroupid = "";
+				}
+				usergroup = model("Usergroup").findAll(where="id = '#params.currentGroup#'");
+				dataFields = model("FieldData").getAllFieldsAndUserData(
+					usergroupid = params.currentGroup
+				);
+			}
 		}	
 		
 		function deleteSelection()
@@ -275,9 +524,7 @@
 			flashInsert(success="Your users were deleted successfully!");			
 			
 			redirectTo(
-				route="moduleIndex",
-				module="admin",
-				controller="users"
+				route="admin~peopleTypes", currentGroup=params.currentGroup
 			);
 		}
 		
@@ -289,10 +536,36 @@
 			}
 			
 			redirectTo(
-				route="moduleIndex",
-				module="admin",
-				controller="users"
+				route="admin~peopleTypes", currentGroup=params.currentGroup 
 			);
+		}
+		
+		function syncApprovedFields()
+		{
+			if(!isNull(params.user.approval_flag) AND params.user.approval_flag neq 1)
+			{			
+				//abort;
+				if(!isNull(params.user.zx_firstname))
+				{
+					params.user.firstname = params.user.zx_firstname;
+				}
+				if(!isNull(params.user.zx_lastname))
+				{
+					params.user.lastname = params.user.zx_lastname;
+				}
+				if(!isNull(params.user.zx_jobtitle))
+				{
+					params.user.jobtitle = params.user.zx_jobtitle;
+				}
+				if(!isNull(params.user.zx_designatory_letters))
+				{
+					params.user.designatory_letters = params.user.zx_designatory_letters;
+				}
+				if(!isNull(params.user.zx_about))
+				{
+					params.user.about = params.user.zx_about;
+				}					
+			}
 		}
 		
 		function filterResults()
@@ -364,7 +637,6 @@
 					);
 				}
 				
-				// Clear out the duplicates
 				qUsers = queryOfQueries(
 					query	= "qUsers",
 					order	= session.users.sortby & " " & session.users.order
@@ -375,9 +647,35 @@
 					pagination.setAppendToLinks("&#rememberParams#");
 				}
 				
-				//renderView(route="moduleAction", module="admin", controller="users", action="index");		
+				//renderPage(route="admin~Action", module="admin", controller="users", action="index");		
 			}
 		}
+		
+		function verifyEmail()
+		{
+			if(!isNull(params.token))
+			{
+				decryptUserId = passcrypt(password=params.token, type="decrypt");
+				
+				matchUser = model("user").findOne(where="id = '#decryptUserId#'");
+							
+				if(isObject(matchUser))
+				{
+					matchUser.update(securityApproval=1);
+					flashInsert(success="Your email address has been verified. You can now login.");
+				} else {
+					flashInsert(error="There was an issue verifying your address. Please try again.");					
+				}
+			}
+			redirectTo(route="admin~action", action="login", controller="users");
+		}
+		
+		function importUserList()
+		{
+
 			
+			
+				
+		}
 	}
 </cfscript>

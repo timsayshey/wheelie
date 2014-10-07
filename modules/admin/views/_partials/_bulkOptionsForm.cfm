@@ -5,7 +5,8 @@
 	<ul class="nav nav-pills nav-stacked col-sm-3">
 		<cfloop query="qOptions">
 			<cfif editContent OR editLabel OR editAttachment>			
-				<cfset optionName = showPrependedText ? qOptions.id : ListDeleteAt(qOptions.id,1,"_")>
+				<!--- <cfset optionName = showPrependedText ? qOptions.id : ListDeleteAt(qOptions.id,1,"_")> --->
+				<cfset optionName = qOptions.id>
 				<li class="#currentRow eq 1 ? 'active' : ''#"><a href="###cleanseFilename(qOptions.id)#" data-toggle="tab">#formatOptionName(optionName)#</a></li>
 			</cfif>
 		</cfloop>

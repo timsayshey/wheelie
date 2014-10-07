@@ -8,7 +8,6 @@ component extends="_main" output="false"
 	
 	function sharedObjects(videoid)
 	{		
-		videofiles = model("File").findAll("filetype = 'video'");
 		videocategories = model("VideoCategory").findAll();
 		selectedvideocategories = model("VideoCategoryJoin").findAll(where="videoid = #arguments.videoid#",include="Video,VideoCategory");
 		selectedvideocategories = ValueList(selectedvideocategories.videocategoryid);
@@ -18,21 +17,75 @@ component extends="_main" output="false"
 		countries = getCountries();	
 	}
 	
+	function video()
+	{		
+		if(!isNull(params.id))
+		{
+			video = model("video").findAll(where="id = '#params.id#'");
+		}
+	}
+	
+	function updateOrder()
+	{
+		orderValues = DeserializeJSON(params.orderValues);
+				
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
+		{
+			sortVal = orderValues[i];
+			
+			sortItem = model("Video").findOne(where="id = #sortVal.fieldId#");
+					
+			if(isObject(sortItem))
+			{
+				sortItem.update(sortorder=sortVal.newIndex);
+			}
+		}
+		abort;
+	}
+	
+	function category()
+	{		
+		sharedObjects(0);
+		
+		if(!isNull(params.id))
+		{
+			videoCategory = model("VideoCategory").findAll(where="urlid = '#params.id#'#wherePermission("VideoCategory","AND")#");
+			videoCategories = model("VideoCategory").findAll(where="parentid = '#videoCategory.id#'#wherePermission("VideoCategory","AND")#");
+			
+			if(videoCategory.recordcount)
+			{				
+				distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
+				videoColumns = "#distinctVideoColumns#, description, status, category_id";
+				
+				qVideos = model("ViewVideo").findAll(
+					where	= buildWhereStatement(modelName="Video", prepend="category_id = '#videoCategory.id#' AND"), 
+					order	= "sortorder ASC", 
+					select	= videoColumns
+				);
+				
+				filterResults();
+			}
+		}
+	}
+	
 	function index()
 	{
 		sharedObjects(0);
-		distinctVideoColumns = "id, name, filename, filepath, description, bytesize, youtubeid, status, createdat, updatedat";
+		distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
 		videoColumns = "#distinctVideoColumns#, description, status, category_id";
 		
 		statusTabs("video");
 		
 		qVideos = model("ViewVideo").findAll(
 			where	= buildWhereStatement("Video"), 
-			order	= session.videos.sortby & " " & session.videos.order, 
+			order	= !isNull(params.rearrange) ? "sortorder ASC" : session.videos.sortby & " " & session.videos.order, 
 			select	= videoColumns
 		);
 		
-		filterResults();
+		if(isNull(params.rearrange))
+		{
+			filterResults();
+		}
 		
 		// Paginate me batman
 		pagination.setQueryToPaginate(qVideos);	
@@ -62,11 +115,11 @@ component extends="_main" output="false"
 			if (!IsObject(video))
 			{
 				flashInsert(error="Not found");
-				redirectTo(route="moduleIndex", module="admin", controller="videos");
+				redirectTo(route="admin~Index", module="admin", controller="videos");
 			}			
 		}
 		
-		renderView(action="editor");		
+		renderPage(action="editor");		
 	}
 	
 	function new()
@@ -76,13 +129,11 @@ component extends="_main" output="false"
 		
 		sharedObjects(0);
 		
-		videofiles = model("File").findAll("filetype = 'video'");
-		
 		// If not allowed redirect
 		wherePermission("Video");
 		
 		// Show page
-		renderView(action="editor");
+		renderPage(action="editor");
 	}
 
 
@@ -99,7 +150,7 @@ component extends="_main" output="false"
 		}
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="videos"
 		);
@@ -115,21 +166,6 @@ component extends="_main" output="false"
 		{
 			params.video.status = handleSubmitType("video", params.submit);	
 		}
-				
-		// Enter video via youtube URL
-		if(!isNull(params.video.youtubeId))
-		{
-			params.video.youtubeId = XMLFormat(trim(params.video.youtubeId));			
-			
-			// If youtube thumb is selected, save the image
-			if(!isNull(params.thumbid))
-			{
-				model("Video").saveYoutubeThumb(
-					params.video.youtubeId,
-					"http://i1.ytimg.com/vi/#params.thumbid#/hqdefault.jpg"
-				);
-			}
-		}
 		
 		// Get video object
 		if(!isNull(params.video.id)) 
@@ -144,6 +180,17 @@ component extends="_main" output="false"
 			saveResult = video.save();
 		}
 		
+		// Youtubeid cleanup and save thumb
+		if(!isNull(params.video.youtubeId) AND len(params.video.youtubeId))
+		{
+			params.video.youtubeId = XMLFormat(trim(params.video.youtubeId));		
+			model("Video").saveYoutubeThumb(
+				filename	= params.video.youtubeId,
+				imgUrl		= "http://i1.ytimg.com/vi/#params.video.youtubeId#/hqdefault.jpg",
+				videoid		= video.id
+			);
+		}
+		
 		// Insert or update video object with properties
 		if (saveResult)
 		{								
@@ -154,7 +201,7 @@ component extends="_main" output="false"
 			}
 			
 			flashInsert(success="Video saved.");
-			redirectTo(route="moduleId", module="admin", controller="videos", action="edit", id=video.id);	
+			redirectTo(route="admin~Id", module="admin", controller="videos", action="edit", id=video.id);	
 		} else {						
 			
 			errorMessagesName = "video";
@@ -162,7 +209,7 @@ component extends="_main" output="false"
 			sharedObjects(video.id);
 			
 			flashInsert(error="There was an error.");
-			renderView(route="moduleAction", module="admin", controller="videos", action="editor");		
+			renderPage(route="admin~Action", module="admin", controller="videos", action="editor");		
 		}		
 	}
 	
@@ -176,7 +223,7 @@ component extends="_main" output="false"
 		flashInsert(success="Your videos were deleted successfully!");			
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="videos"
 		);
@@ -190,7 +237,7 @@ component extends="_main" output="false"
 		}
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="videos"
 		);
@@ -315,7 +362,7 @@ component extends="_main" output="false"
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 			
-			//renderView(route="moduleAction", module="admin", controller="videos", action="index");		
+			//renderPage(route="admin~Action", module="admin", controller="videos", action="index");		
 		}
 	}
 }

@@ -3,20 +3,24 @@
 		function init()
 		{						
 			// Properties
-			defaultScope(where=wherePermission('Video'));
+			this.setWhere = setWhere;	
 			
 			// Relations
 			hasMany("VideoCategoryJoins");
 			belongsTo(name="File", foreignKey="videofileid", joinType="outer");
 			
 			// Validations
-			validatesUniquenessOf(property="urlid");
+			validatesUniquenessOf(property="urlid", scope="siteid");
 			validatesPresenceOf(property ="urlid", when="onCreate");
 			
 			// Other
 			super.init();
 			beforeSave("sanitizeNameAndURLId");
-		}				
+		}		
+		function setWhere()
+		{
+			return wherePermission('Video');
+		}		
 	</cfscript>
 	
 	<cffunction name="convertVideo">
@@ -117,13 +121,14 @@
 		<cfargument name="filename">
 		<cfargument name="imgUrl">
 		<cfargument name="minutesToWait" default="1">
+		<cfargument name="videoid" default="">
 		<cfscript>		
 			try {
 				logEntry("saveYoutubeThumb Start",imgUrl);
 				Sleep(minutesToWait);	
 				
 				// Video thumbnail paths
-				tempThumbPath = "#info.fileuploads#videos/thumbs/#ListFirst(filename,".")#.jpg";
+				tempThumbPath = "#info.fileuploads#videos/thumbs/#videoid#.jpg";
 				
 				// Retrieve and save thumbnail
 				imgsrc = imageRead(imgUrl);						

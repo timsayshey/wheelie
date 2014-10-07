@@ -1,43 +1,80 @@
 <cfoutput>
-
-    <section class="page-wrapper" id="pagey">    
-        <div class="container">
-            <div class="row">
-                <cfif IsStruct(users)>
-                    <h1>#users.name#</h1>
-                    #users.content#
-                <cfelse>
-                
-                    <cfloop query="users">
+         
+		<cfset contentFor(siteTitle = "#capitalize(userTag.name)# Team - #getOption(qOptions,'seo_subpage_title').label#")>
+		<cfset contentFor(siteDesc = getOption(qOptions,'seo_subpage_description').label)>
+		<cfset contentFor(siteKeywords = getOption(qOptions,'seo_subpage_keywords').label)>
+		
+		<cfset checkUrlExtension(checkUrl="/team/#userTag.urlid#")>
+               
+		<cfif IsStruct(users)>
+            <h1>#users.name#</h1>
+            #users.content#
+        <cfelse>
+            
+            <h1>#userTag.name# Team</h1>
+            <br class="clear"><br>
+            
+            <cfif len(trim(userTag.description))>                    
+                #userTag.description#<br><br>
+            </cfif>
+            
+            <cfloop query="users">
                     
-                        <div class="col-md-12">
-                            <div class="panel">
-                                <div class="row">
-                                    <div class="col-xs-4 col-md-4 text-center">
-                                        <img src="#users.portrait#" class="img-rounded img-responsive" />
-                                    </div>
-                                    <div class="col-xs-8 col-md-8 section-box">
-                                        <h3>
-                                           #users.firstname# 
-                                            <cfif len(trim(users.spouse_firstname))>
-                                                & #users.spouse_firstname#
-                                            </cfif>
-                                            #users.lastname#
-                                            <cfif len(trim(users.title))>
-                                             - #users.title#       
-                                            </cfif>
-                                        </h3>
-                                       <p>#users.about#</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        
-                    </cfloop>
-                    	
-                </cfif>
-            </div>
-        </div>
-    </section>
+                <!---<h2>
+                	<cfif users.fullLastname eq 1>
+                    	<cfset userLastname = users.zx_lastname>
+                    <cfelseif len(users.zx_lastname)>
+                    	<cfset userLastname = left(users.zx_lastname,1) & ".">
+                    <cfelse>
+                    	<cfset userLastname = "">
+                    </cfif>
+                    #users.zx_firstname# #userLastname#<cfif len(trim(users.zx_designatory_letters))>, #users.zx_designatory_letters#</cfif>
+                    <cfif len(trim(users.zx_jobtitle))>
+                        <span>#users.zx_jobtitle#</span>
+                    </cfif>
+                </h2>
+                <p>
+                
+                    <cfset imagePath = ExpandPath("/assets/userpics/#users.id#.jpg")>
+                    
+                    <cfif FileExists(imagePath)>
+                        <img src="/assets/userpics/#users.id#.jpg" style="max-width:120px; margin-left:10px; border:4px solid ##fff;" class="img-responsive pull-right" />
+                    </cfif>
+                    
+                    #users.zx_about#
+                
+                </p>--->
+				
+				<div class="row">                	
+                    <div class="col-sm-10"> 
+                        <h2>
+							<cfif users.fullLastname eq 1>
+								<cfset userLastname = users.zx_lastname>
+							<cfelseif len(users.zx_lastname)>
+								<cfset userLastname = left(users.zx_lastname,1) & ".">
+							<cfelse>
+								<cfset userLastname = "">
+							</cfif>
+							#users.zx_firstname# #userLastname#<cfif len(trim(users.zx_designatory_letters))>, #users.zx_designatory_letters#</cfif>
+							<cfif len(trim(users.zx_jobtitle))>
+								<span>#users.zx_jobtitle#</span>
+							</cfif>
+						</h2>
+                        <div class="trunkToggle">
+                             #users.zx_about# 
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+						<cfset imagePath = ExpandPath("/assets/userpics/#users.id#.jpg")>                
+                        <cfif FileExists(imagePath)> 
+                            <img src="/assets/userpics/#users.id#.jpg" style="border:4px solid ##fff; margin-top:40px;" class="img-responsive" />
+                        </cfif>
+                    </div>  
+                </div> 
+				<br class="clear"><br>
+                
+            </cfloop>
+                
+        </cfif>
     
 </cfoutput>

@@ -6,7 +6,7 @@
 			
 			// Properties
 			property(name="categoryType", defaultValue="video");			
-			defaultScope(where="categoryType='video'#wherePermission('Category','AND')#");
+			this.setWhere = setWhere;	
 			
 			// Set
 			table("categories");
@@ -15,11 +15,16 @@
 			hasMany("VideoCategoryJoins");
 			
 			// Validations
-			validatesUniquenessOf(property="urlid");
+			validatesUniquenessOf(property="urlid", scope="siteid");
 			
 			// Other
 			beforeSave("sanitizeNameAndURLId");
-		}					
+		}	
+		
+		function setWhere()
+		{
+			return "categoryType='video'#wherePermission('Category','AND')#";
+		}				
 		
 		function categoryInfo()
 		{

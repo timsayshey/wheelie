@@ -1,5 +1,5 @@
 # Wheelie CMS
-v0.0.1 (Pre-Alpha 0.1)
+v1.0-RC
  
 A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi
 
@@ -7,37 +7,32 @@ A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi
 
 ## Compatibility
 
-Tested on Tomcat Railo 4 with MySQL and Coldfusion 10 with MSSQL.
+Tested on Tomcat Railo 4.2 with MySQL with Windows 2008 R2.
 
 ## Installation
 
-Extract the contents to the root of your site. Set up a mysql datasource and import the wheelie.sql file. Then edit the config/settings.cfm and set the name of your datasource and any other settings. You should be up in running. Keep in mind we are in pre-alpha so you will most likely hit a few snags. If using Railo, make sure you Log into your server admin:
+* Extract the contents to the root of your site. Set up a mysql datasource and import the wheelie.sql file. 
+* Then edit the config/settings.cfm and set the name of your datasource and any other settings.
+* If using Railo, make sure you Log into your server admin:
 http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
 
-## Other tips
+## Set DB, change salt and otherwise configure Wheelie by editing:
+/models/services/global/settings.cfm
 
-* If you want to convert videos, you will need to copy the lib folder from https://github.com/sebtools/Video-Converter and paste it to models/services/videoconverter/lib/
-* I also suggest changing the user password encryption salt in settings.cfm
+### v1.0-RC2 Roadmap
 
-### v0.0.1 (Pre-Alpha 0.2) Roadmap
-
-* Posts - Integrate into a frontend blog section
-* Posts - Categories
-* Bulk Publish/Draft
-* Lockdown CKEditor Filemanager
-* Need to Local scope function variables
-* Update menu when pages urls are changed or deleted
+To-do
+* Need to Local scope function variables to prevent possible race conditions
 * Users: Filter by role
-* Multisite, every table has a siteid column which will be related to the sites tables
 * DB Migrate (To replace vanilla sql file)
 
 ### This is opensource
 
-I am posting this work in an effort to help improve and evolve this code and to give back to the community. *So please contribute :)*
+I am posting this work in an effort to help improve and evolve this code and to give back to the community. Pull requests appreciated!
 
 ### Documentation
 
-I wish I had time to better comment the code, I will probably do this if demand grows or if someone else wants to take this on, feel free :)
+I wish I had time to better comment the code, I will probably do this if demand grows or if someone else wants to take this on.
 
 ### Contribute
 

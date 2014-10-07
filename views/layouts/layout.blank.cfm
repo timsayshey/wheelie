@@ -1,3 +1,1 @@
-<cfoutput>
-	#includeContent()#
-</cfoutput>
+<cfoutput>#includeContent()#</cfoutput>

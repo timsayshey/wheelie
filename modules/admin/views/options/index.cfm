@@ -26,7 +26,7 @@
 		</div>
 	</cfsavecontent>
 	<cfset contentFor(rightColumn = rightColumn)>
-	<cfset contentFor(formWrapStart = startFormTag(route="moduleAction", module="admin", controller="options", action="save", enctype="multipart/form-data"))>		
+	<cfset contentFor(formWrapStart = startFormTag(route="admin~Action", module="admin", controller="options", action="save", enctype="multipart/form-data"))>		
 	<cfset contentFor(formWrapEnd = endFormTag())>	
 
 </cfoutput>

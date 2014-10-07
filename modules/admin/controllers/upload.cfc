@@ -95,7 +95,7 @@
 			<cfoutput>#ajaxReturn#</cfoutput>
 			<cfabort>
 		<cfelse>
-			<cfset redirectTo(route="moduleAction", module="admin", controller="files", action="index")>
+			<cfset redirectTo(route="admin~Action", module="admin", controller="files", action="index")>
 		</cfif>
 		
 	</cffunction>

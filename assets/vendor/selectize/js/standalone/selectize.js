@@ -1180,7 +1180,7 @@
 				keypress  : function() { return self.onKeyPress.apply(self, arguments); },
 				resize    : function() { self.positionDropdown.apply(self, []); },
 				blur      : function() { return self.onBlur.apply(self, arguments); },
-				focus     : function() { return self.onFocus.apply(self, arguments); }
+				focus     : function() { self.ignoreBlur = false; return self.onFocus.apply(self, arguments); }
 			});
 	
 			$document.on('keydown' + eventNS, function(e) {
@@ -1543,6 +1543,18 @@
 			var self = this;
 			self.isFocused = false;
 			if (self.ignoreFocus) return;
+	
+			// necessary to prevent IE closing the dropdown when the scrollbar is clicked
+			if (!self.ignoreBlur && document.activeElement === self.$dropdown_content[0]) {
+				self.ignoreBlur = true;
+				self.onFocus(e);
+	
+				return;
+			}
+	
+			if (self.settings.create && self.settings.createOnBlur) {
+				self.createItem(false);
+			}
 	
 			self.close();
 			self.setTextboxValue('');

@@ -20,20 +20,36 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="whereSiteid">
+	<cfargument name="prepend" default="">
+	<cfargument name="quoteSymbol" default="">
+	<cfscript>			
+		return "siteid=#getSiteId()#";
+	</cfscript>
+</cffunction>
+
 <cffunction name="wherePermission">
 	<cfargument name="modelName" default="">
 	<cfargument name="prepend" default="">
 	<cfargument name="quoteSymbol" default="">
-	<cfscript>
+	<cfscript>			
 		if(checkPermission("#arguments.modelName#_read_others"))
 		{
-			return "";
-		} else if (checkPermission("#arguments.modelName#_read")) 
-		{
-			return " #arguments.prepend# createdby = #quoteSymbol##session.user.id##quoteSymbol#";
-		} else 
-		{
-			session.flash.error="Sorry, you don't have permission to do that.";
+			return " #arguments.prepend# (siteid=#getSiteId()# OR globalized = 1)";
+		
+		} else if (checkPermission("#arguments.modelName#_read") OR (!isNull(params.id) AND params.id eq session.user.id)) {
+			
+			if(arguments.modelName eq "User") {
+				return " #arguments.prepend# (id = '#session.user.id#' OR createdby = '#session.user.id#') AND (siteid=#getSiteId()# OR globalized = 1)";
+			} else {
+				return " #arguments.prepend# createdby = #quoteSymbol##session.user.id##quoteSymbol# AND (siteid=#getSiteId()# OR globalized = 1)";
+			}
+								
+		} else {
+			if(!isNull(flashInsert))
+			{
+				flashInsert(error="Sorry, you don't have permission to do that.");
+			}
 			Location("/m/admin");
 		}
 	</cfscript>
@@ -75,19 +91,15 @@
 	<cfargument name="type" default="encrypt">
 	<cfset salt = application.wheels.passwordSalt>
 	
-	<cfscript>
-		
-			if(arguments.type eq "encrypt")	{
-				return encrypt(arguments.password, salt, "AES", "hex");	
-			} 
-			else if (arguments.type eq "decrypt") {
-				return decrypt(arguments.password, salt, "AES", "hex");
-			}
-			else if (arguments.type eq "generateKey") {
-				writeDump(generateSecretKey("AES")); abort;
-			}
-		try {} catch(any e) {
-			return "";
+	<cfscript>		
+		if(arguments.type eq "encrypt")	{
+			return encrypt(arguments.password, salt, "AES", "hex");	
+		} 
+		else if (arguments.type eq "decrypt") {
+			return decrypt(arguments.password, salt, "AES", "hex");
+		}
+		else if (arguments.type eq "generateKey") {
+			writeDump(generateSecretKey("AES")); abort;
 		}
 	</cfscript>
 </cffunction>

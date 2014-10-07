@@ -28,7 +28,7 @@ component extends="_main" output="false"
 		category = model(getCategoryType()).new();
 		categories = model(getCategoryType()).findAll();
 		sites = model("Site").findAll();
-		renderView(action="editor");
+		renderPage(action="editor");
 	}
 	
 	function delete()
@@ -64,7 +64,7 @@ component extends="_main" output="false"
 		
 		categories = model(getCategoryType()).findAll();
 		sites = model("Site").findAll();
-		renderView(action="editor");		
+		renderPage(action="editor");		
 	}
 	
 	function rearrange()

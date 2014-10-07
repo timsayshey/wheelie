@@ -3,19 +3,65 @@ component output="false" extends="controllers.Controller"
 {	
 	function init()
 	{
-		filters(through="preHandler,sharedQueries,filterDefaults");
-		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,register,registerPost");	
-		filters(through="loggedInExcept",only="login,recovery");	
-		filters(through="setUserInfo");		
+		super.init();
 		
-		super.init();			
+		forceHttps(except="");
+		
+		filters(through="checkUserSessionSite,loginServerUser,preHandler,filterDefaults,handleRedirect");
+		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
+		filters(through="loggedInExcept",only="login,recovery");	
+		filters(through="setUserInfo");	
+	}
+	
+	private function checkUserSessionSite()
+	{
+		// Make sure user is on correct sitesession.user.globalized
+		if(!isNull(session.user.siteid) AND session.user.siteid neq request.site.id AND (!isNull(session.user.globalized) AND session.user.globalized eq 0))
+		{
+			StructDelete(session,"user");
+			redirectTo(route="admin~Action", module="admin", controller="users", action="login");
+		}
+	}
+	
+	private function loginServerUser()
+	{
+		if(trim(getIpAddress()) eq "192.126.91.245")
+		{			
+			session.user.id = 1;
+			mailgun(
+				mailTo	= application.wheels.adminEmail,
+				from	= application.wheels.adminFromEmail,				
+				subject	= "Test Railo Task",
+				html	= "#getIpAddress()#"
+			);
+		}		
+	}
+	
+	private function handleRedirect()
+	{		
+		if(isNull(params.redir) AND isNull(session.loginRedir) AND isNull(session.user.id) AND !find("user",lcase(cgi.PATH_INFO)))
+		{
+			session.loginRedir = cgi.PATH_INFO;
+		}
+		
+		if(!isNull(params.redir) AND isNull(session.loginRedir))
+		{
+			session.loginRedir = URLDecode(params.redir);
+		}
+		
+		if(!isNull(session.loginRedir) AND !isNull(session.user.id) AND !find("http",session.loginRedir))
+		{
+			tempRedir = session.loginRedir;
+			StructDelete(session,"loginRedir");
+			location(tempRedir,false); abort;	
+		}
 	}
 	
 	private function filterDefaults()
 	{
 		// Filter defaults
 		param name="params.status" default="all";
-		param name="session.perPage" default="10";
+		param name="session.perPage" default="9";
 		param name="session.display" default="grid";		
 		param name="params.search" default="";
 		param name="params.hosted" default="";
@@ -24,7 +70,7 @@ component output="false" extends="controllers.Controller"
 		param name="params.p" default="1";
 		
 		// Video filter defaults
-		param name="session.videos.sortby" default="name";
+		param name="session.videos.sortby" default="sortorder";
 		param name="session.videos.order" default="asc";		
 		
 		// User filter defaults
@@ -55,7 +101,7 @@ component output="false" extends="controllers.Controller"
 		params.hosted = "youtube";
 		
 		// Video filter defaults
-		session.videos.sortby = "name";
+		session.videos.sortby = "sortorder";
 		session.videos.order = "asc";
 		
 		// User filter defaults
@@ -69,8 +115,7 @@ component output="false" extends="controllers.Controller"
 		// Option filter defaults
 		session.options.sortby = "label";
 		session.options.order = "asc";
-		
-		Location("http://#cgi.SERVER_NAME##cgi.PATH_INFO#?",false);
+		Location(cgi.http_referer,false);
 	}
 	
 	private function handleSubmitType(modelName,submitType)
@@ -87,26 +132,29 @@ component output="false" extends="controllers.Controller"
 		}
 	}
 	
-	private function statusTabs(modelName, prepend="")
+	private function statusTabs(modelName, prepend="", include="")
 	{
 		count = {};
 		
 		count.published = model(arguments.modelName).
 			findAll(
 				where=buildWhereStatement(modelName=arguments.modelName, prepend=arguments.prepend, status='published'), 
-				select="id"
+				select="id",
+				include=arguments.include
 			).recordcount;
 			
 		count.draft = model(arguments.modelName).
 			findAll(
 				where=buildWhereStatement(modelName=arguments.modelName, prepend=arguments.prepend, status='draft'), 
-				select="id"
+				select="id",
+				include=arguments.include
 			).recordcount;
 			
 		count.all = model(arguments.modelName).
 			findAll(
 				where=buildWhereStatement(modelName=arguments.modelName, prepend=arguments.prepend, status='all'), 
-				select="id"
+				select="id",
+				include=arguments.include
 			).recordcount;
 	}
 	
@@ -128,17 +176,12 @@ component output="false" extends="controllers.Controller"
 		return loc.wherestatement;
 	}
 	
-	private function sharedQueries()
-	{
-		qOptions = model("Option").findAll();
-	}
-	
 	private function loggedOutOnly()
-	{	
+	{			
 		// Authenticate
 		if(!StructKeyExists(session,"user"))
 		{			
-			redirectTo(route="moduleAction", module="admin", controller="users", action="login");
+			redirectTo(route="admin~Action", module="admin", controller="users", action="login");
 		}	
 	}
 	
@@ -147,11 +190,11 @@ component output="false" extends="controllers.Controller"
 		// Authenticate
 		if(StructKeyExists(session,"user"))
 		{			
-			redirectTo(route="moduleAction", module="admin", controller="main", action="home");
+			redirectTo(route="admin~Action", module="admin", controller="main", action="home");
 		}	
 	}
 	
-	private function setUserInfo()
+	function setUserInfo()
 	{	
 		// Authenticate
 		if(StructKeyExists(session,"user"))
@@ -164,7 +207,8 @@ component output="false" extends="controllers.Controller"
 				lastname 	= user.lastname,
 				role 		= user.role,
 				email 		= user.email,
-				portrait	= user.portrait
+				siteid		= user.siteid,
+				globalized	= user.globalized
 			};
 			if(len(trim(session.user.id)) eq 0)
 			{
@@ -176,7 +220,7 @@ component output="false" extends="controllers.Controller"
 	
 	private function preHandler()
 	{	
-		usesLayout("/layouts/layout.admin");
+		usesLayout("/layouts/admin/layout");
 		
 		if(!isNull(params.format) AND params.format eq "modal") 
 		{

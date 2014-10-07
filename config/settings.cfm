@@ -1,17 +1,11 @@
 <cfscript>
-	// Settings
-	set(passwordSalt			= "LKjx1/Yp+xy28SlcEh4EUQ==");	// AES HEX Key // passcrypt(type="generateKey");
-	set(errorEmailAddress		= "changethis@wheelie.com");
-	
-	set(youtubeDevKey			= "AI3WQElYF92bBxo6pNvKBHHq0dgB3as_Nt_grvdsO6w"); // CHANGE THIS DEVKEY!!! ITS CONNECTED TO TIM'S ACCOUNT (For testing)
-	//set(reloadPassword		= "changethis");	
-	set(dataSourceName			= "wheelie");
-	set(URLRewriting			= "On");
-	
+
 	// Moved css/js to assets folder
+	set(dataSourceName			= application.wheels.dataSourceName);
 	set(stylesheetPath			= "assets");
 	set(javascriptPath			= "assets");	
 	set(assetQueryString		= false); // If true, Prevents browser from caching js/css assets
+	set(clearServerCacheOnReload= true); // Disabled for now due to 1.3.1 issue with Reload
 	
 	// Allows us to handle plugins manually, no autozip blackmagic	
 	set(deletePluginDirectories	= false);

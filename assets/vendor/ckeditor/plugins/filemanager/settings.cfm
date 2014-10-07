@@ -1,8 +1,15 @@
+<cfif !StructKeyExists(session,'user')>You must be logged in to do that.<cfabort></cfif>         
 <cfsilent>
+
 <!--- absolute path to User's File storage folder  --->
-<cfset settings.UserFiles 		= application.info.filemedia> <!--- like #ExpandPath('../../../../UserFiles')# --->
+<cfset settings.UserFiles 		= application.info.filemedia> 
+<!--- like #ExpandPath('../../../../UserFiles')# --->
 <!--- URL to user's file storage folder            --->
-<cfset settings.UserFilesURL	= application.info.mediaPath> <!--- like : http://myste.com/UserFiles --->
+
+<cfset mediaPath = Left(application.info.mediaPath,len(application.info.mediaPath) - 1)>
+<cfset settings.UserFilesURL	= "#application.info.domain##mediaPath#"> 
+<!--- like : http://myste.com/UserFiles --->
+
 <!--- image size for thubnail images    --->
 <cfset settings.thumbSize		= 120>
 <!--- image size for medium size images --->

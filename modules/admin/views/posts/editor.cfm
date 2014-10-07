@@ -35,13 +35,12 @@
 	
 	<!--- Post URL --->	
 	#btextfield(
-		prependedText	= '#cgi.server_name#/post/',
+		prependedText	= '#cgi.http_host#/post/',
 		label			= "Post URL",
 		objectName		= 'post', 
 		property		= 'urlid', 												
 		placeholder	 	= "Coolest-Post-Ever",
-		help 			= "This is name of the post's url address (Can't be changed in the future)",
-		disabled 		= !isNew
+		help 			= "This is name of the post's url address (Can't be changed in the future)"
 	)#	
 								
 	<!--- Description --->
@@ -52,6 +51,19 @@
 		label 		 	= "Content",
 		help 			= "Shows on the post"
 	)#	
+	
+	<cfif !isNew>
+		<!--- Set Author --->
+		<cfset users = model("User").findAll(order="email ASC")>
+		#bselecttag(
+			name			= "post[createdBy]",
+			selected		= post.createdBy,
+			label			= 'Author',
+			options			= users,
+			valueField 		= "id", 
+			textField 		= "email"
+		)#
+	</cfif>
 	
 	#includePartial(partial="/_partials/formSeperator")#	
 	
@@ -106,7 +118,7 @@
 		</div>
 	</cfsavecontent>
 	<cfset contentFor(rightColumn = rightColumn)>
-	<cfset contentFor(formWrapStart = startFormTag(route="moduleAction", module="admin", controller="posts", action="save", enctype="multipart/form-data", id = "fileupload"))>		
+	<cfset contentFor(formWrapStart = startFormTag(route="admin~Action", module="admin", controller="posts", action="save", enctype="multipart/form-data", id = "fileupload"))>		
 	<cfset contentFor(formWrapEnd = endFormTag())>	
 	
 </cfoutput>

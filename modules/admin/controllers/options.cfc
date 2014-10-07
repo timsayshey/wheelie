@@ -16,7 +16,7 @@
 			model("Option").saveOptions(params.options);
 			
 			flashInsert(success="Saved successfully.");
-			redirectTo(route="moduleAction", module="admin", controller="options", action="index");	
+			redirectTo(route="admin~Action", module="admin", controller="options", action="index");	
 		}		
 	}
 </cfscript>

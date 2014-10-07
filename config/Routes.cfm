@@ -1,31 +1,96 @@
 <cfscript>
-
-	// Public Routes 
-	addRoute(
-        name="public~secondaryPage", 
-		pattern="/p/[id]",
-        controller="publicPages", 
-		action="page"
-    );
-	
-	addRoute(
-        name="public~usertags", 
-		pattern="/users/t/[id]",
-        controller="publicUsers", 
-		action="usertag"
-    );	
+	application.wheels.adminUrlPath = "manager";
+	adminUrlPath = "/#application.wheels.adminUrlPath#";
 	
 	// Admin Routes
+	var adminUrlPaths = "#adminUrlPath#,/m/admin";
+	for (i=1; i lte listLen(adminUrlPaths); i++) 
+	{ 
+		thisAdminUrlPath = ListGetAt(adminUrlPaths, i);	
+				
+		addRoute(
+			name="admin~peopleTypes", 
+			pattern="#thisAdminUrlPath#/people/[currentGroup]",
+			controller="users", 
+			action="index"
+		);
+		
+		addRoute(
+			name="admin~CategoryId", 
+			pattern="#thisAdminUrlPath#/categories/[action]/[modelName]/[id]/",
+			controller="categories"
+		);
+		
+		addRoute(
+			name="admin~Category", 
+			pattern="#thisAdminUrlPath#/categories/[action]/[modelName]",
+			controller="categories"	
+		);
+		
+		addRoute(
+			name="admin~FieldId", 
+			pattern="#thisAdminUrlPath#/fields/[action]/[modelName]/[id]/",
+			controller="metafields"
+		);
+		
+		addRoute(
+			name="admin~Field", 
+			pattern="#thisAdminUrlPath#/fields/[action]/[modelName]",
+			controller="metafields"	
+		);
+		
+		addRoute(
+			name="admin~MenuId", 
+			pattern="#thisAdminUrlPath#/menus/[action]/[modelName]/[id]/",
+			controller="menus"
+		);
+		addRoute(
+			name="admin~Menu", 
+			pattern="#thisAdminUrlPath#/menus/[action]/[modelName]",
+			controller="menus"	
+		);	
+		
+		addRoute(
+			name="admin~TodoId", 
+			pattern="#thisAdminUrlPath#/todos/[action]/[modelName]/[id]/",
+			controller="todos"
+		);
+		addRoute(
+			name="admin~Todo", 
+			pattern="#thisAdminUrlPath#/todos/[action]/[modelName]",
+			controller="todos"	
+		);	
+		
+		addRoute(
+			name="admin~secureSSN", 
+			pattern="#thisAdminUrlPath#/secure/jobssn/",
+			controller="jobapps", 
+			action="jobssn"	
+		);
+	}
+	
+	// Default Module Routes
 	addRoute(
-        name="admin~CategoryId", 
-		pattern="/m/admin/categories/[action]/[modelName]/[id]/",
-        controller="categories"
+        name="admin~Id", 
+		pattern="#adminUrlPath#/[controller]/[action]/[id].[format]",
+		id=""
+    );
+	addRoute(
+        name="admin~Action", 
+		pattern="#adminUrlPath#/[controller]/[action]"
     );
 	
 	addRoute(
-        name="admin~Category", 
-		pattern="/m/admin/categories/[action]/[modelName]",
-        controller="categories"	
+        name="admin~Index", 
+		pattern="#adminUrlPath#/[controller]",
+		action="index"
+    );
+	
+	addRoute(
+        name="admin~Home", 
+		pattern="#adminUrlPath#",
+		action="home",
+		controller="main"
     );
 	
 	// Default Module Routes
@@ -52,12 +117,95 @@
 		controller="main"
     );
 	
+	// Public Routes 	
+	addRoute(
+        name="public~blogPost", 
+		pattern="/blog/post/[id].[format]",
+		action="post",
+        controller="blog"
+    );
+	
+	addRoute(
+        name="public~blogPager", 
+		pattern="/blog/page/[currPage]",
+		action="index",
+        controller="blog"
+    );
+	
+	addRoute(
+        name="public~blogWrong", 
+		pattern="/blog/[id]",
+		action="goHome",
+        controller="blog"
+    );
+	
+	addRoute(
+        name="public~blogHome", 
+		pattern="/blog/",
+		action="index",
+        controller="blog"
+    );
+	
+	// geolanding	
+	addRoute(
+        name="public~geolanding", 
+		pattern="/Residential-Treatment-Programs/[city]/[state]",
+        controller="publicPages", 
+		action="geolanding"
+    );	
+	
+	addRoute(
+        name="public~geolandingState", 
+		pattern="/Residential-Treatment-Programs/[state]",
+        controller="publicPages", 
+		action="geolanding"
+    );	
+	
+	// Public Routes 	
+	addRoute(
+        name="public~videoId", 
+		pattern="/video/[id]",
+		action="video",
+        controller="pVideos"
+    );
+	
+	addRoute(
+        name="public~id", 
+		pattern="/p/[controller]/[action]/[id]"
+    );
+	
+	addRoute(
+        name="public~action", 
+		pattern="/p/[controller]/[action]"
+    );
+	
+	addRoute(
+        name="public~otherPages", 
+		pattern="/p/[action]",
+        controller="otherPages"
+    );
+	
+	addRoute(
+        name="public~usertags", 
+		pattern="/team/[id].[format]",
+        controller="publicUsers", 
+		action="usertag"
+    );	
+	
+	addRoute(
+        name="public~secondaryPage", 
+		pattern="/[id].[format]",
+        controller="publicPages", 
+		action="page"
+    );	
+	
 	// Home root has to be last otherwise it will takeover every route
 	addRoute(
-        name="public~home", 
+		name="public~home", 
 		pattern="/",
-        controller="publicPages", 
+		controller="publicPages", 
 		action="index"
-    ); 
+	);
+	
 	
 </cfscript>

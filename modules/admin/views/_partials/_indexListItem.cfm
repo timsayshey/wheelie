@@ -8,8 +8,8 @@
 	<cfparam name="controllerName" default="">
 	<cfparam name="overlayImage" default="/assets/images/overlay.png">
 	<cfset editPath = urlFor(							
-						route		= "moduleId",
-						module	= "admin",
+						route		= "admin~Id",
+						module		= "admin",
 						controller	= controllerName,
 						action		= "edit",
 						id			= currentId)> 
@@ -18,16 +18,19 @@
 	<!--- Grid Item --->		
 	<cfif len(gridActive)>				
 	
-		<div class="listbox col-sm-6 col-xs-12 col-md-6 col-lg-4">
-			#checkboxtag(
-				name	= 'deletelist', 
-				class	= "itemselector",
-				value	= currentId
-			)#	
-			<div class="well bootsnipp-thumb">								
-				
+		<div class="listbox col-md-6" rel="#currentId#">
+			<cfif checkPermission("user_save_role_admin")>
+				#checkboxtag(
+					name	= 'deletelist', 
+					class	= "itemselector",
+					value	= currentId
+				)#	
+			</cfif>
+			<div class="well bootsnipp-thumb">		
+			
 				<cfif len(thumbPath)>
-					<a #href# class="filethumb col-md-3 col-sm-3 col-xs-4 roundy" style="												
+					<a #href# class="filethumb col-md-3 col-sm-3 col-xs-4 roundy" style="		
+															
 						<cfif fileExists(thumbPath)>
 							background-image:url('#thumbPath#');
 						</cfif>
@@ -44,29 +47,55 @@
 					
 					#tags#
 					
-					<div class="pull-right">								
-						
-						#linkTo(
-							text		= '<span class="elusive icon-edit"></span> Edit',
-							class		= "btn btn-primary btn-xs",
-							route		= "moduleId",
-							module	= "admin",
-							controller	= controllerName,
-							action		= "edit",
-							id			= currentId
-						)#				
-																								
-						#linkTo(
-							text		= '<span class="elusive icon-trash"></span> Delete',
-							class		= "btn btn-danger btn-xs confirmDelete",
-							route		= "moduleId",
-							module	= "admin",
-							controller	= controllerName,
-							action		= "delete", 
-							id			= currentId
-						)#	
-						
-					</div>		
+					<cfif checkPermission("user_save_role_admin")>
+						<div class="pull-right">
+							<cfif isNull(params.rearrange)>
+								#linkTo(
+									text		= '<span class="elusive icon-edit"></span> Edit',
+									class		= "btn btn-primary btn-xs",
+									route		= "admin~Id",
+									module		= "admin",
+									controller	= controllerName,
+									action		= "edit",
+									id			= currentId
+								)#		
+								
+								<cfset urlparams = "">
+								<cfif !isNull(params.currentGroup)>
+									<cfset urlparams = "currentGroup=#params.currentGroup#">
+								</cfif>
+																							
+								#linkTo(
+									text		= '<span class="elusive icon-trash"></span> Delete',
+									class		= "btn btn-danger btn-xs confirmDelete",
+									route		= "admin~Id",
+									module		= "admin",
+									controller	= controllerName,
+									action		= "delete", 
+									id			= currentId,								
+									params		= urlparams
+								)#
+							<cfelse>	
+								<span class='elusive icon-move'></span>
+							</cfif>
+						</div>
+					</cfif>
+					
+					<cfif !isNull(params.currentGroup)> 
+						<div class="userdetails">
+                            <cfif len(trim(qUsers.jobtitle))>
+							<span class="elusive icon-paper-clip-alt"></span> #qUsers.jobtitle#
+                            <br>
+							</cfif>
+							<cfif len(trim(qUsers.email))>
+                            <span class="elusive icon-envelope-alt"></span> #qUsers.email#
+                            <br>
+							</cfif>
+							<cfif len(trim(qUsers.phone))>
+                            <span class="elusive icon-phone-alt"></span> #qUsers.phone#
+							</cfif>
+						</div>
+					</cfif>		
 					
 				</div>
 				<br class="clear" />
@@ -77,12 +106,13 @@
 	<cfelse>
 		
 		<div class="row listitem well">
-		
-			#checkboxtag(
-				name	= 'deletelist', 
-				class	= "itemselector",
-				value	= currentId
-			)#
+			<cfif checkPermission("user_save_role_admin")>
+				#checkboxtag(
+					name	= 'deletelist', 
+					class	= "itemselector",
+					value	= currentId
+				)#
+			</cfif>
 			
 			<cfif len(thumbPath)>
 				<div class="col-sm-2">
@@ -107,27 +137,31 @@
 					
 					<span class="tags">#tags#</span>
 				</div>
-				<div class="col-sm-3 align-right">
-					#linkTo(
-						text		= '<span class="elusive icon-edit"></span> Edit',
-						class		= "btn btn-primary btn-s",
-						route		= "moduleId",
-						module	= "admin",
-						controller	= controllerName,
-						action		= "edit",
-						id			= currentId
-					)#				
-																							
-					#linkTo(
-						text		= '<span class="elusive icon-trash"></span> Delete',
-						class		= "btn btn-danger btn-s confirmDelete",
-						route		= "moduleId",
-						module	= "admin",
-						controller	= controllerName,
-						action		= "delete", 
-						id			= currentId
-					)#	
-				</div>
+				
+				<cfif checkPermission("user_save_role_admin")>
+					<div class="col-sm-3 align-right">
+						#linkTo(
+							text		= '<span class="elusive icon-edit"></span> Edit',
+							class		= "btn btn-primary btn-s",
+							route		= "admin~Id",
+							module	= "admin",
+							controller	= controllerName,
+							action		= "edit",
+							id			= currentId
+						)#				
+																								
+						#linkTo(
+							text		= '<span class="elusive icon-trash"></span> Delete',
+							class		= "btn btn-danger btn-s confirmDelete",
+							route		= "admin~Id",
+							module	= "admin",
+							controller	= controllerName,
+							action		= "delete", 
+							id			= currentId
+						)#	
+					</div>
+				</cfif>
+				
 			</div>
 		</div>		
 	</cfif>		

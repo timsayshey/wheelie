@@ -1,29 +1,30 @@
-<cfset javaScriptIncludeTag(sources="js/admin/video.js,vendor/jwplayer/jwplayer.js", head=true)>
-
-<cfset contentFor(formy			= true)>
-<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> Videos')>
-<cfset contentFor(headerButtons = 
-			'<li class="headertab">
-				#linkTo(
-					text		= '<span class="elusive icon-plus"></span> Add Video',
-					route		= "moduleAction",
-					module	= "admin",
-					controller	= "videos",
-					action		= "new", 
-					class		= "btn btn-default"
-				)#		
-			</li>')> 
+<cftry>
 
 <cfoutput>
+	
+	<cfscript>
+		// Get rearrange button and script if necessary
+		initializeRearrange = includePartial(partial="/_partials/sortableScript", urlcontroller="videos", reEndRow=qVideos.recordcount);
+		
+		contentFor(formy = true);
+		contentFor(headerTitle	= '<span class="elusive icon-video"></span> Videos');		
+		contentFor(headerButtons = 
+			"<li class='headertab'>
+				#initializeRearrange#
+				#linkTo(
+					text		= '<span class=''elusive icon-plus''></span> Add Video',
+					route		= 'admin~action',
+					controller	= 'videos',
+					action		= 'new', 
+					class		= 'btn btn-default'
+				)#		
+			</li>"
+		);
+	</cfscript>
 	
 	<div class="row-regular">
 	
 		#startFormTag(route="moduleAction", module="admin", controller="videos", action="deleteSelection", enctype="multipart/form-data")#	
-		
-			#includePartial(
-				partial="/_partials/statusTabs", 
-				controllerName	= "videos"
-			)#
 			
 			<div class="col-md-10">
 				<input type="checkbox" class="checkall" />				
@@ -45,36 +46,17 @@
 			
 			<br class="clear" /><br />
 			
-			<div id="video" class="col-md-12">
+			<div id="video" class="sortable col-md-12">
 			
 				<cfif !isNull(Video) and isObject(Video)>
 					#errorMessagesFor("Video")#
 					<br /><br />
 				</cfif>
 				
-				<cfloop query="qVideos" startrow="#pagination.getStartRow()#" endrow="#pagination.getendrow()#">		
-					
-					#includePartial(
-						partial="/_partials/videoListing", 
-						videoid			= qVideos.id, 
-						videofilename	= qVideos.filename, 
-						vidoefilepath	= qVideos.filepath, 
-						youtubeid		= qVideos.youtubeid, 
-						bytesize		= qVideos.bytesize
-					)#
+				<cfloop query="qVideos" startrow="#request.reStartRow#" endrow="#request.reEndRow#">		
 					
 					<cfsavecontent variable="tags">
-						<cfif status eq "youtubePending">
-							<span class="elusive icon-upload color-danger" title="Uploading to Youtube"></span>
-						<cfelseif status eq "youtubeFailed">
-							<span class="elusive icon-error color-danger" title="Youtube Upload Failed"></span>
-						<cfelseif isYoutube>									
-							<span class="elusive icon-youtube color-danger" title="Hosted on Youtube"></span>
-						</cfif>
-						
-						<cfif fileExists(fullFilePath)>
-							<span class="elusive icon-hdd color-primary" title="Hosted on #cgi.SERVER_NAME#"></span>
-						</cfif>
+					
 					</cfsavecontent>
 					
 					#includePartial(
@@ -82,12 +64,18 @@
 						currentid		= qVideos.id, 
 						tags			= tags,
 						gridActive		= gridActive,
-						thumbPath		= thumbPath,
+						thumbPath		= "#info.videoThumbPath##qVideos.id#.jpg",
 						title			= qVideos.name,
 						description		= qVideos.description,
 						controllerName	= "videos",
 						overlayImage	= "/assets/images/videooverlay.png",
-						href			= 'href="javascript:void(0)" data-toggle="modal" data-target="##details_#qVideos.id#"'
+						href			= "href='#urlFor(
+							route		= "admin~Id",
+							module		= "admin",
+							controller	= "videos",
+							action		= "edit",
+							id			= qVideos.id
+						)#'"	
 					)#
 					
 				</cfloop>
@@ -98,109 +86,118 @@
 		
 		<br class="clear" />
 		
-		#includePartial(
-			partial="/_partials/indexPager", 
-			currentController	= "videos"
-		)#					
+		<cfif isNull(params.rearrange)>
+			#includePartial(
+				partial="/_partials/indexPager", 
+				currentController	= "videos"
+			)#	
+		</cfif>				
 		
 	</div>	
 	
-	<cfsavecontent variable="refiner">
+	<cfif isNull(params.rearrange)>
+		
+		<cfsavecontent variable="refiner">
+		
+			<div class="row">
+				<article class="col-sm-12">
+				
+					<div class="data-block filter-bar">
+						<section>
+						
+							<a href="##" class="toggle">Filter results &raquo;</a>
+							<div class="togglediv" <cfif len(rememberParams)>id="show"</cfif>>
+								#startFormTag(route="moduleAction", module="admin", controller="videos", action="index", enctype="multipart/form-data", class="form-inline")#	
+									<div class="row-regular">
+																		
+										<div class="col-md-2 col-sm-2">
+											#bselecttag(
+												name	 = 'sort',
+												label	 = 'Sort by',
+												options	 = [
+													{text = "Default", value = "sortorder"},
+													{text = "Name", value = "name"},
+													{text = "Created", value = "id"}
+												],
+												selected = session.videos.sortby,
+												class	 = "selectize",
+												append	 = ""
+											)#
+										</div>
+										<div class="col-md-2 col-sm-2">									
+											#bselecttag(
+												name	 = 'order',
+												label	 = 'Order',
+												options	 = [
+													{text = "Ascending", value = "ASC"},
+													{text = "Descending", value = "DESC"}
+												],
+												selected = session.videos.order,
+												class	 = "selectize",
+												append	 = ""
+											)#
+										</div>									
+										<div class="col-md-2 col-sm-2">
+											#bselecttag(
+												name	 = 'hosted',
+												label	 = 'Hosted on',
+												options	 = [
+													{text = "", value = ""},
+													{text = "Youtube", value = "youtube"},
+													{text = "#capitalize(siteUrl)#", value = "local"}
+												],
+												selected = params.hosted,
+												class	 = "selectize",
+												append	 = ""
+											)#
+										</div>
+										<div class="col-md-2 col-sm-2">
+											#bselecttag(
+												name			= "filtercategories",
+												class			= "multiselectize",
+												multiple		= "true",
+												selected		= params.filtercategories,
+												label			= "Categories",
+												options			= videocategories,
+												valueField 		= "id", 
+												textField 		= "name"
+											)#
+										</div>
+										<div class="col-md-2 col-sm-2">									
+											#btextfieldtag(
+												name			= 'search', 
+												label			= 'Search',
+												placeholder		= "Ex: green burrito",
+												value			= params.search
+											)#
+										</div>
+										<div class="col-md-1 col-sm-1">									
+											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Apply filter" name="filtertype" value="apply">
+												<span class="elusive icon-ok"></span> Apply
+											</button>
+										</div>
+										<div class="col-md-1 col-sm-1">		
+											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Clear filter" name="filtertype" value="clear">
+												<span class="elusive icon-trash"></span> Clear
+											</button>
+										</div>
+									</div>
+									
+								#endFormTag()#	
+							</div>
+						</section>
+					</div>
+				</article>
+			</div>
+		
+		</cfsavecontent>
+		
+		<cfset contentFor(extraSection=refiner)>
+	</cfif>	
 	
-		<div class="row">
-			<article class="col-sm-12">
-			
-				<div class="data-block filter-bar">
-					<section>
-					
-						<a href="javascript:void(0)" class="toggle">Filter results &raquo;</a>
-						<div class="togglediv" <cfif len(rememberParams)>id="show"</cfif>>
-							#startFormTag(route="moduleAction", module="admin", controller="videos", action="index", enctype="multipart/form-data", class="form-inline")#	
-								<div class="row-regular">
-																	
-									<div class="col-md-2 col-sm-2">
-										#bselecttag(
-											name	 = 'sort',
-											label	 = 'Sort by',
-											options	 = [
-												{text = "Name", value = "name"},
-												{text = "Created", value = "createdat"},
-												{text = "Last updated", value = "updatedat"}
-											],
-											selected = session.videos.sortby,
-											class	 = "selectize",
-											append	 = ""
-										)#
-									</div>
-									<div class="col-md-2 col-sm-2">									
-										#bselecttag(
-											name	 = 'order',
-											label	 = 'Order',
-											options	 = [
-												{text = "Ascending", value = "ASC"},
-												{text = "Descending", value = "DESC"}
-											],
-											selected = session.videos.order,
-											class	 = "selectize",
-											append	 = ""
-										)#
-									</div>									
-									<div class="col-md-2 col-sm-2">
-										#bselecttag(
-											name	 = 'hosted',
-											label	 = 'Hosted on',
-											options	 = [
-												{text = "", value = ""},
-												{text = "Youtube", value = "youtube"},
-												{text = "#capitalize(cgi.SERVER_NAME)#", value = "local"}
-											],
-											selected = params.hosted,
-											class	 = "selectize",
-											append	 = ""
-										)#
-									</div>
-									<div class="col-md-2 col-sm-2">
-										#bselecttag(
-											name			= "filtercategories",
-											class			= "multiselectize",
-											multiple		= "true",
-											selected		= params.filtercategories,
-											label			= "Categories",
-											options			= videocategories,
-											valueField 		= "id", 
-											textField 		= "name"
-										)#
-									</div>
-									<div class="col-md-2 col-sm-2">									
-										#btextfieldtag(
-											name			= 'search', 
-											label			= 'Search',
-											placeholder		= "Ex: green burrito",
-											value			= params.search
-										)#
-									</div>
-									<div class="col-md-1 col-sm-1">									
-										<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Apply filter" name="filtertype" value="apply">
-											<span class="elusive icon-ok"></span> Apply
-										</button>
-									</div>
-									<div class="col-md-1 col-sm-1">		
-										<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Clear filter" name="filtertype" value="clear">
-											<span class="elusive icon-trash"></span> Clear
-										</button>
-									</div>
-								</div>
-								
-							#endFormTag()#	
-						</div>
-					</section>
-				</div>
-			</article>
-		</div>
-	
-	</cfsavecontent>
-	
-	<cfset contentFor(extraSection=refiner)>
-
 </cfoutput>
 		
+<cfcatch>
+	<cfdump var="#cfcatch#">
+</cfcatch>
+</cftry>

@@ -3,20 +3,43 @@ component extends="Wheels"
 {
 	function init()
 	{
-		if(!isNull(session.user.id))
-		{
-			logUserActions(session.user.id);
-		}
+		logUserActions();
 		
 		afterCreate('logCreate');
 		afterUpdate('logUpdate');
 		afterDelete('logDelete');
 		
-		// Permission check override			
+		// Permission check override	
+		beforeValidation("setSiteId");		
 		beforeDelete('checkForDeletePermission');
 		beforeCreate('checkForCreatePermission');
 		beforeUpdate('checkForUpdatePermission');
+		beforeSave("setSiteId");
 	}		
+	
+	function setSiteId()
+	{
+		if(!isNull(request.site.id) AND isNumeric(request.site.id) AND isNull(this.siteid_override))
+		{
+			this.siteid = request.site.id;
+		} else if (!isNull(this.siteid_override) AND isNumeric(this.siteid_override)) {
+			this.siteid = this.siteid_override;			
+		}
+	}
+	
+	// Set this.setWhere in Model to default where statement
+	function findAll()
+	{
+		if(!isNull(this.setWhere) AND isCustomFunction(this.setWhere))
+		{
+			if(!StructKeyExists(arguments, "where") OR !Len(arguments.where))
+			{
+				//arguments.where = wherePermission(getModelName());
+				arguments.where = this.setWhere();
+			}
+		}	
+		return super.findAll(argumentCollection=arguments);
+	}
 	
 	// Clean strings
 	private function sanitizeNameAndURLId()
@@ -42,8 +65,7 @@ component extends="Wheels"
 		checkForPermission(type="save", checkid=this.createdby);
 	}
 	
-	private function checkForDeletePermission()
-	{
+	private function checkForDeletePermission()	{
 		checkForPermission(type="delete", checkid=this.createdby);
 	}
 	
@@ -113,7 +135,10 @@ component extends="Wheels"
 			loc.logit 			 = request.logit;
 			loc.logit.model		 = loc.thisModelName;
 			loc.logit.modelid	 = this.id;
-			loc.logit.savetype	 = arguments.savetype;			
+			loc.logit.savetype	 = arguments.savetype;	
+			loc.logit.useragent  = CGI.HTTP_USER_AGENT;
+			loc.logit.ip         = getIpAddress();		
+			loc.logit.siteid     = request.site.id;		
 			
 			// Can't use the Model().create function here because it'll throw an error, gotta go vanilla
 			db.insertRecord("logs", loc.logit);

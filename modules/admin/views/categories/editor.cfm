@@ -14,7 +14,7 @@
 	)#	
 	
 	#btextfield(
-		prependedText	= '#cgi.server_name#/#lcase(categoryInfo.singularShort)#/',
+		prependedText	= '#cgi.HTTP_HOST#/#lcase(categoryInfo.singularShort)#/', 
 		label			= "#categoryInfo.singular# URL",
 		objectName 		= "category",
 		property 		= 'urlid', 												

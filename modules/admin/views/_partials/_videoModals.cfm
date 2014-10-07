@@ -9,7 +9,9 @@
 	<cfset contentFor(plupload=true)>
 	<cfset contentFor(formy=true)>
 	
-	<cfset oauthService = "http://oauth.outerplex.com/google?redir=http://#cgi.server_name#">
+	<cfparam name="panelUrl" default="">
+	
+	<cfset oauthService = "http://oauth.outerplex.com/google?redir=http://#panelUrl#">
 	<cfset baseOauthUrl = "#oauthService#/m/admin/files/">
 	<cfset baseOauthUrlPopup = "#oauthService#/m/admin/upload/oauth/">
 	<input id="baseOauthUrl" type="hidden" value="#baseOauthUrl#" />	
@@ -30,15 +32,8 @@
 						value		= "yt-u"
 					)#
 					
-					#hiddenfieldtag(
-						name		= 'typeId', 	
-						class		= 'typeId',
-						id			= 'typeId',
-						value		= ''
-					)#
-					
 					<!--- Youtube file - Already uploaded --->
-					<span class="type-wrap" data-type="yt" style="display:none;">					
+					<span class="type-wrap" data-type="yt">					
 							
 						#btextfieldtag(
 							name='youtubeurl', 
@@ -60,7 +55,7 @@
 							<div class="wiz_block yt_thumb_chooser"></div>
 						</div>						
 					
-						<a href="javascript:void(0)" id="youtubelink" rel="loc-u">Back to video uploader</a>
+						<a href="##" id="youtubelink" rel="loc-u">Back to video uploader</a>
 						
 						<button type="button" class="btn btn-primary pull-right" id="submitYoutubeURL">Submit</button>
 						
@@ -70,20 +65,28 @@
 					</span>
 					
 					<!--- Local file - Upload now --->
-					<span class="type-wrap" data-type="loc-u">					
+					<span class="type-wrap" data-type="loc-u" style="display:none;">					
 						<div class="form-group">								
 							#bLabel(label="Upload Video File",help="Select the video file from your computer that you want to upload to the local server. (Valid filetypes: flv)")#
 							<div class="controls">
 								<div id="uploader">											
 									<div id="container">
-										<a id="uploadvideo" rel="loc-u" class="btn btn-success" href="javascript:void(0)">Upload to Server</a>
-										<a id="uploadyoutube" rel="yt-u" class="btn btn-danger" href="javascript:void(0)">Upload to Youtube</a>
+									
+										<div class="btnWrap" style="display:inline;">
+											<div class="btn-group" data-toggle-name="typeId" data-toggle="buttons-radio">
+												<button type="button" value="yt" data-toggle="button" class="btn btn-info active">Youtube</button>
+												<button type="button" value="loc" data-toggle="button" class="btn btn-info">Local Server</button>											
+											</div>										
+											<input type="hidden" id="typeId" class="typeId" name="typeId" value="yt">																					
+										</div>
+										<a id="uploadvideobtn" class="btn btn-success" href="##">Select Video and Upload</a>
+										
 										<br /><br />
 										<div id="filelist"></div>
 										<div id="progress" class="progress progress-success">
 											<div class="progress-bar bar"></div>
 										</div>
-										<a href="javascript:void(0)" id="youtubelink" rel="yt">Already on YouTube?</a>
+										<a href="##" id="youtubelink" rel="yt">Already on YouTube?</a>
 									</div>											
 								</div>										
 							</div>

@@ -54,6 +54,9 @@ config.toolbarGroups = [
 	config.enterMode = CKEDITOR.ENTER_BR;
 	config.shiftEnterMode = CKEDITOR.ENTER_BR;
 	
+	config.htmlEncodeOutput = false;
+	config.entities = false;
+	
 	/*config.extraAllowedContent = [	
         "*[class,id]",
         "a[*]",

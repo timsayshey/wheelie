@@ -10,7 +10,7 @@
 					<h3 class="modal-title" id="myModalLabel">Choose the account that you want to upload "#video.filename#" to:</h3>
 				</div>
 				<div class="modal-body">					
-					<a href="/m/admin/upload/toyoutube/?id=#videoFileID#&token=#token#" id="toYoutubeBtn" class="btn btn-danger btn-lg allowwrap btn-block"><strong>#oauthName# (#oauthEmail#)</strong></a> 
+					<a href="/webpanel/index.cfm/m/admin/upload/toyoutube/?id=#videoFileID#&token=#token#" id="toYoutubeBtn" class="btn btn-danger btn-lg allowwrap btn-block"><strong>#oauthName# (#oauthEmail#)</strong></a> 
 					
 					<br />
 					

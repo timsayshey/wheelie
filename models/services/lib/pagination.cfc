@@ -566,7 +566,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		<cfset var renderedOutput = "" />
 
 		<cftrace category="Pagination" text="Call to render HTML" />
-
+		
 		<cfif not hasMinimumAttributesToRender()>
 			<cfthrow message="You must supply the query, array or struct to paginate before rendering the output." detail="This message may also mean that you did not call init() when you initially created the object.<br/>Please call init to initialize this component: <code>createObject('component','[...]Pagination').init()</code>" />
 		</cfif>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <httpErrors errorMode="Detailed" />
+    <security>
+		<requestFiltering>
+			<requestLimits maxAllowedContentLength="999999999" />
+		</requestFiltering>
+	</security>
+        <handlers>
+            <remove name="Helicon.Ape Handler" />
+            <add name="Helicon.Ape Handler" path="*.apehandler" verb="*" type="Helicon.Ape.Handler, Helicon.Ape, Version=3.1.0.138, Culture=neutral, PublicKeyToken=95bfbfd1a38437eb" resourceType="Unspecified" preCondition="integratedMode" />
+        </handlers>
+        <modules>
+            <remove name="Helicon.Ape" />
+            <add name="Helicon.Ape" type="Helicon.Ape.ApeModule, Helicon.Ape, Version=3.1.0.138, Culture=neutral, PublicKeyToken=95bfbfd1a38437eb" />
+        </modules>
+   </system.webServer>
+	<system.web>
+		<httpRuntime maxRequestLength="999999" executionTimeout="999999" /> 
+	</system.web>
+</configuration>
+
+

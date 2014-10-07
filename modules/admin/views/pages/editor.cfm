@@ -33,9 +33,17 @@
 		help		= 'Message inbox test'
 	)#
 	
+	<!--- Password --->	
+	#btextfield(
+		objectName	= 'page', 
+		property	= 'password', 
+		label		= 'Password',
+		placeholder	= "Ex: Password"
+	)#
+	
 	<!--- Page URL --->	
 	#btextfield(
-		prependedText	= '#cgi.server_name#/page/',
+		prependedText	= '#cgi.HTTP_HOST#/page/', 
 		label			= "Page URL",
 		objectName		= 'page', 
 		property		= 'urlid', 												
@@ -52,6 +60,21 @@
 		label 		 	= "Content",
 		help 			= "Shows on the page"
 	)#	
+	
+	#bselecttag(
+		name	 = 'page[template]',
+		label	 = 'Template',
+		options	 = [
+			{text = "Default", value = "default"},
+			{text = "Hide Sidebar", value = "hide_sidebar"},
+			{text = "Normal Form", value = "normal_form"},
+			{text = "Hide Sidebar and Call to Action", value = "hide_sidebar_and_call_to_action"},
+			{text = "Letter Style", value = "letter"}
+		],
+		selected = page.template,
+		class	 = "selectize",
+		append	 = ""
+	)#
 	
 	#includePartial(partial="/_partials/formSeperator")#	
 	
@@ -142,7 +165,7 @@
 		</div>
 	</cfsavecontent>
 	<cfset contentFor(rightColumn = rightColumn)>
-	<cfset contentFor(formWrapStart = startFormTag(route="moduleAction", module="admin", controller="pages", action="save", enctype="multipart/form-data", id = "fileupload"))>		
+	<cfset contentFor(formWrapStart = startFormTag(route="admin~Action", module="admin", controller="pages", action="save", enctype="multipart/form-data", id = "fileupload"))>		
 	<cfset contentFor(formWrapEnd = endFormTag())>	
 	
 </cfoutput>

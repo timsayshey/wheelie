@@ -8,7 +8,7 @@
 			<div class="btn-group dropdown">
 			
 				<button type="submit" name="submit" value="published" class="btn btn-primary">
-					<cfif isNew OR currentStatus eq "draft">Publish<cfelse>Update</cfif>	
+					<cfif isNew OR currentStatus eq "draft">Save<cfelse>Update</cfif>	
 				</button> 
 				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 				
@@ -16,7 +16,7 @@
 				
 					<li>
 						<button type="submit" name="submit" value="draft" class="btn-linky">
-							<cfif isNew OR currentStatus eq "draft">Save Draft<cfelse>Move to Drafts</cfif>	
+							<cfif isNew OR currentStatus eq "draft">Save as Draft<cfelse>Move to Drafts</cfif>	
 						</button> 	
 					</li>
 						

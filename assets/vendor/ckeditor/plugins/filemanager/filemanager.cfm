@@ -5,7 +5,7 @@
 	<title></title>
 </head>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 	<script src="filemanager.js" type="text/javascript"></script>
 <body>
 <cfinclude template = "settings.cfm" />

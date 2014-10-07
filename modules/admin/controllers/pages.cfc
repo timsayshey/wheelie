@@ -9,10 +9,10 @@ component extends="_main" output="false"
 	function sharedObjects(pageid)
 	{		
 		// Home Page
-		currentPageIsHome = model("option").findAll(where="id = 'home_id' AND content = '#pageid#'");		
+		currentPageIsHome = model("option").findAll(where="id = 'home_id' AND content = '#pageid#'#wherePermission("option","AND")#");		
 		currentPageIsHome = currentPageIsHome.recordcount ? true : false;
 		
-		homeOptions = model("option").findAll(where="id LIKE 'home_%' AND (editContent = 1 OR editLabel = 1 OR editAttachment = 1)");		
+		homeOptions = model("option").findAll(where="id LIKE 'home_%' AND (editContent = 1 OR editLabel = 1 OR editAttachment = 1)#wherePermission("option","AND")#");		
 	}
 	
 	function index()
@@ -44,11 +44,11 @@ component extends="_main" output="false"
 			if (!IsObject(page))
 			{
 				flashInsert(error="Not found");
-				redirectTo(route="moduleIndex", module="admin", controller="pages");
+				redirectTo(route="admin~Index", module="admin", controller="pages");
 			}			
 		}
 		
-		renderView(action="editor");		
+		renderPage(action="editor");		
 	}
 	
 	function new()
@@ -61,7 +61,7 @@ component extends="_main" output="false"
 		wherePermission("Page");
 		
 		// Show page
-		renderView(action="editor");
+		renderPage(action="editor");
 	}
 
 
@@ -78,7 +78,7 @@ component extends="_main" output="false"
 		}
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="pages"
 		);
@@ -119,14 +119,14 @@ component extends="_main" output="false"
 		// Insert or update page object with properties
 		if (saveResult)
 		{				
-			if(StructKeyExists(params,"isHome"))
+			if(StructKeyExists(params,"isHome")) 
 			{
-				option = model("Option").findByKey("home_id");
+				option = model("Option").findOne(where="id = 'home_id'#wherePermission("option","AND")#");
 				option.update(content=page.id);
 			}			
 			
 			flashInsert(success="Page saved. #linkto(text="View page", route="public~secondaryPage", id=page.urlid)#");
-			redirectTo(route="moduleId", module="admin", controller="pages", action="edit", id=page.id);				
+			redirectTo(route="admin~Id", module="admin", controller="pages", action="edit", id=page.id);				
 					
 		} else {						
 			
@@ -135,7 +135,7 @@ component extends="_main" output="false"
 			sharedObjects(page.id);
 			
 			flashInsert(error="There was an error.");
-			renderView(route="moduleAction", module="admin", controller="pages", action="editor");		
+			renderPage(route="admin~Action", module="admin", controller="pages", action="editor");		
 		}		
 	}
 	
@@ -149,7 +149,7 @@ component extends="_main" output="false"
 		flashInsert(success="Your pages were deleted successfully!");			
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="pages"
 		);
@@ -163,7 +163,7 @@ component extends="_main" output="false"
 		}
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="pages"
 		);
@@ -242,7 +242,7 @@ component extends="_main" output="false"
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 			
-			//renderView(route="moduleAction", module="admin", controller="pages", action="index");		
+			//renderPage(route="admin~Action", module="admin", controller="pages", action="index");		
 		}
 	}
 	

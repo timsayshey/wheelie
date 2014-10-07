@@ -4,10 +4,15 @@
 # please read the online documentation on http://cfwheels.org for more information about URL rewriting.
 
 # UNCOMMENT ALL LINES BELOW THIS ONE TO TURN ON THE URL REWRITING RULES
-
+Loglevel debug
+ErrorLog error.log
+Options +StopOnError +ShowErrorInResponse
 Options +FollowSymLinks
-RewriteEngine On
-RewriteCond %{REQUEST_URI} !^.*/(flex2gateway|assets|jrunscripts|errorlog.html|test|assets|cfide|cfformgateway|cffileservlet|railo-context|images|javascripts|miscellaneous|stylesheets|robots.txt|favicon.ico|sitemap.xml|rewrite.cfm)($|/.*$) [NC]
+RewriteEngine On 
+RewriteCond %{REQUEST_URI} !^.*/(flex2gateway|assets|jrunscripts|errorlog.html|assets|cfformgateway|cffileservlet|images|javascripts|miscellaneous|stylesheets|robots.txt|favicon.ico|favicon.png|sitemap.xml|rewrite.cfm|views|railo-context)($|/.*$) [NC]
+
+#
+
 RewriteRule ^(.*)$ ./rewrite.cfm/$1 [NS,L]
 
 AddType video/ogg .ogv

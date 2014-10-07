@@ -1,8 +1,7 @@
 <cfoutput>
 	<cfset javaScriptIncludeTag(sources="
-		js/admin/video.js,
-		js/admin/category.js,
-		vendor/jwplayer/jwplayer.js", 
+		js/admin/newvideo.js,
+		js/admin/category.js", 
 	head=true)>
 	
 	<!--- For category.js --->
@@ -21,51 +20,122 @@
 	
 	<cfif !isNull(params.id)>
 		<cfset isNew = false>
-		<cfset currentStatus = video.status>
 	<cfelse>
 		<cfset isNew = true>
-		<cfset currentStatus = "draft">
 	</cfif>
 	
 	<cfif !isNew>
 		#hiddenfield(objectName='video', property='id', id="videoid")#
 		#hiddenFieldTag("id",params.id)#
 	</cfif>
-					
+	
+	<!--- Youtube id --->
+	<div class="videoExists well">
+		<label>Current Video and Thumbnail</label>
+		<br class="clear">
+		<div class="col-md-4">
+			<cfif len(video.youtubeid)>
+				<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque">
+			<cfelseif len(video.vimeoid)>
+				<cfset videoUrl = "https://player.vimeo.com/video/#video.vimeoid#">
+			<cfelse>
+				<cfset videoUrl = "">
+			</cfif>
+			<iframe src="#videoUrl#" width="100%" height="390" style="max-width:200px;max-height:150px;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			
+		</div>
+		<cfif FileExists("#info.fileVideoThumbs##video.id#.jpg")>
+			<div class="col-md-4">
+				<img src="#info.videoThumbPath##video.id#.jpg" width="100" style="float:left">
+			</div>
+		</cfif>		
+		<br class="clear">
+		
+		<a href="##" class="replaceVideo btn btn-default">Change Video</a>
+	</div>
+	
+	<div class="videoNotExists well">
+		#btextfieldtag(
+			name='videoUrl', 
+			value='', 
+			class="videoUrl form-control",
+			label='Video URL',
+			placeholder	 = "Paste video video or playlist link here",
+			help='Enter the url of the video'
+		)#
+		#hiddenfield(
+			objectName	= 'video', 
+			property	= 'youtubeid',
+			id			= "youtubeIDInput",
+			class		= "youtubeid"
+		)#	
+		#hiddenfield(
+			objectName	= 'video', 
+			property	= 'vimeoid',
+			id			= "vimeoIDInput",
+			class		= "vimeoid"
+		)#	
+		#hiddenfieldtag(
+			name		= 'video[isPlaylist]',
+			id			= "isPlaylist",
+			value		= "0"
+		)#	
+		<div class="form-group">
+			<div class="yt_thumb_chooser"></div>
+		</div>
+		<cfif len(video.youtubeid)>
+			<a href="##" class="replaceVideoCancel btn btn-default">Cancel</a>
+		</cfif>
+	</div>	
+	
+	<div class="videoFile well">
+		Upload file to /assets/private/videos/ then select from the list below:<br>
+		<cfdirectory action="list" filter="*.flv" directory="#expandPath('/assets/private/videos/')#" name="userpics">
+		#bselecttag(
+			name	= 'sort',
+			options	= [
+				{text="6 Per Page",value="6"},
+				{text="10 Per Page",value="10"},
+				{text="50 Per Page",value="50"},
+				{text="100 Per Page",value="100"},
+				{text="Show All",value="9999999"}
+			],
+			selected= session.perPage,
+			class	= "selectize perPage",
+			append	= ""
+		)#
+	</div>
+				
 	<!--- Title --->	
 	#btextfield(
 		objectName	= 'video', 
 		property	= 'name', 
 		label		= 'Title',
-		placeholder	= "Ex: Coolest Video Ever",
-		help		= 'Message inbox test'
+		placeholder	= "Ex: Coolest Video Ever"
 	)#
+	
+	#btextfield(
+		objectName	= 'video', 
+		property	= 'password', 
+		label		= 'Password',
+		placeholder	= "Ex: Pass123"
+	)#
+	
+	<label>Show on Website?</label><br>
+	#radioButton(objectName="video", property="onSite", tagValue="1", label="Yes ",labelPlacement="after")#<br />
+	#radioButton(objectName="video", property="onSite", tagValue="0", label="No ",labelPlacement="after")#
+	<div class="separator"></div>
 	
 	<!--- Video URL --->	
 	#btextfield(
-		prependedText	= '#cgi.server_name#/video/',
+		prependedText	= '#siteUrl#/video/',
 		label			= "Video URL",
 		objectName		= 'video', 
 		property		= 'urlid', 												
 		placeholder	 	= "Coolest-Video-Ever",
 		help 			= "This is name of the video's url address (Can't be changed in the future)",
 		disabled 		= !isNew
-	)#										
-	
-	<!--- Hide for now, use for multisites later --->
-	<span style="display:none;">												
-		#bselect(
-			objectName 		= 'video', 
-			property 		= 'siteid', 
-			label 			= 'Site',
-			class			= "selectize",
-			isSelectize		= true,
-			help			= "This determines which site that this video will show on",				
-			options			= sites,
-			valueField 		= "id", 
-			textField 		= "name"
-		)#
-	</span>
+	)#		
 	
 	<!--- Is featured? --->								
 	#bcheckbox(
@@ -77,13 +147,12 @@
 	
 	#includePartial(partial="/_partials/formSeperator")#	
 	
-	<!--- Teaser --->
 	#btextarea(
-		objectName='video', 
-		property='teaser', 	
+		objectName 		='video', 
+		property 		='teaser', 	
 		label 		 	= "Teaser",
-		help     		= "Shows next to the video title and thumbnail on the video category page"
-	)#
+		help 			= "Shows on the video page"
+	)#	
 	
 	<!--- Description --->
 	#btextarea(
@@ -92,8 +161,7 @@
 		class			= "ckeditor",
 		label 		 	= "Description",
 		help 			= "Shows on the video page"
-	)#	
-							
+	)#
 	
 	<!--- Right area --->
 	<cfsavecontent variable="submitBox">
@@ -117,32 +185,6 @@
 		
 			#includePartial(partial="/_partials/editorSubmitBox", controllerName="videos")#	
 			
-			<!--- Video Upload Section --->	
-				
-			<div class="data-block">
-				<section>	
-					#bselect(
-						objectName 		= "video",
-						property 		= "videofileid",
-						label			= 'Select Video',
-						help			= 'Select video that you want here',
-						id				= "videoSelector",
-						options			= videofiles,
-						valueField 		= "id", 
-						textField 		= "filename"
-					)#
-					
-					<a href="javascript:void(0)" class="delete-video confirmDelete pull-right"><span class="elusive icon-trash"></span> Delete Selected</a>
-					<a href="javascript:void(0)" class="upload-video" data-toggle="modal" data-target="##uploadVideo"><span class="elusive icon-plus"></span> Add New Video</a>
-					<a href="javascript:void(0)" class="preview-video pull-right"><span class="elusive icon-youtube"></span> Preview Selected</a>
-					<br class="clear" />
-					#includePartial(partial="/_partials/videoSelectizer")#	
-												
-					#includePartial(partial="/_partials/videoModals",type="gallery")#	
-					<input type="hidden" id="oauthWindowType" value="popup"> <!--- full or popup --->
-				</section>
-			</div>	
-			
 			<div class="data-block">
 				<section>
 					#bselecttag(
@@ -165,7 +207,7 @@
 						});
 					</script>
 					
-					<a href="javascript:void(0)" id="addnewcategory">+ Add New Category</a>
+					<a href="##" id="addnewcategory">+ Add New Category</a>
 					
 					#includePartial(partial="/_partials/categoryFormModal", modelName="videocategory")#	
 					

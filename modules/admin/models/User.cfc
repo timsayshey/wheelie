@@ -8,18 +8,20 @@
 			
 			// Validations		
 			validatesConfirmationOf(properties="password", message="Your passwords must match!");			
-			validatesPresenceOf("firstname,lastname,email");			
+			validatesPresenceOf("email");			
 			validatesFormatOf(property="email", type="email"); 	
-			validatesUniquenessOf("email"); 
+			validatesUniquenessOf(property="email", scope="siteid"); 
 			
 			// Relations
 			hasMany("Logs");
 			belongsTo(name="Log");
+			belongsTo(name="Post",foreignKey="createdBy");
+			belongsTo(name="Itdevice",foreignKey="userid");
 			
 			super.init();
 			
 			// Permission check override			
-			beforeDelete('checkForDeletePermission');
+			beforeDelete('checkForDeletePermission,resetItDevice');
 			beforeCreate('checkForCreatePermission');
 			beforeUpdate('checkForUpdatePermission');
 		}	
@@ -42,6 +44,15 @@
 		private function checkForDeletePermission()
 		{
 			checkForPermission(type="delete", checkid=this.id & "," & this.createdby);
+		}
+		
+		private function resetItDevice()
+		{
+			itdevice = model("Itdevice").findOne(where="userid = '#this.id#'",returnAs="Object");
+			if(isObject(itdevice))
+			{
+				itdevice.update(userid=1);
+			}
 		}
 	 	
 		// Clean strings

@@ -1,7 +1,19 @@
 <cfoutput>
 
-<!--- Script functions --->
+	<!--- Script functions --->
 	<cfscript>
+		function isDateWithin(startDate,endDate,checkDate)
+		{			
+			if (
+				IsDate(arguments.checkDate) AND 
+				(dateDiff("d", arguments.startDate, arguments.checkDate) >= 0) AND 
+				(dateDiff("d", arguments.checkDate, arguments.endDate) >= 0)
+			)
+			{
+				return true;
+			}
+			return false;
+		}
 		
 		function colStruct(modelName)
 		{
@@ -81,6 +93,38 @@
 		<cfreturn "">
 	</cffunction>
 	
+	<cffunction name="removeLineBreaks">	
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = REReplace(dirtystring,"#chr(13)#|#chr(9)#|\n|\r","","ALL");
+		</cfscript>
+		
+		<cfreturn cleanstring>
+	</cffunction>
+	
+	<cffunction name="replaceLineBreaksWithCommas">	
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = REReplace(dirtystring,"#chr(13)#|#chr(9)#|\n|\r",",","ALL");
+		</cfscript>
+		
+		<cfreturn cleanstring>
+	</cffunction>
+	
+	<cffunction name="safeForJS" output="no">		
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = replace(dirtystring,'"',"&quot;","ALL");	
+			cleanstring = replace(cleanstring,",","&cedil;","ALL");	
+			cleanstring = removeLineBreaks(cleanstring);
+		</cfscript>
+		
+		<cfreturn cleanstring>
+	</cffunction>
+	
 	<cffunction name="fixFilePathSlashes" output="no">		
 		<cfargument name="dirtystring">
 		
@@ -158,8 +202,8 @@
 		
 		<cfscript>
 			cleanstring = removehtml(dirtystring);
-			cleanstring = REReplace(cleanstring,"[^0-9A-Za-z -]","","all");
-			cleanstring = replace(trim(cleanstring)," ","-","ALL");	
+			cleanstring = REReplace(cleanstring,"[^0-9A-Za-z_ -]","","all");
+			cleanstring = replace(trim(cleanstring)," ","-","ALL");	 
 		</cfscript>
 		
 		<cfreturn trim(cleanstring)>
@@ -182,8 +226,10 @@
 		</cfsavecontent>
 		
 		<cfset cleantime = REReplace(now(),"[^0-9 ]","","all")>
-		
-		<cffile action = "append" file = "#expandPath('.\errors\')##cleantime#-log-#subject#.html" attributes = normal output = "#errorInfo#">
+		<cftry>
+		<cffile action = "append" file = "#expandPath('.\assets\errors\')##cleantime#-log-#subject#.html" attributes = normal output = "#errorInfo#">
+		<cfcatch></cfcatch>
+		</cftry>
 		
 	</cffunction>
 	

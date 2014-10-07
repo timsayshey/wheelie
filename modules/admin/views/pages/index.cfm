@@ -8,7 +8,7 @@
 				'<li class="headertab">
 					#linkTo(
 						text		= '<span class="elusive icon-file-new"></span> Add Page',
-						route		= "moduleAction",
+						route		= "admin~Action",
 						module	= "admin",
 						controller	= "pages",
 						action		= "new", 
@@ -18,7 +18,7 @@
 				
 	<div class="row-regular">
 	
-		#startFormTag(route="moduleAction", module="admin", controller="pages", action="deleteSelection", enctype="multipart/form-data")#	
+		#startFormTag(route="admin~Action", module="admin", controller="pages", action="deleteSelection", enctype="multipart/form-data")#	
 		
 			#includePartial(
 				partial="/_partials/statusTabs", 
@@ -39,8 +39,8 @@
 			</cfif>
 			
 			<div class="btn-group pull-right">
-				<a href='#urlFor(route="moduleAction", module="admin", controller="pages", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="elusive icon-th-large"></span></a>
-				<a href='#urlFor(route="moduleAction", module="admin", controller="pages", action="index")#?display=list' class="btn btn-default #listActive#"><span class="elusive icon-th-list"></span></a>
+				<a href='#urlFor(route="admin~Action", module="admin", controller="pages", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="elusive icon-th-large"></span></a>
+				<a href='#urlFor(route="admin~Action", module="admin", controller="pages", action="index")#?display=list' class="btn btn-default #listActive#"><span class="elusive icon-th-list"></span></a>
 			</div>
 			
 			<br class="clear" /><br />
@@ -100,7 +100,7 @@
 					
 						<a href="javascript:void(0)" class="toggle">Filter results &raquo;</a>
 						<div class="togglediv" <cfif len(rememberParams)>id="show"</cfif>>
-							#startFormTag(route="moduleAction", module="admin", controller="pages", action="index", enctype="multipart/form-data", class="form-inline")#	
+							#startFormTag(route="admin~Action", module="admin", controller="pages", action="index", enctype="multipart/form-data", class="form-inline")#	
 								<div class="row-regular">
 																	
 									<div class="col-md-2 col-sm-2">									

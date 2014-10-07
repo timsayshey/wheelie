@@ -40,11 +40,11 @@ component extends="_main" output="false"
 			if (!IsObject(post))
 			{
 				flashInsert(error="Not found");
-				redirectTo(route="moduleIndex", module="admin", controller="posts");
+				redirectTo(route="admin~Index", module="admin", controller="posts");
 			}			
 		}
 		
-		renderView(action="editor");		
+		renderPage(action="editor");		
 	}
 	
 	function new()
@@ -57,7 +57,7 @@ component extends="_main" output="false"
 		wherePermission("Post");
 		
 		// Show post
-		renderView(action="editor");
+		renderPage(action="editor");
 	}
 
 
@@ -74,7 +74,7 @@ component extends="_main" output="false"
 		}
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="posts"
 		);
@@ -110,7 +110,7 @@ component extends="_main" output="false"
 		if (saveResult)
 		{	
 			flashInsert(success="Post saved. #linkto(text="View post", route="public~secondaryPage", id=post.urlid)#");
-			redirectTo(route="moduleId", module="admin", controller="posts", action="edit", id=post.id);				
+			redirectTo(route="admin~Id", module="admin", controller="posts", action="edit", id=post.id);				
 					
 		} else {						
 			
@@ -119,7 +119,7 @@ component extends="_main" output="false"
 			sharedObjects(post.id);
 			
 			flashInsert(error="There was an error.");
-			renderView(route="moduleAction", module="admin", controller="posts", action="editor");		
+			renderPage(route="admin~Action", module="admin", controller="posts", action="editor");		
 		}		
 	}
 	
@@ -133,7 +133,7 @@ component extends="_main" output="false"
 		flashInsert(success="Your posts were deleted successfully!");			
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="posts"
 		);
@@ -147,7 +147,7 @@ component extends="_main" output="false"
 		}
 		
 		redirectTo(
-			route="moduleIndex",
+			route="admin~Index",
 			module="admin",
 			controller="posts"
 		);
@@ -226,7 +226,7 @@ component extends="_main" output="false"
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 			
-			//renderView(route="moduleAction", module="admin", controller="posts", action="index");		
+			//renderPage(route="admin~Action", module="admin", controller="posts", action="index");		
 		}
 	}
 	

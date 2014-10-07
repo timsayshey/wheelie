@@ -1,45 +1,56 @@
 <cfcomponent output="false" displayname="Multi Module">
 
+	<cfset this.$modulesPath = getDirectoryFromPath(getBaseTemplatePath()) & '/modules'>
+
 	<cffunction name="init" access="public" output="false" returntype="any">
-		<cfset this.version = "1.1.8" />		
+		<cfset this.version = "1.1.8,1.3" />
 		<cfset $buildModulesCache()>
 		<cfreturn this />
 	</cffunction>
-	
-	<cffunction name="doCheckAll" returntype="string">
-		<cfargument name="type" default="all">	
-		<!--- 
+
+	<cffunction name="doCheckAll" returntype="string" hint="decide whether to check all module location when searching for objects. Configurable via set(multiModuleCheckAllModules=) in settings.cfm">
+		<cfargument name="type" default="all">
+		<!---
 			True: Check all type folders no matter what
 			False: If [module] is defined in params then only check its models, views, etc no matter what
-		--->		
+		--->
 		<cfif arguments.type eq "models">
 			<cfreturn true>
 		<cfelseif arguments.type eq "controllers">
-			<cfreturn false>
+			<cfif IsDefined("application.wheels.multiModuleCheckAllModules")>
+				<cfreturn get("multiModuleCheckAllModules")>
+			</cfif>
+			<cfreturn true>
 		<cfelseif arguments.type eq "modules">
-			<cfreturn false>
+			<cfif IsDefined("application.wheels.multiModuleCheckAllModules")>
+				<cfreturn get("multiModuleCheckAllModules")>
+			</cfif>
+			<cfreturn true>
 		<cfelse>
-			<cfreturn false>
-		</cfif>			
+			<cfif IsDefined("application.wheels.multiModuleCheckAllModules")>
+				<cfreturn get("multiModuleCheckAllModules")>
+			</cfif>
+			<cfreturn true>
+		</cfif>
 	</cffunction>
-	
-	<cffunction name="getModuleFromUrl" returntype="string">		
+
+	<cffunction name="getModuleFromUrl" returntype="string">
 		<cfset var loc = StructNew()>
 		<cfparam name="request.module" default="">
-		<cfscript>			
+		<cfscript>
 			if(!len(request.module))
-			{			
+			{
 				if(!structKeyExists(variables,"params") && isDefined("core.$paramParser"))
 				{
 					loc.params = core.$paramParser();
-					
+
 				} else if (structKeyExists(variables,"params")) {
 					loc.params = params;
-					
+
 				} else {
 					loc.params = {};
 				}
-					
+
 				// Check to see if module param was found
 				if(structKeyExists(loc.params,"module")) {
 					request.module = loc.params.module;
@@ -48,9 +59,9 @@
 				else if(StructKeyExists(loc.params,"route") && find("~",loc.params.route))
 				{
 					request.module = ListFirst(loc.params.route,"~");
-				}				
+				}
 			}
-			
+
 			if(DirectoryExists(ExpandPath(LCase("modules\" & request.module))))
 			{
 				return "modules\" & request.module;
@@ -59,7 +70,7 @@
 			}
 		</cfscript>
 	</cffunction>
-	
+
 	<cffunction name="$generateIncludeTemplatePath" returntype="string" access="public" output="false" mixin="controller">
 		<cfargument name="$name" type="any" required="true">
 		<cfargument name="$type" type="any" required="true">
@@ -83,27 +94,27 @@
 		</cfscript>
 		<cfreturn LCase(loc.include) />
 	</cffunction>
-	
+
 	<cffunction name="$findInModules" returntype="string">
 		<cfargument name="baseInclude" type="string">
 		<cfscript>
 			var loc = StructNew();
 			loc.modules = $modules();
-			
+
 			// Override module name via URL
-			if(len(getModuleFromUrl())) { 		
+			if(len(getModuleFromUrl())) {
 				loc.result = getModuleFromUrl() & "/" & baseInclude;
-				if (FileExists(ExpandPath(LCase(loc.result)))) return loc.result;		
+				if (FileExists(ExpandPath(LCase(loc.result)))) return loc.result;
 			}
-			
+
 			// Not in url? Go look through modules folder
 			if (doCheckAll("modules")) {
-				
+
 				for (loc.i = 1; loc.i <= ArrayLen(loc.modules); loc.i ++) {
 					loc.result = loc.modules[loc.i] & "/" & baseInclude;
 					if (FileExists(ExpandPath(LCase(loc.result)))) return loc.result;
 				}
-			
+
 			}
 			return baseInclude;
 		</cfscript>
@@ -119,15 +130,14 @@
 	<cffunction name="$buildModulesCache" returntype="array">
 		<cfscript>
 			var loc = StructNew();
-			if (IsDefined("application.multimodule.modulePaths")) {
-				application.multimodule.modulesCache = listToArray(application.multimodule.modulePaths);
+			if (IsDefined("application.wheels.multiModulePaths")) {
+				application.multimodule.modulesCache = listToArray(application.wheels.multiModulePaths);
 				return application.multimodule.modulesCache;
 			}
-		 	loc.modulesPath = getDirectoryFromPath(getBaseTemplatePath()) & '/modules';
 		</cfscript>
-		<cfdirectory action="list" directory="#loc.modulesPath#" type="dir" name="loc.q">
+		<cfdirectory action="list" directory="#this.$modulesPath#" type="dir" name="loc.q">
 		<cfquery name="loc.q" dbtype="query">
-		select name from loc.q where name not like '.%' 
+		select name from loc.q where name not like '.%'
 		</cfquery>
 		<cfscript>
 			loc.results = ArrayNew( 1 );
@@ -148,15 +158,15 @@
 			loc.args = duplicate(arguments);
 			loc.basePath = arguments.controllerPaths;
 			loc.modules = $modules();
-			
+
 			// Override module name via URL
-			if(len(getModuleFromUrl())) { 
+			if(len(getModuleFromUrl())) {
 				loc.result = getModuleFromUrl() & "/" & loc.basePath;
 				if (FileExists(ExpandPath("#loc.result#/#name#.cfc"))) {
-					loc.args.controllerPaths = loc.result;					
+					loc.args.controllerPaths = loc.result;
 				}
 			}
-			
+
 			// Not in url? Go look through modules folder
 			if (doCheckAll("controllers")) {
 				for (loc.i = 1; loc.i <= ArrayLen(loc.modules); loc.i ++) {
@@ -166,8 +176,8 @@
 						break;
 					}
 				}
-			}			
-			
+			}
+
 			return core.$createControllerClass(loc.args.name,loc.args.controllerPaths,loc.args.type);
 		</cfscript>
 	</cffunction>
@@ -182,7 +192,7 @@
 			loc.basePath = arguments.modelPaths;
 			loc.modules = $modules();
 			loc.results = arguments.modelPaths;
-			
+
 			// Go look through modules folder
 			if (doCheckAll("models")) {
 				for (loc.i = 1; loc.i <= ArrayLen(loc.modules); loc.i ++) {
@@ -193,16 +203,16 @@
 					}
 				}
 			}
-			
+
 			// Override module name via URL
-			if(len(getModuleFromUrl())) { 
+			if(len(getModuleFromUrl())) {
 				loc.result = getModuleFromUrl() & "/" & loc.basePath;
 				if (DirectoryExists(ExpandPath(loc.result))) {
 					loc.results = loc.results & ",";
 					loc.results = loc.results & loc.result;
 				}
 			}
-			
+
 			loc.args.modelPaths = loc.results;
 			return core.$createModelClass(loc.args.name,loc.args.modelPaths,loc.args.type);
 		</cfscript>
@@ -215,23 +225,23 @@
 			var loc = {};
 			loc.template = "#application.wheels.viewPath#/#LCase(arguments.name)#/helpers.cfm";
 			if (! FileExists(ExpandPath(loc.template))) {
-				if(len(getModuleFromUrl())) { 
-					loc.result = getModuleFromUrl();
-					loc.template = "#getModuleFromUrl()#/#application.wheels.viewPath#/#LCase(arguments.name)#/helpers.cfm";
-					if (FileExists(ExpandPath(loc.template))) break;
-				} else if (doCheckAll("controllers")) {
+				if (doCheckAll("controllers")) {
 					loc.modules = $modules();
 					for (loc.i = 1; loc.i <= ArrayLen(loc.modules); loc.i ++) {
 						loc.template = "#loc.modules[loc.i]#/#application.wheels.viewPath#/#LCase(arguments.name)#/helpers.cfm";
 						if (FileExists(ExpandPath(loc.template))) break;
 					}
+				} else if(len(getModuleFromUrl())) {
+					loc.result = getModuleFromUrl();
+					loc.template = "#getModuleFromUrl()#/#application.wheels.viewPath#/#LCase(arguments.name)#/helpers.cfm";
+					if (FileExists(ExpandPath(loc.template))) break;
 				}
 			}
-	
+
 			// create a struct for storing request specific data
 			variables.$instance = {};
 			variables.$instance.contentFor = {};
-	
+
 			// include controller specific helper files if they exist, cache the file check for performance reasons
 			loc.helperFileExists = false;
 			if (!ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) && !ListFindNoCase(application.wheels.nonExistingHelperFiles, arguments.name))
@@ -248,11 +258,11 @@
 			}
 			if (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists)
 				$include(template=loc.template);
-	
+
 			loc.executeArgs = {};
 			loc.executeArgs.name = arguments.name;
 			$simpleLock(name="controllerLock", type="readonly", execute="$setControllerClassData", executeArgs=loc.executeArgs);
-	
+
 			variables.params = arguments.params;
 		</cfscript>
 		<cfreturn this>
@@ -307,10 +317,10 @@
 		<cfargument name="action" type="string" required="true">
 		<cfscript>
 			var loc = {};
-	
+
 			if (Left(arguments.action, 1) == "$" || ListFindNoCase(application.wheels.protectedControllerMethods, arguments.action))
 				$throw(type="Wheels.ActionNotAllowed", message="You are not allowed to execute the `#arguments.action#` method as an action.", extendedInfo="Make sure your action does not have the same name as any of the built-in Wheels functions.");
-	
+
 			if (StructKeyExists(this, arguments.action) && IsCustomFunction(this[arguments.action]))
 			{
 				$invoke(method=arguments.action);
@@ -322,7 +332,7 @@
 				loc.invokeArgs.missingMethodArguments = {};
 				$invoke(method="onMissingMethod", invokeArgs=loc.invokeArgs);
 			}
-	
+
 			if (!$performedRenderOrRedirect())
 			{
 				try
@@ -356,23 +366,7 @@
 				}
 			}
 		</cfscript>
-		
-	</cffunction>
 
-	<cffunction name="$createObjectFromRoot" returntype="any" access="public" output="false" mixin="global">
-		<cfargument name="path" type="string" required="true">
-		<cfargument name="fileName" type="string" required="true">
-		<cfargument name="method" type="string" required="true">
-		<cfscript>
-			var returnValue = "";
-			arguments.returnVariable = "returnValue";
-			arguments.component = ListChangeDelims(arguments.path.replace("../",""), ".", "/") & "." & ListChangeDelims(arguments.fileName, ".", "/");
-			arguments.argumentCollection = Duplicate(arguments);
-			StructDelete(arguments, "path");
-			StructDelete(arguments, "fileName");
-		</cfscript>
-		<cfinclude template="../../root.cfm">
-		<cfreturn returnValue>
 	</cffunction>
 
 	<cffunction name="$renderLayout" returntype="string" access="public" output="false" mixin="controller">
@@ -392,7 +386,7 @@
 					loc.layoutFileExists = false;
 					if (!ListFindNoCase(application.wheels.existingLayoutFiles, variables.params.controller) && !ListFindNoCase(application.wheels.nonExistingLayoutFiles, variables.params.controller))
 					{
-						if (FileExists(ExpandPath($findInModules("#application.wheels.viewPath#/#LCase(variables.params.controller)#/layout.cfm")))) 
+						if (FileExists(ExpandPath($findInModules("#application.wheels.viewPath#/#LCase(variables.params.controller)#/layout.cfm"))))
 							loc.layoutFileExists = true;
 						if (application.wheels.cacheFileChecking)
 						{

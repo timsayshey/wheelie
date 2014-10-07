@@ -420,6 +420,7 @@
 	<cfargument name="Folder" type="string" required="no">
 	<cfargument name="NameConflict" type="string" default="Error">
 	<cfargument name="TempDirectory" default="#variables.TempDir#">
+	<cfargument name="renameFile" default="">
 	
 	<cfset var destination = getDirectory(argumentCollection=arguments)>
 	<cfset var CFFILE = StructNew()>
@@ -505,6 +506,18 @@
 		<cfset cffile.ServerFileName = sOrigFile.ServerFileName>
 		<cfset cffile.ServerFile = sOrigFile.ServerFile>
 		<cfset cffile.ServerDirectory = destination>
+	</cfif>
+	
+	<!--- Rename --->
+	<cfset currentFilePath = "#cffile.serverdirectory##cffile.serverfile#">
+	<cfif len(arguments.renameFile) AND fileExists(currentFilePath)>
+		<cfset renamedFilename = "#listFirst(arguments.renameFile,'.')#.#ListLast(cffile.serverfile,'.')#">
+		<cfset renamedFilePath = "#cffile.ServerDirectory##renamedFilename#">
+		<cffile 
+			action = "rename"
+			destination = "#renamedFilePath#" 
+			source = "#currentFilePath#">
+		<cfset cffile.serverfile = renamedFilename>
 	</cfif>
 	
 	<cfif StructKeyExists(arguments,"return") AND isSimpleValue(arguments.return)>

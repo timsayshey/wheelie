@@ -6,8 +6,8 @@
 			super.init();
 			
 			// Properties
-			property(name="categoryType", defaultValue="user");			
-			defaultScope(where="categoryType='user'#wherePermission('Category','AND')#");
+			property(name="categoryType", defaultValue="user");						
+			this.setWhere = setWhere;	
 			
 			// Set
 			table("categories");
@@ -16,11 +16,16 @@
 			hasMany("UserTagJoins");
 			
 			// Validations
-			validatesUniquenessOf(property="urlid");
+			validatesUniquenessOf(property="urlid", scope="siteid");
 			
 			// Other		
 			beforeSave("sanitizeNameAndURLId");
-		}			
+		}		
+		
+		function setWhere()
+		{
+			return "categoryType='user'#wherePermission('Category','AND')#";
+		}	
 		
 		function categoryInfo()
 		{
