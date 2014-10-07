@@ -9,11 +9,9 @@
 	<cfelse>
 		<cfset isStaff = true>
 	</cfif>
-		 
-	<cfset javaScriptIncludeTag(sources="
-		js/admin/user.js, 
-		js/admin/category.js", 
-	head=true)>
+	
+	<script src="/views/layouts/admin/assets/js/user.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/category.js" type="text/javascript"></script>
 	
 	<cfset contentFor(formy			= true)>
 	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #capitalize(usergroup.groupname)#')>

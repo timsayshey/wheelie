@@ -1,6 +1,7 @@
 <cfoutput>
 
-	<cfset javaScriptIncludeTag(sources="js/admin/page.js,vendor/jwplayer/jwplayer.js", head=true)>
+	<script src="/views/layouts/admin/assets/js/page.js" type="text/javascript"></script>
+	<cfset javaScriptIncludeTag(sources="vendor/jwplayer/jwplayer.js", head=true)>
 	
 	<cfset contentFor(formy			= true)>
 	<cfset contentFor(headerTitle	= '<span class="elusive icon-file-new"></span> Pages')>

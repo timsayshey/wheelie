@@ -1,9 +1,9 @@
 <cfoutput>    
-	<cfset javaScriptIncludeTag(sources="
-		js/admin/sortCategories.js,
-		js/admin/category.js,
-		js/admin/video.js
-	", head=true)>	
+
+	<script src="/views/layouts/admin/assets/js/sortCategories.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/category.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/video.js" type="text/javascript"></script>
+	
 	#hiddenfieldtag(name="categoryController", id="categoryController", value="categories")#	
 	#hiddenfieldtag(name="categoryModel", id="categoryModel", value=params.modelName)#	
 	#hiddenFieldTag(name="addCategoryType", id="addCategoryType", value="sortlist")#

@@ -32,11 +32,11 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	
-	<link href="/assets/css/front/style.css" rel="stylesheet">
+	<link href="#themeDir#assets/css/style.css" rel="stylesheet">
 	
 	<cfif !isHome>
-		<link href="/assets/css/front/vendor.css" rel="stylesheet">
-		<link href="/assets/css/front/sub.css" rel="stylesheet">	
+		<link href="#themeDir#assets/css/vendor.css" rel="stylesheet">
+		<link href="#themeDir#assets/css/sub.css" rel="stylesheet">	
 	</cfif>
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

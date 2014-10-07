@@ -3,7 +3,7 @@
 	<cfset buttonParams = "">
 	<script type='text/javascript' src="//code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<link href="//code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all">
-	<script type='text/javascript' src="/assets/js/admin/reorder.js"></script>
+	<script type='text/javascript' src="/views/layouts/admin/assets/js/reorder.js"></script>
 	<script type="text/javascript">	
 		$(function() {
 			initSortable('#urlFor(				

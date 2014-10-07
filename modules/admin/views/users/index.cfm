@@ -1,9 +1,9 @@
 <cfoutput>
+	<script src="/views/layouts/admin/assets/js/user.js" type="text/javascript"></script>
 	<cfscript>
 		// Get rearrange button and script if necessary
-		initializeRearrange = includePartial(partial="/_partials/sortableScript", urlcontroller="users", reEndRow=qUsers.recordcount);
+		initializeRearrange = includePartial(partial="/_partials/sortableScript", urlcontroller="users", reEndRow=qUsers.recordcount);		
 		
-		javaScriptIncludeTag(sources="js/admin/user.js", head=true);		
 		contentFor(formy = true);		
 		if(len(capitalize(usergroup.groupname)))
 		{

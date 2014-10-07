@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<cfset javaScriptIncludeTag(sources="js/admin/page.js", head=true)>
+	<script src="/views/layouts/admin/assets/js/page.js" type="text/javascript"></script>
 	
 	<cfset contentFor(plupload		= true)>
 	<cfset contentFor(formy			= true)>

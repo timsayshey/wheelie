@@ -15,6 +15,7 @@ Tested on Tomcat Railo 4.2 with MySQL with Windows 2008 R2.
 * Then edit the config/settings.cfm and set the name of your datasource and any other settings.
 * If using Railo, make sure you Log into your server admin:
 http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
+* Login at http://localhost/manager - email: admin@getwheelie.com - password: wheelie
 
 ## Set DB, change salt and otherwise configure Wheelie by editing:
 /models/services/global/settings.cfm

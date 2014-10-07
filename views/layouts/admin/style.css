@@ -467,3 +467,16 @@ hr {
 	height: 7px;
 	background: #CDEB8B;
 }
+
+.navwrapper {
+	margin-bottom:20px;	
+}
+#header {
+	margin-bottom:0;	
+}
+.data-header-actions {
+	margin-bottom:0;	
+}
+.userinfo {
+margin: 0;
+}

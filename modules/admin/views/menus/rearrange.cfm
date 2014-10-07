@@ -1,9 +1,9 @@
 <cfoutput>    
-	<cfset javaScriptIncludeTag(sources="
-		js/admin/sortMenus.js,
-		js/admin/menu.js,
-		js/admin/video.js
-	", head=true)>	
+
+	<script src="/views/layouts/admin/assets/js/sortMenus.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/menu.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/video.js" type="text/javascript"></script>
+		
 	#hiddenfieldtag(name="menuController", id="menuController", value="menus")#	
 	#hiddenfieldtag(name="menuModel", id="menuModel", value="Menu")#	
 	#hiddenFieldTag(name="addMenuType", id="addMenuType", value="sortlist")#

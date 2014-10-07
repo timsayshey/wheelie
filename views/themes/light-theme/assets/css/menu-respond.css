@@ -1,0 +1,91 @@
+@media screen and (max-width: 992px) {
+	/* nav-wrap */
+	#menu-wrap {
+		position: relative;
+	}
+	#menu-wrap * {
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	/* menu icon */
+	#menu-trigger {
+		display: block; /* show menu icon */
+		height: 40px;
+		line-height: 40px;
+		cursor: pointer;
+		padding: 0 0 0 35px;
+		color: #fafafa;
+		font-weight: bold;
+		background-color: #E07736;
+	}
+	/* main nav */
+	#menu {
+		margin: 0;
+		padding: 10px;
+		position: absolute;
+		top: 40px;
+		width: 100%;
+		z-index: 10;
+		background-color: #444;
+		display: none;
+		box-shadow: none;
+	}
+	#menu:after {
+		content: '';
+		position: absolute;
+		left: 25px;
+		top: -8px;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-bottom: 8px solid #444;
+	}
+	#menu ul {
+		position: static;
+		visibility: visible;
+		opacity: 1;
+		margin: 0;
+		background: none;
+		box-shadow: none;
+	}
+	#menu ul ul {
+		margin: 0 0 0 20px !important;
+		box-shadow: none;
+	}
+	#menu li {
+		position: static;
+		display: block;
+		float: none;
+		border: 0;
+		margin: 5px;
+		box-shadow: none;
+	}
+	#menu ul li {
+		margin-left: 20px;
+		box-shadow: none;
+	}
+	#menu a {
+		display: block;
+		float: none;
+		padding: 0;
+	}
+	#menu a:hover {
+		color: #fafafa;
+	}
+	#menu ul a {
+		padding: 0;
+		width: auto;
+	}
+	#menu ul a:hover {
+		background: none;
+	}
+	#menu ul li:first-child a:after,  #menu ul ul li:first-child a:after {
+		border: 0;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	#menu {
+		display: block !important;
+	}
+}

@@ -1,8 +1,6 @@
 <cfoutput>
-	<cfset javaScriptIncludeTag(sources="
-		js/admin/newvideo.js,
-		js/admin/category.js", 
-	head=true)>
+	<script src="/views/layouts/admin/assets/js/newvideo.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/category.js" type="text/javascript"></script>
 	
 	<!--- For category.js --->
 	#hiddenfieldtag(name="categoryController", id="categoryController", value="videoCategories")#	
@@ -88,7 +86,7 @@
 		</cfif>
 	</div>	
 	
-	<div class="videoFile well">
+	<!--- <div class="videoFile well">
 		Upload file to /assets/private/videos/ then select from the list below:<br>
 		<cfdirectory action="list" filter="*.flv" directory="#expandPath('/assets/private/videos/')#" name="userpics">
 		#bselecttag(
@@ -104,7 +102,7 @@
 			class	= "selectize perPage",
 			append	= ""
 		)#
-	</div>
+	</div> --->
 				
 	<!--- Title --->	
 	#btextfield(

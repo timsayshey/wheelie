@@ -1,6 +1,6 @@
 <cfoutput>
-
-	<cfset javaScriptIncludeTag(sources="js/admin/post.js,vendor/jwplayer/jwplayer.js", head=true)>
+	<script src="/views/layouts/admin/assets/js/post.js" type="text/javascript"></script>
+	<cfset javaScriptIncludeTag(sources="vendor/jwplayer/jwplayer.js", head=true)>
 	
 	<cfset contentFor(formy			= true)>
 	<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Posts')>

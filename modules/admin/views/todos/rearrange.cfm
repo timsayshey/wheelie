@@ -1,9 +1,6 @@
 <cfoutput> 
-	 
-	<cfset javaScriptIncludeTag(sources="
-		js/admin/sortTodos.js,
-		js/admin/todo.js
-	", head=true)>	
+	<script src="/views/layouts/admin/assets/js/sortTodos.js" type="text/javascript"></script>
+	<script src="/views/layouts/admin/assets/js/todo.js" type="text/javascript"></script>
 	
 	#hiddenfieldtag(name="todoController", id="todoController", value="todos")#	
 	#hiddenfieldtag(name="todoModel", id="todoModel", value="Todo")#	

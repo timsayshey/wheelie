@@ -82,17 +82,12 @@
 		
 	</head>
 	<body>
-	
-		<div id="preloader">
-			<div id="status">&nbsp;</div>
-		</div>
 		
 		<!-- Full height wrapper -->
 		<div id="wrapper" class="headerwrap">
 
 			<!-- Main page header -->
 			<header id="header" class="container">
-				<div class="col-md-12">
 				
 				<a href='#urlFor(route="admin~Action", controller="main", action="home")#'  id="logo"><h2 style="display:inline-block; margin:0;">#request.site.name#</h2></a>	
 								
@@ -117,36 +112,21 @@
 						</figure>
 					</div>
 				</cfif>
-				
-				<br class="clear">
-				</div>
-				</header>
-			</div>
-			<div id="wrapper" class="navwrapper">
-				<header class="container">
-				<div class="col-md-12">
-				<!-- Main navigation -->
-				<nav class="main-navigation navbar navbar-masthead navbar-inverse navigaty" role="navigation">
-
-					<!-- Collapse navigation for mobile -->
+			</header>
+		</div>
+		<div id="wrapper" class="navwrapper">
+			<header class="container">					
+				<nav class="main-navigation navbar navbar-masthead navbar-default" role="navigation">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navigation-collapse">
 							Menu
 						</button>
 					</div>
-					<!-- /Collapse navigation for mobile -->
-
-					<!-- Navigation -->
 					<div class="main-navigation-collapse collapse navbar-collapse">
-						
 						#includePartial(partial="/_partials/adminMenu")#
-
 					</div>
-					<!-- /Navigation -->
-			</div>
-			</header>
-			<!-- /Main page header -->
-			
+				</nav>
+			</header>			
 		</div>
 		<div id="wrapper">
 			<cfif NOT flashIsEmpty()>
