@@ -1,6 +1,5 @@
 <cfoutput>
 <cfset themeDir = "/views/themes/#request.site.theme#/">
-<cfoutput>
 
 <cfif params.action eq "index">
 	<cfset isHome = 1>
@@ -9,7 +8,7 @@
 </cfif>
 
 <!DOCTYPE html>
-<html lang="en" <cfif !isHome>style="background-image:url(#getOption(qOptions,'secondary_page_background').attachment#)"</cfif>>
+<html lang="en">
 <head>	
 	
 	<!-- Meta, title, CSS, favicons, etc. -->
@@ -20,24 +19,28 @@
 	
 	<title>		
 		<cfif !isHome>#capitalize(activeMenuItem.name)# <cfif len(activeMenuItem.name)>-</cfif></cfif> 
-		#getOption(qOptions,'seo_title').label#
+		<cfif len(getOption(qOptions,'seo_title').label)>
+			#getOption(qOptions,'seo_title').label#
+		<cfelse>
+			#request.site.name#
+		</cfif>
+		
 	</title>
 	
 	<!-- Bootstrap core -->
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:700,400,300" />
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
 	
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	
 	<link href="#themeDir#assets/css/style.css" rel="stylesheet">
 	
-	<cfif !isHome>
-		<link href="#themeDir#assets/css/vendor.css" rel="stylesheet">
-		<link href="#themeDir#assets/css/sub.css" rel="stylesheet">	
-	</cfif>
+	<link href="#themeDir#assets/css/vendor.css" rel="stylesheet">
+	<link href="#themeDir#assets/css/sub.css" rel="stylesheet">	
+		
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -49,8 +52,6 @@
 </head>
 <body>
 <div class="page-wrap">
-
-	<cfif isHome><div class="slider_wrap" style="background-image:url(#getOption(qOptions,'home_slide_1').attachment#)"></cfif>
     
         <div class="navbar_wrap">
             <div class="navbar_top"></div>
@@ -63,7 +64,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/"><img src="#getOption(qOptions,'site_name_and_logo').attachment#" alt="#getOption(qOptions,'site_name_and_logo').label#"></a>
+                        <h2 class="logo-text">#request.site.name#</h2>
                     </div>
             
                     <div class="navbar-collapse collapse">
@@ -75,7 +76,7 @@
 								</a>
 							</li>
 							
-							#generateMenu()#
+							#generateMenu(false)#
                         </ul>
                     </div><!--/.navbar-collapse -->
                 
@@ -83,32 +84,20 @@
             </div>		
             <div class="navbar_bottom"></div>
             
-            <cfif isHome>
-                <div class="container">
-                    <div class="bannercontent">
-                    
-                        <cfset spotlightTitle = getOption(qOptions,'home_spotlight_title')>
-                        <h1 class="title">#spotlightTitle.label#</h1>
-                        <p>#spotlightTitle.content#</p>
-                        <br class="clear"><br><br>
-                        
-                        <cfset spotlightBtn = getOption(qOptions,'home_spotlight_button')>
-                        <a href="#spotlightBtn.content#" class="btn btn-primary btn-lg" class="feature_btn">#spotlightBtn.label#</a>
-                    </div>
-                </div>
-                
-                <div class="slider_bottom"></div>
-            </cfif>
-            
         </div>
-        
-    <cfif isHome></div></cfif>
-        
-    <cfoutput>#includeContent()#</cfoutput>
+		
+		<cfif isNull(request.templateActive)>
+			<section class="page-wrapper">
+				<article class="page-content-full">    
+					#includeContent()#
+				</article>
+			</section>
+		<cfelse>
+			#includeContent()#
+		</cfif>
 
 </div>
 
-<cfif isHome><br><br></cfif>
 
 <footer class="site-footer">
 	<div class="container">
@@ -125,11 +114,11 @@
 						</a>
 					</li>
 					
-					#generateMenu()#
+					#generateMenu(false)#
 				</ul>
 			</div>
 			<div class="col-lg-1">
-				<a href="##"><img src="/assets/images/front/ico_fb.png" class="social_icon"></a>
+				<a href="##"><img src="#themeDir#assets/images/ico_fb.png" class="social_icon"></a>
 			</div>
 		</div>
 	</div>
@@ -138,7 +127,5 @@
 
 </body>
 </html>
-
-</cfoutput>
 
 </cfoutput>

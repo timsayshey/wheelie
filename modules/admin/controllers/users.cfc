@@ -72,6 +72,7 @@
 			}
 			
 			// Paginate me batman
+			pagination = application.pagination;
 			pagination.setQueryToPaginate(qUsers);	
 			pagination.setItemsPerPage(session.perPage);		
 			paginator = pagination.getRenderedHTML();

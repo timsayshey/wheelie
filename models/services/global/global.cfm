@@ -37,11 +37,11 @@
 			application.validateit = CreateObject("component","models.services.lib.validateit").init();	
 		}
 		
-		// Setup VideoConverter
+		/* Setup VideoConverter 
 		if (!structKeyExists(application, 'videoConverter') or isReload) {
 			videoFileMgr = CreateObject("component","models.services.videoconverter.FileMgr").init(info.fileuploads,info.uploadsPath);
 			application.videoConverter = CreateObject("component","models.services.videoconverter.VideoConverter").init(videoFileMgr);
-		}	
+		}*/	
 		
 		// Setup filemanager
 		if (!structKeyExists(application, 'fileMgr') or isReload) {
@@ -63,7 +63,7 @@
 		
 		// Make them accessible from local scope	
 		validate		= application.validateit;
-		videoconverter	= application.videoConverter;
+		//videoconverter	= application.videoConverter;
 		db 				= application.db;
 		youtube			= application.yt;
 		_				= application._;
@@ -75,7 +75,7 @@
 	<!--- Set User Permissions --->
 	<cfif isNull(application.rbs.permissionsQuery) or isReload>
 	
-		<cfset application.rbs.permissionsQuery = db.getRecords("Permissions")>
+		<cfset application.rbs.permissionsQuery = db.getRecords("permissions")>
 		<cfloop query="application.rbs.permissionsQuery">
 			<cfscript>				
 				application.rbs.permission["#id#"]["superuser"]		= superuser;

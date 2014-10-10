@@ -2,21 +2,20 @@ html,body {
 	background:none;	
 }
 html { 
-	background: url(/assets/images/front/greenbg.jpg) no-repeat center center fixed #242628; 
-	background-image:url(http://lorempixel.com/1200/800/nature/);
+	background: url(../images/greenbg.jpg) no-repeat center center fixed #242628;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/images/front/greenbg.jpg', sizingMethod='scale');
-	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/images/front/greenbg.jpg', sizingMethod='scale')";
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://lorempixel.com/1200/800/nature/', sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://lorempixel.com/1200/800/nature/', sizingMethod='scale')";
 }
 .navbar_wrap {
 	display:block;
 	padding-top:20px;
 }
 .page-wrapper, .page-nav .current:hover, .page-nav .current {
-	background:url(/assets/images/front/bg.jpg) #fff;
+	background:url(../images/bg.jpg) #fff;
 }
 #pagey {
 	padding:20px;

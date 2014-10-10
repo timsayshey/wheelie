@@ -147,7 +147,7 @@
 <cffunction name="siteQuery">
 	<cfargument name="urlid" required="yes">
 	<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
-		SELECT * FROM Sites
+		SELECT * FROM sites
 		WHERE urlid = '#arguments.urlid#' AND deletedAt IS NULL
 	</cfquery>
 	<cfreturn qSiteData>

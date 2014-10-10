@@ -5,10 +5,10 @@
 	this.name 				= "Wheelie";
 	rootPath 				= getDirectoryFromPath(getBaseTemplatePath());
 	
-	this.mappings["/"] 				= rootPath;
-	this.mappings["/controllers"]	= rootPath & "controllers";
-	this.mappings["/models"] 		= rootPath & "models";
-	this.mappings["/cachebox"] 		= rootPath & "models/services/cachebox";
+	//this.mappings["/"] 				= rootPath;
+	//this.mappings["/controllers"]	= rootPath & "controllers";
+	//this.mappings["/models"] 		= rootPath & "models";
+	//this.mappings["/cachebox"] 		= rootPath & "models/services/cachebox";
 </cfscript>
 <cfif find("beta2",cgi.HTTP_HOST)>
     <cferror type="exception" template="/assets/scripts/error.cfm">

@@ -2,8 +2,8 @@ html, body {
   height: 100%;
 }
 html,body {
-	font-family: "Open Sans", sans-serif;
-	background:url(/assets/images/front/bg.jpg);
+	font-family: "Montserrat", sans-serif;
+	background:url(../images/bg.jpg);
 	line-height:27px;
 }
 
@@ -53,7 +53,7 @@ hr {
 	padding-top:5px;
 }
 footer {
-	background:url(/assets/images/front/bg_footer.png) repeat-x top #fff;
+	background:url(../images/bg_footer.png) repeat-x top;
 	height:58px;
 	overflow:hidden;
 	padding-top:10px;
@@ -84,18 +84,19 @@ footer {
 	float: left;
 	clear: left;
 }
+
 .slider_wrap {
 	height: 588px;
 	padding-top:20px;
 	width: 100%;
 	color: #fff;
-	background: #242628 url(/assets/images/front/slide1.jpg) top left;
+	background: #242628 url(../images/greenbg.jpg) top left;
 	background-size: cover;
 	position: relative;
 	z-index:1;
 }
 .slider_bottom {
-	background:url(/assets/images/front/bg_content_top.png) bottom repeat-x;
+	background:url(../images/bg_content_top.png) bottom repeat-x;
 	height:24px;
 	width:100%;
 	position:absolute;
@@ -105,7 +106,7 @@ footer {
 	text-align:center;
 }
 .navbar_top {
-	background:url(/assets/images/front/bg_header_top.png) top repeat-x;
+	background:url(../images/bg_header_top.png) top repeat-x;
 	height:22px;
 	z-index:999;
 }
@@ -113,19 +114,19 @@ footer {
 	padding:60px;	
 }
 .navbar_bottom {
-	background:url(/assets/images/front/bg_header_bottom.png) bottom repeat-x;
+	background:url(../images/bg_header_bottom.png) bottom repeat-x;
 	height:22px;
 	z-index:999;
 }
 .navbar_wrap .navbar {
 	/*min-height:111px;*/
-	background:url(/assets/images/front/bg.jpg) #fff;
+	background: #fff;
 	margin:0;
 }
 .navbar-toggle {
 	background:#fff;
 	border:2px solid #bbb;
-	margin-top: 28px;
+	margin-top: 0;
 	z-index:999;
 	position:absolute;
 	right:0;
@@ -249,7 +250,7 @@ a.featured_event {
 /* Desktop */
 @media (min-width: 1199px) {
 	.navbar-nav {
-		margin-top:20px;
+		margin-top:0px;
 	} 
 	.navbar-collapse.collapse {
 		display: inline-block !important;
@@ -269,4 +270,16 @@ a.featured_event {
 	.desk-left:after {
 		clear:both;
 	}
+}
+
+.logo-text {
+	margin:0;
+	padding:0;
+	color:#000;	
+	line-height:45px;
+	font-weight:bold !important;
+	border:0;
+}
+* {
+	font-family: "Montserrat", sans-serif !important;
 }

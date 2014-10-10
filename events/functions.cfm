@@ -2,6 +2,7 @@
 
 	<cfset request.fieldslist = "">
 	<cfinclude template="/models/services/global/functions.cfm">
+	<cfinclude template="/models/services/global/global.cfm">
 	
 	<cffunction name="getFieldVal">
 		<cfargument name="name">

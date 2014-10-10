@@ -6,6 +6,7 @@
 	set(javascriptPath			= "assets");	
 	set(assetQueryString		= false); // If true, Prevents browser from caching js/css assets
 	set(clearServerCacheOnReload= true); // Disabled for now due to 1.3.1 issue with Reload
+	//set(URLRewriting			= true);
 	
 	// Allows us to handle plugins manually, no autozip blackmagic	
 	set(deletePluginDirectories	= false);

@@ -1,6 +1,6 @@
 <cfscript>
-	application.wheels.adminUrlPath = "manager";
-	adminUrlPath = "/#application.wheels.adminUrlPath#";
+	
+	adminUrlPath = "/manager";
 	
 	// Admin Routes
 	var adminUrlPaths = "#adminUrlPath#,/m/admin";
@@ -91,6 +91,53 @@
 		pattern="#adminUrlPath#",
 		action="home",
 		controller="main"
+    );
+	
+	// Custom App Module Routes
+	addRoute(
+        name="appfront~Id", 
+		pattern="app/[controller]/[action]/[id].[format]",
+		id=""
+    );
+	addRoute(
+        name="appfront~Action", 
+		pattern="app/[controller]/[action]"
+    );
+	
+	addRoute(
+        name="appfront~Index", 
+		pattern="app/[controller]",
+		action="index"
+    );
+	
+	addRoute(
+        name="appfront~Home", 
+		pattern="app",
+		action="home",
+		controller="appfront"
+    );
+	
+	addRoute(
+        name="appback~Id", 
+		pattern="admin/[controller]/[action]/[id].[format]",
+		id=""
+    );
+	addRoute(
+        name="appback~Action", 
+		pattern="admin/[controller]/[action]"
+    );
+	
+	addRoute(
+        name="appback~Index", 
+		pattern="admin/[controller]",
+		action="index"
+    );
+	
+	addRoute(
+        name="appback~Home", 
+		pattern="admin",
+		action="home",
+		controller="appback"
     );
 	
 	// Default Module Routes

@@ -933,8 +933,9 @@ html.js.secure #global-header>nav>.wrapper {
 *zoom:1
 }
 html {
-	font:62.5%/1.65 "Open Sans", sans-serif
+	font:62.5%/1.65 "Montserrat", sans-serif
 }
+
 body {
 	background:#edece4;
 	width:100%;
@@ -2231,7 +2232,7 @@ padding:0 10px
 	left:10px;
 	font-size:11px;
 	font-weight:normal;
-	font-family:"Open Sans", sans-serif;
+	font-family:"Montserrat", sans-serif;
 	display:block;
 	width:100px;
 	opacity:0.6;
@@ -4546,7 +4547,7 @@ display:none
 }
 .blogs-holding {
 	padding:260px 10px;
-	background:url("/assets/images/front/holding-page.jpg") center no-repeat;
+	background:url("../images/holding-page.jpg") center no-repeat;
 	background-size:100% 100%;
 	text-align:center
 }
@@ -4955,7 +4956,7 @@ color:#9fbb58
 text-decoration:none
 }
 [data-valid="processing"] {
-background:url("/assets/images/front/loading.gif") no-repeat 98% !important;
+background:url("../images/loading.gif") no-repeat 98% !important;
 background-size:20px 20px
 }
 button[type="submit"].button-full-width {
