@@ -1,7 +1,6 @@
 <cfoutput>
 	<div class="blog-post">          
 		<h1>Our Blog</h1>
-		<br class="clear"><br>
 		
 		<cfloop query="posts" startrow="#pagination.getStartRow()#" endrow="#pagination.getendrow()#">	
 			<h2><a href="/blog/post/#posts.urlid#.html">#capitalize(posts.name)#</a></h2> 

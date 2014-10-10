@@ -57,7 +57,7 @@
 			name='videoUrl', 
 			value='', 
 			class="videoUrl form-control",
-			label='Video URL',
+			label='Vimeo or Youtube Video URL',
 			placeholder	 = "Paste video video or playlist link here",
 			help='Enter the url of the video'
 		)#
