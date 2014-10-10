@@ -1,0 +1,97 @@
+/* nested sortable
+------------------------------------------------------------------------- */
+#nestable ul, #nestable li {
+	list-style:none;
+	padding:0;
+}
+
+.ns-helper {
+	border: 1px dashed #C6C486;
+	background: #FAFAE0;
+	display:block;
+	padding:10px;
+	min-height:30px;
+}
+.sortable {
+	margin: 5px 0;
+	clear: both;
+}
+.sortable img {
+	vertical-align: bottom;
+}
+#ns-header {
+	padding: 8px 10px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #555;
+	background: #fff;
+	border: none;
+}
+#ns-header div {
+	border: none;
+}
+#ns-footer {
+	text-align: right;
+	margin-top: 10px;
+}
+.ns-row {
+	font: 11px Tahoma, sans-serif;
+	line-height: 18px;
+	padding: 7px 10px;
+	border: 1px solid #d5d5d5;
+	background: #f7f7f7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9f9), to(#f5f5f5));
+	background: -moz-linear-gradient(#f9f9f9, #f5f5f5);
+	background: linear-gradient(#f9f9f9, #f5f5f5);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 0 #fff;
+	-moz-box-shadow: inset 0 1px 0 #fff;
+	box-shadow: inset 0 1px 0 #fff;
+	position: relative;
+}
+.ns-row div {
+	border-left: 1px solid #e3e3e3;
+	height: 18px;
+	overflow: hidden;
+	position: absolute;
+	top: 6px;
+	padding-left: 10px;
+}
+div.ns-title {
+	position: static;
+	border: none;
+	font-weight: bold;
+	padding-left: 0;
+	cursor: move;
+}
+.ns-actions {
+	width: 70px;
+	right: 5px;
+	background-color: #f7f7f7;
+}
+.ns-class {
+	width: 100px;
+	right: 60px;
+}
+.ns-url {
+	width: 140px;
+	right: 170px;
+}
+.ns-actions a {
+	padding-left: 0px;
+}
+
+
+/* new library update
+-------------------------- */
+#nestable ul {
+	margin-left: 30px;	
+}
+.ns-helper {
+	margin: 5px 0;
+}
+.ns-row div {
+	top: 7px;
+}

@@ -1,0 +1,31 @@
+html,body {
+	background:none;	
+}
+html { 
+	background: url(../images/greenbg.jpg) no-repeat center center fixed #242628;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://lorempixel.com/1200/800/nature/', sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://lorempixel.com/1200/800/nature/', sizingMethod='scale')";
+}
+.navbar_wrap {
+	display:block;
+	padding-top:20px;
+}
+.page-wrapper, .page-nav .current:hover, .page-nav .current {
+	background:url(../images/bg.jpg) #fff;
+}
+#pagey {
+	padding:20px;
+}
+
+#pagey .panel {
+	padding:20px;
+}
+
+.page-wrapper img {
+	padding-left:10px;
+	padding-bottom:10px;
+}

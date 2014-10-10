@@ -1,0 +1,53 @@
+* { -webkit-font-smoothing: antialiased; }
+
+img { max-width: 100%; height: auto; }
+
+
+
+
+.bx-wrapper { margin: 0; }
+.bx-wrapper .bx-viewport { border: 0 none; left: auto; box-shadow: none; background: transparent; }
+.bx-wrapper .bx-controls-direction a { width: 156px; height: 186px; z-index: 998; background-size: auto 100%; }
+.bx-wrapper .bx-next,
+.bx-wrapper .bx-next:hover { background: url(../img/slider-nav.png) 100% 0 no-repeat; background-size: auto 100%; }
+.bx-wrapper .bx-prev,
+.bx-wrapper .bx-prev:hover { background: url(../img/slider-nav.png) 0 0 no-repeat; background-size: auto 100%; }
+.bx-wrapper .bx-loading { background: #FFF; }
+
+
+@media (max-width: 1099px) {
+	.bx-wrapper .bx-controls-direction a { width: 85px; height: 100px; margin-top: -50px; }
+}
+
+
+.page-slider-wrap { min-height: 600px; }
+.page-slider { list-style: none; padding: 0; margin: 0; position: relative; min-height: 225px; }
+.page-slider > li { position: absolute; top: 0; width: 100%; background-repeat: no-repeat; background-position: center center; background-size: 100%; min-height: 425px; background-color: #FFF; }
+.page-slider > li:first-child { position: relative; }
+.page-slider > li > img { display: block; margin: 0 auto; visibility: hidden; }
+.page-slider .title { bottom: 53px; color: #FEFCF6; font-weight: bold; display: block; font-size: 12px; font-style: italic; margin: 0 auto; max-width: 1078px; position: relative; text-align: left; text-shadow: 0 0 3px rgba(0,0,0,.7); }
+
+
+
+@media (max-width: 1100px) {
+	.page-slider-wrap { min-height: 390px; }
+	.page-slider > li { min-height: 390px; background-size: auto 100%; }
+}
+
+@media (max-width: 767px) {
+	.page-slider-wrap { min-height: 250px; }
+	.page-slider > li > img { min-height: 250px; }
+}
+
+
+
+
+
+
+
+/* Body */
+
+.main-container { padding: 50px 0 0; background: #FFF; }
+.main-container.header-stack { margin-top: -80px; padding: 30px 30px 0; position: relative; z-index: 99; }
+.main-container.blog-container { padding-left: 30px; padding-right: 30px; padding-bottom: 30px; }
+
