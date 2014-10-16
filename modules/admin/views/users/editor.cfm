@@ -1,14 +1,4 @@
 <cfoutput>
-
-	<cfif !len(user.role)>
-		<cfset user.role = "guest">
-	</cfif>
-	
-	<cfif user.role eq "parent" or user.role eq "student">
-		<cfset isStaff = false>
-	<cfelse>
-		<cfset isStaff = true>
-	</cfif>
 	
 	<script src="/views/layouts/admin/assets/js/user.js" type="text/javascript"></script>
 	<script src="/views/layouts/admin/assets/js/category.js" type="text/javascript"></script>
@@ -33,7 +23,6 @@
 		<cfset user.securityApproval = 1>
 	</cfif>
 	
-	
 	<cfif !isNew>
 		#hiddenfield(objectName='user', property='id', id="userid")#
 		#hiddenFieldTag("id",params.id)#
@@ -44,7 +33,7 @@
 		<cfset passrequired = "required">
 	</cfif>				
 	
-	<cfif !isNull(user.approval_flag) AND user.approval_flag eq 1>
+	<cfif !isNull(user.approval_flag) AND user.approval_flag eq 1 AND user.showOnSite>
 		<div class="alert alert-warning">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			Some changes are awaiting for approval by the admin before they show up publicly on the website.
@@ -62,9 +51,10 @@
 	</div>
 	
 	<cfif checkPermission("user_save_role_admin")>	
-		<cfset roles = ["","superuser","admin","editor","user","guest"]>			
+		<cfset roles = ["superuser","admin","editor","user","guest"]>			
 		<div class="col-sm-6">	
 			#bselect(
+				includeBlank	= true,
 				objectName		= 'user',
 				property		= 'role',
 				label			= 'Override Usergroup Role',
@@ -126,25 +116,23 @@
 		)#
 	</div>
 	
-	<cfif isStaff>
-		<div class="col-sm-6">	
-			#btextfield(
-				objectName	= 'user', 
-				property	= '#approvalToggle#designatory_letters', 
-				label		= 'Designatory Letters',
-				placeholder	= "Ex: PhD, MSW, etc"
-			)#
-		</div>
-		
-		<div class="col-sm-6 ">	
-			#btextfield(
-				objectName	= 'user', 
-				property	= '#approvalToggle#jobtitle', 
-				label		= 'Job Title*',
-				placeholder	= "Ex: Teacher"
-			)#
-		</div>
-	</cfif>
+	<div class="col-sm-6">	
+		#btextfield(
+			objectName	= 'user', 
+			property	= '#approvalToggle#designatory_letters', 
+			label		= 'Designatory Letters',
+			placeholder	= "Ex: PhD, MSW, etc"
+		)#
+	</div>
+	
+	<div class="col-sm-6 ">	
+		#btextfield(
+			objectName	= 'user', 
+			property	= '#approvalToggle#jobtitle', 
+			label		= 'Job Title*',
+			placeholder	= "Ex: Teacher"
+		)#
+	</div>
 	
     <div class="col-sm-6 ">			
 		#bselect(
@@ -267,24 +255,21 @@
 			placeholder	= '65049'
 		)#
 	</div>
-
-	<cfif isStaff>
-		#includePartial(partial="/_partials/formSeperator")#	
-		
-		<h3 class="formHeader">Professional</h3>
-		
-		#btextarea(
-			objectName 		= 'user', 
-			property 		= '#approvalToggle#about',
-			label 		 	= "Bio for Website*",
-			style			= "height:150px"
-		)#	
-		
-		<!--- Get Custom Fields --->
-		#includePartial(partial="/_partials/formFieldsRender")# 
-		<br class="clear">
-		
-	</cfif>
+	
+	#includePartial(partial="/_partials/formSeperator")#	
+	
+	<h3 class="formHeader">Professional</h3>
+	
+	#btextarea(
+		objectName 		= 'user', 
+		property 		= '#approvalToggle#about',
+		label 		 	= "Bio for Website*",
+		style			= "height:150px"
+	)#	
+	
+	<!--- Get Custom Fields --->
+	#includePartial(partial="/_partials/formFieldsRender")# 
+	<br class="clear">
 	
 	<cfif checkPermission("user_noApprovalNeeded")>	
 		#includePartial(partial="/_partials/formSeperator")#

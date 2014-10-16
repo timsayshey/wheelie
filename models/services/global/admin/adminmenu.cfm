@@ -26,6 +26,97 @@
 			url		= urlFor(route="admin~Action", controller="main", action="home")
 		});
 		
+		menuitem = arrayAppend(adminNavMain,{
+			type		= 'parent',
+			name		= 'Content',
+			icon		= 'icon-th-list',
+			permission  = 'page_save',
+			children= 
+			[
+				{
+					type	   = 'subparent',
+					name	   = 'Pages',
+					icon	   = 'icon-file-new',
+					permission = 'page_save',
+					url		   = urlFor(route="admin~Action", controller="pages", action="index"),
+					children   = [
+						{
+							type	   = 'link',
+							name	   = 'All Pages',
+							url		   = urlFor(route="admin~Action", controller="pages", action="index")
+						},
+						{
+							type	   = 'link',
+							name	   = 'Add New',
+							url		   = urlFor(route="admin~Action", controller="pages", action="new")
+						},
+						{
+							type	   = 'link',
+							name	   = 'Manage Fields',
+							url		   = urlFor(route="admin~Field", controller="metafields", action="index", modelName="pagefield")
+						}
+					]
+				},
+				{
+					type	   = 'subparent',
+					name	   = 'Posts',
+					icon	   = 'icon-pencil',
+					permission = 'post_save',
+					url		   = urlFor(route="admin~Action", controller="posts", action="index"),
+					children   = [
+						{
+							type	   = 'link',
+							name	   = 'All Posts',
+							url		   = urlFor(route="admin~Action", controller="posts", action="index")
+						},
+						{
+							type	   = 'link',
+							name	   = 'Add New',
+							url		   = urlFor(route="admin~Action", controller="posts", action="new")
+						}
+					]
+				},
+				{
+					type	   = 'subparent',
+					name	   = 'Videos',
+					icon	   = 'icon-youtube',
+					permission = 'video_save',
+					url		   = urlFor(route="admin~Action", controller="videos", action="index"),
+					children   = [
+						{
+							type	   = 'link',
+							name	   = 'All Videos',
+							url		   = urlFor(route="admin~Action", controller="videos", action="index")
+						},
+						{
+							type	   = 'link',
+							name	   = 'Add New',
+							url		   = urlFor(route="admin~Action", controller="videos", action="new")
+						},
+						{
+							type	   = 'link',
+							name	   = 'Categories',
+							url		   = urlFor(route="admin~Category", action="rearrange", modelName="videoCategory")
+						}
+					]
+				},
+				{
+					type	   = 'link',
+					name	   = 'Menus',
+					icon	   = 'icon-list',
+					permission = 'menu_save',
+					url		   = urlFor(route="admin~Action", controller="menus", action="rearrange")
+				},
+				{
+					type	   = 'link',
+					name	   = 'Newsletters',
+					icon	   = 'icon-envelope',
+					permission = 'newsletter_save',
+					url		   = urlFor(route="admin~Action", controller="newsletters", action="index")
+				}
+			]
+		});	
+		
 		// Create Children for People Menu
 		usergroupLinks = [];
 		for(usergroup in qUsergroups)
@@ -75,104 +166,18 @@
 		// menu item
 		menuitem = arrayAppend(adminNavMain,{
 			type	= 'link',
-			name	= 'To-Dos',
-			icon	= 'icon-list-alt',
-			url		= urlFor(route="admin~Action", controller="todos", action="rearrange")
-		});
-		
-		// menu item
-		menuitem = arrayAppend(adminNavMain,{
-			type	= 'link',
 			name	= 'Videos',
 			icon	= 'icon-video',
 			url		= urlFor(route="admin~id", controller="videos", action="category", id="staff")
 		});
 		
+		// menu item
 		menuitem = arrayAppend(adminNavMain,{
-			type	= 'parent',
-			name	= 'Content',
-			permission='editor',
-			icon	= 'icon-th-list',
-			children= 
-			[
-				{
-					type	   = 'subparent',
-					name	   = 'Pages',
-					icon	   = 'icon-file-new',
-					url		   = urlFor(route="admin~Action", controller="pages", action="index"),
-					children   = [
-						{
-							type	   = 'link',
-							name	   = 'All Pages',
-							url		   = urlFor(route="admin~Action", controller="pages", action="index")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Add New',
-							url		   = urlFor(route="admin~Action", controller="pages", action="new")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Manage Fields',
-							url		   = urlFor(route="admin~Field", controller="metafields", action="index", modelName="pagefield")
-						}
-					]
-				},
-				{
-					type	   = 'subparent',
-					name	   = 'Posts',
-					icon	   = 'icon-pencil',
-					url		   = urlFor(route="admin~Action", controller="posts", action="index"),
-					children   = [
-						{
-							type	   = 'link',
-							name	   = 'All Posts',
-							url		   = urlFor(route="admin~Action", controller="posts", action="index")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Add New',
-							url		   = urlFor(route="admin~Action", controller="posts", action="new")
-						}
-					]
-				},
-				{
-					type	   = 'subparent',
-					name	   = 'Videos',
-					icon	   = 'icon-youtube',
-					url		   = urlFor(route="admin~Action", controller="videos", action="index"),
-					children   = [
-						{
-							type	   = 'link',
-							name	   = 'All Videos',
-							url		   = urlFor(route="admin~Action", controller="videos", action="index")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Add New',
-							url		   = urlFor(route="admin~Action", controller="videos", action="new")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Categories',
-							url		   = urlFor(route="admin~Category", action="rearrange", modelName="videoCategory")
-						}
-					]
-				},
-				{
-					type	   = 'link',
-					name	   = 'Menus',
-					icon	   = 'icon-list',
-					url		   = urlFor(route="admin~Action", controller="menus", action="rearrange")
-				},
-				{
-					type	   = 'link',
-					name	   = 'Newsletters',
-					icon	   = 'icon-envelope',
-					url		   = urlFor(route="admin~Action", controller="newsletters", action="index")
-				}
-			]
-		});	
+			type	= 'link',
+			name	= 'To-Dos',
+			icon	= 'icon-list-alt',
+			url		= urlFor(route="admin~Action", controller="todos", action="rearrange")
+		});		
 		
 		// adminNavMore
 		menuitem = arrayAppend(adminNavMore,{

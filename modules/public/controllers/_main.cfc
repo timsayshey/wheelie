@@ -8,11 +8,16 @@ component output="false" extends="controllers.Controller"
 		secureActions = "mailUs,jobapp,jobappSubmit,newsletter,newsletterSubmit,footerbar";
 		forceHttps(only=secureActions);
 		forceHttp(except=secureActions);
-		filters(through="redirectSecureSubdomain",except=secureActions);	
+		filters(through="customPublicAppFilters,redirectSecureSubdomain",except=secureActions);	
 		
 		
 		filters(through="preHandler,setMenus");	
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,register,registerPost");
+	}
+	
+	private function customPublicAppFilters()
+	{
+		include "/modules/publicapp/publicfilters.cfm";
 	}
 	
 	private function loggedOutOnly()

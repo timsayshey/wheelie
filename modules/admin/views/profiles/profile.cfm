@@ -34,7 +34,7 @@
 			<cfset thumbpathfull = fileExists(expandPath("/assets/userpics_full/#user.id#.jpg")) ? "/assets/userpics_full/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
 			
 			<a data-lightbox="image-1" href='#thumbpathfull#' class="filethumb col-md-3 col-sm-3 col-xs-4 roundy" style="												
-				<cfif fileExists(thumbPath)>
+				<cfif fileExists(expandPath(thumbPath))>
 					background-image:url('#thumbPath#');
 				</cfif>
 			">

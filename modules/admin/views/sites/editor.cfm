@@ -75,12 +75,35 @@
 			options		= themeOptions
 		)#
 	</div>
-	
+	<br class="clear">
 	<div class="col-sm-6">
-		<label>SSL Enabled?</label><br>
+		<label>SSL Enabled</label><br>
 		#radioButton(objectName="site", property="sslenabled", tagValue="1", label="Yes ",labelPlacement="after")#<br />
 		#radioButton(objectName="site", property="sslenabled", tagValue="0", label="No ",labelPlacement="after")#
 		<div class="separator"></div>
+	</div>
+	
+	<div class="col-sm-6">
+		<label>Disable Registration</label><br>
+		#radioButton(objectName="site", property="registrationDisabled", tagValue="1", label="Yes ",labelPlacement="after")#<br />
+		#radioButton(objectName="site", property="registrationDisabled", tagValue="0", label="No ",labelPlacement="after")#
+		<div class="separator"></div>
+	</div>
+	
+	<div class="col-sm-6">
+		<label>Require User's Email Match Domain</label><br>
+		#radioButton(objectName="site", property="emailMatchDomainRequired", tagValue="1", label="Yes ",labelPlacement="after")#<br />
+		#radioButton(objectName="site", property="emailMatchDomainRequired", tagValue="0", label="No ",labelPlacement="after")#
+		<div class="separator"></div>
+	</div>
+	
+	<div class="col-sm-6 ">		
+		#btextfield(
+			objectName	= 'site', 
+			property	= 'emailMatchOtherDomains', 
+			label		= 'Alternative Domains for Email Match',
+			placeholder	= "Ex: mydomain.com, otherdomain.com"
+		)#
 	</div>
 	
 	<br class="clear">

@@ -7,10 +7,19 @@ component output="false" extends="controllers.Controller"
 		
 		forceHttps(except="");
 		
-		filters(through="adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,loginServerUser,preHandler,filterDefaults,handleRedirect");
+		filters(through="deleteEmptyPassword,adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,loginServerUser,preHandler,filterDefaults,handleRedirect");
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
 		filters(through="loggedInExcept",only="login,recovery");	
 		filters(through="setUserInfo");	
+	}
+	
+	private function deleteEmptyPassword()
+	{
+		if(!isNull(params.user.password) AND !len(params.user.password) AND !isNull(params.user.passwordConfirmation))
+		{
+			StructDelete(params.user,"password");
+			StructDelete(params.user,"passwordConfirmation");
+		}
 	}
 	
 	private function customAdminAppFilters()

@@ -43,7 +43,7 @@
 </cffunction>
 
 <cffunction name="facebookLikeButton">
-	<cfargument name="facebookid" default="#application.wheels.facebookid#">
+	<cfargument name="facebookid" default="#getOption(qOptions,'facebook_id').content#">
 	<cfargument name="style" default="width:100px; height:20px; display:inline-block; margin-right:10px; margin-top:5px;">
 	<cfif request.site.id eq 1>
 		<cfreturn '<iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;send=false&amp;layout=button_count&amp;colorscheme=light&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpages%2F#arguments.facebookid#" scrolling="no" frameborder="0" allowtransparency="true" class="fb-like-widget" style="#arguments.style#"></iframe><br>'>
@@ -159,7 +159,8 @@
 		
 		if(isNull(request.site.id))
 		{
-			loc.domain = cgi.http_host;			
+			loc.domain = cgi.http_host;
+					
 			if(listlen(loc.domain,".") GT 2)
 			{
 				loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,".") - 2,".");
@@ -177,6 +178,13 @@
 			if(isNull(db)) { datamgrInit(); }			
 			
 			loc.siteResult = siteQuery(urlid=loc.domain);
+			
+			if(!loc.siteResult.recordcount)
+			{
+				// check for localhost
+				loc.siteResult = siteQuery(urlid="localhost");
+				loc.siteResult.urlid = loc.domain;
+			}
 			//writeDump(loc.siteResult); abort;
 			//loc.siteResult = model("site").findAll(where="urlid = '#loc.domain#'");	
 			if(loc.siteResult.recordcount)
@@ -190,6 +198,7 @@
 					ssl 			= loc.siteResult.sslenabled,
 					theme 			= loc.siteResult.theme,
 					urlExtension 	= loc.siteResult.urlExtension,
+					
 					emailMatchDomainRequired = loc.siteResult.emailMatchDomainRequired,
 					emailMatchOtherDomains   = loc.siteResult.emailMatchOtherDomains,
 					registrationDisabled 	 = loc.siteResult.registrationDisabled

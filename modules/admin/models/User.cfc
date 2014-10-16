@@ -11,6 +11,7 @@
 			validatesPresenceOf("email");			
 			validatesFormatOf(property="email", type="email"); 	
 			validatesUniquenessOf(property="email", scope="siteid"); 
+			validatesLengthOf(property="password", within="4,65", message="The password length must be between 4 and 65 characters.");
 			
 			// Relations
 			hasMany("Logs");

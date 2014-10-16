@@ -681,32 +681,30 @@ CREATE TABLE `options` (
 -- ----------------------------
 -- Records of options
 -- ----------------------------
-INSERT INTO `options` VALUES ('home_id', '0', null, '942', null, '', '', '0', '0', '0', null, null, '2014-10-02 15:53:23', '224', null, null, '0');
-INSERT INTO `options` VALUES ('home_id', '60', null, '945', null, null, null, '0', '0', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:11:17', '224', null, null, '0');
-INSERT INTO `options` VALUES ('secondary_page_background', '0', null, null, null, '', '', '0', '0', '1', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('secondary_page_background', '60', null, null, null, null, null, '0', '0', '1', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_description', '0', null, null, null, '', '', '0', '1', '0', null, null, '2014-09-22 16:13:25', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_description', '60', null, null, null, null, null, '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_keywords', '0', null, null, null, '', '', '0', '1', '0', null, null, '2014-09-22 16:13:24', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_keywords', '60', null, null, null, null, null, '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_title', '0', null, null, null, '', '', '0', '1', '0', null, null, '2014-09-22 16:13:24', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_title', '60', null, null, null, null, null, '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
+INSERT INTO `options` VALUES ('home_id', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('home_id', '60', null, '1', null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_description', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_description', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_keywords', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_keywords', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_title', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_title', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
 INSERT INTO `options` VALUES ('seo_description', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_description', '60', null, null, null, null, null, '0', '0', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_description', '0', null, null, null, '', 'text', '0', '1', '0', null, null, '2014-09-22 16:15:31', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_description', '60', null, null, null, null, 'text', '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_keywords', '0', null, null, null, '', 'text', '0', '1', '0', null, null, '2014-09-22 16:13:25', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_keywords', '60', null, null, null, null, 'text', '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_title', '0', null, null, null, '', 'text', '0', '1', '0', null, null, '2014-09-22 16:13:25', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_title', '60', null, null, null, null, 'text', '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
+INSERT INTO `options` VALUES ('seo_description', '60', null, null, null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_description', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_description', '60', null, null, null, null, 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_keywords', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_keywords', '60', null, null, null, null, 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_title', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_title', '60', null, null, null, null, 'text', '0', '1', '0', null, null, null, null, null, null, '0');
 INSERT INTO `options` VALUES ('seo_keywords', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_keywords', '60', null, null, null, null, null, '0', '0', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_subpage_title', '0', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, '2014-09-22 16:13:25', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_subpage_title', '60', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_title', '0', null, null, null, '', '', '0', '1', '0', null, null, '2014-09-22 16:13:25', '224', null, null, '0');
-INSERT INTO `options` VALUES ('seo_title', '60', null, null, null, null, null, '0', '1', '0', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
-INSERT INTO `options` VALUES ('site_name_and_logo', '0', null, null, null, '', '', '0', '1', '1', null, null, '2014-09-22 16:13:25', '224', null, null, '0');
-INSERT INTO `options` VALUES ('site_name_and_logo', '60', null, null, null, null, null, '0', '1', '1', '2014-10-05 19:10:06', '224', '2014-10-05 19:10:06', '224', null, null, '0');
+INSERT INTO `options` VALUES ('seo_keywords', '60', null, null, null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_subpage_title', '0', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_subpage_title', '60', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_title', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_title', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('site_logo', '0', null, null, null, '', '', '0', '1', '1', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('site_logo', '60', null, null, null, null, null, '0', '1', '1', null, null, null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -728,65 +726,81 @@ CREATE TABLE `permissions` (
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES ('admin_menu', '1', '1', '1', '0', '0', '224', '224', '2014-10-01 10:50:43');
-INSERT INTO `permissions` VALUES ('category_delete', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('category_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('category_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('category_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('category_save', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('category_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('jobapp', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('log_read_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('menu_delete', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('menu_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('menu_save', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('menu_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:19');
-INSERT INTO `permissions` VALUES ('option_delete', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('option_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('option_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('option_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('option_save', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('option_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('page_delete', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('page_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('page_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('page_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('page_save', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('page_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('post_delete', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('post_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('post_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('post_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('post_save', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('post_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('superadmin', '1', '0', '0', '0', '0', null, '224', '2014-10-01 10:50:38');
-INSERT INTO `permissions` VALUES ('todo_delete', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('todo_delete_others', '0', '0', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('todo_read', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('todo_read_others', '0', '0', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('todo_save', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('todo_save_others', '0', '0', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('usertag_delete', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('usertag_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('usertag_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('usertag_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('usertag_save', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('usertag_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_delete', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_noApprovalNeeded', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_save', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_save_role', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('user_save_role_admin', '1', '0', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('video_delete', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('video_delete_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('video_read', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('video_read_others', '1', '1', '1', '1', '1', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('video_save', '1', '1', '1', '1', '0', '224', '224', '2014-09-30 15:39:20');
-INSERT INTO `permissions` VALUES ('video_save_others', '1', '1', '0', '0', '0', '224', '224', '2014-09-30 15:39:20');
+INSERT INTO `permissions` VALUES ('admin_menu', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('category_delete', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('category_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('category_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('category_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('category_save', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('category_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('email_full_control', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('form_delete', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('form_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('form_read', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('form_read_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('form_save', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('form_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('itdevice_full_control', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('jobapp', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('log_read_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('menu_delete', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('menu_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('menu_save', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('menu_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('newsletter_save', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('option_delete', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('option_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('option_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('option_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('option_save', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('option_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('page_delete', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('page_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('page_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('page_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('page_save', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('page_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('permission_delete', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('permission_delete_others', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('permission_read', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('permission_read_others', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('permission_save', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('permission_save_others', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('post_delete', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('post_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('post_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('post_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('post_save', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('post_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('superadmin', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('superuser_menu', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('todo_delete', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('todo_delete_others', '0', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('todo_read', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('todo_read_others', '0', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('todo_save', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('todo_save_others', '0', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('usertag_delete', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('usertag_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('usertag_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('usertag_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('usertag_save', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('usertag_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('user_delete', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('user_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('user_noApprovalNeeded', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('user_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('user_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('user_save', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('user_save_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('user_save_role', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('user_save_role_admin', '1', '0', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('video_delete', '1', '1', '1', '1', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('video_delete_others', '1', '1', '0', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('video_read', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('video_read_others', '1', '1', '1', '1', '1', null, null, null);
+INSERT INTO `permissions` VALUES ('video_save', '1', '1', '1', '0', '0', null, null, null);
+INSERT INTO `permissions` VALUES ('video_save_others', '1', '1', '0', '0', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for posts
@@ -820,11 +834,12 @@ CREATE TABLE `posts` (
   `authorName` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of posts
 -- ----------------------------
+INSERT INTO `posts` VALUES ('1', 'page', 'home', 'Home', 'Welcome home', 'default', '0', null, null, null, 'published', null, null, null, null, null, '60', null, null, null, null, null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for redirects
@@ -978,7 +993,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '9999', '0', '1', 'Get', 'Wheelie', 'Wheelie', null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'FE7874168A1593052982406379EDCAB0', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', 'draft', null, null, null, null, null, null, null, '1');
+INSERT INTO `users` VALUES ('1', '9999', '0', '1', 'Get', 'Wheelie', 'Wheelie', null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'F58319B6389F308D77D8D07DEBA42398', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', 'draft', null, null, null, null, null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for users_categories
@@ -1097,7 +1112,7 @@ CREATE TABLE `zipcodes` (
   `estimated_population` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42523 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of zipcodes

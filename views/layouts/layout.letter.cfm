@@ -62,7 +62,7 @@
 				<div class="col-md-8 col-md-offset-2">
 					<div class="page-wrap">
 						<div class="text-center">
-							<img src="/assets/css/front/logo.png" width="285" class="img-responsive">
+							<img src="#getOption(qOptions,'site_logo').attachment#" width="285" class="img-responsive">
 						</div>						
 						#includeContent()#
 					</div>

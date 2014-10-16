@@ -9,10 +9,11 @@
 		function requireEmailMatchDomain()
 		{
 			var loc = {};
-			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired)
+			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired OR list)
 			{
 				loc.domain = ListLast(trim(params.user.email),"@");
-				if(loc.domain NEQ request.site.domain)
+				
+				if(loc.domain NEQ request.site.domain AND !ListFindNoCase(request.site.emailMatchOtherDomains,loc.domain))
 				{ 
 					flashInsert(error="Sorry, you entered an invalid email address. We only accept #request.site.domain# email addresses.");
 					if(!isNull(params.id) AND params.action eq "save")

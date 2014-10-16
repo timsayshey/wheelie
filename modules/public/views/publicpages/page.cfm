@@ -33,7 +33,7 @@
 		<cfset contentFor(siteDesc = page.metadescription)>
 		<cfset contentFor(siteKeywords = page.metakeywords)>
 	<cfelseif !isNull(params.format) AND !isNull(params.id) AND ListFind("jpg,pdf,mp3",lcase(params.format))>
-		<!--- For Old Files // Should Remove Later --->
+		<!--- For Old CALO Files // Should Remove Later --->
 		<cfheader statuscode="301" statustext="Moved Permanently">
 		<cfheader name="Location" value="/assets/site/#params.id#.#params.format#">
 		<cfabort>

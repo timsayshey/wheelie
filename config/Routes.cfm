@@ -1,6 +1,10 @@
 <cfscript>
 	
 	adminUrlPath = "/manager";
+	application.wheels.adminUrlPath = adminUrlPath;
+	
+	// Custom routes
+	include "/models/services/global/approutes.cfm";
 	
 	// Admin Routes
 	var adminUrlPaths = "#adminUrlPath#,/m/admin";
