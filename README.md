@@ -17,27 +17,30 @@ Tested on Tomcat Railo 4.2 with MySQL with Windows 2008 R2.
 http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
 * Login at http://localhost/manager - email: admin@getwheelie.com - password: wheelie
 
-## Set DB, change salt and otherwise configure Wheelie by editing:
+## Docs
+
+To get up and running, set DB, change salt and otherwise configure Wheelie by editing:
+
 /models/services/global/settings.cfm
 
-### v1.0-RC2 Roadmap
+Custom Routes:
+
+/models/services/global/approutes.cfm
+
+## v1.0-RC2 Roadmap
 
 To-do
 * Need to Local scope function variables to prevent possible race conditions
 * Users: Filter by role
 * DB Migrate (To replace vanilla sql file)
 
-### This is opensource
+## Docs
 
-I am posting this work in an effort to help improve and evolve this code and to give back to the community. Pull requests appreciated!
 
-### Documentation
 
-I wish I had time to better comment the code, I will probably do this if demand grows or if someone else wants to take this on.
+## Contribute
 
-### Contribute
-
-I'm an expert at a few things, and a hack at most. Feel free to make changes and issue a pull request.
+Feel free to make changes and issue a pull request.
 
 ## LICENSE
 
