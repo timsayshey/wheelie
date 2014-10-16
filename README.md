@@ -21,8 +21,12 @@ http://{your domain}/railo-context/admin/server.cfm?action=security.access then 
 
 * **Set Password Salt, Datasource, Error Email, Environment:**  /models/services/global/settings.cfm
 * **Custom Routes:** /models/services/global/approutes.cfm
-* Everything thing else in /models/services/global is pretty much global scoped functions, feel free to add more.
-
+* **Everything thing else in /models/services/global/...** is pretty much global scoped functions, feel free to add more.
+* **Themes:** /views/themes - look at the default light-theme
+* **Other layouts and admin theme:** /views/layouts/..
+* **Static pages: (Override a DB page by placing a cfm file in a site folder with the following name pattern (id_whatever.cfm, ex 4_about.cfm)** /views/static/..
+* **Shortcode functions:** /views/plugins/..
+* **Put custom app code in:** /modules/adminapp and /modules/publicapp - look at existing models and controllers to get an idea of what controllers and models to extend.
 
 
 ## v1.0-RC2 Roadmap
