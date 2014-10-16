@@ -1,9 +1,9 @@
 # Wheelie CMS
 v1.0-RC
  
-A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi
+**A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi**
 
-## [Quick video tour](http://youtu.be/7AAMkGP-y3E)
+### Watch a quick [video tour](http://youtu.be/7AAMkGP-y3E)
 
 ## Compatibility
 
@@ -11,21 +11,19 @@ Tested on Tomcat Railo 4.2 with MySQL with Windows 2008 R2.
 
 ## Installation
 
-* Extract the contents to the root of your site. Set up a mysql datasource and import the wheelie.sql file. 
-* Then edit the config/settings.cfm and set the name of your datasource and any other settings.
+* Extract the contents to the root of your site. Set up a mysql datasource named 'wheelie' and import the wheelie_mysql.sql file. 
+* Then edit the /models/services/global/settings.cfm and set the name of your datasource and any other settings.
 * If using Railo, make sure you Log into your server admin:
 http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
 * Login at http://localhost/manager - email: admin@getwheelie.com - password: wheelie
 
-## Docs
+## Docs - quick brain dump
 
-To get up and running, set DB, change salt and otherwise configure Wheelie by editing:
+* **Set Password Salt, Datasource, Error Email, Environment:**  /models/services/global/settings.cfm
+* **Custom Routes:** /models/services/global/approutes.cfm
+* Everything thing else in /models/services/global is pretty much global scoped functions, feel free to add more.
 
-/models/services/global/settings.cfm
 
-Custom Routes:
-
-/models/services/global/approutes.cfm
 
 ## v1.0-RC2 Roadmap
 
