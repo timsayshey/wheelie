@@ -47,7 +47,7 @@
         <tr>
           <td class="container-padding" bgcolor="##ffffff" style="background-color: ##ffffff; padding-left: 30px; padding-right: 30px; font-size: 14px; line-height: 20px; font-family: Helvetica, sans-serif; color: ##333; padding-bottom:20px;">
 		  	
-			<br><img src="http://#request.site.domain#/assets/images/newsletter/newsletter_header.jpg" width="100%">		
+			<br><img src="http://#request.site.domain#/assets/img/newsletter/newsletter_header.jpg" width="100%">		
 
           </td>
         </tr>

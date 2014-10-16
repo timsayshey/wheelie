@@ -138,12 +138,12 @@
 	<cfscript>
 		if (!structKeyExists(application, 'db')) 
 		{
-			application.db = CreateObject("component","models.services.datamgr.DataMgr").init(application.wheels.dataSourceName);		
+			application.db = CreateObject("component","models.services.vendor.datamgr.DataMgr").init(application.wheels.dataSourceName);		
 		}
 		db = application.db;
 	</cfscript>	
 </cffunction>
-
+ 
 <cffunction name="siteQuery">
 	<cfargument name="urlid" required="yes">
 	<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
@@ -189,7 +189,10 @@
 					urlid 			= loc.siteResult.urlid,
 					ssl 			= loc.siteResult.sslenabled,
 					theme 			= loc.siteResult.theme,
-					urlExtension 	= loc.siteResult.urlExtension
+					urlExtension 	= loc.siteResult.urlExtension,
+					emailMatchDomainRequired = loc.siteResult.emailMatchDomainRequired,
+					emailMatchOtherDomains   = loc.siteResult.emailMatchOtherDomains,
+					registrationDisabled 	 = loc.siteResult.registrationDisabled
 				};
 			}
 			else 

@@ -93,7 +93,7 @@
 		controller="main"
     );
 	
-	// Custom App Module Routes
+	/* Custom App Module Routes 
 	addRoute(
         name="appfront~Id", 
 		pattern="app/[controller]/[action]/[id].[format]",
@@ -139,6 +139,7 @@
 		action="home",
 		controller="appback"
     );
+	*/
 	
 	// Default Module Routes
 	addRoute(
@@ -228,8 +229,14 @@
 	
 	addRoute(
         name="public~otherPages", 
-		pattern="/p/[action]",
+		pattern="/o/[action]",
         controller="otherPages"
+    );
+	
+	addRoute( 
+        name="public~pageapps", 
+		pattern="/p/[action]",
+        controller="pageapps"
     );
 	
 	addRoute(

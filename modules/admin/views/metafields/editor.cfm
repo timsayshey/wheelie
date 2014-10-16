@@ -73,6 +73,15 @@
 			placeholder	= "Ex: Coolest Field Ever"
 		)#
 	</div>
+    
+    <div class="col-sm-6 ">		
+		#btextfield(
+			objectName	= 'metafield', 
+			property	= 'identifier', 
+			label		= 'Identifier',
+			placeholder	= "Ex: coolest-field-ever"
+		)#
+	</div>
 	
 	<div class="col-sm-6 ">	
 		#bselecttag(

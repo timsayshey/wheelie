@@ -9,7 +9,7 @@
 		function sharedGlobalData()
 		{
 			qOptions = model("Option").findAll();
-			qUsergroups = model("Usergroup").findAll();
+			//qUsergroups = model("Usergroup").findAll();
 		}
 	
 		/* Multisite: Set Site Settings

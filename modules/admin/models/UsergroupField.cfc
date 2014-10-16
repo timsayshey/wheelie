@@ -18,7 +18,21 @@
 			
 			// Map column
 			//property(name="usergroupid", column="usergroupid")
-		}		
+			
+			validatesUniquenessOf(property="identifier", scope="siteid");
+			validatesPresenceOf(property="identifier", when="onCreate");
+			beforeSave("sanitizeIdentifier");
+			
+		}	
+		
+		// Clean strings
+		private function sanitizeIdentifier()
+		{
+			if(!isNull(this.identifier) AND len(this.identifier))
+			{		
+				this.identifier 	= lcase(cleanUrlId(this.identifier));		
+			}
+		}	
 		
 		function setWhere()
 		{

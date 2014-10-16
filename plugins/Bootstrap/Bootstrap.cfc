@@ -82,7 +82,7 @@
 			
 			if(!len(arguments.filepath) OR !FileExists(ExpandPath(arguments.filepath)))
 			{ 
-				arguments.filepath = "/assets/images/upload-thumb-50x50.png";
+				arguments.filepath = "/assets/img/upload-thumb-50x50.png";
 			}
 			
 			if(len(arguments.help)) {

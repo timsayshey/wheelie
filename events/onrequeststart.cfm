@@ -1,18 +1,22 @@
-<cfset setSiteInfo()>
+<cfscript>
+	setSiteInfo();
 
-<cfinclude template="/models/services/global/settings.cfm">
-
-<cfif isNull(session.referer) AND !Find("#request.site.domain#",lcase(cgi.http_referer)) AND len(trim(cgi.http_referer))>
-	<cfset session.referer = cgi.http_referer>
-</cfif>
-
-<cfif isNull(session.entryPage)>
-	<cfset session.entryPage = cgi.path_info>
-</cfif>
-
-<cfinclude template="/models/services/global/global.cfm">
-
-<cfset redirects()>
+	include "/models/services/global/settings.cfm";
+	
+	if(isNull(session.referer) AND !Find("#request.site.domain#",lcase(cgi.http_referer)) AND len(trim(cgi.http_referer)))
+	{
+		session.referer = cgi.http_referer;
+	}
+	
+	if(isNull(session.entryPage))
+	{
+		session.entryPage = cgi.path_info;
+	}
+	
+	include "/models/services/global/global.cfm";
+	
+	redirects();
+</cfscript>
 
 <!--- Remove beginning/ending whitespace from params --->
 <cfif StructCount(form)>

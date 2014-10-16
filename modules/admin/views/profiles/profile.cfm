@@ -29,16 +29,16 @@
 				
 		<div id="about" style="margin:0 auto; text-align:center; max-width:500px">
 		
-			<cfset thumbpath = fileExists(expandPath("/assets/userpics/#user.id#.jpg")) ? "/assets/userpics/#user.id#.jpg" : '/assets/images/user_thumbholder.jpg'>
+			<cfset thumbpath = fileExists(expandPath("/assets/userpics/#user.id#.jpg")) ? "/assets/userpics/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
 			
-			<cfset thumbpathfull = fileExists(expandPath("/assets/userpics_full/#user.id#.jpg")) ? "/assets/userpics_full/#user.id#.jpg" : '/assets/images/user_thumbholder.jpg'>
+			<cfset thumbpathfull = fileExists(expandPath("/assets/userpics_full/#user.id#.jpg")) ? "/assets/userpics_full/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
 			
 			<a data-lightbox="image-1" href='#thumbpathfull#' class="filethumb col-md-3 col-sm-3 col-xs-4 roundy" style="												
 				<cfif fileExists(thumbPath)>
 					background-image:url('#thumbPath#');
 				</cfif>
 			">
-				<img src="/assets/images/overlay.png">
+				<img src="/assets/img/overlay.png">
 			</a>
 			
 			<h3 class="media-heading">#capitalize(user.firstName)# #capitalize(user.lastName)# #user.designatory_letters#</h3>

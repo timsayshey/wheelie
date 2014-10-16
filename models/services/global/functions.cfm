@@ -1,6 +1,7 @@
 <cfinclude template="/models/services/global/settings.cfm">
 
 <cfinclude template="/models/services/global/admin/plupload.cfm">
+<cfinclude template="/models/services/global/admin/adminmenu.cfm">
 <cfinclude template="/models/services/global/admin/meta.cfm">
 <cfinclude template="/models/services/global/admin/shared.cfm">
 <cfinclude template="/models/services/global/admin/nestable.cfm">
@@ -19,7 +20,7 @@
 	info.domain		 = "http://#info.domainshort#";
 	info.rootPath    = "/";
 	info.assetsPath  = "/assets/";
-	info.imagesPath  = "/assets/images/";
+	info.imagesPath  = "/assets/img/";
 	info.uploadsPath = "/assets/uploads/";		
 	info.videosPath  = "/assets/uploads/videos/";
 	info.mediaPath   = "/assets/uploads/media/";
@@ -46,9 +47,9 @@
 	};
 	
 	// Only available after initial run
-	if (!isNull(Application.videoConverter))
+	if (!isNull(Application.db))
 	{
-		videoconverter	= application.videoConverter;
+		//videoconverter	= application.videoConverter;
 		db 				= application.db;
 		youtube			= application.yt;
 		_				= application._;

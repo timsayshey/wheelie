@@ -1,18 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : farm.outerplex
-Source Server Version : 50173
-Source Host           : 192.126.90.95:3306
-Source Database       : admin_farmouterplex
-
-Target Server Type    : MYSQL
-Target Server Version : 50173
-File Encoding         : 65001
-
-Date: 2014-10-14 22:58:42
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -867,6 +852,9 @@ CREATE TABLE `sites` (
   `subdomain` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sslenabled` int(11) DEFAULT '0',
+  `registrationDisabled` int(1) DEFAULT '0',
+  `emailMatchDomainRequired` int(1) DEFAULT '0',
+  `emailMatchOtherDomains` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `theme` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlExtension` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `siteid` int(11) DEFAULT NULL,
@@ -883,7 +871,7 @@ CREATE TABLE `sites` (
 -- ----------------------------
 -- Records of sites
 -- ----------------------------
-INSERT INTO `sites` VALUES ('60', 'Wheelie CMS', null, 'localhost', '0', 'light-theme', null, '60', '2014-10-05 19:10:06', '1', '2014-10-05 19:10:06', '1', null, null, '1');
+INSERT INTO `sites` VALUES ('60', 'Wheelie CMS', null, 'localhost', '0', '0', '0', null, 'light-theme', null, '60', '2014-10-05 19:10:06', '1', '2014-10-05 19:10:06', '1', null, null, '1');
 
 -- ----------------------------
 -- Table structure for todos
@@ -974,7 +962,7 @@ CREATE TABLE `users` (
   `birthday` datetime DEFAULT NULL,
   `showOnSite` int(1) DEFAULT '0',
   `start_date` datetime DEFAULT NULL,
-  `role` varchar(255) COLLATE utf8_unicode_ci,
+  `role` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'draft',
   `siteid` int(11) DEFAULT NULL,
   `createdat` datetime DEFAULT NULL,
@@ -990,7 +978,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '9999', '0', '1', 'Get', 'Wheelie', 'Wheelie', null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'FE7874168A1593052982406379EDCAB0', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', 'draft', null, 'staff', null, null, null, null, null, null, '1');
+INSERT INTO `users` VALUES ('1', '9999', '0', '1', 'Get', 'Wheelie', 'Wheelie', null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'FE7874168A1593052982406379EDCAB0', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', 'draft', null, null, null, null, null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for users_categories

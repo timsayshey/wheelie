@@ -132,7 +132,7 @@
 																			<cfset rowColor = "##efefef">
 																		</cfif>
 																		<tr>
-																			<td style="padding:.5em; background-color:#rowColor#;"><img src="http://#request.site.domain#/assets/images/checkmark_icon.png" width="20" height="20"></td>
+																			<td style="padding:.5em; background-color:#rowColor#;"><img src="http://#request.site.domain#/assets/img/checkmark_icon.png" width="20" height="20"></td>
 																			<td style="padding:.5em; background-color:#rowColor#;"><strong>#todos.name#</strong><br>
 #todos.description# 																				</td>
 																			<td style="padding:.5em; background-color:#rowColor#;">#DateFormat(todos.isDone,"MMMM D, YYYY")# </td>

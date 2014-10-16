@@ -2,15 +2,24 @@
 	<cfset contentFor(siteTitle = getOption(qOptions,'seo_homepage_title').label)>
 	<cfset contentFor(siteDesc = getOption(qOptions,'seo_homepage_description').label)>
 	<cfset contentFor(siteKeywords = getOption(qOptions,'seo_homepage_keywords').label)>	
+    
+	<!--- Check Static Page --->
+    <cfset staticDir = "/views/static/">	
+	<cfset staticPathFull = expandPath(staticDir)>
 	
-	<cfset staticPath = "/views/static/#request.site.urlid#/home.cfm">
+	<!--- Find Static Folder ie "3 - My Site" --->
+	<cfdirectory action="list" directory="#staticPathFull#" listinfo="name" name="qStaticDir" filter="#request.site.id#_*" />
+	
+	<cfset staticPath = "#staticDir##qStaticDir.name#/home.cfm">
     <cfset staticPathFull = expandPath(staticPath)>
     
-    <cfif FileExists(staticPath)>
-    	<cfset contentFor(staticPage = true)>
+    <cfif FileExists(staticPathFull)>
+    	<!--- Load Static Page --->
+		<cfset contentFor(staticPage = true)>
     	<cfinclude template="#staticPath#">
     <cfelse>
-    	<cfset pagetitleTemplate = getThemeTemplate("page-home")>
+    	<!--- Load DB Page --->
+		<cfset pagetitleTemplate = getThemeTemplate("page-home")>
 		
 		<cfset page.content = processShortcodes(page.content)>
 		

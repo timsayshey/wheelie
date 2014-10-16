@@ -1,22 +1,26 @@
-3<cfscript>
+<cfscript>
 	component extends="_main" 
 	{
 		function init() 
 		{
 			super.init();
-			//filters(through="requireEmailMatchDomain");
 		}
 		
 		function requireEmailMatchDomain()
 		{
 			var loc = {};
-			if(!isNull(params.user.email))
+			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired)
 			{
 				loc.domain = ListLast(trim(params.user.email),"@");
 				if(loc.domain NEQ request.site.domain)
 				{ 
 					flashInsert(error="Sorry, you entered an invalid email address. We only accept #request.site.domain# email addresses.");
-					redirectTo(route="admin~action", action="login", controller="users");
+					if(!isNull(params.id) AND params.action eq "save")
+					{
+						redirectTo(route="admin~id", action="edit", controller="users", id=params.id);
+					} else {
+						redirectTo(route="admin~action", action="login", controller="users");
+					}
 				}
 			}			
 		}
@@ -150,12 +154,19 @@
 		
 		function register()
 		{			
+			if(request.site.registrationDisabled)
+			{
+				redirectTo(route="admin~Index", module="admin", controller="users"); abort;
+			}
+			
 			// Queries
 			user = model("User").new(colStruct("User"));
 		}
 		
 		function registerPost()
 		{				
+			requireEmailMatchDomain();
+			
 			request.newRegistration = true;
 			
 			// Save Portrait
@@ -268,6 +279,8 @@
 		
 		function save()
 		{							
+			requireEmailMatchDomain();
+			
 			param name="params.usertags" default="";		
 			param name="params.usergroups" default="";		
 			

@@ -68,7 +68,7 @@
 						title			= qVideos.name,
 						description		= qVideos.description,
 						controllerName	= "videos",
-						overlayImage	= "/assets/images/videooverlay.png",
+						overlayImage	= "/assets/img/videooverlay.png",
 						href			= "href='#urlFor(
 							route		= "admin~Id",
 							module		= "admin",

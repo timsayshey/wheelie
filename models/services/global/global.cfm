@@ -22,25 +22,25 @@
 		
 		// Setup Underscore.cfc
 		if (!structKeyExists(application, '_') or isReload) {
-			application._ = CreateObject("component","models.services.lib.underscore").init();
-		}
+			application._ = CreateObject("component","models.services.vendor.underscore").init();
+		} 
 		
 		// Setup Youtube.cfc
 		if (!structKeyExists(application, 'yt') or isReload) {			
-			application.yt = CreateObject("component","models.services.lib.youtube").init(
+			application.yt = CreateObject("component","models.services.vendor.youtube").init(
 				devkey = application.wheels.youtubeDevKey
 			);		
 		}
 		
 		// Setup Validateit.cfc
 		if (!structKeyExists(application, 'validateit') or isReload) {
-			application.validateit = CreateObject("component","models.services.lib.validateit").init();	
+			application.validateit = CreateObject("component","models.services.vendor.validateit").init();	
 		}
 		
 		/* Setup VideoConverter 
 		if (!structKeyExists(application, 'videoConverter') or isReload) {
-			videoFileMgr = CreateObject("component","models.services.videoconverter.FileMgr").init(info.fileuploads,info.uploadsPath);
-			application.videoConverter = CreateObject("component","models.services.videoconverter.VideoConverter").init(videoFileMgr);
+			videoFileMgr = CreateObject("component","models.services.vendor.videoconverter.FileMgr").init(info.fileuploads,info.uploadsPath);
+			application.videoConverter = CreateObject("component","models.services.vendor.videoconverter.VideoConverter").init(videoFileMgr);
 		}*/	
 		
 		// Setup filemanager
@@ -49,17 +49,19 @@
 			
 		}	
 		
-		application.fileMgr = CreateObject("component","models.services.lib.filemgr").init(info.fileuploads,info.uploadsPath);
+		application.fileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.fileuploads,info.uploadsPath);
 		
 		// Setup filemanager
 		if (!structKeyExists(application, 'privatefileMgr') or isReload) {
-			application.privateFileMgr = CreateObject("component","models.services.lib.filemgr").init(info.privateroot,info.privateRootPath);
+			application.privateFileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.privateroot,info.privateRootPath);
 		}	
 		
 		// Setup pagination
-		if (!structKeyExists(application, 'pagination') or isReload) {}
-			application.pagination = CreateObject("component","models.services.lib.pagination").init();
+		if (!structKeyExists(application, 'pagination') or isReload) {
+			application.pagination = CreateObject("component","models.services.vendor.pagination").init();
+		}
 		
+		//writeDump(application.pagination); abort;
 		
 		// Make them accessible from local scope	
 		validate		= application.validateit;

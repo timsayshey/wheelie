@@ -37,7 +37,8 @@
 						</div>
 						<div class="panel-footer">
 							<!--- <span class="login-link">Not Registered? <a href='#urlFor(route="admin~Action", module="admin", controller="users", action="register")#'>Register here</a></span> --->
-							<a class="pull-left" href='#urlFor(route="admin~Action", module="admin", controller="users", action="register")#'>Register</a>							
+							
+							<cfif !request.site.registrationDisabled><a class="pull-left" href='#urlFor(route="admin~Action", module="admin", controller="users", action="register")#'>Register</a></cfif>							
 							<a class="lost-password pull-right" href='#urlFor(route="admin~Action", module="admin", controller="users", action="recovery")#'>Forgot pass?</a>
 							<br class="clear">
 						</div>

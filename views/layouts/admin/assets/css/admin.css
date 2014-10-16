@@ -1,9 +1,61 @@
 body {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 14px;
 	line-height: 1.428571429;
 	color: #2c3e50;
 	background-color: #eaf0f1;
+}
+.ui-sortable-placeholder {
+	background:#fefefe;
+	border: dashed 2px #999;	
+}
+.formHeader {
+	background: #eee;
+	padding: 10px;
+	margin: 0;
+	margin-bottom: 20px;
+	border-bottom:1px solid #ddd;	
+}
+.userdetails {
+	font-size:11px;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.userdetails .elusive {
+	font-size:14px;	
+}
+.data-header-actions {
+	margin-bottom:0;	
+}
+input[type=radio] {
+	margin-right:5px;	
+}
+.dateSelect {
+	height: 30px;
+	padding: 5px 8px;
+	font-size: 13px;
+	line-height: 1.4;	
+}
+.hero {
+	background:#54a5de !important;
+	margin:0 14px;
+}
+.hero * {
+	color:#fff;
+}
+.hero h2 {
+	font-size:33px;
+	margin-top:0;	
+}
+.cardy section {
+	padding:20px;
+	text-align:center;
+}
+.cardy.col-sm-3 a, .cardy.col-sm-3 span {
+	display:block;
+	margin-top:10px;
+}
+.cardy-title {
+	font-size:18px;
+	font-weight:bold;	
 }
 .filethumb img {
 	width:100%;	
@@ -30,7 +82,7 @@ body {
 }
 .jumbotron.blue {
 	color:#fff;
-	background:#4d90fe;	
+	background:#54a5de;	
 }
 .btn-linky.btn-danger, .btn-linky.btn-danger:hover {
 	background:#d14836;
@@ -63,7 +115,7 @@ body {
 }
 .icon-btn-lg:hover {
 	color:#fff;
-	background:#4d90fe;		
+	background:#54a5de;		
 }
 .icon-btn-lg:hover, .icon-btn-lg:active, .icon-btn-lg:visited {
 	text-decoration:none;	
@@ -125,7 +177,7 @@ input.itemselector {
 }
 .data-block header {
 	padding: 10px 10px 10px 15px;
-	background: #4d90fe;
+	background: #54a5de;
 	border-top-right-radius: 2px;
 	border-top-left-radius: 2px;
 }

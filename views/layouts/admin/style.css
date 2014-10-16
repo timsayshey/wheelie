@@ -1,16 +1,81 @@
-body * {
-	font-family:Arial, Helvetica, sans-serif;	
-}
-
 input[type="checkbox"], input[type="radio"] {
    -webkit-appearance: none;
    -moz-appearance:    none;
    appearance:         none;
+   cursor:pointer;
 }
-
+.videoNotExists .wiz_thumb input[type="radio"] {
+	margin: 3px auto;
+}
+#nestable {
+	padding:0;
+		
+}
+.opacity50 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+}
+.newsletterPreview {
+	overflow:scroll;
+	height:500px;
+	width:100%;
+	border:2px solid #ddd;	
+}
+.userinfo {
+margin: 0;
+}
+.navbar-masthead {
+border-radius: 0;
+}
+.main-navigation {
+margin-top: 0;
+}
 /* Preloader */
 body {
-	overflow: hidden;
+	overflow: visible;
+	background:#eee;
+}
+.headerwrap {
+	background:#fff;	
+	margin-bottom: 0;	
+}
+#header {
+	padding: 10px 0;
+	margin-bottom: 0;
+}
+.navbar.navigaty {
+	box-shadow:none;
+	border:0;	
+}
+.navwrapper {
+	background:#444;
+	margin-bottom:20px;
+	box-shadow: 0 2px 1px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.1);
+}
+#preloader {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-image:url(../../images/FFFFFF-0.83.png);
+	z-index:99999; /* makes sure it stays on top */
+	display:none;
+}
+#status {
+	width:200px;
+	height:200px;
+	position:absolute;
+	left:50%; /* centers the loading animation horizontally one the screen */
+	top:50%; /* centers the loading animation vertically one the screen */
+	background-image:url(../../images/status.gif); /* path to your loading animation */
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:-100px 0 0 -100px; /* is width and height divided by two */
+	display:none;
 }
 .navbar {
 	z-index:99;	
@@ -56,26 +121,7 @@ body {
 .listitem .tags .elusive {
 	font-size:20px;	
 }
-#preloader {
-	position: fixed;
-	top:0;
-	left:0;
-	right:0;
-	bottom:0;
-	background-image:url(../../images/FFFFFF-0.83.png);
-	z-index:99999; /* makes sure it stays on top */
-}
-#status {
-	width:200px;
-	height:200px;
-	position:absolute;
-	left:50%; /* centers the loading animation horizontally one the screen */
-	top:50%; /* centers the loading animation vertically one the screen */
-	background-image:url(../../images/status.gif); /* path to your loading animation */
-	background-repeat:no-repeat;
-	background-position:center;
-	margin:-100px 0 0 -100px; /* is width and height divided by two */
-}
+
 .dropdown-menu .btn-danger {
 	color:#fff;
 }
@@ -468,15 +514,124 @@ hr {
 	background: #CDEB8B;
 }
 
-.navwrapper {
-	margin-bottom:20px;	
+/* carousel */
+#quote-carousel 
+{
+  padding: 0 10px 30px 10px;
+  margin-top: 30px 0px 0px;
 }
-#header {
-	margin-bottom:0;	
+
+/* Control buttons  */
+#quote-carousel .carousel-control
+{
+  background: none;
+  color: #222;
+  font-size: 2.3em;
+  text-shadow: none;
+  margin-top: 30px;
 }
-.data-header-actions {
-	margin-bottom:0;	
+/* Previous button  */
+#quote-carousel .carousel-control.left 
+{
+  left: -12px;
 }
-.userinfo {
-margin: 0;
+/* Next button  */
+#quote-carousel .carousel-control.right 
+{
+  right: -12px !important;
+}
+/* Changes the position of the indicators */
+#quote-carousel .carousel-indicators 
+{
+  right: 50%;
+  top: auto;
+  bottom: 0px;
+  margin-right: -19px;
+}
+/* Changes the color of the indicators */
+#quote-carousel .carousel-indicators li 
+{
+  background: #c0c0c0;
+}
+#quote-carousel .carousel-indicators .active 
+{
+  background: #333333;
+}
+#quote-carousel img
+{
+  width: 250px;
+  height: 100px
+}
+/* End carousel */
+
+.item blockquote {
+    border-left: none; 
+    margin: 0;
+}
+
+.item blockquote img {
+    margin-bottom: 10px;
+}
+
+.item blockquote p:before {
+    content: "\f10d";
+    font-family: 'Fontawesome';
+    float: left;
+    margin-right: 10px;
+}
+
+
+
+/**
+  MEDIA QUERIES
+*/
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    #quote-carousel 
+    {
+      margin-bottom: 0;
+      padding: 0 40px 30px 40px;
+      margin-top: 30px;
+    }
+    
+}
+
+/* Small devices (tablets, up to 768px) */
+@media (max-width: 768px) { 
+    
+    /* Make the indicators larger for easier clicking with fingers/thumb on mobile */
+    
+    #quote-carousel .carousel-indicators {
+        bottom: -20px !important;  
+    }
+    #quote-carousel .carousel-indicators li {
+        display: inline-block;
+        margin: 0px 5px;
+        width: 15px;
+        height: 15px;
+    }
+    #quote-carousel .carousel-indicators li.active {
+        margin: 0px 5px;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.navbar-toggle {
+	background:none;
+	background:#fff !important;	
+}
+
+.logo-top {
+	font-size:30px;
+	font-weight:700;
+}
+a {
+	color:#54a5de
+}
+.dropdown-menu {
+	padding: 6px 0;
+	margin: 1px 0 0;
+	font-size: 12px;
 }

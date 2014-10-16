@@ -7,10 +7,15 @@ component output="false" extends="controllers.Controller"
 		
 		forceHttps(except="");
 		
-		filters(through="checkUserSessionSite,loginServerUser,preHandler,filterDefaults,handleRedirect");
+		filters(through="adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,loginServerUser,preHandler,filterDefaults,handleRedirect");
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
 		filters(through="loggedInExcept",only="login,recovery");	
 		filters(through="setUserInfo");	
+	}
+	
+	private function customAdminAppFilters()
+	{
+		include "/modules/adminapp/adminfilters.cfm";
 	}
 	
 	private function checkUserSessionSite()
@@ -25,7 +30,9 @@ component output="false" extends="controllers.Controller"
 	
 	private function loginServerUser()
 	{
-		if(trim(getIpAddress()) eq "192.126.91.245")
+		serverIp = CreateObject("java", "java.net.InetAddress").getLocalHost().getHostAddress();
+		
+		if(trim(getIpAddress()) eq serverIp)
 		{			
 			session.user.id = 1;
 			mailgun(
@@ -199,17 +206,24 @@ component output="false" extends="controllers.Controller"
 		// Authenticate
 		if(StructKeyExists(session,"user"))
 		{
-			var user = model("User").findAll(where="id = '#session.user.id#'");
+			var user = model("UserGroupJoin").findAll(where="userid = '#session.user.id#'", include="User,UserGroup");
+			//var user = model("User").findAll(where="id = '#session.user.id#'");
 			session.user = {
-				id 			= user.id,
+				id 			= user.userid,
 				fullname 	= user.firstname & " " & user.lastname,
 				firstname 	= user.firstname,
 				lastname 	= user.lastname,
-				role 		= user.role,
+				role		= user.usergrouprole,
 				email 		= user.email,
 				siteid		= user.siteid,
 				globalized	= user.globalized
 			};
+			
+			if(len(trim(user.role)))
+			{
+				session.user.role = user.role;
+			}
+			
 			if(len(trim(session.user.id)) eq 0)
 			{
 				flashInsert(error="There was an issue with your account. Try again.");			

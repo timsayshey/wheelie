@@ -6,7 +6,7 @@
 	<cfparam name="description">
 	<cfparam name="thumbPath" default="">
 	<cfparam name="controllerName" default="">
-	<cfparam name="overlayImage" default="/assets/images/overlay.png">
+	<cfparam name="overlayImage" default="/assets/img/overlay.png">
 	<cfset editPath = urlFor(							
 						route		= "admin~Id",
 						module		= "admin",
@@ -29,9 +29,10 @@
 			<div class="well bootsnipp-thumb">		
 			
 				<cfif len(thumbPath)>
+				
 					<a #href# class="filethumb col-md-3 col-sm-3 col-xs-4 roundy" style="		
 															
-						<cfif fileExists(thumbPath)>
+						<cfif fileExists(expandPath(thumbPath))>
 							background-image:url('#thumbPath#');
 						</cfif>
 					">

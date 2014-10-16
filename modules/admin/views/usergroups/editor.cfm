@@ -63,6 +63,18 @@
 			#radioButton(objectName="usergroup", property="globalized", tagValue="1", label="Yes ",labelPlacement="after")#<br />
 			#radioButton(objectName="usergroup", property="globalized", tagValue="0", label="No ",labelPlacement="after")#
 		</div>
+        
+		<cfset roles = ["","superuser","admin","editor","user","guest"]>	
+        
+        <div class="col-sm-6">	
+            #bselect(
+                objectName		= 'usergroup',
+                property		= 'role',
+                label			= 'Role',
+                options			= roles
+            )#
+        </div>
+            
 	</cfif>
 	
 	<br class="clear">

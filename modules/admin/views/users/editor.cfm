@@ -61,28 +61,20 @@
 		)#
 	</div>
 	
-	<cfif checkPermission("user_save_role")>	
-		<cfset roles = ["user","guest"]>		
-		<cfif checkPermission("user_save_role_admin")>	
-			<cfset ArrayPrepend(roles,"superuser")>	
-			<cfset ArrayPrepend(roles,"admin")>
-			<cfset ArrayPrepend(roles,"editor")>			
-		</cfif>				
-		<cfif !isNull(user.role) AND !ArrayFind(roles,user.role)>
-			<cfset ArrayPrepend(roles,user.role)>
-		</cfif>		
-		
+	<cfif checkPermission("user_save_role_admin")>	
+		<cfset roles = ["","superuser","admin","editor","user","guest"]>			
 		<div class="col-sm-6">	
 			#bselect(
 				objectName		= 'user',
 				property		= 'role',
-				label			= 'Role',
+				label			= 'Override Usergroup Role',
 				options			= roles
 			)#
 		</div>
 	<cfelse>
 		<br class="clear" />							
-	</cfif>
+	</cfif> 
+    <br class="clear" />
 
 	<cfset approvalToggle = "">
 	<cfif checkPermission("user_noApprovalNeeded") OR user.showOnSite eq 0>	

@@ -79,7 +79,12 @@
 			<!---#includeIECSS#--->
 			#includeIEJS#
 		<![endif]-->
-		
+		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
+		<style type="text/css">
+			*, strong, h1, h2, h3, h4 {
+				font-family:'Montserrat', sans-serif !important
+			}
+		</style>
 	</head>
 	<body>
 		
@@ -88,8 +93,9 @@
 
 			<!-- Main page header -->
 			<header id="header" class="container">
+				<div class="col-md-12">
 				
-				<a href='#urlFor(route="admin~Action", controller="main", action="home")#'  id="logo"><h2 style="display:inline-block; margin:0;">#request.site.name#</h2></a>	
+				<a href='#urlFor(route="admin~Action", controller="main", action="home")#' class="logo-top">#request.site.name#</a>	
 								
 				<cfif !isNull(session.user)>
 					<div class="userinfo col-sm-3 pull-right">
@@ -97,12 +103,12 @@
 							<img src="/assets/userpics/#session.user.id#.jpg">
 							<figcaption>
 								<cfset editAccount = urlFor(									
-										route		= "admin~Id",
-										module		= "admin",
-										controller	= "profiles",
-										action		= "profile",
-										id			= session.user.id
-									)>
+									route		= "admin~Id",
+									module		= "admin",
+									controller	= "profiles",
+									action		= "profile",
+									id			= session.user.id
+								)>
 								<strong><a href='#editAccount#'>#session.user.fullname#</a></strong>
 								<ul>
 									<li><a href='#editAccount#'>my profile</a></li>
@@ -112,21 +118,36 @@
 						</figure>
 					</div>
 				</cfif>
-			</header>
-		</div>
-		<div id="wrapper" class="navwrapper">
-			<header class="container">					
-				<nav class="main-navigation navbar navbar-masthead navbar-default" role="navigation">
+				
+				<br class="clear">
+				</div>
+				</header>
+			</div>
+			<div id="wrapper" class="navwrapper">
+				<header class="container">
+				<div class="col-md-12">
+				<!-- Main navigation -->
+				<nav class="main-navigation navbar navbar-masthead navbar-inverse navigaty" role="navigation">
+
+					<!-- Collapse navigation for mobile -->
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navigation-collapse">
 							Menu
 						</button>
 					</div>
+					<!-- /Collapse navigation for mobile -->
+
+					<!-- Navigation -->
 					<div class="main-navigation-collapse collapse navbar-collapse">
-						#includePartial(partial="/_partials/adminMenu")#
+						<cfif !isNull(session.user)>
+							#includePartial(partial="/_partials/adminMenu")#
+						</cfif>
 					</div>
-				</nav>
-			</header>			
+					<!-- /Navigation -->
+			</div>
+			</header>
+			<!-- /Main page header -->
+			
 		</div>
 		<div id="wrapper">
 			<cfif NOT flashIsEmpty()>
@@ -272,7 +293,11 @@
 		<cfif len(includeContent("selectize")) OR len(includeContent("formy"))>
 		
 			#styleSheetLinkTag(sources='vendor/selectize/css/selectize.bootstrap3.css')#
-			#javaScriptIncludeTag(sources='vendor/selectize/js/standalone/microplugin.min.js,vendor/selectize/js/standalone/sifter.min.js,vendor/selectize/js/standalone/selectize.js')#
+			#javaScriptIncludeTag(sources='
+				vendor/selectize/js/standalone/microplugin.min.js,
+				vendor/selectize/js/standalone/sifter.min.js,
+				vendor/selectize/js/standalone/selectize.js
+			')#
 			
 			<script type="text/javascript">
 				$(function() {

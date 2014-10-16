@@ -68,6 +68,7 @@
 		<cfquery name="fieldQuery" datasource="#application.wheels.dataSourceName#">
 			SELECT
 				metafields.id,
+                metafields.identifier,
 				metafields.modelid,
 				metafields.name,
 				metafields.type,

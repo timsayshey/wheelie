@@ -53,7 +53,7 @@
 					item: function(item, escape) {
 						return  '<div>' +
 									'<div class="filethumb col-md-3 col-sm-3 col-xs-3 roundy" style="background-image:url(' + escape(item.thumb) + ');">' +
-										'<img src="/assets/images/videooverlay.png">' +
+										'<img src="/assets/img/videooverlay.png">' +
 									'</div>' +
 									'<div class="col-md-9 col-sm-9 col-xs-9">' +
 										'<span class="boxtitle">' + escape(item.name) + '</span>' +
@@ -68,7 +68,7 @@
 						var caption = item.name ? item.thumb : null;
 						return '<div>' +
 									'<div class="filethumb col-md-3 col-sm-3 col-xs-3 roundy" style="background-image:url(' + escape(item.thumb) + ');">' +
-										'<img src="/assets/images/videooverlay.png">' +
+										'<img src="/assets/img/videooverlay.png">' +
 									'</div>' +
 									'<div class="col-md-9 col-sm-9 col-xs-9">' +
 										'<span class="boxtitle">' + escape(item.name) + '</span>' +

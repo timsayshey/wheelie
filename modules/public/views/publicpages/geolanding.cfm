@@ -8,7 +8,7 @@
 
 <cfset request.page.hideSidebar = true>
 
-<cfset pic1 = '<div class="photo_sq pull-right"><img src="/assets/images/photo_sq.jpg" alt="Blah blah" /></div>'>
+<cfset pic1 = '<div class="photo_sq pull-right"><img src="/assets/img/photo_sq.jpg" alt="Blah blah" /></div>'>
 
 <cfif landingPage.templateid eq 1>
 <!--- Template --->
