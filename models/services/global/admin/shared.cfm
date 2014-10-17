@@ -125,19 +125,6 @@
 		<cfreturn cleanstring>
 	</cffunction>
 	
-	<cffunction name="fixFilePathSlashes" output="no">		
-		<cfargument name="dirtystring">
-		
-		<cfscript>
-			cleanstring = replace(dirtystring,"\/","\","ALL");	
-			cleanstring = replace(cleanstring,"\\","\","ALL");	
-			cleanstring = replace(cleanstring,"//","\","ALL");	
-			cleanstring = replace(cleanstring,"/","\","ALL");	
-		</cfscript>
-		
-		<cfreturn cleanstring>
-	</cffunction>
-	
 	<cffunction name="bytesToMegabytes" output="no">		
 		<cfargument name="byteInput">
 		

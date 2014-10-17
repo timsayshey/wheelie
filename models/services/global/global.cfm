@@ -18,7 +18,11 @@
 		}
 		
 		// Setup DataMgr
-		datamgrInit();
+		if (!structKeyExists(application, 'db') or isReload) 
+		{
+			application.db = CreateObject("component","models.services.vendor.datamgr.DataMgr").init(application.wheels.dataSourceName);		
+		}
+		db = application.db;
 		
 		// Setup Underscore.cfc
 		if (!structKeyExists(application, '_') or isReload) {
@@ -64,14 +68,7 @@
 		//writeDump(application.pagination); abort;
 		
 		// Make them accessible from local scope	
-		validate		= application.validateit;
-		//videoconverter	= application.videoConverter;
-		db 				= application.db;
-		youtube			= application.yt;
-		_				= application._;
-		fileMgr			= application.fileMgr;
-		privateFileMgr	= application.privateFileMgr;
-		pagination 		= application.pagination;
+		include "/models/services/global/init/setservices.cfm";
 	</cfscript>
 	
 	<!--- Set User Permissions --->
