@@ -39,7 +39,7 @@ component output="false" extends="controllers.Controller"
 	
 	private function loginServerUser()
 	{
-		serverIp = CreateObject("java", "java.net.InetAddress").getLocalHost().getHostAddress();
+		serverIp = ""; // Auto login server for tasks by IP - put your ip here
 		
 		if(trim(getIpAddress()) eq serverIp)
 		{			
