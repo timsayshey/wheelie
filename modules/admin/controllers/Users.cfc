@@ -9,7 +9,7 @@
 		function requireEmailMatchDomain()
 		{
 			var loc = {};
-			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired OR list)
+			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired)
 			{
 				loc.domain = ListLast(trim(params.user.email),"@");
 				
