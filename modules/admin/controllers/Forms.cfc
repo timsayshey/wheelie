@@ -261,7 +261,10 @@ component extends="_main" output="false"
 	{					
 		formusers = model("User").findAll(where="#wherePermission("User")#");
 		
-		selectedformusers = model("FormUserJoin").findAll(where="formid = #arguments.formid# AND type = 'to'#wherePermission("Form","AND")#",include="User,Form");
+		selectedformusers = model("FormUserJoin").findAll(
+			where="formid = #arguments.formid# AND type = 'to'#wherePermission("Form","AND")#",
+			include="User,Form"
+		);
 		selectedformusers = ValueList(selectedformusers.userid);
 		
 		selectedccformusers = model("FormUserJoin").findAll(where="formid = #arguments.formid# AND type = 'cc'#wherePermission("Form","AND")#",include="User,Form");

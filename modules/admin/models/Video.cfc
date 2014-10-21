@@ -6,8 +6,8 @@
 			this.setWhere = setWhere;	
 			
 			// Relations
-			hasMany("VideoCategoryJoins");
-			belongsTo(name="File", foreignKey="videofileid", joinType="outer");
+			//hasMany(name="VideoCategoryJoins", foreignKey="id");			
+			belongsTo(name="VideoCategoryJoin", foreignKey="id", joinKey="videoid", joinType="outer");
 			
 			// Validations
 			validatesUniquenessOf(property="urlid", scope="siteid");

@@ -8,8 +8,8 @@
 			table("videos_categories");
 			
 			// Relations
-			belongsTo("Video");
-			belongsTo("VideoCategory");
+			belongsTo(name="Video", foreignKey="videoid");
+			belongsTo(name="VideoCategory", foreignKey="videocategoryid", joinType="outer");	
 		}					
 	</cfscript>
 	

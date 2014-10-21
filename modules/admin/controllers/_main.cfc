@@ -38,17 +38,15 @@ component output="false" extends="controllers.Controller"
 	}
 	
 	private function loginServerUser()
-	{
-		serverIp = ""; // Auto login server for tasks by IP - put your ip here
-		
-		if(trim(getIpAddress()) eq serverIp)
+	{		
+		if(!isNull(application.info.serverIp) AND trim(getIpAddress()) eq application.info.serverIp)
 		{			
 			session.user.id = 1;
 			mailgun(
 				mailTo	= application.wheels.adminEmail,
 				from	= application.wheels.adminFromEmail,				
-				subject	= "Test Railo Task",
-				html	= "#getIpAddress()#"
+				subject	= "Railo Task Started",
+				html	= "IP: #getIpAddress()#"
 			);
 		}		
 	}
@@ -71,67 +69,6 @@ component output="false" extends="controllers.Controller"
 			StructDelete(session,"loginRedir");
 			location(tempRedir,false); abort;	
 		}
-	}
-	
-	private function filterDefaults()
-	{
-		// Filter defaults
-		param name="params.status" default="all";
-		param name="session.perPage" default="9";
-		param name="session.display" default="grid";		
-		param name="params.search" default="";
-		param name="params.hosted" default="";
-		param name="params.filtercategories" default="";
-		
-		param name="params.p" default="1";
-		
-		// Video filter defaults
-		param name="session.videos.sortby" default="sortorder";
-		param name="session.videos.order" default="asc";		
-		
-		// User filter defaults
-		param name="session.users.sortby" default="firstname";
-		param name="session.users.order" default="asc";
-		
-		// Page filter defaults
-		param name="session.pages.sortby" default="name";
-		param name="session.pages.order" default="asc";
-		
-		// Post filter defaults
-		param name="session.posts.sortby" default="name";
-		param name="session.posts.order" default="asc";
-		
-		// Option filter defaults
-		param name="session.options.sortby" default="label";
-		param name="session.options.order" default="asc";
-	}
-	
-	// Usually called when a user clicks the clear button
-	private function resetIndexFilters()
-	{
-		session.perPage = "10";
-		//session.display = "grid";
-		params.p = "1";		
-		params.filtercategories = "";	
-		params.search = "";
-		params.hosted = "youtube";
-		
-		// Video filter defaults
-		session.videos.sortby = "sortorder";
-		session.videos.order = "asc";
-		
-		// User filter defaults
-		session.users.sortby = "firstname";
-		session.users.order = "asc";
-		
-		// Page filter defaults
-		session.pages.sortby = "name";
-		session.pages.order = "asc";
-		
-		// Option filter defaults
-		session.options.sortby = "label";
-		session.options.order = "asc";
-		Location(cgi.http_referer,false);
 	}
 	
 	private function handleSubmitType(modelName,submitType)

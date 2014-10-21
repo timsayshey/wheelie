@@ -57,10 +57,11 @@ component extends="_main" output="false"
 				distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
 				videoColumns = "#distinctVideoColumns#, description, status, category_id";
 				
-				qVideos = model("ViewVideo").findAll(
-					where	= buildWhereStatement(modelName="Video", prepend="category_id = '#videoCategory.id#' AND"), 
+				qVideos = model("Video").findAll(
+					where	= buildWhereStatement(modelName="Video", prepend="videocategoryid = '#videoCategory.id#' AND"), 
 					order	= "sortorder ASC", 
-					select	= videoColumns
+					select	= videoColumns,
+					include = "videocategoryjoin(videocategory)"
 				);
 				
 				filterResults();
@@ -76,12 +77,13 @@ component extends="_main" output="false"
 		
 		statusTabs("video");
 		
-		qVideos = model("ViewVideo").findAll(
+		qVideos = model("Video").findAll(
 			where	= buildWhereStatement("Video"), 
 			order	= !isNull(params.rearrange) ? "sortorder ASC" : session.videos.sortby & " " & session.videos.order, 
-			select	= videoColumns
+			select	= videoColumns,
+			include = "videocategoryjoin(videocategory)"
 		);
-		
+				
 		if(isNull(params.rearrange))
 		{
 			filterResults();
@@ -303,10 +305,11 @@ component extends="_main" output="false"
 					whereClause = whereKeywords;	
 				}					
 				
-				qqVideos = model("ViewVideo").findAll(
+				qqVideos = model("Video").findAll(
 					where	= whereClause,
 					order	= session.videos.sortby & " " & session.videos.order, 
-					select	= videoColumns
+					select	= videoColumns,
+					include = "videocategoryjoin(videocategory)"
 				);
 			}
 			

@@ -22,126 +22,138 @@
 		<cfset isNew = true>
 	</cfif>
 	
-	<cfif !isNew>
-		#hiddenfield(objectName='video', property='id', id="videoid")#
-		#hiddenFieldTag("id",params.id)#
-	</cfif>
-	
-	<!--- Youtube id --->
-	<div class="videoExists well">
-		<label>Current Video and Thumbnail</label>
-		<br class="clear">
-		<div class="col-md-4">
-			<cfif len(video.youtubeid)>
-				<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque">
-			<cfelseif len(video.vimeoid)>
-				<cfset videoUrl = "https://player.vimeo.com/video/#video.vimeoid#">
-			<cfelse>
-				<cfset videoUrl = "">
-			</cfif>
-			<iframe src="#videoUrl#" width="100%" height="390" style="max-width:200px;max-height:150px;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-			
-		</div>
-		<cfif FileExists("#info.fileVideoThumbs##video.id#.jpg")>
-			<div class="col-md-4">
-				<img src="#info.videoThumbPath##video.id#.jpg" width="100" style="float:left">
-			</div>
-		</cfif>		
-		<br class="clear">
+	<div class="col-sm-12">	
 		
-		<a href="##" class="replaceVideo btn btn-default">Change Video</a>
+		<cfif !isNew>
+			#hiddenfield(objectName='video', property='id', id="videoid")#
+			#hiddenFieldTag("id",params.id)#
+		</cfif>
+		
+		<!--- Youtube id --->
+		<div class="videoExists well">
+			<label>Current Video and Thumbnail</label>
+			<br class="clear">
+			<div class="col-md-4">
+				<cfif len(video.youtubeid)>
+					<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque">
+				<cfelseif len(video.vimeoid)>
+					<cfset videoUrl = "https://player.vimeo.com/video/#video.vimeoid#">
+				<cfelse>
+					<cfset videoUrl = "">
+				</cfif>
+				<iframe src="#videoUrl#" width="100%" height="390" style="max-width:200px;max-height:150px;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+				
+			</div>
+			<cfif FileExists("#info.fileVideoThumbs##video.id#.jpg")>
+				<div class="col-md-4">
+					<img src="#info.videoThumbPath##video.id#.jpg" width="100" style="float:left">
+				</div>
+			</cfif>		
+			<br class="clear">
+			
+			<a href="##" class="replaceVideo btn btn-default">Change Video</a>
+		</div>
+		
+		<div class="videoNotExists well">
+			#btextfieldtag(
+				name='videoUrl', 
+				value='', 
+				class="videoUrl form-control",
+				label='Vimeo or Youtube Video URL',
+				placeholder	 = "Paste video video or playlist link here",
+				help='Enter the url of the video'
+			)#
+			#hiddenfield(
+				objectName	= 'video', 
+				property	= 'youtubeid',
+				id			= "youtubeIDInput",
+				class		= "youtubeid"
+			)#	
+			#hiddenfield(
+				objectName	= 'video', 
+				property	= 'vimeoid',
+				id			= "vimeoIDInput",
+				class		= "vimeoid"
+			)#	
+			#hiddenfieldtag(
+				name		= 'video[isPlaylist]',
+				id			= "isPlaylist",
+				value		= "0"
+			)#	
+			<div class="form-group">
+				<div class="yt_thumb_chooser"></div>
+			</div>
+			<cfif len(video.youtubeid)>
+				<a href="##" class="replaceVideoCancel btn btn-default">Cancel</a>
+			</cfif>
+		</div>	
+		
+		<!--- <div class="videoFile well">
+			Upload file to /assets/private/videos/ then select from the list below:<br>
+			<cfdirectory action="list" filter="*.flv" directory="#expandPath('/assets/private/videos/')#" name="userpics">
+			#bselecttag(
+				name	= 'sort',
+				options	= [
+					{text="6 Per Page",value="6"},
+					{text="10 Per Page",value="10"},
+					{text="50 Per Page",value="50"},
+					{text="100 Per Page",value="100"},
+					{text="Show All",value="9999999"}
+				],
+				selected= session.perPage,
+				class	= "selectize perPage",
+				append	= ""
+			)#
+		</div> --->
+					
+		<!--- Title --->	
+		#btextfield(
+			objectName	= 'video', 
+			property	= 'name', 
+			label		= 'Title',
+			placeholder	= "Ex: Coolest Video Ever"
+		)#
+		
+		<!--- Video URL --->	
+		#btextfield(
+			prependedText	= '#siteUrl#/video/',
+			label			= "Video URL",
+			objectName		= 'video', 
+			property		= 'urlid', 												
+			placeholder	 	= "Coolest-Video-Ever",
+			help 			= "This is name of the video's url address (Can't be changed in the future)",
+			disabled 		= !isNew
+		)#
+		
+		#btextfield(
+			objectName	= 'video', 
+			property	= 'password', 
+			label		= 'Password',
+			help 		= "Leave blank for no password",
+			placeholder	= "Ex: Pass123"
+		)#	
+	
 	</div>
 	
-	<div class="videoNotExists well">
-		#btextfieldtag(
-			name='videoUrl', 
-			value='', 
-			class="videoUrl form-control",
-			label='Vimeo or Youtube Video URL',
-			placeholder	 = "Paste video video or playlist link here",
-			help='Enter the url of the video'
-		)#
-		#hiddenfield(
-			objectName	= 'video', 
-			property	= 'youtubeid',
-			id			= "youtubeIDInput",
-			class		= "youtubeid"
-		)#	
-		#hiddenfield(
-			objectName	= 'video', 
-			property	= 'vimeoid',
-			id			= "vimeoIDInput",
-			class		= "vimeoid"
-		)#	
-		#hiddenfieldtag(
-			name		= 'video[isPlaylist]',
-			id			= "isPlaylist",
-			value		= "0"
-		)#	
-		<div class="form-group">
-			<div class="yt_thumb_chooser"></div>
-		</div>
-		<cfif len(video.youtubeid)>
-			<a href="##" class="replaceVideoCancel btn btn-default">Cancel</a>
-		</cfif>
-	</div>	
-	
-	<!--- <div class="videoFile well">
-		Upload file to /assets/private/videos/ then select from the list below:<br>
-		<cfdirectory action="list" filter="*.flv" directory="#expandPath('/assets/private/videos/')#" name="userpics">
-		#bselecttag(
-			name	= 'sort',
-			options	= [
-				{text="6 Per Page",value="6"},
-				{text="10 Per Page",value="10"},
-				{text="50 Per Page",value="50"},
-				{text="100 Per Page",value="100"},
-				{text="Show All",value="9999999"}
-			],
-			selected= session.perPage,
-			class	= "selectize perPage",
-			append	= ""
-		)#
-	</div> --->
-				
-	<!--- Title --->	
-	#btextfield(
+	<!--- Show on Website? --->								
+	<div class="col-sm-6 ">	
+	#bcheckbox(
 		objectName	= 'video', 
-		property	= 'name', 
-		label		= 'Title',
-		placeholder	= "Ex: Coolest Video Ever"
+		property	= "onSite",
+		help		= "If checked, this video will show on the website",
+		label		= "Show on Website?"
 	)#
-	
-	#btextfield(
-		objectName	= 'video', 
-		property	= 'password', 
-		label		= 'Password',
-		placeholder	= "Ex: Pass123"
-	)#
-	
-	<label>Show on Website?</label><br>
-	#radioButton(objectName="video", property="onSite", tagValue="1", label="Yes ",labelPlacement="after")#<br />
-	#radioButton(objectName="video", property="onSite", tagValue="0", label="No ",labelPlacement="after")#
-	<div class="separator"></div>
-	
-	<!--- Video URL --->	
-	#btextfield(
-		prependedText	= '#siteUrl#/video/',
-		label			= "Video URL",
-		objectName		= 'video', 
-		property		= 'urlid', 												
-		placeholder	 	= "Coolest-Video-Ever",
-		help 			= "This is name of the video's url address (Can't be changed in the future)",
-		disabled 		= !isNew
-	)#		
+	</div>
 	
 	<!--- Is featured? --->								
+	<div class="col-sm-6 ">	
 	#bcheckbox(
 		objectName	= 'video', 
 		property	= "isFeatured",
-		help		= "If featured, this video will show up on the homepage in the video spotlight",
+		help		= "If checked, this video will show up in the featured section",
 		label		= "Featured?"
 	)#
+	</div>
 	
 	#includePartial(partial="/_partials/formSeperator")#	
 	

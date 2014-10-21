@@ -125,7 +125,7 @@ component extends="_main" output="false"
 		
 		sharedData();
 		
-		todos = model("Todo").findAll(where=buildWhereStatement("Todo"), order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder, description, priority, duedate, isdone", distinct=true);
+		todos = model("Todo").findAll(where="isdone IS NULL#wherePermission("Todo","AND")#", order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder, description, priority, duedate, isdone", distinct=true);
 	}
 	
 	function saveRearrange()
