@@ -1136,9 +1136,3 @@ CREATE TABLE `_default` (
 -- ----------------------------
 -- Records of _default
 -- ----------------------------
-
--- ----------------------------
--- View structure for viewvideos
--- ----------------------------
-DROP VIEW IF EXISTS `viewvideos`;
-CREATE VIEW `viewvideos` AS select `videos`.`id` AS `id`,`videos`.`urlid` AS `urlid`,`videos`.`name` AS `name`,`videos`.`teaser` AS `teaser`,`videos`.`description` AS `description`,`videos`.`videoSubHeader` AS `videoSubHeader`,`videos`.`videoLink` AS `videoLink`,`videos`.`hideFromB2B` AS `hideFromB2B`,`videos`.`isFeatured` AS `isFeatured`,`videos`.`sortorder` AS `sortorder`,`videos`.`typeId` AS `typeId`,`videos`.`status` AS `status`,`videos`.`videofileid` AS `videofileid`,`videos`.`createdat` AS `createdat`,`videos`.`createdby` AS `createdby`,`videos`.`updatedat` AS `updatedat`,`videos`.`updatedby` AS `updatedby`,`videos`.`deletedby` AS `deletedby`,`users`.`id` AS `user_id`,`users`.`zip` AS `zip`,`users`.`country` AS `country`,`users`.`role` AS `role`,`categories`.`name` AS `category_name`,`categories`.`urlid` AS `category_urlid`,`categories`.`parentid` AS `parentid`,`categories`.`description` AS `category_description`,`categories`.`sortorder` AS `category_sortorder`,`categories`.`id` AS `category_id`,`users`.`firstname` AS `firstname`,`users`.`lastname` AS `lastname`,`users`.`email` AS `email`,`videos`.`siteid` AS `siteid`,`videos`.`vimeoid` AS `vimeoid`,`videos`.`youtubeid` AS `youtubeid`,`videos`.`deletedat` AS `deletedat`,`videos`.`globalized` AS `globalized` from (((`videos` left join `videos_categories` on((`videos`.`id` = `videos_categories`.`videoid`))) left join `users` on((`users`.`id` = `videos`.`createdby`))) left join `categories` on(((`categories`.`id` = `videos_categories`.`videocategoryid`) and (`categories`.`id` = `videos_categories`.`videocategoryid`)))) ;
