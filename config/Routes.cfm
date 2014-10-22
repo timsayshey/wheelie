@@ -232,9 +232,15 @@
     );
 	
 	addRoute(
-        name="public~otherPages", 
+        name="public~otherPagesOld", 
 		pattern="/o/[action]",
         controller="otherPages"
+    );
+	
+	addRoute(
+        name="public~otherPages", 
+		pattern="/p/[action]",
+        controller="pageapps"
     );
 	
 	addRoute( 
