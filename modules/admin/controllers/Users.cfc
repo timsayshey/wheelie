@@ -197,16 +197,16 @@
 				defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
 				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
 				flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
-				mailgun(
+				mailgun( 
 					mailTo	= application.wheels.adminEmail,
 					from	= application.wheels.adminFromEmail,
 					subject	= "New User awaiting approval",
 					html	= "#params.user.firstname# #params.user.lastname#"
 				);
 				
-				userVerifyUrl = 'http://#request.site.domain#/#application.wheels.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
+				userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
 				mailgun(
-					mailTo	= user.email,
+					mailTo	= user.email, 
 					from	= application.wheels.adminFromEmail,
 					subject	= "Verify your email address",
 					html	= "Click the link below to verify your email address:<br>
@@ -462,7 +462,7 @@
 						Password: #passcrypt(user.password, "decrypt")#<br><br>
 						
 						Log in anytime at 
-						<a href='http://#request.site.domain#/#application.wheels.adminUrlPath#'>http://#request.site.domain#/#application.wheels.adminUrlPath#</a><br><br>
+						<a href='http://#request.site.domain#/#application.info.adminUrlPath#'>http://#request.site.domain#/#application.info.adminUrlPath#</a><br><br>
 						
 						Don't forget to update your profile and upload your portrait.<br><br>
 						
@@ -496,7 +496,7 @@
 					"Your password is:<br> 
 					#passcrypt(user.password, "decrypt")#<br><br>
 					Login at:<br> 
-					http://#request.site.domain#/#application.wheels.adminUrlPath#"
+					http://#request.site.domain#/#application.info.adminUrlPath#"
 				);
 				
 				flashInsert(success="Your account information has been emailed to you. (Check your spam if you don't see it)");		

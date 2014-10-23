@@ -12,7 +12,7 @@
 			
 		}
 		
-		function profile() 
+		function profile()  
 		{					
 			user = model("UserGroupJoin").findAll(where="userid = '#params.id#'", include="User,UserGroup");
 			try {
@@ -22,7 +22,7 @@
 					metafieldType = "usergroupfield"
 				);
 			} catch(e) {
-				Location("/#application.wheels.adminUrlPath#/users/edit/#params.id#"); abort;
+				Location("/#application.info.adminUrlPath#/users/edit/#params.id#"); abort;
 			}
 		}			
 	}
