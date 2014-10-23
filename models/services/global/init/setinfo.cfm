@@ -16,6 +16,9 @@
 	fileroot = expandPath(".");
 	privateroot = expandPath("../");
 	
+	info.validCategoryModelsList = ""; // lowercase
+	info.serverIp = "";
+	
 	info.domainshort = cgi.HTTP_HOST;
 	siteUrl 		 = info.domainshort;
 	info.domain		 = "http://#info.domainshort#";
@@ -35,8 +38,7 @@
 	info.fileuploads 	= fixFilePathSlashes("#fileroot##info.uploadsPath#");		
 	info.filevideos 	= fixFilePathSlashes("#fileroot##info.videosPath#");
 	info.fileVideoThumbs= fixFilePathSlashes("#fileroot##info.videoThumbPath#");
-	info.filemedia	 	= fixFilePathSlashes("#fileroot##info.mediaPath#");	
-	application.info.serverIp = "";
+	info.filemedia	 	= fixFilePathSlashes("#fileroot##info.mediaPath#");		
 	
 	if (isNull(Application.info) OR !isNull(url.reload))
 	{	
@@ -60,6 +62,10 @@
 		// Video filter defaults
 		param name="session.videos.sortby" default="sortorder";
 		param name="session.videos.order" default="asc";		
+		
+		// Item filter defaults
+		param name="session.items.sortby" default="sortorder";
+		param name="session.items.order" default="asc";
 		
 		// User filter defaults
 		param name="session.users.sortby" default="firstname";
@@ -91,6 +97,10 @@
 		// Video filter defaults
 		session.videos.sortby = "sortorder";
 		session.videos.order = "asc";
+		
+		// Item filter defaults
+		session.items.sortby = "sortorder";
+		session.items.order = "asc";
 		
 		// User filter defaults
 		session.users.sortby = "firstname";

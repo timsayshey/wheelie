@@ -8,7 +8,8 @@ component extends="_main" output="false"
 	
 	function getCategoryType()
 	{
-		if(ListFind("videocategory,usertag",LCase(params.modelName)))
+		// model names in listfind must be lowercase
+		if(!isNull(application.info.validCategoryModelsList) AND ListFind("videocategory,usertag,#application.info.validCategoryModelsList#",LCase(params.modelName)))
 		{
 			return params.modelName;
 		} else {
