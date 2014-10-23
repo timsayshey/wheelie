@@ -19,7 +19,6 @@
 	info.validCategoryModelsList = ""; // lowercase
 	info.serverIp = "";
 	
-	info.adminUrlPath = "/wheelie-admin";
 	info.domainshort = cgi.HTTP_HOST;
 	siteUrl 		 = info.domainshort;
 	info.domain		 = "http://#info.domainshort#";

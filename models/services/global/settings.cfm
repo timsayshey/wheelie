@@ -5,7 +5,9 @@
 	application.wheels.dataSourceName			= "wheelie";
 	application.wheels.adminFromEmail			= "noreply@getwheelie.com";	
 	application.wheels.adminEmail				= "admin@getwheelie.com";
-
+	
+	application.info.adminUrlPath 				= "/wheelie-admin";
+	
 	application.wheels.showDebugInformation 	= false;	
 	application.wheels.isBeta					= false;	
 	
