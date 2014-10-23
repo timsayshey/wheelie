@@ -47,23 +47,16 @@
 			application.videoConverter = CreateObject("component","models.services.vendor.videoconverter.VideoConverter").init(videoFileMgr);
 		}*/	
 		
-		// Setup filemanager
-		if (!structKeyExists(application, 'fileMgr') or isReload) {
-			
-			
-		}	
-		
+		// Setup filemanager		
 		application.fileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.fileuploads,info.uploadsPath);
 		
-		// Setup filemanager
+		// Setup private filemanager
 		if (!structKeyExists(application, 'privatefileMgr') or isReload) {
 			application.privateFileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.privateroot,info.privateRootPath);
 		}	
 		
 		// Setup pagination
-		if (!structKeyExists(application, 'pagination') or isReload) {
-			application.pagination = CreateObject("component","models.services.vendor.pagination").init();
-		}
+		application.pagination = CreateObject("component","models.services.vendor.pagination").init();
 		
 		//writeDump(application.pagination); abort;
 		
