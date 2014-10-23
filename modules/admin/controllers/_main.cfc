@@ -39,8 +39,9 @@ component output="false" extends="controllers.Controller"
 	
 	private function loginServerUser()
 	{		
-		if(!isNull(application.info.serverIp) AND trim(getIpAddress()) eq application.info.serverIp)
+		if(FindNoCase("CFSCHEDULE",CGI.HTTP_USER_AGENT))
 		{			
+			request.isScheduledTask = true;
 			session.user.id = 1;
 			mailgun(
 				mailTo	= application.wheels.adminEmail,

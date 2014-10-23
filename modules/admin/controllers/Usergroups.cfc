@@ -80,6 +80,12 @@ component extends="_main" output="false"
 		// Insert or update usergroup object with properties
 		if (saveResult)
 		{	
+			// Reset DefaultPublic
+			if(!isNull(usergroup.defaultgroup) AND usergroup.defaultgroup eq 1)
+			{
+				model("Usergroup").updateAll(defaultgroup=0, where="defaultgroup = 1 AND id != '#usergroup.id#' AND globalized = 0#wherePermission("Usergroup","AND")#");
+			}
+			
 			flashInsert(success='Usergroup saved.');
 			redirectTo(route="admin~Id", module="admin", controller="usergroups", action="edit", id=usergroup.id);
 		} else {						

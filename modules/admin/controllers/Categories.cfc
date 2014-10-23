@@ -110,8 +110,8 @@ component extends="_main" output="false"
 		// Save
 		if(!isNull(params.category.id)) 
 		{
-			category = model(getCategoryType()).findByKey(params.category.id);
-			saveResult = category.update(params.category);	
+			category = model(getCategoryType()).findOne(where="id = '#params.category.id#'#wherePermission("Category","AND")#");
+			saveResult = category.update(params.category);
 			
 		} else {
 			category = model(getCategoryType()).new(params.category);
@@ -121,6 +121,18 @@ component extends="_main" output="false"
 		// Redirect based on result
 		if (saveResult)
 		{			
+			// Reset DefaultPublic
+			if(!isNull(category.defaultpublic) AND category.defaultpublic eq 1)
+			{
+				model(getCategoryType()).updateAll(defaultpublic=0, where="defaultpublic = 1 AND id != '#category.id#'#wherePermission("Category","AND")#");
+			}
+			
+			// Reset DefaultAdmin
+			if(!isNull(category.defaultadmin) AND category.defaultadmin eq 1)
+			{
+				model(getCategoryType()).updateAll(defaultadmin=0, where="defaultadmin = 1 AND id != '#category.id#'#wherePermission("Category","AND")#");
+			}
+			
 			if(isNull(isAjaxRequest))
 			{
 				flashInsert(success="Saved successfully.");
@@ -138,7 +150,7 @@ component extends="_main" output="false"
 				
 				writeOutput(json); abort;
 			}
-			
+						
 					
 		} else {	
 		
