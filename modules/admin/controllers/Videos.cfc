@@ -48,24 +48,28 @@ component extends="_main" output="false"
 		sharedObjects(0);
 		
 		if(!isNull(params.id))
-		{
-			videoCategory = model("VideoCategory").findAll(where="urlid = '#params.id#'#wherePermission("VideoCategory","AND")#");
-			videoCategories = model("VideoCategory").findAll(where="parentid = '#videoCategory.id#'#wherePermission("VideoCategory","AND")#");
+		{			
+			videoCategory = model("VideoCategory").findAll(where="urlid = '#params.id#'#wherePermission("VideoCategory","AND")#");				
+		} else {
+			// Get default category
+			videoCategory = model("VideoCategory").findAll(where="defaultadmin = 1#wherePermission("VideoCategory","AND")#");				
+		}
+		
+		videoCategories = model("VideoCategory").findAll(where="parentid = '#videoCategory.id#'#wherePermission("VideoCategory","AND")#");
+		
+		if(videoCategory.recordcount)
+		{				
+			distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
+			videoColumns = "#distinctVideoColumns#, description, status, category_id";
 			
-			if(videoCategory.recordcount)
-			{				
-				distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
-				videoColumns = "#distinctVideoColumns#, description, status, category_id";
-				
-				qVideos = model("Video").findAll(
-					where	= buildWhereStatement(modelName="Video", prepend="videocategoryid = '#videoCategory.id#' AND"), 
-					order	= "sortorder ASC", 
-					select	= videoColumns,
-					include = "videocategoryjoin(videocategory)"
-				);
-				
-				filterResults();
-			}
+			qVideos = model("Video").findAll(
+				where	= buildWhereStatement(modelName="Video", prepend="videocategoryid = '#videoCategory.id#' AND"), 
+				order	= "sortorder ASC", 
+				select	= videoColumns,
+				include = "videocategoryjoin(videocategory)"
+			);
+			
+			filterResults();
 		}
 	}
 	

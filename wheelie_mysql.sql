@@ -11,6 +11,8 @@ CREATE TABLE `categories` (
   `urlid` varchar(400) COLLATE utf8_unicode_ci DEFAULT NULL,
   `parentid` int(11) DEFAULT NULL,
   `description` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `defaultpublic` int(1) DEFAULT '0',
+  `defaultadmin` int(1) DEFAULT '0',
   `sortorder` int(11) NOT NULL DEFAULT '0',
   `siteid` int(11) DEFAULT '1',
   `globalized` int(1) DEFAULT '0',

@@ -168,7 +168,7 @@
 			type	= 'link',
 			name	= 'Videos',
 			icon	= 'icon-video',
-			url		= urlFor(route="admin~id", controller="videos", action="category", id="staff")
+			url		= urlFor(route="admin~Action", controller="videos", action="category")
 		});
 		
 		// menu item
@@ -294,6 +294,7 @@
 		menureturn = "";
 		
 		for(item in menuArray)
+
 		{
 			menureturn = menureturn & formatAdminMenuItem(item=item,parentClass=parentClass);
 		}
