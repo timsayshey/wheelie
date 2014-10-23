@@ -19,7 +19,7 @@
 	info.validCategoryModelsList = ""; // lowercase
 	info.serverIp = "";
 	
-	info.adminUrlPath = "/manager";
+	info.adminUrlPath = "/wheelie-admin";
 	info.domainshort = cgi.HTTP_HOST;
 	siteUrl 		 = info.domainshort;
 	info.domain		 = "http://#info.domainshort#";
@@ -83,6 +83,9 @@
 		// Option filter defaults
 		param name="session.options.sortby" default="label";
 		param name="session.options.order" default="asc";
+		
+		// App specific
+		include "/models/services/global/app/filterDefaults.cfm";
 	}
 	
 	// Usually called when a user clicks the clear button
@@ -114,6 +117,10 @@
 		// Option filter defaults
 		session.options.sortby = "label";
 		session.options.order = "asc";
+		
+		// App specific
+		include "/models/services/global/app/resetIndexFilters.cfm";
+		
 		Location(cgi.http_referer,false);
 	}
 </cfscript>

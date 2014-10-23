@@ -82,17 +82,12 @@
 				application.rbs.permission["#id#"]["editor"]		= editor;
 				application.rbs.permission["#id#"]["user"]			= user;
 				application.rbs.permission["#id#"]["guest"]			= guest;
-				
-				/* For railo
-				application.rbs.permission["#id#"]["admin"]		= application.rbs.permissionsQuery["admin"];
-				application.rbs.permission["#id#"]["editor"]	= application.rbs.permissionsQuery["editor"];
-				application.rbs.permission["#id#"]["author"]	= application.rbs.permissionsQuery["author"];
-				application.rbs.permission["#id#"]["user"]		= application.rbs.permissionsQuery["user"];
-				application.rbs.permission["#id#"]["guest"]		= application.rbs.permissionsQuery["guest"];		
-				*/	
 			</cfscript>
 		</cfloop>
 	</cfif>
+	
+	<!--- Custom Overrides --->
+	<cfinclude template="/models/services/global/app/app.cfm">
 	
 </cfoutput>
 
