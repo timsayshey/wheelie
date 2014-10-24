@@ -23,7 +23,6 @@ component extends="_main" output="false"
 			goHome();
 		}		
 		
-		pagination = application.pagination;
 		pagination.setQueryToPaginate(posts);	
 		pagination.setItemsPerPage(25);		
 		paginator = pagination.getRenderedHTML();

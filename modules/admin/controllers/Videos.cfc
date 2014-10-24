@@ -94,7 +94,6 @@ component extends="_main" output="false"
 		}
 		
 		// Paginate me batman
-		pagination = application.pagination;
 		pagination.setQueryToPaginate(qVideos);	
 		pagination.setItemsPerPage(session.perPage);		
 		paginator = pagination.getRenderedHTML();

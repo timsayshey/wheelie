@@ -23,7 +23,6 @@ component extends="_main" output="false"
 		filterResults();
 			
 		// Paginate me batman
-		pagination = application.pagination;
 		pagination.setQueryToPaginate(qPages);	
 		pagination.setItemsPerPage(session.perPage);		
 		paginator = pagination.getRenderedHTML();
