@@ -237,48 +237,48 @@
 		});	
 	
 	}
-	function formatAdminMenuItem(item,parentClass="")
+	function formatAdminMenuItem(currMenuItem,parentClass="")
 	{
 		itemreturn = '';
 		menuitempermission = true;
 		
-		if(!isNull(item.permission))
+		if(!isNull(currMenuItem.permission))
 		{
-			menuitempermission = checkPermission(item.permission);
+			menuitempermission = checkPermission(currMenuItem.permission);
 		}		
 		
-		if(!isNull(item.type) AND menuitempermission)
+		if(!isNull(currMenuItem.type) AND menuitempermission)
 		{
 			itemicon = '';
-			if(!isNull(item.icon)) { itemicon = '<span class="elusive #item.icon#"></span> '; }
+			if(!isNull(currMenuItem.icon)) { itemicon = '<span class="elusive #currMenuItem.icon#"></span> '; }
 			
-			if(item.type eq 'link' and !isNull(item.name) and !isNull(item.url))
+			if(currMenuItem.type eq 'link' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url))
 			{
-				itemreturn = itemreturn & '<li><a href="#item.url#">#itemicon##item.name#</a></li>';
+				itemreturn = itemreturn & '<li><a href="#currMenuItem.url#">#itemicon##currMenuItem.name#</a></li>';
 				
-			} else if(item.type eq 'divider') {
+			} else if(currMenuItem.type eq 'divider') {
 			
 				itemreturn = itemreturn & '<li class="divider"></li>';
 				
-			} else if(item.type eq 'parent' and !isNull(item.name) and !isNull(item.children)) {
+			} else if(currMenuItem.type eq 'parent' and !isNull(currMenuItem.name) and !isNull(currMenuItem.children)) {
 				
 				itemreturn = itemreturn & '<li class="dropdown #parentClass#">
-				<a href="##" class="dropdown-toggle" data-toggle="dropdown">#itemicon##item.name# <b class="caret"></b></a>
+				<a href="##" class="dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name# <b class="caret"></b></a>
 				<ul class="dropdown-menu">';
 				
-				for(childitem in item.children)
+				for(childitem in currMenuItem.children)
 				{
 					itemreturn = itemreturn & formatAdminMenuItem(childitem);
 				}
 				itemreturn = itemreturn & '</ul></li>';
 				
-			} else if(item.type eq 'subparent' and !isNull(item.name) and !isNull(item.url) and !isNull(item.children)) {					
+			} else if(currMenuItem.type eq 'subparent' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url) and !isNull(currMenuItem.children)) {					
 								
 				itemreturn = itemreturn & '<li class="dropdown-submenu #parentClass#">';
-				itemreturn = itemreturn & '<a href="#item.url#" class="dropdown-toggle" data-toggle="dropdown">#itemicon##item.name#</a>
+				itemreturn = itemreturn & '<a href="#currMenuItem.url#" class="dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name#</a>
 				<ul class="dropdown-menu">';
 				
-				for(childitem in item.children)
+				for(childitem in currMenuItem.children)
 				{
 					itemreturn = itemreturn & formatAdminMenuItem(childitem);
 				}
@@ -293,10 +293,10 @@
 	{
 		menureturn = "";
 		
-		for(item in menuArray)
+		for(curritem in menuArray)
 
 		{
-			menureturn = menureturn & formatAdminMenuItem(item=item,parentClass=parentClass);
+			menureturn = menureturn & formatAdminMenuItem(currMenuItem=curritem,parentClass=parentClass);
 		}
 		
 		return menureturn;
