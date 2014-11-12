@@ -101,6 +101,8 @@ CREATE TABLE `formsubmissions` (
   `optin` int(11) DEFAULT NULL,
   `mobile` varchar(3000) DEFAULT NULL,
   `siteid` int(11) DEFAULT '1',
+  `ip` text,
+  `useragent` text,
   `createdAt` datetime DEFAULT NULL,
   `createdBy` int(255) DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
@@ -135,357 +137,6 @@ CREATE TABLE `forms_users` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for geolandings
--- ----------------------------
-DROP TABLE IF EXISTS `geolandings`;
-CREATE TABLE `geolandings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `state` varchar(255) DEFAULT NULL,
-  `state_acronym` varchar(2) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `templateid` int(11) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `siteid` int(11) DEFAULT '1',
-  `globalized` int(1) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=339 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of geolandings
--- ----------------------------
-INSERT INTO `geolandings` VALUES ('9', 'Alabama', 'AL', 'Huntsville', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('8', 'Alabama', 'AL', 'Birmingham', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('10', 'Alabama', 'AL', 'Mobile', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('11', 'Alabama', 'AL', 'Montgomery', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('12', 'Alaska', 'AK', 'Anchorage', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('13', 'Arizona', 'AZ', 'Chandler', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('14', 'Arizona', 'AZ', 'Gilbert', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('15', 'Arizona', 'AZ', 'Glendale', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('16', 'Arizona', 'AZ', 'Mesa', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('17', 'Arizona', 'AZ', 'Peoria', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('18', 'Arizona', 'AZ', 'Phoenix', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('19', 'Arizona', 'AZ', 'Scottsdale', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('20', 'Arizona', 'AZ', 'Surprise', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('21', 'Arizona', 'AZ', 'Tempe', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('22', 'Arizona', 'AZ', 'Tucson', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('23', 'Arkansas', 'AR', 'Little Rock', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('24', 'California', 'CA', 'Anaheim', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('25', 'California', 'CA', 'Antioch', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('26', 'California', 'CA', 'Bakersfield', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('27', 'California', 'CA', 'Berkeley', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('28', 'California', 'CA', 'Burbank', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('29', 'California', 'CA', 'Carlsbad', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('30', 'California', 'CA', 'Chula Vista', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('31', 'California', 'CA', 'Concord', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('32', 'California', 'CA', 'Corona', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('33', 'California', 'CA', 'Costa Mesa', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('34', 'California', 'CA', 'Daly City', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('35', 'California', 'CA', 'Downey', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('36', 'California', 'CA', 'El Cajon', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('37', 'California', 'CA', 'El Monte', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('38', 'California', 'CA', 'Elk Grove', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('39', 'California', 'CA', 'Escondido', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('40', 'California', 'CA', 'Fairfield', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('41', 'California', 'CA', 'Fontana', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('42', 'California', 'CA', 'Fremont', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('43', 'California', 'CA', 'Fresno', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('44', 'California', 'CA', 'Fullerton', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('45', 'California', 'CA', 'Garden Grove', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('46', 'California', 'CA', 'Glendale', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('47', 'California', 'CA', 'Hayward', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('48', 'California', 'CA', 'Huntington Beach', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('49', 'California', 'CA', 'Inglewood', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('50', 'California', 'CA', 'Irvine', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('51', 'California', 'CA', 'Lancaster', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('52', 'California', 'CA', 'Long Beach', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('53', 'California', 'CA', 'Los Angeles', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('54', 'California', 'CA', 'Modesto', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('55', 'California', 'CA', 'Moreno Valley', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('56', 'California', 'CA', 'Murrieta', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('57', 'California', 'CA', 'Norwalk', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('58', 'California', 'CA', 'Oakland', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('59', 'California', 'CA', 'Oceanside', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('60', 'California', 'CA', 'Ontario', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('61', 'California', 'CA', 'Orange', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('62', 'California', 'CA', 'Oxnard', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('63', 'California', 'CA', 'Palmdale', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('64', 'California', 'CA', 'Pasadena', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('65', 'California', 'CA', 'Pomona', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('66', 'California', 'CA', 'Rancho Cucamonga', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('67', 'California', 'CA', 'Rialto', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('68', 'California', 'CA', 'Richmond', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('69', 'California', 'CA', 'Riverside', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('70', 'California', 'CA', 'Roseville', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('71', 'California', 'CA', 'Sacramento', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('72', 'California', 'CA', 'Salinas', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('73', 'California', 'CA', 'San Bernardino', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('74', 'California', 'CA', 'San Buenaventura', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('75', 'California', 'CA', 'San Diego', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('76', 'California', 'CA', 'San Francisco', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('77', 'California', 'CA', 'San Jose', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('78', 'California', 'CA', 'Santa Ana', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('79', 'California', 'CA', 'Santa Clara', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('80', 'California', 'CA', 'Santa Clarita', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('81', 'California', 'CA', 'Santa Maria', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('82', 'California', 'CA', 'Santa Rosa', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('83', 'California', 'CA', 'Simi Valley', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('84', 'California', 'CA', 'Stockton', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('85', 'California', 'CA', 'Sunnyvale', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('86', 'California', 'CA', 'Temecula', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('87', 'California', 'CA', 'Thousand Oaks', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('88', 'California', 'CA', 'Torrance', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('89', 'California', 'CA', 'Vallejo', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('90', 'California', 'CA', 'Victorville', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('91', 'California', 'CA', 'Visalia', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('92', 'California', 'CA', 'West Covina', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('93', 'Colorado', 'CO', 'Arvada', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('94', 'Colorado', 'CO', 'Aurora', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('95', 'Colorado', 'CO', 'Boulder', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('96', 'Colorado', 'CO', 'Centennial', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('97', 'Colorado', 'CO', 'Colorado Springs', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('98', 'Colorado', 'CO', 'Denver', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('99', 'Colorado', 'CO', 'Fort Collins', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('100', 'Colorado', 'CO', 'Lakewood', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('101', 'Colorado', 'CO', 'Pueblo', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('102', 'Colorado', 'CO', 'Thornton', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('103', 'Colorado', 'CO', 'Westminster', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('104', 'Connecticut', 'CT', 'Bridgeport', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('105', 'Connecticut', 'CT', 'Hartford', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('106', 'Connecticut', 'CT', 'New Haven', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('107', 'Connecticut', 'CT', 'Stamford', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('108', 'Connecticut', 'CT', 'Waterbury', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('109', 'District of Columbia', 'DC', 'Washington', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('110', 'Florida', 'FL', 'Cape Coral', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('111', 'Florida', 'FL', 'Clearwater', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('112', 'Florida', 'FL', 'Coral Springs', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('113', 'Florida', 'FL', 'Fort Lauderdale', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('114', 'Florida', 'FL', 'Gainesville', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('115', 'Florida', 'FL', 'Hialeah', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('116', 'Florida', 'FL', 'Hollywood', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('117', 'Florida', 'FL', 'Jacksonville', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('118', 'Florida', 'FL', 'Miami', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('119', 'Florida', 'FL', 'Miami Gardens', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('120', 'Florida', 'FL', 'Miramar', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('121', 'Florida', 'FL', 'Orlando', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('122', 'Florida', 'FL', 'Palm Bay', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('123', 'Florida', 'FL', 'Pembroke Pines', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('124', 'Florida', 'FL', 'Pompano Beach', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('125', 'Florida', 'FL', 'Port St Lucie', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('126', 'Florida', 'FL', 'St Petersburg', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('127', 'Florida', 'FL', 'Tallahassee', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('128', 'Florida', 'FL', 'Tampa', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('129', 'Florida', 'FL', 'West Palm Beach', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('130', 'Georgia', 'GA', 'Athens', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('131', 'Georgia', 'GA', 'Atlanta', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('132', 'Georgia', 'GA', 'Augusta', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('133', 'Georgia', 'GA', 'Columbus', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('134', 'Georgia', 'GA', 'Savannah', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('135', 'Hawaii', 'HI', 'Honolulu', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('136', 'Idaho', 'ID', 'Boise', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('137', 'Illinois', 'IL', 'Aurora', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('138', 'Illinois', 'IL', 'Chicago', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('139', 'Illinois', 'IL', 'Elgin', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('140', 'Illinois', 'IL', 'Joliet', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('141', 'Illinois', 'IL', 'Naperville', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('142', 'Illinois', 'IL', 'Peoria', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('143', 'Illinois', 'IL', 'Rockford', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('144', 'Illinois', 'IL', 'Springfield', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('145', 'Indiana', 'IN', 'Evansville', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('146', 'Indiana', 'IN', 'Fort Wayne', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('147', 'Indiana', 'IN', 'Indianapolis', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('148', 'Indiana', 'IN', 'South Bend', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('149', 'Iowa', 'IA', 'Cedar Rapids', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('150', 'Iowa', 'IA', 'Davenport', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('151', 'Iowa', 'IA', 'Des Moines', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('152', 'Kansas', 'KS', 'Kansas City', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('153', 'Kansas', 'KS', 'Olathe', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('154', 'Kansas', 'KS', 'Overland Park', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('155', 'Kansas', 'KS', 'Topeka', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('156', 'Kansas', 'KS', 'Wichita', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('157', 'Kentucky', 'KY', 'Lexington', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('158', 'Kentucky', 'KY', 'Louisville', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('159', 'Louisiana', 'LA', 'Baton Rouge', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('160', 'Louisiana', 'LA', 'Lafayette', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('161', 'Louisiana', 'LA', 'New Orleans', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('162', 'Louisiana', 'LA', 'Shreveport', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('163', 'Maryland', 'MD', 'Baltimore', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('164', 'Massachusetts', 'MA', 'Boston', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('165', 'Massachusetts', 'MA', 'Cambridge', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('166', 'Massachusetts', 'MA', 'Lowell', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('167', 'Massachusetts', 'MA', 'Springfield', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('168', 'Massachusetts', 'MA', 'Worcester', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('169', 'Michigan', 'MI', 'Ann Arbor', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('170', 'Michigan', 'MI', 'Detroit', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('171', 'Michigan', 'MI', 'Flint', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('172', 'Michigan', 'MI', 'Grand Rapids', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('173', 'Michigan', 'MI', 'Lansing', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('174', 'Michigan', 'MI', 'Sterling Heights', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('175', 'Michigan', 'MI', 'Warren', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('176', 'Minnesota', 'MN', 'Minneapolis', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('177', 'Minnesota', 'MN', 'Rochester', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('178', 'Minnesota', 'MN', 'Saint Paul', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('179', 'Mississippi', 'MS', 'Jackson', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('180', 'Missouri', 'MO', 'Columbia', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('181', 'Missouri', 'MO', 'Independence', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('182', 'Missouri', 'MO', 'Kansas City', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('183', 'Missouri', 'MO', 'Springfield', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('184', 'Missouri', 'MO', 'St Louis', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('185', 'Montana', 'MT', 'Billings', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('186', 'Nebraska', 'NE', 'Lincoln', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('187', 'Nebraska', 'NE', 'Omaha', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('188', 'Nevada', 'NV', 'Henderson', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('189', 'Nevada', 'NV', 'Las Vegas', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('190', 'Nevada', 'NV', 'North Las Vegas', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('191', 'Nevada', 'NV', 'Reno', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('192', 'New Hampshire', 'NH', 'Manchester', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('193', 'New Jersey', 'NJ', 'Elizabeth', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('194', 'New Jersey', 'NJ', 'Jersey City', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('195', 'New Jersey', 'NJ', 'Newark', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('196', 'New Jersey', 'NJ', 'Paterson', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('197', 'New Mexico', 'NM', 'Albuquerque', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('198', 'New Mexico', 'NM', 'Las Cruces', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('199', 'New York', 'NY', 'Buffalo', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('200', 'New York', 'NY', 'Rochester', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('201', 'New York', 'NY', 'Syracuse', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('202', 'New York', 'NY', 'Yonkers', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('203', 'North Carolina', 'NC', 'Cary', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('204', 'North Carolina', 'NC', 'Charlotte', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('205', 'North Carolina', 'NC', 'Durham', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('206', 'North Carolina', 'NC', 'Fayetteville', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('207', 'North Carolina', 'NC', 'Greensboro', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('208', 'North Carolina', 'NC', 'High Point', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('209', 'North Carolina', 'NC', 'Raleigh', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('210', 'North Carolina', 'NC', 'Wilmington', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('211', 'North Carolina', 'NC', 'Winston Salem', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('212', 'North Dakota', 'ND', 'Fargo', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('213', 'Ohio', 'OH', 'Akron', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('214', 'Ohio', 'OH', 'Cincinnati', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('215', 'Ohio', 'OH', 'Cleveland', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('216', 'Ohio', 'OH', 'Columbus', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('217', 'Ohio', 'OH', 'Dayton', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('218', 'Ohio', 'OH', 'Toledo', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('219', 'Oklahoma', 'OK', 'Broken Arrow', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('220', 'Oklahoma', 'OK', 'Norman', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('221', 'Oklahoma', 'OK', 'Oklahoma City', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('222', 'Oklahoma', 'OK', 'Tulsa', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('223', 'Oregon', 'OR', 'Eugene', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('224', 'Oregon', 'OR', 'Gresham', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('225', 'Oregon', 'OR', 'Portland', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('226', 'Oregon', 'OR', 'Salem', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('227', 'Pennsylvania', 'PA', 'Allentown', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('228', 'Pennsylvania', 'PA', 'Erie', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('229', 'Pennsylvania', 'PA', 'Philadelphia', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('230', 'Pennsylvania', 'PA', 'Pittsburgh', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('231', 'Rhode Island', 'RI', 'Providence', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('232', 'South Carolina', 'SC', 'Charleston', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('233', 'South Carolina', 'SC', 'Columbia', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('234', 'South Carolina', 'SC', 'North Charleston', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('235', 'South Dakota', 'SD', 'Sioux Falls', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('236', 'Tennessee', 'TN', 'Chattanooga', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('237', 'Tennessee', 'TN', 'Clarksville', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('238', 'Tennessee', 'TN', 'Knoxville', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('239', 'Tennessee', 'TN', 'Memphis', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('240', 'Tennessee', 'TN', 'Murfreesboro', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('241', 'Tennessee', 'TN', 'Nashville', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('242', 'Texas', 'TX', 'Abilene', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('243', 'Texas', 'TX', 'Amarillo', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('244', 'Texas', 'TX', 'Arlington', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('245', 'Texas', 'TX', 'Austin', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('246', 'Texas', 'TX', 'Beaumont', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('247', 'Texas', 'TX', 'Brownsville', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('248', 'Texas', 'TX', 'Carrollton', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('249', 'Texas', 'TX', 'Corpus Christi', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('250', 'Texas', 'TX', 'Dallas', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('251', 'Texas', 'TX', 'Denton', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('252', 'Texas', 'TX', 'El Paso', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('253', 'Texas', 'TX', 'Fort Worth', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('254', 'Texas', 'TX', 'Frisco', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('255', 'Texas', 'TX', 'Garland', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('256', 'Texas', 'TX', 'Grand Prairie', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('257', 'Texas', 'TX', 'Houston', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('258', 'Texas', 'TX', 'Irving', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('259', 'Texas', 'TX', 'Killeen', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('260', 'Texas', 'TX', 'Laredo', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('261', 'Texas', 'TX', 'Lubbock', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('262', 'Texas', 'TX', 'McAllen', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('263', 'Texas', 'TX', 'McKinney', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('264', 'Texas', 'TX', 'Mesquite', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('265', 'Texas', 'TX', 'Midland', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('266', 'Texas', 'TX', 'Odessa', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('267', 'Texas', 'TX', 'Pasadena', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('268', 'Texas', 'TX', 'Plano', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('269', 'Texas', 'TX', 'Richardson', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('270', 'Texas', 'TX', 'Round Rock', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('271', 'Texas', 'TX', 'San Antonio', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('272', 'Texas', 'TX', 'Waco', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('273', 'Texas', 'TX', 'Wichita Falls', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('274', 'Utah', 'UT', 'Provo', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('275', 'Utah', 'UT', 'Salt Lake City', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('276', 'Utah', 'UT', 'West Jordan', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('277', 'Utah', 'UT', 'West Valley City', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('278', 'Virginia', 'VA', 'Alexandria', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('279', 'Virginia', 'VA', 'Chesapeake', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('280', 'Virginia', 'VA', 'Hampton', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('281', 'Virginia', 'VA', 'Newport News', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('282', 'Virginia', 'VA', 'Norfolk', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('283', 'Virginia', 'VA', 'Richmond', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('284', 'Virginia', 'VA', 'Virginia Beach', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('285', 'Washington', 'WA', 'Bellevue', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('286', 'Washington', 'WA', 'Everett', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('287', 'Washington', 'WA', 'Kent', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('288', 'Washington', 'WA', 'Seattle', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('289', 'Washington', 'WA', 'Spokane', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('290', 'Washington', 'WA', 'Tacoma', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('291', 'Washington', 'WA', 'Vancouver', '4', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('292', 'Wisconsin', 'WI', 'Green Bay', '5', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('293', 'Wisconsin', 'WI', 'Kenosha', '1', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('294', 'Wisconsin', 'WI', 'Madison', '2', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('295', 'Wisconsin', 'WI', 'Milwaukee', '3', 'city', '1', '0');
-INSERT INTO `geolandings` VALUES ('296', 'Arkansas', 'AR', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('297', 'California', 'CA', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('298', 'Colorado', 'CO', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('299', 'Connecticut', 'CT', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('300', 'District of Columbia', 'DC', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('301', 'Florida', 'FL', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('302', 'Georgia', 'GA', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('303', 'Hawaii', 'HI', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('304', 'Idaho', 'ID', null, '4', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('305', 'Illinois', 'IL', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('306', 'Indiana', 'IN', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('307', 'Iowa', 'IA', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('308', 'Kansas', 'KS', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('309', 'Kentucky', 'KY', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('310', 'Louisiana', 'LA', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('311', 'Maryland', 'MD', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('312', 'Massachusetts', 'MA', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('313', 'Michigan', 'MI', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('314', 'Minnesota', 'MN', null, '4', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('315', 'Mississippi', 'MS', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('316', 'Missouri', 'MO', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('317', 'Montana', 'MT', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('318', 'Nebraska', 'NE', null, '4', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('319', 'Nevada', 'NV', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('320', 'New Hampshire', 'NH', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('321', 'New Jersey', 'NJ', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('322', 'New Mexico', 'NM', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('323', 'New York', 'NY', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('324', 'North Carolina', 'NC', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('325', 'North Dakota', 'ND', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('326', 'Ohio', 'OH', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('327', 'Oklahoma', 'OK', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('328', 'Oregon', 'OR', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('329', 'Pennsylvania', 'PA', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('330', 'Rhode Island', 'RI', null, '4', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('331', 'South Carolina', 'SC', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('332', 'South Dakota', 'SD', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('333', 'Tennessee', 'TN', null, '4', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('334', 'Texas', 'TX', null, '5', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('335', 'Utah', 'UT', null, '2', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('336', 'Virginia', 'VA', null, '1', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('337', 'Washington', 'WA', null, '3', 'state', '1', '0');
-INSERT INTO `geolandings` VALUES ('338', 'Wisconsin', 'WI', null, '5', 'state', '1', '0');
-
--- ----------------------------
 -- Table structure for logs
 -- ----------------------------
 DROP TABLE IF EXISTS `logs`;
@@ -508,6 +159,357 @@ CREATE TABLE `logs` (
 -- ----------------------------
 -- Records of logs
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for majorcities
+-- ----------------------------
+DROP TABLE IF EXISTS `majorcities`;
+CREATE TABLE `majorcities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `state` varchar(255) DEFAULT NULL,
+  `state_acronym` varchar(2) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `templateid` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `siteid` int(11) DEFAULT '1',
+  `globalized` int(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=339 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of majorcities
+-- ----------------------------
+INSERT INTO `majorcities` VALUES ('9', 'Alabama', 'AL', 'Huntsville', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('8', 'Alabama', 'AL', 'Birmingham', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('10', 'Alabama', 'AL', 'Mobile', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('11', 'Alabama', 'AL', 'Montgomery', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('12', 'Alaska', 'AK', 'Anchorage', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('13', 'Arizona', 'AZ', 'Chandler', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('14', 'Arizona', 'AZ', 'Gilbert', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('15', 'Arizona', 'AZ', 'Glendale', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('16', 'Arizona', 'AZ', 'Mesa', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('17', 'Arizona', 'AZ', 'Peoria', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('18', 'Arizona', 'AZ', 'Phoenix', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('19', 'Arizona', 'AZ', 'Scottsdale', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('20', 'Arizona', 'AZ', 'Surprise', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('21', 'Arizona', 'AZ', 'Tempe', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('22', 'Arizona', 'AZ', 'Tucson', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('23', 'Arkansas', 'AR', 'Little Rock', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('24', 'California', 'CA', 'Anaheim', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('25', 'California', 'CA', 'Antioch', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('26', 'California', 'CA', 'Bakersfield', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('27', 'California', 'CA', 'Berkeley', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('28', 'California', 'CA', 'Burbank', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('29', 'California', 'CA', 'Carlsbad', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('30', 'California', 'CA', 'Chula Vista', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('31', 'California', 'CA', 'Concord', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('32', 'California', 'CA', 'Corona', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('33', 'California', 'CA', 'Costa Mesa', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('34', 'California', 'CA', 'Daly City', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('35', 'California', 'CA', 'Downey', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('36', 'California', 'CA', 'El Cajon', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('37', 'California', 'CA', 'El Monte', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('38', 'California', 'CA', 'Elk Grove', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('39', 'California', 'CA', 'Escondido', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('40', 'California', 'CA', 'Fairfield', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('41', 'California', 'CA', 'Fontana', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('42', 'California', 'CA', 'Fremont', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('43', 'California', 'CA', 'Fresno', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('44', 'California', 'CA', 'Fullerton', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('45', 'California', 'CA', 'Garden Grove', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('46', 'California', 'CA', 'Glendale', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('47', 'California', 'CA', 'Hayward', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('48', 'California', 'CA', 'Huntington Beach', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('49', 'California', 'CA', 'Inglewood', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('50', 'California', 'CA', 'Irvine', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('51', 'California', 'CA', 'Lancaster', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('52', 'California', 'CA', 'Long Beach', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('53', 'California', 'CA', 'Los Angeles', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('54', 'California', 'CA', 'Modesto', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('55', 'California', 'CA', 'Moreno Valley', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('56', 'California', 'CA', 'Murrieta', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('57', 'California', 'CA', 'Norwalk', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('58', 'California', 'CA', 'Oakland', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('59', 'California', 'CA', 'Oceanside', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('60', 'California', 'CA', 'Ontario', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('61', 'California', 'CA', 'Orange', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('62', 'California', 'CA', 'Oxnard', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('63', 'California', 'CA', 'Palmdale', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('64', 'California', 'CA', 'Pasadena', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('65', 'California', 'CA', 'Pomona', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('66', 'California', 'CA', 'Rancho Cucamonga', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('67', 'California', 'CA', 'Rialto', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('68', 'California', 'CA', 'Richmond', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('69', 'California', 'CA', 'Riverside', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('70', 'California', 'CA', 'Roseville', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('71', 'California', 'CA', 'Sacramento', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('72', 'California', 'CA', 'Salinas', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('73', 'California', 'CA', 'San Bernardino', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('74', 'California', 'CA', 'San Buenaventura', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('75', 'California', 'CA', 'San Diego', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('76', 'California', 'CA', 'San Francisco', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('77', 'California', 'CA', 'San Jose', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('78', 'California', 'CA', 'Santa Ana', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('79', 'California', 'CA', 'Santa Clara', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('80', 'California', 'CA', 'Santa Clarita', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('81', 'California', 'CA', 'Santa Maria', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('82', 'California', 'CA', 'Santa Rosa', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('83', 'California', 'CA', 'Simi Valley', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('84', 'California', 'CA', 'Stockton', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('85', 'California', 'CA', 'Sunnyvale', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('86', 'California', 'CA', 'Temecula', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('87', 'California', 'CA', 'Thousand Oaks', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('88', 'California', 'CA', 'Torrance', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('89', 'California', 'CA', 'Vallejo', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('90', 'California', 'CA', 'Victorville', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('91', 'California', 'CA', 'Visalia', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('92', 'California', 'CA', 'West Covina', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('93', 'Colorado', 'CO', 'Arvada', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('94', 'Colorado', 'CO', 'Aurora', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('95', 'Colorado', 'CO', 'Boulder', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('96', 'Colorado', 'CO', 'Centennial', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('97', 'Colorado', 'CO', 'Colorado Springs', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('98', 'Colorado', 'CO', 'Denver', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('99', 'Colorado', 'CO', 'Fort Collins', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('100', 'Colorado', 'CO', 'Lakewood', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('101', 'Colorado', 'CO', 'Pueblo', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('102', 'Colorado', 'CO', 'Thornton', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('103', 'Colorado', 'CO', 'Westminster', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('104', 'Connecticut', 'CT', 'Bridgeport', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('105', 'Connecticut', 'CT', 'Hartford', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('106', 'Connecticut', 'CT', 'New Haven', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('107', 'Connecticut', 'CT', 'Stamford', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('108', 'Connecticut', 'CT', 'Waterbury', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('109', 'District of Columbia', 'DC', 'Washington', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('110', 'Florida', 'FL', 'Cape Coral', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('111', 'Florida', 'FL', 'Clearwater', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('112', 'Florida', 'FL', 'Coral Springs', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('113', 'Florida', 'FL', 'Fort Lauderdale', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('114', 'Florida', 'FL', 'Gainesville', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('115', 'Florida', 'FL', 'Hialeah', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('116', 'Florida', 'FL', 'Hollywood', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('117', 'Florida', 'FL', 'Jacksonville', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('118', 'Florida', 'FL', 'Miami', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('119', 'Florida', 'FL', 'Miami Gardens', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('120', 'Florida', 'FL', 'Miramar', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('121', 'Florida', 'FL', 'Orlando', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('122', 'Florida', 'FL', 'Palm Bay', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('123', 'Florida', 'FL', 'Pembroke Pines', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('124', 'Florida', 'FL', 'Pompano Beach', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('125', 'Florida', 'FL', 'Port St Lucie', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('126', 'Florida', 'FL', 'St Petersburg', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('127', 'Florida', 'FL', 'Tallahassee', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('128', 'Florida', 'FL', 'Tampa', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('129', 'Florida', 'FL', 'West Palm Beach', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('130', 'Georgia', 'GA', 'Athens', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('131', 'Georgia', 'GA', 'Atlanta', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('132', 'Georgia', 'GA', 'Augusta', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('133', 'Georgia', 'GA', 'Columbus', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('134', 'Georgia', 'GA', 'Savannah', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('135', 'Hawaii', 'HI', 'Honolulu', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('136', 'Idaho', 'ID', 'Boise', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('137', 'Illinois', 'IL', 'Aurora', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('138', 'Illinois', 'IL', 'Chicago', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('139', 'Illinois', 'IL', 'Elgin', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('140', 'Illinois', 'IL', 'Joliet', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('141', 'Illinois', 'IL', 'Naperville', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('142', 'Illinois', 'IL', 'Peoria', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('143', 'Illinois', 'IL', 'Rockford', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('144', 'Illinois', 'IL', 'Springfield', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('145', 'Indiana', 'IN', 'Evansville', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('146', 'Indiana', 'IN', 'Fort Wayne', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('147', 'Indiana', 'IN', 'Indianapolis', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('148', 'Indiana', 'IN', 'South Bend', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('149', 'Iowa', 'IA', 'Cedar Rapids', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('150', 'Iowa', 'IA', 'Davenport', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('151', 'Iowa', 'IA', 'Des Moines', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('152', 'Kansas', 'KS', 'Kansas City', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('153', 'Kansas', 'KS', 'Olathe', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('154', 'Kansas', 'KS', 'Overland Park', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('155', 'Kansas', 'KS', 'Topeka', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('156', 'Kansas', 'KS', 'Wichita', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('157', 'Kentucky', 'KY', 'Lexington', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('158', 'Kentucky', 'KY', 'Louisville', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('159', 'Louisiana', 'LA', 'Baton Rouge', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('160', 'Louisiana', 'LA', 'Lafayette', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('161', 'Louisiana', 'LA', 'New Orleans', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('162', 'Louisiana', 'LA', 'Shreveport', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('163', 'Maryland', 'MD', 'Baltimore', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('164', 'Massachusetts', 'MA', 'Boston', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('165', 'Massachusetts', 'MA', 'Cambridge', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('166', 'Massachusetts', 'MA', 'Lowell', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('167', 'Massachusetts', 'MA', 'Springfield', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('168', 'Massachusetts', 'MA', 'Worcester', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('169', 'Michigan', 'MI', 'Ann Arbor', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('170', 'Michigan', 'MI', 'Detroit', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('171', 'Michigan', 'MI', 'Flint', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('172', 'Michigan', 'MI', 'Grand Rapids', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('173', 'Michigan', 'MI', 'Lansing', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('174', 'Michigan', 'MI', 'Sterling Heights', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('175', 'Michigan', 'MI', 'Warren', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('176', 'Minnesota', 'MN', 'Minneapolis', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('177', 'Minnesota', 'MN', 'Rochester', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('178', 'Minnesota', 'MN', 'Saint Paul', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('179', 'Mississippi', 'MS', 'Jackson', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('180', 'Missouri', 'MO', 'Columbia', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('181', 'Missouri', 'MO', 'Independence', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('182', 'Missouri', 'MO', 'Kansas City', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('183', 'Missouri', 'MO', 'Springfield', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('184', 'Missouri', 'MO', 'St Louis', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('185', 'Montana', 'MT', 'Billings', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('186', 'Nebraska', 'NE', 'Lincoln', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('187', 'Nebraska', 'NE', 'Omaha', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('188', 'Nevada', 'NV', 'Henderson', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('189', 'Nevada', 'NV', 'Las Vegas', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('190', 'Nevada', 'NV', 'North Las Vegas', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('191', 'Nevada', 'NV', 'Reno', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('192', 'New Hampshire', 'NH', 'Manchester', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('193', 'New Jersey', 'NJ', 'Elizabeth', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('194', 'New Jersey', 'NJ', 'Jersey City', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('195', 'New Jersey', 'NJ', 'Newark', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('196', 'New Jersey', 'NJ', 'Paterson', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('197', 'New Mexico', 'NM', 'Albuquerque', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('198', 'New Mexico', 'NM', 'Las Cruces', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('199', 'New York', 'NY', 'Buffalo', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('200', 'New York', 'NY', 'Rochester', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('201', 'New York', 'NY', 'Syracuse', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('202', 'New York', 'NY', 'Yonkers', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('203', 'North Carolina', 'NC', 'Cary', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('204', 'North Carolina', 'NC', 'Charlotte', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('205', 'North Carolina', 'NC', 'Durham', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('206', 'North Carolina', 'NC', 'Fayetteville', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('207', 'North Carolina', 'NC', 'Greensboro', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('208', 'North Carolina', 'NC', 'High Point', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('209', 'North Carolina', 'NC', 'Raleigh', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('210', 'North Carolina', 'NC', 'Wilmington', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('211', 'North Carolina', 'NC', 'Winston Salem', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('212', 'North Dakota', 'ND', 'Fargo', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('213', 'Ohio', 'OH', 'Akron', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('214', 'Ohio', 'OH', 'Cincinnati', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('215', 'Ohio', 'OH', 'Cleveland', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('216', 'Ohio', 'OH', 'Columbus', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('217', 'Ohio', 'OH', 'Dayton', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('218', 'Ohio', 'OH', 'Toledo', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('219', 'Oklahoma', 'OK', 'Broken Arrow', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('220', 'Oklahoma', 'OK', 'Norman', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('221', 'Oklahoma', 'OK', 'Oklahoma City', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('222', 'Oklahoma', 'OK', 'Tulsa', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('223', 'Oregon', 'OR', 'Eugene', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('224', 'Oregon', 'OR', 'Gresham', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('225', 'Oregon', 'OR', 'Portland', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('226', 'Oregon', 'OR', 'Salem', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('227', 'Pennsylvania', 'PA', 'Allentown', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('228', 'Pennsylvania', 'PA', 'Erie', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('229', 'Pennsylvania', 'PA', 'Philadelphia', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('230', 'Pennsylvania', 'PA', 'Pittsburgh', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('231', 'Rhode Island', 'RI', 'Providence', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('232', 'South Carolina', 'SC', 'Charleston', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('233', 'South Carolina', 'SC', 'Columbia', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('234', 'South Carolina', 'SC', 'North Charleston', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('235', 'South Dakota', 'SD', 'Sioux Falls', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('236', 'Tennessee', 'TN', 'Chattanooga', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('237', 'Tennessee', 'TN', 'Clarksville', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('238', 'Tennessee', 'TN', 'Knoxville', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('239', 'Tennessee', 'TN', 'Memphis', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('240', 'Tennessee', 'TN', 'Murfreesboro', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('241', 'Tennessee', 'TN', 'Nashville', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('242', 'Texas', 'TX', 'Abilene', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('243', 'Texas', 'TX', 'Amarillo', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('244', 'Texas', 'TX', 'Arlington', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('245', 'Texas', 'TX', 'Austin', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('246', 'Texas', 'TX', 'Beaumont', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('247', 'Texas', 'TX', 'Brownsville', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('248', 'Texas', 'TX', 'Carrollton', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('249', 'Texas', 'TX', 'Corpus Christi', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('250', 'Texas', 'TX', 'Dallas', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('251', 'Texas', 'TX', 'Denton', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('252', 'Texas', 'TX', 'El Paso', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('253', 'Texas', 'TX', 'Fort Worth', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('254', 'Texas', 'TX', 'Frisco', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('255', 'Texas', 'TX', 'Garland', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('256', 'Texas', 'TX', 'Grand Prairie', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('257', 'Texas', 'TX', 'Houston', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('258', 'Texas', 'TX', 'Irving', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('259', 'Texas', 'TX', 'Killeen', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('260', 'Texas', 'TX', 'Laredo', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('261', 'Texas', 'TX', 'Lubbock', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('262', 'Texas', 'TX', 'McAllen', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('263', 'Texas', 'TX', 'McKinney', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('264', 'Texas', 'TX', 'Mesquite', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('265', 'Texas', 'TX', 'Midland', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('266', 'Texas', 'TX', 'Odessa', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('267', 'Texas', 'TX', 'Pasadena', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('268', 'Texas', 'TX', 'Plano', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('269', 'Texas', 'TX', 'Richardson', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('270', 'Texas', 'TX', 'Round Rock', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('271', 'Texas', 'TX', 'San Antonio', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('272', 'Texas', 'TX', 'Waco', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('273', 'Texas', 'TX', 'Wichita Falls', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('274', 'Utah', 'UT', 'Provo', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('275', 'Utah', 'UT', 'Salt Lake City', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('276', 'Utah', 'UT', 'West Jordan', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('277', 'Utah', 'UT', 'West Valley City', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('278', 'Virginia', 'VA', 'Alexandria', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('279', 'Virginia', 'VA', 'Chesapeake', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('280', 'Virginia', 'VA', 'Hampton', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('281', 'Virginia', 'VA', 'Newport News', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('282', 'Virginia', 'VA', 'Norfolk', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('283', 'Virginia', 'VA', 'Richmond', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('284', 'Virginia', 'VA', 'Virginia Beach', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('285', 'Washington', 'WA', 'Bellevue', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('286', 'Washington', 'WA', 'Everett', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('287', 'Washington', 'WA', 'Kent', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('288', 'Washington', 'WA', 'Seattle', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('289', 'Washington', 'WA', 'Spokane', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('290', 'Washington', 'WA', 'Tacoma', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('291', 'Washington', 'WA', 'Vancouver', '4', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('292', 'Wisconsin', 'WI', 'Green Bay', '5', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('293', 'Wisconsin', 'WI', 'Kenosha', '1', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('294', 'Wisconsin', 'WI', 'Madison', '2', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('295', 'Wisconsin', 'WI', 'Milwaukee', '3', 'city', '1', '0');
+INSERT INTO `majorcities` VALUES ('296', 'Arkansas', 'AR', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('297', 'California', 'CA', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('298', 'Colorado', 'CO', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('299', 'Connecticut', 'CT', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('300', 'District of Columbia', 'DC', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('301', 'Florida', 'FL', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('302', 'Georgia', 'GA', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('303', 'Hawaii', 'HI', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('304', 'Idaho', 'ID', null, '4', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('305', 'Illinois', 'IL', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('306', 'Indiana', 'IN', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('307', 'Iowa', 'IA', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('308', 'Kansas', 'KS', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('309', 'Kentucky', 'KY', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('310', 'Louisiana', 'LA', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('311', 'Maryland', 'MD', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('312', 'Massachusetts', 'MA', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('313', 'Michigan', 'MI', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('314', 'Minnesota', 'MN', null, '4', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('315', 'Mississippi', 'MS', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('316', 'Missouri', 'MO', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('317', 'Montana', 'MT', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('318', 'Nebraska', 'NE', null, '4', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('319', 'Nevada', 'NV', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('320', 'New Hampshire', 'NH', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('321', 'New Jersey', 'NJ', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('322', 'New Mexico', 'NM', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('323', 'New York', 'NY', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('324', 'North Carolina', 'NC', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('325', 'North Dakota', 'ND', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('326', 'Ohio', 'OH', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('327', 'Oklahoma', 'OK', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('328', 'Oregon', 'OR', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('329', 'Pennsylvania', 'PA', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('330', 'Rhode Island', 'RI', null, '4', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('331', 'South Carolina', 'SC', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('332', 'South Dakota', 'SD', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('333', 'Tennessee', 'TN', null, '4', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('334', 'Texas', 'TX', null, '5', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('335', 'Utah', 'UT', null, '2', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('336', 'Virginia', 'VA', null, '1', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('337', 'Washington', 'WA', null, '3', 'state', '1', '0');
+INSERT INTO `majorcities` VALUES ('338', 'Wisconsin', 'WI', null, '5', 'state', '1', '0');
 
 -- ----------------------------
 -- Table structure for menus
@@ -567,12 +569,20 @@ CREATE TABLE `metafields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `metafieldType` varchar(255) DEFAULT NULL,
   `modelid` int(11) DEFAULT NULL,
-  `identifier` varchar(500) DEFAULT NULL,
   `name` varchar(500) DEFAULT NULL,
   `type` varchar(500) DEFAULT NULL,
   `contentblock` text,
   `wysiwyg` int(1) DEFAULT '0',
   `fieldvalues` text,
+  `class` text,
+  `checked` int(1) DEFAULT '0',
+  `divwrap` int(1) DEFAULT NULL,
+  `divclass` text,
+  `labelplacement` varchar(255) DEFAULT 'before',
+  `prepend` text,
+  `append` text,
+  `styleattribute` text,
+  `identifier` varchar(500) DEFAULT NULL,
   `sortorder` int(11) DEFAULT '9999',
   `siteid` int(11) DEFAULT NULL,
   `createdat` datetime DEFAULT NULL,
@@ -868,10 +878,10 @@ CREATE TABLE `sites` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `subdomain` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sslenabled` int(11) DEFAULT '0',
   `registrationDisabled` int(1) DEFAULT '0',
   `emailMatchDomainRequired` int(1) DEFAULT '0',
   `emailMatchOtherDomains` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sslenabled` int(11) DEFAULT '0',
   `theme` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlExtension` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `siteid` int(11) DEFAULT NULL,
@@ -888,7 +898,7 @@ CREATE TABLE `sites` (
 -- ----------------------------
 -- Records of sites
 -- ----------------------------
-INSERT INTO `sites` VALUES ('60', 'Wheelie CMS', null, 'localhost', '0', '0', '0', null, 'light-theme', null, '60', '2014-10-05 19:10:06', '1', '2014-10-05 19:10:06', '1', null, null, '1');
+INSERT INTO `sites` VALUES ('60', 'Wheelie CMS', null, 'localhost', '0', '0', null, '0', 'light-theme', null, '60', '2014-10-05 19:10:06', '1', '2014-10-05 19:10:06', '1', null, null, '1');
 
 -- ----------------------------
 -- Table structure for todos
@@ -927,8 +937,8 @@ DROP TABLE IF EXISTS `usergroups`;
 CREATE TABLE `usergroups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `groupname` varchar(1000) DEFAULT NULL,
-  `role` varchar(255) DEFAULT NULL,
   `siteid` int(11) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   `defaultgroup` int(11) DEFAULT '0',
   `createdat` datetime DEFAULT NULL,
@@ -943,7 +953,7 @@ CREATE TABLE `usergroups` (
 -- ----------------------------
 -- Records of usergroups
 -- ----------------------------
-INSERT INTO `usergroups` VALUES ('1', 'Users', null, '1', '1', '1', null, null, null, null, null, null);
+INSERT INTO `usergroups` VALUES ('1', 'Users', '1', null, '1', '1', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for users

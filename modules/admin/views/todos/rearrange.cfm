@@ -34,6 +34,8 @@
 	<a href='#urlFor(route="admin~Action", controller="todos", action="emailreviewform")#' class="btn btn-sm btn-info">Get Email Review</a>	
 	
 	<a href='#urlFor(route="admin~Action", controller="todos", action="print")#' class="btn btn-sm btn-info">Print</a>
+	
+	<a href='#urlFor(route="admin~Action", controller="todos", action="importlist")#' class="btn btn-sm btn-info">Import Todos</a>
 	<br><br>
 	
 	Drag the list to re-order.

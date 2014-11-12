@@ -1,10 +1,10 @@
 <cfscript>
 	setSiteInfo();
 
-	include "/models/services/global/settings.cfm";	
+	include "/models/services/global/settings.cfm";
 	
-	// Get referrer for contact form / make sure not our domain
 	thisSiteUrl = "http://#request.site.domain#";
+	
 	if(
 		isNull(session.referer) AND len(trim(cgi.http_referer)) AND 
 		(len(cgi.http_referer) GTE thisSiteUrl AND Left(cgi.http_referer,len(thisSiteUrl)) NEQ thisSiteUrl OR len(cgi.http_referer) LT thisSiteUrl)

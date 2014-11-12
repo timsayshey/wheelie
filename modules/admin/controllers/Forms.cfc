@@ -59,6 +59,10 @@ component extends="_main" output="false"
 		
 		params.formsubmission.mobile = isMobile();	
 		
+		params.formsubmission.ip = getIpAddress();
+		
+		params.formsubmission.useragent = cgi.HTTP_USER_AGENT;
+		
 		// Get Form
 		qform = model("Form").findByKey(params.qform.id);
 		params.formsubmission.formid = qform.id;

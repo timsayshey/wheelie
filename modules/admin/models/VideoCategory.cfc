@@ -12,6 +12,7 @@
 			table("categories");
 			
 			// Relations
+			belongsTo(name="VideoCategoryJoin", foreignKey="id", joinKey="videocategoryid", joinType="outer");
 			hasMany("VideoCategoryJoins");
 			
 			// Validations

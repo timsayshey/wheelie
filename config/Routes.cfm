@@ -222,6 +222,19 @@
     );
 	
 	addRoute(
+        name="public~videos", 
+		pattern="/videos/[action]/[id]",
+		controller="pVideos"
+    );
+	
+	addRoute(
+        name="public~videosIndex", 
+		pattern="/videos",
+		action="category",
+		controller="pVideos"
+    );
+	
+	addRoute(
         name="public~id", 
 		pattern="/p/[controller]/[action]/[id]"
     );

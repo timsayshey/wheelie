@@ -21,7 +21,7 @@
 		'<li class="headertab">
 			#linkTo(
 				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
-				route		= "admin~Action", 
+				route		= "public~Action", 
 				module		= "admin",
 				controller	= "forms", 
 				action		= "index", 
@@ -74,7 +74,6 @@
 		property 	= 'failembed',
 		label 		= "Fail Embed Codes"
 	)#
-
 	
 	<br class="clear">
 	 
@@ -89,7 +88,7 @@
 				options			= formusers,
 				selected		= selectedformusers,
 				valueField 		= "id", 
-				textField 		= "lastname"
+				textField 		= "email"
 			)#	
 			
 			#bselecttag(
@@ -100,7 +99,7 @@
 				options			= formusers,
 				selected		= selectedccformusers,
 				valueField 		= "id", 
-				textField 		= "lastname"
+				textField 		= "email"
 			)#	
 			<script type="text/javascript">
 				$(function() {

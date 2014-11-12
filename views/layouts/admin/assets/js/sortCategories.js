@@ -6,11 +6,14 @@ $(document).ready(function(){
 
 function initCategorySort()
 {
+	$getMaxLevel = $(".maxLevel").val();
+	
 	/* nested sortables
 	------------------------------------------------------------------------- */
 	var menu_serialized;
 	$('#nestable').nestedSortable({
 		listType: 'ul',
+		maxLevels: $getMaxLevel,
 		handle: 'div',
 		items: 'li',
 		placeholder: 'ns-helper',

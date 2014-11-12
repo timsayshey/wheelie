@@ -93,7 +93,7 @@ component extends="_main" output="false"
 			filterResults();
 		}
 		
-		// Paginate me batman
+		// Paginate me batman		
 		pagination.setQueryToPaginate(qVideos);	
 		pagination.setItemsPerPage(session.perPage);		
 		paginator = pagination.getRenderedHTML();

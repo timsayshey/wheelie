@@ -19,6 +19,7 @@
 	info.validCategoryModelsList = ""; // lowercase
 	info.serverIp = "";
 	
+	info.adminUrlPath = "/manager";
 	info.domainshort = cgi.HTTP_HOST;
 	siteUrl 		 = info.domainshort;
 	info.domain		 = "http://#info.domainshort#";

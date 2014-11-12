@@ -31,12 +31,20 @@
 			<cfloop query="forms">
 				<tr> 
 					<td>
+						<h5 style="margin:0"><strong>#name#</strong></h5>
 						<a href='#urlFor(
 								route		= "admin~Id",
 								controller	= "forms",
 								action		= "show",
 								id			= id
-							)#'>#name#</a><br>
+							)#'>Admin Form</a> - 
+						<a href='#urlFor(
+								route		= "public~id", 
+								controller	= "pforms", 
+								action		= "show",
+								id			= id
+							)#'>Public Form</a> - 
+						Shortcode: [formly formid="#id#"]
 					</td>
 					<td class="actions">						
 						

@@ -44,7 +44,7 @@
 					vendor/serializeAnything.jquery.js,
 					vendor/nestedSortable/jquery-ui-1.10.3.custom.min.js,
 					vendor/nestedSortable/jquery.ui.touch-punch.min.js,
-					vendor/nestedSortable/jquery.mjs.nestedSortable.js,
+					vendor/nestedSortable/jquery.mjs.nestedSortable2.js,
 					vendor/js/plugins/fileupload/bootstrap-fileupload.js,
 					vendor/jquery.responsivetable.min.js
 			');
@@ -100,7 +100,7 @@
 				<cfif !isNull(session.user)>
 					<div class="userinfo col-sm-3 pull-right">
 						<figure>
-							<img src="/assets/userpics/#session.user.id#.jpg">
+							<img src="#fileExists(expandPath('/assets/userpics/#session.user.id#.jpg')) ? '/assets/userpics/#session.user.id#.jpg' : '/assets/img/user_thumbholder.jpg'#">
 							<figcaption>
 								<cfset editAccount = urlFor(									
 									route		= "admin~Id",

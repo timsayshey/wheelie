@@ -289,9 +289,16 @@
 		</div>
 		
 		<div class="col-sm-6">
-			<label>Security clearance?</label><br>
+			<label>Email confirmed?</label><br>
 			#radioButton(objectName="user", property="securityApproval", tagValue="1", label="Yes ",labelPlacement="after")#<br />
 			#radioButton(objectName="user", property="securityApproval", tagValue="0", label="No ",labelPlacement="after")#
+			<div class="separator"></div>
+		</div>
+		
+		<div class="col-sm-6">
+			<label>Multisite User?</label><br>
+			#radioButton(objectName="user", property="globalized", tagValue="1", label="Yes ",labelPlacement="after")#<br />
+			#radioButton(objectName="user", property="globalized", tagValue="0", label="No ",labelPlacement="after")#
 			<div class="separator"></div>
 		</div>
 		

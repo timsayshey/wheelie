@@ -83,9 +83,17 @@
 				metafields.updatedby,
 				metafields.deletedat,
 				metafields.deletedby,
+				metafields.divwrap,
+				metafields.divclass,
+				metafields.checked,
+				metafields.labelplacement,
+				metafields.prepend,
+				metafields.append,
+				metafields.styleattribute,
+				metafields.class,
 				metadata.foreignid,
 				metadata.metafieldid,
-				metadata.fielddata
+				metadata.fielddata				
 			FROM
 				metafields
 			LEFT OUTER JOIN metadata AS metadata ON 

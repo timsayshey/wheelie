@@ -58,6 +58,8 @@
 		// Setup pagination
 		application.pagination = CreateObject("component","models.services.vendor.pagination").init();
 		
+		//writeDump(application.pagination); abort;
+		
 		// Make them accessible from local scope	
 		include "/models/services/global/init/setservices.cfm";
 	</cfscript>

@@ -7,7 +7,7 @@ component output="false" extends="controllers.Controller"
 		
 		forceHttps(except="");
 		
-		filters(through="deleteEmptyPassword,adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,loginServerUser,preHandler,filterDefaults,handleRedirect");
+		filters(through="loginServerUser,deleteEmptyPassword,adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,preHandler,filterDefaults,handleRedirect");
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
 		filters(through="loggedInExcept",only="login,recovery");	
 		filters(through="setUserInfo");	
@@ -39,7 +39,7 @@ component output="false" extends="controllers.Controller"
 	
 	private function loginServerUser()
 	{		
-		if(FindNoCase("CFSCHEDULE",CGI.HTTP_USER_AGENT))
+		if(FindNoCase("cfschedule",lcase(CGI.HTTP_USER_AGENT)))
 		{			
 			request.isScheduledTask = true;
 			session.user.id = 1;

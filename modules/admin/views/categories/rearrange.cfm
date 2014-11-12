@@ -1,5 +1,5 @@
 <cfoutput>    
-
+	<input type="hidden" name="maxLevel" class="maxLevel" value="#isNull(params.maxlevel) ? 0 : params.maxlevel#" />
 	<script src="/views/layouts/admin/assets/js/sortCategories.js" type="text/javascript"></script>
 	<script src="/views/layouts/admin/assets/js/category.js" type="text/javascript"></script>
 	<script src="/views/layouts/admin/assets/js/video.js" type="text/javascript"></script>

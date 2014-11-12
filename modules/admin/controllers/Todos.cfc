@@ -6,6 +6,20 @@ component extends="_main" output="false"
 		super.init();
 	}
 	
+	function importlistSubmit()
+	{
+		linebreak = Chr(13) & Chr(10);
+		todoArray = ListToArray(params.importlist,linebreak);		
+		
+		for(todo in todoArray)
+		{
+			savetodo = model("Todo").new({ name = todo });
+			saveResult = savetodo.save();
+		}
+		flashInsert(success="Todos imported successfully!");
+		redirectTo(route="admin~Todo", action="rearrange", modelName="Todo");	
+	}
+	
 	function sharedData()
 	{
 		//pages = model("Page").findAll(order="name ASC");
