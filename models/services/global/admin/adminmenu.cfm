@@ -207,7 +207,7 @@
 				{
 					type	   = 'link',
 					name	   = 'Share Pics',
-					url		   = urlFor(route="public~otherPages", action="sharepics")
+					url		   = urlFor(route="public~otherPagesOld", action="sharepics")
 				},
 				{
 					type	  = 'subparent',
