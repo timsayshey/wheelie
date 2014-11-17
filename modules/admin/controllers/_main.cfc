@@ -8,7 +8,7 @@ component output="false" extends="controllers.Controller"
 		forceHttps(except="");
 		
 		filters(through="loginServerUser,deleteEmptyPassword,adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,preHandler,filterDefaults,handleRedirect");
-		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
+		filters(through="loggedOutOnly",except="login,usermenu,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
 		filters(through="loggedInExcept",only="login,recovery");	
 		filters(through="setUserInfo");	
 	}
@@ -54,7 +54,7 @@ component output="false" extends="controllers.Controller"
 	
 	private function handleRedirect()
 	{		
-		if(isNull(params.redir) AND isNull(session.loginRedir) AND isNull(session.user.id) AND !find("user",lcase(cgi.PATH_INFO)))
+		if(isNull(params.redir) AND isNull(session.loginRedir) AND isNull(session.user.id) AND !find("user",lcase(cgi.PATH_INFO)) AND !find(lcase(params.action),"save") AND !find(lcase(params.action),"submit"))
 		{
 			session.loginRedir = cgi.PATH_INFO;
 		}
@@ -182,6 +182,11 @@ component output="false" extends="controllers.Controller"
 	private function preHandler()
 	{	
 		usesLayout("/layouts/admin/layout");
+		
+		if(request.site.enableAdminTheme)
+		{
+			usesLayout("/layouts/admin/layoutfull");
+		}
 		
 		if(!isNull(params.format) AND params.format eq "modal") 
 		{

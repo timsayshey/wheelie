@@ -128,17 +128,10 @@ h1 {
 font-size:4rem
 }
 }
-h2 {
-	font-size:4.5rem;
-	padding-top:0.8em;
-	margin-top:0.8em;
-	border-top:#edece4 1px solid;
-	margin-bottom: 15px;
-	font-weight:normal !important;
-}
+
 @media (max-width: 800px), (max-width: 800px) {
 h2 {
-font-size:2.8rem
+font-size:15px
 }
 }
 h3 {
@@ -192,4 +185,19 @@ h3 a:hover {
 h4 a:hover, h5 a:hover, h6 a:hover {
 	text-decoration:none;
 	box-shadow:#5ba4e5 0 -1px 0 inset
+}
+
+h2 {
+	font-size:25px;
+	line-height:normal;
+	padding-top:0;
+	margin-top:0;
+	border-top:0;
+	margin-bottom: 0;
+	font-weight:normal !important;
+}
+
+h1 {
+	border-bottom:#edece4 1px solid;
+	padding-bottom:25px;	
 }

@@ -82,6 +82,5 @@
 		
 		</cfif>	
 		
-	</cfif>
-	
+	</cfif>	
 </cfoutput>

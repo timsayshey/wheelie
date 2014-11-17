@@ -1,23 +1,42 @@
 <cfset themeDir = "/views/layouts/admin/">
-<cfoutput>
-<!DOCTYPE html>
-<!--[if lt IE 7]> <html lang="en" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html lang="en" class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html lang="en" class="lt-ie9"> <![endif]-->
-<!--[if IE 9]>    <html lang="en" class="ie9"> <![endif]-->
-<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-	<head>	
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		
-		<title>#sanitize(includeContent("headerTitle"))# | Web Panel</title>
-		
-		<link rel="icon" type="image/png"  href="/favicon.png">
-		
-		<meta name="description" content="">
-		<meta name="robots" content="index, follow">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+<cfset request.page.hideSidebar = true>
+<cfset request.page.hideFooterCallToAction = true>
+<cfset request.page.clearThemeWrapper = true>
+<cfset request.page.noBgImage = true>
+<cfset contentFor(siteTitle = "#sanitize(includeContent('headerTitle'))# | Web Panel")>
+<cfoutput>  
+	<cfsavecontent variable="adminbody">
+		<style type="text/css">
+			.admin-content *, .admin-content strong, .admin-content h1, .admin-content h2, .admin-content h3, .admin-content h4 {
+				font-family:'Montserrat', sans-serif !important;
+			}
+			.contentwrapper {
+				margin-top:0;
+			}			
+			.admin-content {
+				background:##eee;	
+				padding-top: 20px;
+			}
+			.admin-content .leftside .data-block {
+				border-bottom: 3px solid ##ddd;
+				background:white;
+			}		
+			.admin-content .rightbar .data-block {
+				border-bottom: 3px solid ##ddd;
+				background:white;
+				color:##333
+			}
+.admin-content h2 span { display: inline-block; } .admin-content article, .admin-content aside, .admin-content details, .admin-content figcaption, .admin-content figure, .admin-content footer, .admin-content header, .admin-content hgroup, .admin-content nav, .admin-content section, .admin-content summary{display:block} .admin-content audio, .admin-content canvas, .admin-content video{display:inline-block;*display:inline;*zoom:1} .admin-content audio:not([controls]){display:none;height:0} .admin-content [hidden]{display:none}.admin-content, .admin-content button, .admin-content input, .admin-content select, .admin-content textarea{font-family:sans-serif}.admin-content{margin:0} .admin-content a:focus{outline:thin dotted} .admin-content a:active, .admin-content a:hover{outline:0} .admin-content h1, .admin-content h2, .admin-content h3, .admin-content h4, .admin-content h5 { background:none; } .admin-content h1{font-size:2em;} .admin-content h2{font-size:1.5em;} .admin-content h3{font-size:1.17em;} .admin-content h4{font-size:1em;} .admin-content h5{font-size:.83em;} .admin-content h6{font-size:.75em;} .admin-content abbr[title]{border-bottom:1px dotted} .admin-content b, .admin-content strong{font-weight:bold} .admin-content blockquote{margin:1em 40px} .admin-content dfn{font-style:italic} .admin-content mark{background:##ff0;color:##000} .admin-content p, .admin-content pre{margin:1em 0} .admin-content code, .admin-content kbd, .admin-content pre, .admin-content samp{font-family:monospace,serif;_font-family:'courier new',monospace;font-size:1em} .admin-content pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word} .admin-content q{quotes:none} .admin-content q:before, .admin-content q:after{content:'';content:none} .admin-content small{font-size:75%} .admin-content sub, .admin-content sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline} .admin-content sup{top:-0.5em} .admin-content sub{bottom:-0.25em} .admin-content dl, .admin-content menu, .admin-content ol, .admin-content dd{margin:0 0 0 40px} .admin-content menu, .admin-content ol, .admin-content ul{padding:0 0 0 40px} .admin-content nav ul, .admin-content nav ol{list-style:none;list-style-image:none} .admin-content img{border:0;-ms-interpolation-mode:bicubic} .admin-content svg:not(:root){overflow:hidden} .admin-content figure{margin:0} .admin-content form{margin:0} .admin-content fieldset{border:1px solid ##c0c0c0;margin:0 2px;padding:.35em .625em .75em} .admin-content legend{border:0;padding:0;white-space:normal;*margin-left:-7px} .admin-content button, .admin-content input{line-height:normal} .admin-content button, .admin-content input[type="button"], .admin-content input[type="reset"], .admin-content input[type="submit"]{-webkit-appearance:button;cursor:pointer;*overflow:visible} .admin-content button[disabled], .admin-content input[disabled]{cursor:default} .admin-content input[type="checkbox"], .admin-content input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px} .admin-content input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box} .admin-content input[type="search"]::-webkit-search-cancel-button, .admin-content input[type="search"]::-webkit-search-decoration{-webkit-appearance:none} .admin-content button::-moz-focus-inner, .admin-content input::-moz-focus-inner{border:0;padding:0} .admin-content textarea{overflow:auto;vertical-align:top} .admin-content table{border-collapse:collapse;border-spacing:0}
+			.admin-content div, .admin-content input, .admin-content label, .admin-content select, .admin-content textarea {
+				font-size:12px;
+			}
+			.topnav {
+				margin-bottom:0;	
+			}
+			.admin-content h1,.admin-content h2,.admin-content h3,.admin-content h4,.admin-content h5,.admin-content h6,.admin-content h7 {
+				border:0;	
+			}			
+		</style>
 		<cfscript>		
 			includeCSS = styleSheetLinkTag(sources='
 					vendor/css/plugins/lightbox/lightbox.css, 	
@@ -28,11 +47,13 @@
 			
 			//includeIECSS = styleSheetLinkTag(sources='');
 			
+			/*  
+				vendor/js/libs/modernizr.js,
+				vendor/js/bootstrap/bootstrap.min.js,
+			*/
+			
 			includeJS = javaScriptIncludeTag(sources='
-					vendor/js/libs/jquery.js,
-					js/utilities.js,					
-					vendor/js/libs/modernizr.js,
-					vendor/js/bootstrap/bootstrap.min.js,
+					js/utilities.js,
 					vendor/js/plugins/wysihtml5/wysihtml5-0.3.0.js,
 					vendor/js/plugins/wysihtml5/bootstrap-wysihtml5.js,
 					vendor/js/plugins/lightbox/lightbox-2.6.min.js,
@@ -61,95 +82,31 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.png">-->
 		
+		<!--- <cfif isNull(request.page.jqueryLoaded)>
+			<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+			<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+			<cfset request.page.jqueryLoaded = true>
+		</cfif> --->
+		
 		<!-- CSS Libs -->
 		#includeCSS#
 		
-		<link href="#themeDir#assets/css/bootstrap.min.css" rel="stylesheet">
-		<link href="#themeDir#assets/css/todc-bootstrap.min.css" rel="stylesheet">
-		<link href="#themeDir#assets/css/admin.css" rel="stylesheet">
+		<link href="#themeDir#assets/css/admin-bootstrap.css" rel="stylesheet">
 		<link href="#themeDir#style.css" rel="stylesheet">
 		
 		<!-- JS Libs -->
 		#includeJS#
 		
 		<script src="#themeDir#assets/js/shared.js" type="text/javascript"></script>
-		
 		<!-- IE8 support of media queries and CSS 2/3 selectors -->
 		<!--[if lt IE 9]>
 			<!---#includeIECSS#--->
 			#includeIEJS#
 		<![endif]-->
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
-		<style type="text/css">
-			*, strong, h1, h2, h3, h4 {
-				font-family:'Montserrat', sans-serif !important
-			}
-		</style>
-	</head>
-	<body>
 		
-		<!-- Full height wrapper -->
-		<div id="wrapper" class="headerwrap">
-
-			<!-- Main page header -->
-			<header id="header" class="container">
-				<div class="col-md-12">
-				
-				<a href='#urlFor(route="admin~Action", controller="main", action="home")#' class="logo-top">#request.site.name#</a>	
-								
-				<cfif !isNull(session.user)>
-					<div class="userinfo col-sm-3 pull-right">
-						<figure>
-							<img src="#fileExists(expandPath('/assets/userpics/#session.user.id#.jpg')) ? '/assets/userpics/#session.user.id#.jpg' : '/assets/img/user_thumbholder.jpg'#">
-							<figcaption>
-								<cfset editAccount = urlFor(									
-									route		= "admin~Id",
-									module		= "admin",
-									controller	= "profiles",
-									action		= "profile",
-									id			= session.user.id
-								)>
-								<strong><a href='#editAccount#'>#session.user.fullname#</a></strong>
-								<ul>
-									<li><a href='#editAccount#'>my profile</a></li>
-									<li><a href='#urlFor(route="admin~Action", controller="users", action="logout")#'>logout</a></li>
-								</ul>
-							</figcaption>
-						</figure>
-					</div>
-				</cfif>
-				
-				<br class="clear">
-				</div>
-				</header>
-			</div>
-			<div id="wrapper" class="navwrapper">
-				<header class="container">
-				<div class="col-md-12">
-				<!-- Main navigation -->
-				<nav class="main-navigation navbar navbar-masthead navbar-inverse navigaty" role="navigation">
-
-					<!-- Collapse navigation for mobile -->
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navigation-collapse">
-							Menu
-						</button>
-					</div>
-					<!-- /Collapse navigation for mobile -->
-
-					<!-- Navigation -->
-					<div class="main-navigation-collapse collapse navbar-collapse">
-						<cfif !isNull(session.user)>
-							#includePartial(partial="/_partials/adminMenu")#
-						</cfif>
-					</div>
-					<!-- /Navigation -->
-			</div>
-			</header>
-			<!-- /Main page header -->
-			
-		</div>
-		<div id="wrapper">
+		<div id="wrapper" class="admin-content">
+		
 			<cfif NOT flashIsEmpty()>
 				<div class="container">				
 					<cfif flashKeyExists("error")>
@@ -203,13 +160,9 @@
 								</header>
 								<section>							
 								
-				</cfif>			
+				</cfif>	
 					
-				<cfif len(includeContent("mainBody"))>
-					#includeContent("mainBody")#
-				<cfelse>
-					#includeContent()#
-				</cfif>
+				#includeContent()#
 								
 				<cfif !len(includeContent("clearLayout"))>		
 						
@@ -236,114 +189,93 @@
 			
 			#includeContent("formWrapEnd")#
 			
-		</div>
-		<!-- /Full height wrapper -->
-		
-		<!-- Main page footer -->
-		<footer id="footer">
-			<div class="container">
-					<a href="##top" class="btn btn-primary pull-right" title="Back to top"><span class="elusive icon-arrow-up"></span></a>
-				<!-- Footer info -->
-				<p>Copyright &copy; #DateFormat(now(),"YYYY")# #capitalize(cgi.SERVER_NAME)#</p>
-
-				<!--- <!-- Footer nav -->
-				<ul>
-					<li><a href="##">Support</a></li>
-					<li class="muted">&middot;</li>
-					<li><a href="##">Documentation</a></li>
-					<li class="muted">&middot;</li>
-					<li><a href="##">API</a></li>
-				</ul>
-				<!-- /Footer nav --> --->
-
-				<!-- Footer back to top -->
+			<cfif len(includeContent("plupload"))>
+				<script type="text/javascript" src="/assets/vendor/plupload/plupload.full.min.js"></script>
+				<script type="text/javascript" src="/assets/vendor/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+				<link rel="stylesheet" href="/assets/vendor/plupload/plupload.bootstrap/css/plupload.bootstrap.css" type="text/css" media="screen" />
+				<script type="text/javascript" src="/assets/js/plupload.video.js"></script>
 				
-
-			</div>
-		</footer>
-		<!-- /Main page footer -->
-		
-		<cfif len(includeContent("plupload"))>
-			<script type="text/javascript" src="/assets/vendor/plupload/plupload.full.min.js"></script>
-			<script type="text/javascript" src="/assets/vendor/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
-			<link rel="stylesheet" href="/assets/vendor/plupload/plupload.bootstrap/css/plupload.bootstrap.css" type="text/css" media="screen" />
-			<script type="text/javascript" src="/assets/js/plupload.video.js"></script>
+				<script type="text/html" id="tmpl_ytThumbs">	
+					<div class="form-group">
+						#bLabel(label="Choose a Thumbnail",class="control-label")#
+						<div class="controls">
+							<% for ( var id = 0; id < videos.length; id++ ) { %>	
+							
+								<div class="wiz_thumb">
+									<label for="img">
+										<img class="img" src="http://i.ytimg.com/vi/<%=videos[id]%>/hqdefault.jpg" />
+										<input type="radio" name="thumbid" class="thumbid" value="<%=videos[id]%>" checked />
+									</label>
+								</div>
+							
+							<% } %>
+							<br class="clear" />
+						</div>
+					</div>	
+				</script>
+				
+			</cfif>
 			
-			<script type="text/html" id="tmpl_ytThumbs">	
-				<div class="form-group">
-					#bLabel(label="Choose a Thumbnail",class="control-label")#
-					<div class="controls">
-						<% for ( var id = 0; id < videos.length; id++ ) { %>	
-						
-							<div class="wiz_thumb">
-								<label for="img">
-									<img class="img" src="http://i.ytimg.com/vi/<%=videos[id]%>/hqdefault.jpg" />
-									<input type="radio" name="thumbid" class="thumbid" value="<%=videos[id]%>" checked />
-								</label>
-							</div>
-						
-						<% } %>
-						<br class="clear" />
-					</div>
-				</div>	
-			</script>
+			<cfif len(includeContent("selectize")) OR len(includeContent("formy"))>
 			
-		</cfif>
-		
-		<cfif len(includeContent("selectize")) OR len(includeContent("formy"))>
-		
-			#styleSheetLinkTag(sources='vendor/selectize/css/selectize.bootstrap3.css')#
-			#javaScriptIncludeTag(sources='
-				vendor/selectize/js/standalone/microplugin.min.js,
-				vendor/selectize/js/standalone/sifter.min.js,
-				vendor/selectize/js/standalone/selectize.js
-			')#
-			
-			<script type="text/javascript">
-				$(function() {
-					$('.multiselectize').selectize({
-						maxItems: null
-					});
-					$('.selectize').selectize();
-					$('.selectizetags').selectize({
-						delimiter: ',',
-						persist: false,
-						create: function(input) {
-							return {
-								value: input,
-								text: input
+				#styleSheetLinkTag(sources='vendor/selectize/css/selectize.bootstrap3.css')#
+				#javaScriptIncludeTag(sources='
+					vendor/selectize/js/standalone/microplugin.min.js,
+					vendor/selectize/js/standalone/sifter.min.js,
+					vendor/selectize/js/standalone/selectize.js
+				')#
+				
+				<script type="text/javascript">
+					$(function() {
+						$('.multiselectize').selectize({
+							maxItems: null
+						});
+						$('.selectize').selectize();
+						$('.selectizetags').selectize({
+							delimiter: ',',
+							persist: false,
+							create: function(input) {
+								return {
+									value: input,
+									text: input
+								}
 							}
-						}
+						});
 					});
-				});
-			</script>	
-		</cfif>
+				</script>	
+			</cfif>
+			
+			<cfif len(includeContent("checkable")) OR len(includeContent("formy"))>
+			
+				#javaScriptIncludeTag(sources='vendor/js/plugins/prettyCheckable/prettyCheckable.js')#
+				#styleSheetLinkTag(sources='vendor/css/plugins/prettycheckable/prettyCheckable.css')#
 		
-		<cfif len(includeContent("checkable")) OR len(includeContent("formy"))>
+				<script>
+					$(document).ready(function() {
 		
-			#javaScriptIncludeTag(sources='vendor/js/plugins/prettyCheckable/prettyCheckable.js')#
-			#styleSheetLinkTag(sources='vendor/css/plugins/prettycheckable/prettyCheckable.css')#
-
-			<script>
-				$(document).ready(function() {
+						$('.styled-checkbox input, .styled-radio input').prettyCheckable();
+		
+					});
+				</script>
+		
+			</cfif>
+			
+			<cfif len(includeContent("ajaxModal")) OR len(includeContent("formy"))>
+				#javaScriptIncludeTag(
+					sources="
+						vendor/jquery.form.js,
+						js/ajax.js				
+				")#	
+				<div id="ajax-modal" class="modal primary container hide fade" tabindex="-1"></div>
+			</cfif>
+		
+		</div>
+		
+	</cfsavecontent>
 	
-					$('.styled-checkbox input, .styled-radio input').prettyCheckable();
+	<!--- Inject the above variable into the parent layout --->
+	<cfset contentFor(adminbody=adminbody)>
 	
-				});
-			</script>
-
-		</cfif>
-		
-		<cfif len(includeContent("ajaxModal")) OR len(includeContent("formy"))>
-			#javaScriptIncludeTag(
-				sources="
-					vendor/jquery.form.js,
-					js/ajax.js				
-			")#	
-			<div id="ajax-modal" class="modal primary container hide fade" tabindex="-1"></div>
-		</cfif>
-		
-	</body>
-</html>
-
+	<!--- Include the parent layout --->
+	#includeLayout("/themes/#request.site.theme#/layout.cfm")#	
 </cfoutput>

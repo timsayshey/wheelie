@@ -3,7 +3,7 @@
 	{
 		function init()
 		{
-			filters(through="sharedGlobalData,setLogInfo");	
+			filters(through="sharedGlobalData,setLogInfo,setMenus");	
 		}
 		
 		function sharedGlobalData()
@@ -12,34 +12,43 @@
 			//qUsergroups = model("Usergroup").findAll();
 		}
 	
-		/* Multisite: Set Site Settings
-		private function setSiteInfo()  
-		{			
-			var loc = {};
+		function setMenus()
+		{
+			cgiPathInfo = cgi.path_info;
+			PagePathInfo = ListLast(listfirst(cgiPathInfo,"."),"/");
 			
-			loc.domain = cgi.SERVER_NAME;			
-			if(listlen(loc.domain,".") GT 2)
+			// Set home
+			cgiPathInfo = len(cgiPathInfo) GT 1 ? cgiPathInfo : "IsHome";
+			
+			// Set current menu item
+			activeMenuItem 	= model("Menu").findAll(where="#whereSiteid()# AND (urlId LIKE '#PagePathInfo#' OR customurl LIKE '#cgiPathInfo#')", maxRows=1, include="AllPost");
+			activeMenuId = activeMenuItem.id;
+			
+			// Override current menu item id
+			if(!isNull(request.overrideMenuId))
 			{
-				loc.domainName = ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
-				loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
-				loc.domain = loc.domainName & "." & loc.domainExt;				
+				activeMenuId = request.overrideMenuId;
 			}
 			
-			loc.siteResult = model("site").findAll(where="urlid = '#loc.domain#'");	
-			if(loc.siteResult.recordcount)
+			if(isNumeric(activeMenuId))
 			{
-				request.site = 
-				{
-					id = loc.siteResult.id,
-					domain = loc.siteResult.urlid,
-					ssl = loc.siteResult.ssl
-				};
-			}
-			else 
+				activeMenuItem 	= model("Menu").findAll(where="#whereSiteid()# AND id = #activeMenuId#", maxRows=1, include="AllPost");
+			}		
+			
+			menuitems = model("Menu").findAll(where="#whereSiteid()# AND menuid = 'primary' AND parentid = 0", order="sortOrder ASC, name ASC", include="AllPost");
+			
+			if(activeMenuItem.parentid neq 0)
 			{
-				writeOutput("Sorry, this site is currently unavailable."); abort;
+				subParentId = len(activeMenuItem.parentid) GT 0 ? activeMenuItem.parentid : 999;
+				activeParent = model("Menu").findAll(where="#whereSiteid()# AND menuid = 'primary' AND id = #subParentId#", maxRows=1, include="AllPost");
+			}		
+			else  
+			{
+				subParentId = activeMenuId;
 			}
-		}*/
+			
+			subMenuItems = model("Menu").findAll(where="#whereSiteid()# AND menuid = 'primary' AND parentid = #subParentId#", order="sortOrder ASC, name ASC", include="AllPost");
+		}
 		
 		function renderPage(string template="") 
 		{	

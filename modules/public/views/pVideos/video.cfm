@@ -8,7 +8,9 @@
 	</cfscript>
 	
 	<h1>#video.name#</h1>
-	<br class="clear">
+	<cfif request.site.id eq 1>
+		<br class="clear">
+	</cfif>
 	#facebookLikeButton()#	
 	<br>
 	

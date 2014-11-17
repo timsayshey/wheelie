@@ -262,9 +262,9 @@
 				
 			} else if(currMenuItem.type eq 'parent' and !isNull(currMenuItem.name) and !isNull(currMenuItem.children)) {
 				
-				itemreturn = itemreturn & '<li class="dropdown #parentClass#">
-				<a href="##" class="dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name# <b class="caret"></b></a>
-				<ul class="dropdown-menu">';
+				itemreturn = itemreturn & '<li class="admindropdown #parentClass#">
+				<a href="##" class="admindropdown-toggle" data-toggle="admindropdown">#itemicon##currMenuItem.name# <span class="elusive icon-caret-down"></span></a>
+				<ul class="admindropdown-menu">';
 				
 				for(childitem in currMenuItem.children)
 				{
@@ -274,9 +274,9 @@
 				
 			} else if(currMenuItem.type eq 'subparent' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url) and !isNull(currMenuItem.children)) {					
 								
-				itemreturn = itemreturn & '<li class="dropdown-submenu #parentClass#">';
-				itemreturn = itemreturn & '<a href="#currMenuItem.url#" class="dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name#</a>
-				<ul class="dropdown-menu">';
+				itemreturn = itemreturn & '<li class="admindropdown-submenu #parentClass#">';
+				itemreturn = itemreturn & '<a href="#currMenuItem.url#" class="admindropdown-toggle" data-toggle="admindropdown">#itemicon##currMenuItem.name#  <span class="elusive icon-caret-right"></span></a>
+				<ul class="admindropdown-menu">';
 				
 				for(childitem in currMenuItem.children)
 				{

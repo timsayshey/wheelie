@@ -23,11 +23,13 @@ CREATE TABLE `categories` (
   `deletedAt` datetime DEFAULT NULL,
   `deletedBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
+INSERT INTO `categories` VALUES ('1', 'Public Videos', 'video', 'public-videos', null, 'Welcome to the videos', '1', '0', '2', '60', '0', '2014-11-17 11:10:38', '1', '2014-11-17 11:14:11', '1', null, null);
+INSERT INTO `categories` VALUES ('2', 'CFWheels', 'video', 'cfwheels', '1', 'CFWheels Training Videos', '0', '0', '3', '60', '0', '2014-11-17 11:13:52', '1', '2014-11-17 11:14:11', '1', null, null);
 
 -- ----------------------------
 -- Table structure for emailoptouts
@@ -79,11 +81,12 @@ CREATE TABLE `forms` (
   `deletedby` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of forms
 -- ----------------------------
+INSERT INTO `forms` VALUES ('1', 'Contact', '60', 'Thanks for contacting us!', '<!-- google success conversion js here -->', 'Whoopsies there was an issue!', '<!-- google fail conversion js here -->', '2014-11-17 15:55:18', '1', '2014-11-17 15:55:18', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for formsubmissions
@@ -135,6 +138,7 @@ CREATE TABLE `forms_users` (
 -- ----------------------------
 -- Records of forms_users
 -- ----------------------------
+INSERT INTO `forms_users` VALUES ('1', '1', 'to', '2014-11-17 15:55:18', '1', '2014-11-17 15:55:18', '1');
 
 -- ----------------------------
 -- Table structure for logs
@@ -154,11 +158,7 @@ CREATE TABLE `logs` (
   `useragent` varchar(800) COLLATE utf8_unicode_ci DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
--- Records of logs
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Table structure for majorcities
@@ -534,11 +534,15 @@ CREATE TABLE `menus` (
   `deletedBy` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of menus
 -- ----------------------------
+INSERT INTO `menus` VALUES ('1', 'Blog', 'custom', null, '/blog', 'Primary', '0', null, '3', '60', '2014-11-17 11:07:03', '1', '2014-11-17 15:59:34', '1', null, null, '0');
+INSERT INTO `menus` VALUES ('2', 'Videos', 'custom', null, '/videos', 'Primary', '0', null, '2', '60', '2014-11-17 11:09:59', '1', '2014-11-17 15:59:34', '1', null, null, '0');
+INSERT INTO `menus` VALUES ('3', 'Contact', 'custom', null, '/p/pforms/show/1', 'Primary', '0', null, '5', '60', '2014-11-17 15:59:18', '1', '2014-11-17 16:00:53', '1', null, null, '0');
+INSERT INTO `menus` VALUES ('4', 'Login', 'custom', null, '/manager', 'Primary', '0', null, '4', '60', '2014-11-17 16:00:41', '1', '2014-11-17 16:00:53', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for metadata
@@ -593,11 +597,16 @@ CREATE TABLE `metafields` (
   `deletedby` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of metafields
 -- ----------------------------
+INSERT INTO `metafields` VALUES ('1', 'formfield', '1', 'Your Name', 'text', null, '0', null, null, '0', '0', null, 'before', null, null, null, 'name', '1', '60', '2014-11-17 15:55:44', '1', '2014-11-17 15:58:08', '1', null, null, '0');
+INSERT INTO `metafields` VALUES ('2', 'formfield', '1', 'Your Email', 'text', null, '0', null, null, '0', '0', null, 'before', null, null, null, 'email', '2', '60', '2014-11-17 15:56:06', '1', '2014-11-17 15:58:08', '1', null, null, '0');
+INSERT INTO `metafields` VALUES ('3', 'formfield', '1', 'Your Message', 'textarea', null, '0', null, null, '0', '0', null, 'before', null, null, null, 'message', '3', '60', '2014-11-17 15:56:25', '1', '2014-11-17 15:58:08', '1', null, null, '0');
+INSERT INTO `metafields` VALUES ('4', 'formfield', '1', 'Send', 'submit', null, '0', null, 'btn btn-md btn-primary', '0', '0', null, 'before', null, null, null, null, '4', '60', '2014-11-17 15:56:53', '1', '2014-11-17 15:58:08', '1', null, null, '0');
+INSERT INTO `metafields` VALUES ('5', 'formfield', '1', 'Contact Us', 'headline', null, '0', null, null, '0', '0', null, 'before', null, null, null, 'Contact Us', '0', '60', '2014-11-17 15:57:40', '1', '2014-11-17 15:58:08', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for newsletters
@@ -664,6 +673,8 @@ CREATE TABLE `notfounds` (
 -- ----------------------------
 -- Records of notfounds
 -- ----------------------------
+INSERT INTO `notfounds` VALUES ('/connect', null, '0', null, '2014-11-17 11:06:08', '0');
+INSERT INTO `notfounds` VALUES ('/connect/main/usermenu', null, '0', null, '2014-11-17 11:57:23', '0');
 
 -- ----------------------------
 -- Table structure for options
@@ -694,29 +705,29 @@ CREATE TABLE `options` (
 -- Records of options
 -- ----------------------------
 INSERT INTO `options` VALUES ('home_id', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('home_id', '60', null, '1', null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('home_id', '60', null, '1', null, null, null, '0', '0', '0', null, null, '2014-11-17 11:09:15', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_blog_description', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_description', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_description', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_blog_keywords', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_keywords', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_keywords', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_blog_title', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_blog_title', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_blog_title', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_description', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
 INSERT INTO `options` VALUES ('seo_description', '60', null, null, null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
 INSERT INTO `options` VALUES ('seo_homepage_description', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_description', '60', null, null, null, null, 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_description', '60', null, null, null, null, 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_homepage_keywords', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_keywords', '60', null, null, null, null, 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_keywords', '60', null, null, null, null, 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_homepage_title', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_homepage_title', '60', null, null, null, null, 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_homepage_title', '60', null, null, null, null, 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_keywords', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
 INSERT INTO `options` VALUES ('seo_keywords', '60', null, null, null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
 INSERT INTO `options` VALUES ('seo_subpage_title', '0', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_subpage_title', '60', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_subpage_title', '60', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('seo_title', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('seo_title', '60', null, null, null, null, null, '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('seo_title', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 INSERT INTO `options` VALUES ('site_logo', '0', null, null, null, '', '', '0', '1', '1', null, null, null, null, null, null, '0');
-INSERT INTO `options` VALUES ('site_logo', '60', null, null, null, null, null, '0', '1', '1', null, null, null, null, null, null, '0');
+INSERT INTO `options` VALUES ('site_logo', '60', null, null, null, null, null, '0', '1', '1', null, null, '2014-11-17 12:10:57', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -846,12 +857,13 @@ CREATE TABLE `posts` (
   `authorName` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of posts
 -- ----------------------------
-INSERT INTO `posts` VALUES ('1', 'page', 'home', 'Home', 'Welcome home', 'default', '0', null, null, null, 'published', null, null, null, null, null, '60', null, null, null, null, null, null, null, null, '0');
+INSERT INTO `posts` VALUES ('1', 'page', 'home', 'Home', '<h2>Welcome to bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl capicola short ribs. Frankfurter strip steak meatloaf sirloin, jowl shank alcatra fatback.</h2>\r\n<br />\r\nTail ham hock cow leberkas hamburger. Doner prosciutto porchetta, turducken biltong jowl tri-tip. Shankle corned beef frankfurter strip steak. Tenderloin sirloin landjaeger pork chop ham prosciutto. Chuck turkey ham hock drumstick, tail meatball sausage ball tip swine ground round boudin t-bone.<br />\r\n<br />\r\nLandjaeger swine ribeye, ball tip biltong cow shoulder leberkas pig flank pork loin frankfurter. T-bone chicken spare ribs tail. Brisket venison shank frankfurter jowl pig pork loin strip steak cow t-bone beef ribs flank ribeye. Pork leberkas picanha, cupim pig prosciutto ball tip. Frankfurter andouille pancetta tri-tip.', 'default', '1', 'Home', 'Welcome to bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue rib', 'andouille,alcatra,capicola,Pork,bacon,tip,dolor,sausage,Chuck,loin,Turkey,tail,hamburger,Tenderloin,ipsum,Brisket,drumstick,hock,ground,t-bone,tenderloin,kevin,chicken,turducken,short,tri-tip,steak,ba', 'published', null, null, null, null, null, '60', null, null, '2014-11-17 11:19:42', '1', null, null, null, null, '0');
+INSERT INTO `posts` VALUES ('2', 'post', 'hello-world', 'Hello world', '<h2>Bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl capicola short ribs. Frankfurter strip steak meatloaf sirloin, jowl shank alcatra fatback.</h2>\r\n\r\n<p>Tail ham hock cow leberkas hamburger. Doner prosciutto porchetta, turducken biltong jowl tri-tip. Shankle corned beef frankfurter strip steak. Tenderloin sirloin landjaeger pork chop ham prosciutto. Chuck turkey ham hock drumstick, tail meatball sausage ball tip swine ground round boudin t-bone.</p>\r\n\r\n<p>Landjaeger swine ribeye, ball tip biltong cow shoulder leberkas pig flank pork loin frankfurter. T-bone chicken spare ribs tail. Brisket venison shank frankfurter jowl pig pork loin strip steak cow t-bone beef ribs flank ribeye. Pork leberkas picanha, cupim pig prosciutto ball tip. Frankfurter andouille pancetta tri-tip.</p>', 'default', '1', 'Hello world', 'Bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl ca', 'andouille,alcatra,capicola,Pork,tip,dolor,sausage,Chuck,loin,Turkey,tail,hamburger,Tenderloin,ipsum,Brisket,drumstick,hock,ground,t-bone,tenderloin,kevin,chicken,turducken,short,tri-tip,steak,ball,Sha', 'published', null, null, null, null, null, '60', '2014-11-17 11:08:36', '1', '2014-11-17 11:08:36', '1', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for redirects
@@ -878,6 +890,7 @@ CREATE TABLE `sites` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `subdomain` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `enableAdminTheme` int(1) DEFAULT '1',
   `registrationDisabled` int(1) DEFAULT '0',
   `emailMatchDomainRequired` int(1) DEFAULT '0',
   `emailMatchOtherDomains` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -898,7 +911,7 @@ CREATE TABLE `sites` (
 -- ----------------------------
 -- Records of sites
 -- ----------------------------
-INSERT INTO `sites` VALUES ('60', 'Wheelie CMS', null, 'localhost', '0', '0', null, '0', 'light-theme', null, '60', '2014-10-05 19:10:06', '1', '2014-10-05 19:10:06', '1', null, null, '1');
+INSERT INTO `sites` VALUES ('60', 'Wheelie CMS', null, 'localhost', '0', '0', '0', null, '0', 'light-theme', null, '60', '2014-10-05 19:10:06', '1', '2014-11-17 12:10:56', '1', null, null, '1');
 
 -- ----------------------------
 -- Table structure for todos
@@ -924,11 +937,14 @@ CREATE TABLE `todos` (
   `deletedBy` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of todos
 -- ----------------------------
+INSERT INTO `todos` VALUES ('1', 'Add a video', '2014-11-17', null, '2014-11-17 00:00:00', 'low', null, '3', null, '4', '60', '2014-11-17 15:53:41', '1', '2014-11-17 15:54:09', '1', null, null, '0');
+INSERT INTO `todos` VALUES ('2', 'Add a page', null, null, '2014-11-17 00:00:00', 'low', null, '3', null, '3', '60', '2014-11-17 15:53:50', '1', '2014-11-17 15:54:08', '1', null, null, '0');
+INSERT INTO `todos` VALUES ('3', 'Add site content', null, null, '2014-11-17 00:00:00', 'low', null, null, null, '2', '60', '2014-11-17 15:54:06', '1', '2014-11-17 15:54:07', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for usergroups
@@ -1077,11 +1093,12 @@ CREATE TABLE `videos` (
   `deletedby` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of videos
 -- ----------------------------
+INSERT INTO `videos` VALUES ('1', 'setting-up-coldfusion-on-wheels', 'Setting up ColdFusion on Wheels', 'Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels.', '<span style=\"font-family: arial, sans-serif; font-size: 12.7272720336914px; line-height: 17px;\">Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels. He shows how to configure a data source and test that it\'s working. This is part of a screencast series on building a social networking site using the ColdFusion on Wheels framework.</span>', null, null, null, '0', 'J3xdxp29ig4', null, null, null, null, 'published', '0', null, '60', null, '1', '2014-11-17 11:12:18', '1', '2014-11-17 11:12:18', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for videos_categories
@@ -1100,6 +1117,8 @@ CREATE TABLE `videos_categories` (
 -- ----------------------------
 -- Records of videos_categories
 -- ----------------------------
+INSERT INTO `videos_categories` VALUES ('1', '1', '2014-11-17 11:15:00', '1', '2014-11-17 11:15:00', '1');
+INSERT INTO `videos_categories` VALUES ('2', '1', '2014-11-17 11:15:00', '1', '2014-11-17 11:15:00', '1');
 
 -- ----------------------------
 -- Table structure for zipcodes

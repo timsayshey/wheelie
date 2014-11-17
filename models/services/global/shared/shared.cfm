@@ -201,7 +201,8 @@
 					
 					emailMatchDomainRequired = loc.siteResult.emailMatchDomainRequired,
 					emailMatchOtherDomains   = loc.siteResult.emailMatchOtherDomains,
-					registrationDisabled 	 = loc.siteResult.registrationDisabled
+					registrationDisabled 	 = loc.siteResult.registrationDisabled,
+					enableAdminTheme	 	 = loc.siteResult.enableAdminTheme
 				};
 			}
 			else 

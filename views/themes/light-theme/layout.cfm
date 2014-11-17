@@ -27,14 +27,15 @@
 		
 	</title>
 	
-	<!-- Bootstrap core -->
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<!--- Public head sets admin colors and adds tags: jquery, bootstrap, modernizer, adminmenu --->
+	#includePartial(
+		partial="/_partials/publicHeadTags", 
+		adminHeadColor = "54a5de"
+	)#
 	
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
 	
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<link href="#themeDir#assets/css/bootstrap.min.css" rel="stylesheet">
 	
 	<link href="#themeDir#assets/css/style.css" rel="stylesheet">
 	
@@ -85,17 +86,19 @@
             <div class="navbar_bottom"></div>
             
         </div>
-		
-		<cfif isNull(request.templateActive)>
-			<section class="page-wrapper">
-				<article class="page-content-full">    
-					#includeContent()#
-				</article>
-			</section>
+		<cfif len(includeContent("adminbody"))>
+			#includeContent("adminbody")#
 		<cfelse>
-			#includeContent()#
+			<cfif isNull(request.templateActive)>
+				<section class="page-wrapper">
+					<article class="page-content-full">    
+						#includeContent()#
+					</article>
+				</section>
+			<cfelse>
+				#includeContent()#
+			</cfif>
 		</cfif>
-
 </div>
 
 

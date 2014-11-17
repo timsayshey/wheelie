@@ -6,6 +6,11 @@ component extends="_main"
 		super.init();
 	}
 	
+	function usermenu()
+	{
+		usesLayout("/layouts/layout.blank");
+	}
+	
 	function home() 
 	{
 		if(checkPermission("log_read_others"))

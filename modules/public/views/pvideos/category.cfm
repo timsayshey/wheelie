@@ -34,8 +34,10 @@
 
 <cfif !isSingleCategory>
 	<h1>Browse videos by topic</h1>
-	<br class="clear" /><br>
-	Explore the most recently updated topics below.<br><hr>
+	<cfif request.site.id eq 1>
+		<br class="clear"><br>
+	</cfif>
+	Explore the most recently updated topics below.<br><br>
 </cfif>
 
 <cfif isNull(qCategoryOfVideos)>
@@ -60,7 +62,9 @@
 			</div><br>			
 		<cfelse>
 			<h1>#name#</h1>
-			<br class="clear" /><br>
+			<cfif request.site.id eq 1>
+				<br class="clear"><br>
+			</cfif>
 			#description#<br><hr>
 		</cfif>
 		

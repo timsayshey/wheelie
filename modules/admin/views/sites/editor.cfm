@@ -75,7 +75,27 @@
 			options		= themeOptions
 		)#
 	</div>
+	
+	<div class="col-sm-6 ">		
+		#btextfield(
+			objectName	= 'site', 
+			property	= 'emailMatchOtherDomains', 
+			label		= 'Alternative Domains for Email Match',
+			placeholder	= "Ex: mydomain.com, otherdomain.com"
+		)#
+	</div>
+	
+	<div class="col-sm-6 ">		
+		#btextfield(
+			objectName	= 'site', 
+			property	= 'urlExtension', 
+			label		= 'Url Extension',
+			placeholder	= "Ex: html"
+		)#
+	</div>	
+	
 	<br class="clear">
+	
 	<div class="col-sm-6">
 		<label>SSL Enabled</label><br>
 		#radioButton(objectName="site", property="sslenabled", tagValue="1", label="Yes ",labelPlacement="after")#<br />
@@ -97,15 +117,13 @@
 		<div class="separator"></div>
 	</div>
 	
-	<div class="col-sm-6 ">		
-		#btextfield(
-			objectName	= 'site', 
-			property	= 'emailMatchOtherDomains', 
-			label		= 'Alternative Domains for Email Match',
-			placeholder	= "Ex: mydomain.com, otherdomain.com"
-		)#
+	<div class="col-sm-6">
+		<label>Enable Admin Theme</label><br>
+		#radioButton(objectName="site", property="enableAdminTheme", tagValue="1", label="Yes ",labelPlacement="after")#<br />
+		#radioButton(objectName="site", property="enableAdminTheme", tagValue="0", label="No ",labelPlacement="after")#
+		<div class="separator"></div>
 	</div>
-	
+		
 	<br class="clear">
 	
 	<div id="siteOptions">							
