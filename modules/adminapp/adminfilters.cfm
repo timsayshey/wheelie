@@ -5,8 +5,8 @@
 	
 	// Set Custom Info
 	/////////////////////////////////////////////////////////////////////////////////
-	// application.info.validCategoryModelsList = "itemcategory"; // lowercase
-	// application.info.serverIp = "";
+	application.info.validCategoryModelsList = "itemcategory"; // lowercase
+	application.info.serverIp = "";
 	
 	// Add Custom Menu Item
 	/////////////////////////////////////////////////////////////////////////////////
