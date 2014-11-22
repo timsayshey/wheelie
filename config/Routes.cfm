@@ -218,20 +218,20 @@
         name="public~videoId", 
 		pattern="/video/[id]",
 		action="video",
-        controller="pVideos"
+        controller="pvideos"
     );
 	
 	addRoute(
         name="public~videos", 
 		pattern="/videos/[action]/[id]",
-		controller="pVideos"
+		controller="pvideos"
     );
 	
 	addRoute(
         name="public~videosIndex", 
 		pattern="/videos",
 		action="category",
-		controller="pVideos"
+		controller="pvideos"
     );
 	
 	addRoute(
