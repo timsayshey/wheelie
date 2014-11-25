@@ -6,7 +6,7 @@
 	application.wheels.adminFromEmail			= "noreply@getwheelie.com";	
 	application.wheels.adminEmail				= "admin@getwheelie.com";
 	
-	application.info.adminUrlPath 				= "/wheelie-admin";
+	// override admin url scope in /config/Routes.cfm
 	
 	application.wheels.showDebugInformation 	= false;	
 	application.wheels.isBeta					= false;	
