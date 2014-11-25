@@ -52,12 +52,9 @@
 		color: #000;
 		background: #ff0
 	}
-	code, kbd, pre, samp {
+	code, kbd, samp {
 		font-family: monospace, serif;
 		font-size: 1em
-	}
-	pre {
-		white-space: pre-wrap
 	}
 	q {
 		quotes: "\201C" "\201D" "\2018" "\2019"
@@ -158,7 +155,7 @@
 	a[href^="javascript:"]:after, a[href^="#"]:after {
 		content: ""
 	}
-	pre, blockquote {
+	blockquote {
 		border: 1px solid #999;
 		page-break-inside: avoid
 	}
@@ -507,7 +504,7 @@
 		font-style: normal;
 		line-height: 1.428571429
 	}
-	code, kbd, pre, samp {
+	code, kbd, samp {
 		font-family: Menlo, Monaco, Consolas, "Courier New", monospace
 	}
 	code {
@@ -517,27 +514,6 @@
 		white-space: nowrap;
 		background-color: #f9f2f4;
 		border-radius: 4px
-	}
-	pre {
-		display: block;
-		padding: 9.5px;
-		margin: 0 0 10px;
-		font-size: 13px;
-		line-height: 1.428571429;
-		color: #333;
-		word-break: break-all;
-		word-wrap: break-word;
-		background-color: #f5f5f5;
-		border: 1px solid #ccc;
-		border-radius: 4px
-	}
-	pre code {
-		padding: 0;
-		font-size: inherit;
-		color: inherit;
-		white-space: pre-wrap;
-		background-color: transparent;
-		border-radius: 0
 	}
 	.pre-scrollable {
 		max-height: 340px;
@@ -1437,6 +1413,7 @@
 	.form-control::-moz-placeholder {
 	color:#999;
 	opacity:1
+
 	}
 	.form-control:-ms-input-placeholder {
 	color:#999
@@ -5356,14 +5333,7 @@
 		padding: 2px 4px;
 		font-size: 90%;
 		border-radius: 0
-	}
-	pre {
-		padding: 9px;
-		margin: 0 0 9px;
-		font-size: 12px;
-		line-height: 1.4;
-		border-radius: 0
-	}
+	}	
 	table {
 		background-color: transparent
 	}
@@ -9315,6 +9285,7 @@
 	{
 	  padding: 0 10px 30px 10px;
 	  margin-top: 30px 0px 0px;
+
 	}
 	
 	/* Control buttons  */
