@@ -78,15 +78,15 @@
 			<br><div style="font-weight: bold; font-size: 18px; line-height: 24px; color: ##dd7924">
             Contact Info:
             </div><br>			
-			Phone: 877-879-2256<br>
+			Phone: 555-555-5555<br>
 			Email: contact@#request.site.domain#
           </td>
 		  <td bgcolor="##ffffff" style="background-color: ##ffffff; padding-left: 30px; padding-right: 30px; font-size: 14px; line-height: 20px; font-family: Helvetica, sans-serif; color: ##333; padding-top:0; padding-bottom:20px;" valign="top">
 			<br><div style="font-weight: bold; font-size: 18px; line-height: 24px; color: ##dd7924">
             Connect with Us:
             </div><br>
-			<a href="https://facebook.com/">Facebook</a><br>
-			<a href="https://twitter.com/">Twitter</a></td>
+			<a href="https://facebook.com/#ListFirst(request.site.domain,'.')#">Facebook</a><br>
+			<a href="https://twitter.com/#ListFirst(request.site.domain,'.')#">Twitter</a></td>
         </tr>
       </table>
 	  

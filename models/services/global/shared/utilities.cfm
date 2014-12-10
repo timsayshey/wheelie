@@ -1,5 +1,17 @@
 <cfoutput>
 	
+	<cffunction name="deleteThisFile">
+		<cfargument name="filepath">
+		<cfscript>
+			var loc = {};
+			loc.thisfile = expandPath(arguments.filepath);
+			if(FileExists(loc.thisfile))
+			{
+				fileDelete(loc.thisfile);
+			}
+		</cfscript>
+	</cffunction>
+	
 	<cffunction name="generateForm">
 		<cfargument name="formid" default="">
 		<cfset dataFields = model("FormField").findAll(where="metafieldType = 'formfield' AND modelid = '#arguments.formid#'",order="sortorder ASC")>

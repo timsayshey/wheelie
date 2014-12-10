@@ -137,7 +137,7 @@
 												append	 = ""
 											)#
 										</div>									
-										<div class="col-md-2 col-sm-2">
+										<!--- <div class="col-md-2 col-sm-2">
 											#bselecttag(
 												name	 = 'hosted',
 												label	 = 'Hosted on',
@@ -162,7 +162,7 @@
 												valueField 		= "id", 
 												textField 		= "name"
 											)#
-										</div>
+										</div> --->
 										<div class="col-md-2 col-sm-2">									
 											#btextfieldtag(
 												name			= 'search', 

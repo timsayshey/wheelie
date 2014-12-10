@@ -169,18 +169,6 @@
 			
 			request.newRegistration = true;
 			
-			// Save Portrait
-			if(len(form.portrait) AND FileExists(form.portrait))
-			{				
-				uploadResult = fileMgr.uploadFile(FieldName="portrait", NameConflict="MakeUnique");	
-				
-				if(StructKeyExists(uploadResult,"filewassaved") AND uploadResult.filewassaved)
-				{
-					params.user.portrait = fileMgr.getFileURL(uploadResult.serverfile);
-				}
-			}
-			
-			
 			// Sync Unapproved Fields
 			params.user.zx_firstname = params.user.firstname;				
 			params.user.zx_lastname = params.user.lastname;
@@ -192,6 +180,15 @@
 			// Insert or update user object with properties
 			if (saveResult)
 			{			
+				// Save Portrait
+				if(!isNull(form.portrait) AND len(form.portrait) AND FileExists(form.portrait))
+				{								
+					if(uploadUserImage(field="portrait",user=user,newUser=true))
+					{
+						user.portrait = "";
+					}
+				}
+				
 				// Default usergroup to staff ("1")
 				defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
 				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
@@ -248,7 +245,7 @@
 			if(!isNull(loc.user.id))
 			{				
 				var approvalToggle = "_pending";
-				if(checkPermission("user_noApprovalNeeded") OR loc.user.showOnSite eq 0)
+				if(checkPermission("user_noApprovalNeeded") OR !isNull(loc.user.showOnSite) AND loc.user.showOnSite eq 0 OR !isNull(arguments.newUser))
 				{
 					approvalToggle = "";
 				}
@@ -333,6 +330,14 @@
 					{
 						FileDelete(pendingPortraitPath);
 					}
+				}
+				
+				// Delete Portrait
+				if(!isNull(params.portrait_delete))
+				{
+					deleteThisFile("/assets/userpics/#user.id#.jpg");
+					deleteThisFile("/assets/userpics_full/#user.id#.jpg");
+					deleteThisFile("/assets/userpics_pending/#user.id#.jpg");
 				}
 				
 				// Save Portrait

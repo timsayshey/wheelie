@@ -28,13 +28,13 @@ component extends="_main" output="false"
 		if(!isNull(params.id))
 		{			
 			// Get single category
-			categoryWhere = "urlid = '#params.id#'";
+			categoryWhere = "urlid = '#params.id#' AND #whereSiteid()#";
 			isSingleCategory = true;
 			videoLimitPerCategory = 99999;						
 		} else {
 			// Get default category
-			videoCategory = model("VideoCategory").findAll(where="defaultpublic = 1");
-			categoryWhere = "parentid = '#videoCategory.id#'";
+			videoCategory = model("VideoCategory").findAll(where="#whereSiteid()# AND defaultpublic = 1");
+			categoryWhere = "parentid = '#videoCategory.id#' AND #whereSiteid()#";
 			isSingleCategory = false;
 			videoLimitPerCategory = 4;
 		}

@@ -1,5 +1,14 @@
 <cfoutput>	
 	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #qform.name# Submissions')>
+	<cfset contentFor(headerButtons = 
+		'<li class="headertab">
+			#linkTo(
+				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				route		= "admin~index",
+				controller	= "forms",
+				class		= "btn btn-default" 
+			)#
+		</li>')>
 	<cftry>
 		
 	<style type="text/css">
@@ -12,7 +21,9 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>Date</th>
+				<th>From Page</th>
+				<th>Referrer</th>
 			</tr>
 		</thead>
 		<tbody> 	
@@ -24,7 +35,13 @@
 								controller	= "forms",
 								action		= "formsubmission",
 								id			= id
-							)#'>#DateFormat(formsubmissions.createdAt,"MMMM D, YYYY")#</a><br>
+							)#'>#DateFormat(formsubmissions.createdAt,"MMMM D, YYYY")# at #TimeFormat(formsubmissions.createdAt, "short")#</a><br>
+					</td>
+					<td>
+						#formsubmissions.fromPage#
+					</td>
+					<td>
+						#formsubmissions.referrer#
 					</td>
 				</tr>			
 			</cfloop>	

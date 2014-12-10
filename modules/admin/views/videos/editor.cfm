@@ -33,7 +33,7 @@
 		<div class="videoExists well">
 			<label>Current Video and Thumbnail</label>
 			<br class="clear">
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<cfif len(video.youtubeid)>
 					<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque">
 				<cfelseif len(video.vimeoid)>
@@ -44,11 +44,11 @@
 				<iframe src="#videoUrl#" width="100%" height="390" style="max-width:200px;max-height:150px;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 				
 			</div>
-			<cfif FileExists("#info.fileVideoThumbs##video.id#.jpg")>
+			<!--- <cfif FileExists("#info.fileVideoThumbs##video.id#.jpg")>
 				<div class="col-md-4">
 					<img src="#info.videoThumbPath##video.id#.jpg" width="100" style="float:left">
 				</div>
-			</cfif>		
+			</cfif>	 --->	
 			<br class="clear">
 			
 			<a href="##" class="replaceVideo btn btn-default">Change Video</a>
@@ -74,7 +74,7 @@
 				property	= 'vimeoid',
 				id			= "vimeoIDInput",
 				class		= "vimeoid"
-			)#	
+			)#				
 			#hiddenfieldtag(
 				name		= 'video[isPlaylist]',
 				id			= "isPlaylist",
@@ -152,7 +152,7 @@
 		property	= "isFeatured",
 		help		= "If checked, this video will show up in the featured section",
 		label		= "Featured?"
-	)#
+	)#	
 	</div>
 	
 	#includePartial(partial="/_partials/formSeperator")#	
@@ -224,6 +224,24 @@
 				</section>
 			</div>			
 		</div>
+		
+		<div class="data-block">
+			<section>
+				<cfparam name="video.videothumb" default="">
+				#bImageUploadTag(
+					name			= "videothumb",
+					value			= "",
+					filepath		= "#info.uploadsPath#videos/thumbs/#video.id#.jpg",
+					label			= "Thumbnail"
+				)#<br>
+				#bcheckbox(
+					objectName	= 'video', 
+					property	= "customThumb",
+					help		= "This will overwrite your current thumbnail",
+					label		= "Disable Youtube Thumb Fetcher"
+				)#
+			</section>
+		</div> 	
 		
 		</div>
 		<div class="rightBottomBox  hidden-xs hidden-sm">

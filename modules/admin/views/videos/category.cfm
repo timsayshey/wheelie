@@ -1,9 +1,16 @@
 <cfset contentFor(formy			= true)>
-<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> Videos')>
+<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> Training')>
 
 <cfoutput>
 	<cfif isNull(qVideos)>
-		<h2>Sorry, couldn't find that category. Please try again.</h2>
+		<h4>Oops! You haven't set the default admin video category yet.</h4>
+		<strong>To fix this:</strong>
+		<ul>
+			<li>Go to the admin menu > content > videos > categories.</li>
+			<li>Add a root training category and checkmark "Default Admin Category".</li>
+			<li>Then save.</li>
+			<li>You're done! Now add sub categories and videos to the categories.</li>
+		</ul>
 	<cfelse>
 	
 		<div class="row-regular">	

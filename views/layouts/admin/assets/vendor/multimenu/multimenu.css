@@ -1,6 +1,6 @@
 /* Credit: http://codepen.io/catalinred/pen/ngBJF */
 body {
-	padding-top:30px;
+	padding-top:35px;
 }
 .icon-caret-down, .icon-caret-right {
 	font-size: 9px;
@@ -312,7 +312,9 @@ body {
 }
 @media screen and (min-width: 600px) {
 	.admin-alignright {
-		float:right !important; 
-		margin-right:20px;
+		float:right !important; 		
+	} 
+	.admin-pad-right {
+		margin-right:20px !important;
 	}
 }

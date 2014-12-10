@@ -5,14 +5,14 @@
 		<cfsavecontent variable="topBtns">
 			<li class="headertab">
 			
-				<cfif params.id eq session.user.id>
+				<cfif params.id eq session.user.id OR checkPermission("user_save_others")>
 					#linkTo(
 						text		= "<span class=""elusive icon-edit""></span> Edit",							
 						route		= "admin~Id",
 						module		= "admin",
 						controller	= "users",
 						action		= "edit",
-						id			= session.user.id,
+						id			= params.id,
 						class		= "btn btn-default"
 					)#		
 				</cfif>
@@ -20,8 +20,8 @@
 				#linkTo(
 					text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
 					route		= "admin~peopleTypes", 
-					currentGroup	= user.usergroupid,
-					class		= "btn btn-default" 
+					currentGroup= user.usergroupid,
+					class		= "btn btn-default"  
 				)#	
 			</li>
 		</cfsavecontent>

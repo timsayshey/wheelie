@@ -26,7 +26,7 @@
 		</li>')>
 		
 	<cfif len(video.youtubeid)>
-		<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque">
+		<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque&autohide=1">
 	<cfelseif len(video.vimeoid)>
 		<cfset videoUrl = "https://player.vimeo.com/video/#video.vimeoid#">
 	<cfelse>
@@ -34,6 +34,6 @@
 	</cfif>
 	
 	<div class="videoWrapper">
-		<iframe width="560" height="349" src="#videoUrl#" frameborder="0" allowfullscreen></iframe>
+		<iframe type="text/html" width="640" height="360" src="#videoUrl#" frameborder="0"></iframe>
 	</div>	
 </cfoutput>

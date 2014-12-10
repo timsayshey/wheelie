@@ -127,7 +127,7 @@
 			id			= "isHomeCheckbox",
 			checked		= true,
 			disabled	= true,
-			label		= "Set as hompage?",
+			label		= "Set as homepage?",
 			help		= "Can't be disabled. Set a different page as the homepage to disable this one."
 		)#	
 		#checkboxtag(

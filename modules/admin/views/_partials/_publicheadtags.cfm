@@ -6,6 +6,8 @@
 	<script src="/assets/vendor/js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
 	<script src="/views/layouts/admin/assets/js/adminmenu.js" type="text/javascript"></script>
 	
+	<link href="/assets/css/shared.css" rel="stylesheet" type="text/css"/>
+	
 	<cfparam name="adminHeadColor" default="54a5de">
 	
 	<style type="text/css">

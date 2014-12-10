@@ -49,7 +49,7 @@
 	<cfelse>
 	
 		<cfif len(video.youtubeid)>
-			<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque">
+			<cfset videoUrl = "https://www.youtube.com/embed/#video.youtubeid#?rel=0&showinfo=0&fs=1&hl=en_US&wmode=opaque&autohide=1">
 		<cfelseif len(video.vimeoid)>
 			<cfset videoUrl = "https://player.vimeo.com/video/#video.vimeoid#">
 		<cfelse>

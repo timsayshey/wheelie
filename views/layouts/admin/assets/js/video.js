@@ -3,18 +3,21 @@ $(function() {
 	selectVal = "";
 	url = "";
 	
-	loadYoutubeThumbs(selectVal);
-	
-	setListeners();
-	
-	if($(".youtubeId").val().length > 0)
+	if(typeof $(".youtubeId").val() !== 'undefined') 
 	{
-		$(".videoNotExists").hide();
-		$(".videoExists").show();	
-	} else {
-		$(".videoNotExists").show();
-		$(".videoExists").hide();	
-	}	
+		loadYoutubeThumbs(selectVal);
+		
+		setListeners();
+		
+		if($(".youtubeId").val().length > 0)
+		{
+			$(".videoNotExists").hide();
+			$(".videoExists").show();	
+		} else {
+			$(".videoNotExists").show();
+			$(".videoExists").hide();	
+		}	
+	}
 });
 
 // Add listeners 
@@ -105,4 +108,3 @@ function loadYoutubeThumbs()
 	// Show thumbs block
 	$thumbChooser.show();
 }
-

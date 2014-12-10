@@ -10,7 +10,7 @@
 			action		= "profile",
 			id			= session.user.id
 		)>
-		<li class="admindropdown admin-alignright">
+		<li class="admindropdown admin-alignright admin-pad-right">
 		 	 <a href="#editAccount#" class="admindropdown-toggle" data-toggle="admindropdown"><span class="elusive icon-user"></span> Account <span class="elusive icon-caret-down"></span></a>
 			 <ul class="admindropdown-menu">	
 				
@@ -20,5 +20,11 @@
 				</li>
 				<li><a href='#urlFor(route="admin~Action", controller="users", action="logout")#'>Logout</a></li>
 			 </ul>
-		</li>	</cfif>
+		</li>
+		
+		<li class="admin-alignright">
+			<a href="/"><span class="elusive icon-eye-open"></span> Visit Site</a>
+		</li>
+		
+	</cfif>
 </cfoutput>

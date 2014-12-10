@@ -1,4 +1,5 @@
 <cfoutput>	
+
 	<script type='text/javascript' src="//code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<link href="//code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all">
 	<script type='text/javascript' src="/views/layouts/admin/assets/js/reorder.js"></script>
@@ -13,10 +14,25 @@
 			)#');
 		});
 	</script>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #metafieldInfo.singular# Fields')>
+	
+	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #capitalize(metafieldInfo.singular)# Fields')>
+	
 	<cfif !isNull(metafields)>
+	
+		<cfset backbtn = "">
+		<cfset parentController = pluralize(Replace(params.modelname,"field",""))>
+		<cfif FileExists(expandPath("/modules/admin/views/#parentController#/index.cfm"))>
+			<cfset backbtn = linkTo(
+				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				route		= "admin~index",
+				controller	= parentController,
+				class		= "btn btn-default" 
+			)>
+		</cfif>
+		
 		<cfset contentFor(headerButtons = 
 					'<li class="headertab">
+						#backbtn#
 						#linkTo(
 							text		= "<span class=""elusive icon-user""></span> Add Field",
 							route		= "admin~Field",

@@ -10,7 +10,7 @@
 	<div style="max-width:700px; margin:0 auto">
 	
 		<h2>#newsletter.subject#</h2>
-		<h4>#request.site.name# (info@#request.site.domain#.com)</h4>
+		<h4>#request.site.name# (info@#request.site.domain#)</h4>
 		<h5>Sent: #DateFormat(now(),"ddd M/D/YYYY")# 12:16 PM
 		
 		</h5>

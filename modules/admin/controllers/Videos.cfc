@@ -88,8 +88,15 @@ component extends="_main" output="false"
 			include = "videocategoryjoin(videocategory)"
 		);
 				
-		if(isNull(params.rearrange))
+		if(!isNull(params.rearrange))
 		{
+			// Removes duplicates
+			qVideos = queryOfQueries(
+				query	= "qVideos", 
+				select	= "DISTINCT #distinctVideoColumns#", 
+				order	= "sortorder ASC"
+			);
+		} else {
 			filterResults();
 		}
 		
@@ -186,17 +193,6 @@ component extends="_main" output="false"
 			saveResult = video.save();
 		}
 		
-		// Youtubeid cleanup and save thumb
-		if(!isNull(params.video.youtubeId) AND len(params.video.youtubeId))
-		{
-			params.video.youtubeId = XMLFormat(trim(params.video.youtubeId));		
-			model("Video").saveYoutubeThumb(
-				filename	= params.video.youtubeId,
-				imgUrl		= "http://i1.ytimg.com/vi/#params.video.youtubeId#/hqdefault.jpg",
-				videoid		= video.id
-			);
-		}
-		
 		// Insert or update video object with properties
 		if (saveResult)
 		{								
@@ -204,6 +200,39 @@ component extends="_main" output="false"
 			for(id in ListToArray(params.videocategories))
 			{				
 				model("videoCategoryJoin").create(videocategoryid = id, videoid = video.id);				
+			}
+			
+			// Delete videothumb
+			if(!isNull(params.videothumb_delete) AND !isNull(params.video.id))
+			{
+				deleteThisFile("#info.uploadsPath#videos/thumbs/#params.video.id#.jpg");
+				deleteThisFile("#info.uploadsPath#videos/thumbs/#params.video.id#_full.jpg");
+				params.video.customThumb = 1;
+			}
+			
+			// Save videothumb
+			if(!isNull(form.videothumb) AND len(form.videothumb) AND FileExists(form.videothumb))
+			{								
+				if(uploadVideoImage("videothumb",video))
+				{
+					params.video.portrait = "";
+					params.video.customThumb = 1;
+					
+				}
+			}
+			
+			// Update video with custom thumb boolean
+			video.update(customThumb=params.video.customThumb);
+			
+			// Youtubeid cleanup and save thumb
+			if(!isNull(params.video.youtubeId) AND len(params.video.youtubeId) AND !isNull(video.id) AND params.video.customThumb neq 1)
+			{
+				params.video.youtubeId = XMLFormat(trim(params.video.youtubeId));		
+				model("Video").saveYoutubeThumb(
+					filename	= params.video.youtubeId,
+					imgUrl		= "http://i1.ytimg.com/vi/#params.video.youtubeId#/hqdefault.jpg",
+					videoid		= video.id
+				);
 			}
 			
 			flashInsert(success="Video saved.");
@@ -370,6 +399,36 @@ component extends="_main" output="false"
 			}
 			
 			//renderPage(route="admin~Action", module="admin", controller="videos", action="index");		
+		}
+	}
+	function uploadVideoImage(field,video)
+	{
+		var loc = {};
+		loc.video = arguments.video;
+		
+		if(!isNull(loc.video.id))
+		{							
+			var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
+			if(result.fileWasSaved) {
+				var theFile = result.serverdirectory & "/" & result.serverFile;
+				var newFile = expandPath("#info.uploadsPath#videos/thumbs/#loc.video.id#.jpg");
+				var fullFile = expandPath("#info.uploadsPath#videos/thumbs/#loc.video.id#_full.jpg");
+				if(!isImageFile(thefile)) {
+					fileDelete(theFile);
+					return false;
+				} else {					
+					var img = imageRead(thefile);
+					try {
+						imageWrite(img,fullFile,1);
+						imageScaleToFit(img, 250, 250);
+						imageWrite(img,newFile,1);
+						fileDelete(theFile);
+					} catch(e) {
+						return false;
+					}
+					return true;
+				}
+			} else return false;			
 		}
 	}
 }

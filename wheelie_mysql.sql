@@ -1,3 +1,18 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : caloKAV
+Source Server Version : 50505
+Source Host           : 192.126.91.245:3306
+Source Database       : wheelie
+
+Target Server Type    : MYSQL
+Target Server Version : 50505
+File Encoding         : 65001
+
+Date: 2014-12-10 16:41:17
+*/
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -114,11 +129,12 @@ CREATE TABLE `formsubmissions` (
   `deletedBy` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of formsubmissions
 -- ----------------------------
+INSERT INTO `formsubmissions` VALUES ('1', '1', null, null, 'http://beta.caloteens.com/?reload=true&password=wheelie', '/', 'http://beta.caloteens.com/p/pforms/show/1', 'false', null, 'false', '60', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '2014-12-10 14:21:49', '1', '2014-12-10 14:21:49', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for forms_users
@@ -158,7 +174,110 @@ CREATE TABLE `logs` (
   `useragent` varchar(800) COLLATE utf8_unicode_ci DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of logs
+-- ----------------------------
+INSERT INTO `logs` VALUES ('76', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 15:48:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('77', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 15:48:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('78', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 15:48:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('79', null, '2', 'Create', 'User', 'Users', 'registerPost', '60', '2014-12-09 15:50:23', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('80', null, null, 'Create', 'UsergroupJoin', 'Users', 'registerPost', '60', '2014-12-09 15:50:23', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('81', null, '3', 'Create', 'User', 'Users', 'registerPost', '60', '2014-12-09 15:53:13', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('82', null, '4', 'Create', 'User', 'Users', 'registerPost', '60', '2014-12-09 15:54:08', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('83', null, null, 'Create', 'UsergroupJoin', 'Users', 'registerPost', '60', '2014-12-09 15:54:08', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('84', null, '5', 'Create', 'User', 'Users', 'registerPost', '60', '2014-12-09 15:57:06', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('85', null, null, 'Create', 'UsergroupJoin', 'Users', 'registerPost', '60', '2014-12-09 15:57:06', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('86', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:13:47', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('87', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:13:47', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('88', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:13:47', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('89', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:14:50', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('90', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:14:50', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('91', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:14:50', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('92', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:16:45', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('93', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:16:45', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('94', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:16:45', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('95', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:17:10', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('96', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:17:10', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('97', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:17:10', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('98', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:17:24', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('99', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:17:24', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('100', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:17:24', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('101', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:18:54', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('102', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:18:54', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('103', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:18:54', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('104', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:19:14', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('105', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:19:14', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('106', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:19:14', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('107', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:19:50', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('108', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:19:50', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('109', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:19:50', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('110', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:31:43', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('111', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:31:43', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('112', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:31:43', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('113', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:31:52', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('114', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:31:52', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('115', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:31:52', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('116', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:32:01', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('117', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:32:01', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('118', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:32:01', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('119', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:32:51', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('120', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:32:51', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('121', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:32:51', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('122', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:33:33', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('123', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:33:33', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('124', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:33:33', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('125', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:33:43', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('126', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:33:43', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('127', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:33:43', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('128', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:33:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('129', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:33:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('130', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:33:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('131', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:34:40', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('132', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:34:40', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('133', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:34:40', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('134', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:36:55', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('135', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:36:55', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('136', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:36:55', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('137', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:37:41', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('138', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:37:41', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('139', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:37:41', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('140', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:37:55', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('141', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:37:55', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('142', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:37:55', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('143', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:38:39', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('144', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:38:39', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('145', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:38:39', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('146', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:38:46', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('147', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:38:46', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('148', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:38:46', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('149', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:39:16', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('150', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:39:16', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('151', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:39:16', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('152', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:40:39', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('153', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:40:39', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('154', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-09 16:40:39', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('155', '1', '2', 'Create', 'Video', 'Videos', 'save', '60', '2014-12-09 16:44:35', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('156', '1', '2', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:44:35', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('157', '1', '3', 'Create', 'Video', 'Videos', 'save', '60', '2014-12-09 16:45:04', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('158', '1', '3', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:45:04', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('159', '1', '3', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:45:11', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('160', '1', '3', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:45:11', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('161', '1', '3', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:45:15', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('162', '1', '3', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-09 16:45:15', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('163', '1', '4', 'Create', 'Video', 'Videos', 'save', '60', '2014-12-10 12:07:00', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('164', '1', '4', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-10 12:07:00', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('165', '1', '4', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-10 12:07:07', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('166', '1', '4', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-10 12:07:07', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('167', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-10 12:07:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('168', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-10 12:07:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('169', '1', null, 'Create', 'VideoCategoryJoin', 'Videos', 'save', '60', '2014-12-10 12:07:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('170', '1', '1', 'Update', 'Video', 'Videos', 'save', '60', '2014-12-10 12:07:26', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('171', '1', '1', 'Create', 'FormSubmission', 'Forms', 'formsubmissionSave', '60', '2014-12-10 14:21:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('172', '1', null, 'Create', 'FieldData', 'Forms', 'formsubmissionSave', '60', '2014-12-10 14:21:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('173', '1', null, 'Create', 'FieldData', 'Forms', 'formsubmissionSave', '60', '2014-12-10 14:21:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
+INSERT INTO `logs` VALUES ('174', '1', null, 'Create', 'FieldData', 'Forms', 'formsubmissionSave', '60', '2014-12-10 14:21:48', '12.232.137.226', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36', '0');
 
 -- ----------------------------
 -- Table structure for majorcities
@@ -564,6 +683,9 @@ CREATE TABLE `metadata` (
 -- ----------------------------
 -- Records of metadata
 -- ----------------------------
+INSERT INTO `metadata` VALUES ('1', '1', 'test', '2014-12-10 14:21:49', '1', '2014-12-10 14:21:49', '1', null, null);
+INSERT INTO `metadata` VALUES ('1', '2', 'test', '2014-12-10 14:21:49', '1', '2014-12-10 14:21:49', '1', null, null);
+INSERT INTO `metadata` VALUES ('1', '3', 'test', '2014-12-10 14:21:49', '1', '2014-12-10 14:21:49', '1', null, null);
 
 -- ----------------------------
 -- Table structure for metafields
@@ -673,8 +795,6 @@ CREATE TABLE `notfounds` (
 -- ----------------------------
 -- Records of notfounds
 -- ----------------------------
-INSERT INTO `notfounds` VALUES ('/connect', null, '0', null, '2014-11-17 11:06:08', '0');
-INSERT INTO `notfounds` VALUES ('/connect/main/usermenu', null, '0', null, '2014-11-17 11:57:23', '0');
 
 -- ----------------------------
 -- Table structure for options
@@ -1016,7 +1136,7 @@ CREATE TABLE `users` (
   `deletedby` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of users
@@ -1059,6 +1179,9 @@ CREATE TABLE `users_usergroups` (
 -- Records of users_usergroups
 -- ----------------------------
 INSERT INTO `users_usergroups` VALUES ('1', '1', '2014-08-18 14:01:09', '1', '2014-08-18 14:01:09', '1');
+INSERT INTO `users_usergroups` VALUES ('1', '2', '2014-12-09 15:50:23', null, '2014-12-09 15:50:23', null);
+INSERT INTO `users_usergroups` VALUES ('1', '4', '2014-12-09 15:54:10', null, '2014-12-09 15:54:10', null);
+INSERT INTO `users_usergroups` VALUES ('1', '5', '2014-12-09 15:57:09', null, '2014-12-09 15:57:09', null);
 
 -- ----------------------------
 -- Table structure for videos
@@ -1072,7 +1195,6 @@ CREATE TABLE `videos` (
   `description` varchar(2000) COLLATE utf8_unicode_ci NOT NULL,
   `videoSubHeader` longtext CHARACTER SET latin1,
   `videoLink` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hideFromB2B` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `isFeatured` int(11) DEFAULT NULL,
   `youtubeid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `vimeoid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1085,6 +1207,7 @@ CREATE TABLE `videos` (
   `siteid` int(11) DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `onSite` int(11) DEFAULT '0',
+  `customThumb` int(1) DEFAULT '0',
   `createdat` datetime DEFAULT NULL,
   `createdby` int(11) DEFAULT NULL,
   `updatedat` datetime DEFAULT NULL,
@@ -1093,12 +1216,12 @@ CREATE TABLE `videos` (
   `deletedby` int(11) DEFAULT NULL,
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of videos
 -- ----------------------------
-INSERT INTO `videos` VALUES ('1', 'setting-up-coldfusion-on-wheels', 'Setting up ColdFusion on Wheels', 'Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels.', '<span style=\"font-family: arial, sans-serif; font-size: 12.7272720336914px; line-height: 17px;\">Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels. He shows how to configure a data source and test that it\'s working. This is part of a screencast series on building a social networking site using the ColdFusion on Wheels framework.</span>', null, null, null, '0', 'J3xdxp29ig4', null, null, null, null, 'published', '0', null, '60', null, '1', '2014-11-17 11:12:18', '1', '2014-11-17 11:12:18', '1', null, null, '0');
+INSERT INTO `videos` VALUES ('1', 'setting-up-coldfusion-on-wheels', 'Setting up ColdFusion on Wheels', 'Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels.', '<span style=\"font-family: arial, sans-serif; font-size: 12.7272720336914px; line-height: 17px;\">Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels. He shows how to configure a data source and test that it\'s working. This is part of a screencast series on building a social networking site using the ColdFusion on Wheels framework.</span>', null, null, '0', 'J3xdxp29ig4', null, null, null, null, 'published', '0', null, '60', null, '1', '0', '2014-11-17 11:12:18', '1', '2014-12-10 12:07:27', '1', null, null, '0');
 
 -- ----------------------------
 -- Table structure for videos_categories
@@ -1117,8 +1240,8 @@ CREATE TABLE `videos_categories` (
 -- ----------------------------
 -- Records of videos_categories
 -- ----------------------------
-INSERT INTO `videos_categories` VALUES ('1', '1', '2014-11-17 11:15:00', '1', '2014-11-17 11:15:00', '1');
-INSERT INTO `videos_categories` VALUES ('2', '1', '2014-11-17 11:15:00', '1', '2014-11-17 11:15:00', '1');
+INSERT INTO `videos_categories` VALUES ('1', '1', '2014-12-10 12:07:27', '1', '2014-12-10 12:07:27', '1');
+INSERT INTO `videos_categories` VALUES ('2', '1', '2014-12-10 12:07:27', '1', '2014-12-10 12:07:27', '1');
 
 -- ----------------------------
 -- Table structure for zipcodes

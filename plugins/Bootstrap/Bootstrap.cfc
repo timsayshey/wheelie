@@ -80,9 +80,27 @@
 			param name="arguments.help" type="string" default="";
 			param name="arguments.filepath" type="string" default="";
 			
+			imageRemovalCheckbox = '
+				<script src="/assets/vendor/bootstrap-checkbox.js"></script>
+				<link href="/assets/vendor/bootstrap-checkbox.css" rel="stylesheet" type="text/css" media="screen">
+				<script>
+					$(function() {
+						$(''.bcheckbox'').checkbox({
+							 buttonStyle: ''btn-danger'',
+							 checkedClass: ''icon-check'',
+							 uncheckedClass: ''icon-check-empty'',
+							 displayAsButton: true
+						});
+					});
+				</script>
+				<input type="checkbox" class="bcheckbox" name="#arguments.name#_delete" data-label="Delete"/>
+			';
+			browseBtnText = "Change";
 			if(!len(arguments.filepath) OR !FileExists(ExpandPath(arguments.filepath)))
 			{ 
 				arguments.filepath = "/assets/img/upload-thumb-50x50.png";
+				imageRemovalCheckbox = "";
+				browseBtnText = "Select image";
 			}
 			
 			if(len(arguments.help)) {
@@ -99,11 +117,12 @@
 					</div>
 					<div class="fileupload-preview fileupload-exists fileupload-small thumbnail"></div>
 					<span class="btn btn-default btn-file">
-						<span class="fileupload-new">Select image</span>
+						<span class="fileupload-new">#browseBtnText#</span>
 						<span class="fileupload-exists">Change</span>
 						#fileFieldTag(argumentCollection=arguments, label="")#
 					</span>
-					<a href="##" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+					<a href="##" class="btn btn-warning fileupload-exists" data-dismiss="fileupload">Cancel</a>
+					#imageRemovalCheckbox#
 				</div>';			
 		</cfscript>
 		<cfreturn returnfield>

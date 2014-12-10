@@ -49,11 +49,6 @@
 							type	   = 'link',
 							name	   = 'Add New',
 							url		   = urlFor(route="admin~Action", controller="pages", action="new")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Manage Fields',
-							url		   = urlFor(route="admin~Field", controller="metafields", action="index", modelName="pagefield")
 						}
 					]
 				},
@@ -102,7 +97,7 @@
 				},
 				{
 					type	   = 'link',
-					name	   = 'Menus',
+					name	   = 'Site Menu',
 					icon	   = 'icon-list',
 					permission = 'menu_save',
 					url		   = urlFor(route="admin~Action", controller="menus", action="rearrange")
@@ -141,7 +136,7 @@
 			},
 			{
 				type	   = 'link',
-				name	   = 'Groups',
+				name	   = 'User Groups',
 				url		   = urlFor(route="admin~Action", controller="usergroups", action="index"),
 				permission = "user_save_others"
 			},
@@ -163,13 +158,13 @@
 			children= peopleLinks
 		});
 		
-		// menu item
+		/* menu item
 		menuitem = arrayAppend(adminNavMain,{
 			type	= 'link',
-			name	= 'Videos',
-			icon	= 'icon-video',
+			name	= 'Training',
+			icon	= 'icon-youtube',
 			url		= urlFor(route="admin~Action", controller="videos", action="category")
-		});
+		}); */
 		
 		// menu item
 		menuitem = arrayAppend(adminNavMain,{
@@ -180,35 +175,25 @@
 		});		
 		
 		// adminNavMore
+		/*
+			{
+				type	   = 'link',
+				name	   = 'Emails',
+				url		   = urlFor(route="admin~Action", controller="emails", action="index"),
+				permission  = "email_full_control"
+			},
+			{
+				type	   = 'link',
+				name	   = 'Share Pics',
+				url		   = urlFor(route="public~otherPagesOld", action="sharepics")
+			}			
+		*/
 		menuitem = arrayAppend(adminNavMore,{
 			type	= 'parent',
 			name	= 'More',
 			icon	= 'icon-cog',
 			children= 
-			[
-				{
-					type	   = 'link',
-					name	   = 'Emails',
-					url		   = urlFor(route="admin~Action", controller="emails", action="index"),
-					permission  = "email_full_control"
-				},
-				{
-					type	   = 'link',
-					name	   = 'Options',
-					url		   = urlFor(route="admin~Action", controller="options", action="index"),
-					permission  = "option_save_others"					
-				},
-				{
-					type	   = 'link',
-					name	   = 'Forms',
-					url		   = urlFor(route="admin~Action", controller="forms", action="index"),
-					permission  = "form_save_others"		
-				},
-				{
-					type	   = 'link',
-					name	   = 'Share Pics',
-					url		   = urlFor(route="public~otherPagesOld", action="sharepics")
-				},
+			[				
 				{
 					type	  = 'subparent',
 					name	  = 'Super Admin',
@@ -232,7 +217,19 @@
 							url		   = urlFor(route="admin~Action", controller="usergroups", action="index")
 						}
 					]
-				}
+				},
+				{
+					type	   = 'link',
+					name	   = 'Site Options',
+					url		   = urlFor(route="admin~Action", controller="options", action="index"),
+					permission  = "option_save_others"					
+				},
+				{
+					type	   = 'link',
+					name	   = 'Forms',
+					url		   = urlFor(route="admin~Action", controller="forms", action="index"),
+					permission  = "form_save_others"		
+				}				
 			]
 		});	
 	

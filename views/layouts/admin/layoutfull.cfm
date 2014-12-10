@@ -17,68 +17,13 @@
 		<meta name="description" content="">
 		<meta name="robots" content="index, follow">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-		<cfscript>		
-			includeCSS = styleSheetLinkTag(sources='
-					vendor/css/plugins/lightbox/lightbox.css, 	
-					vendor/css/plugins/jgrowl/jquery.jgrowl.css,
-					vendor/nestedSortable/nestedSortable.css,
-					vendor/css/font/icons.css	
-			');
-			
-			//includeIECSS = styleSheetLinkTag(sources='');
-			
-			includeJS = javaScriptIncludeTag(sources='
-					vendor/js/libs/jquery.js,
-					js/utilities.js,					
-					vendor/js/libs/modernizr.js,
-					vendor/js/bootstrap/bootstrap.min.js,
-					vendor/js/plugins/wysihtml5/wysihtml5-0.3.0.js,
-					vendor/js/plugins/wysihtml5/bootstrap-wysihtml5.js,
-					vendor/js/plugins/lightbox/lightbox-2.6.min.js,
-					vendor/js/plugins/jGrowl/jquery.jgrowl.js,					
-					vendor/ckeditor/ckeditor.js,
-					vendor/tmpl.js,
-					vendor/jquery.popupwindow.js,
-					vendor/jquery.form.js,
-					vendor/serializeAnything.jquery.js,
-					vendor/nestedSortable/jquery-ui-1.10.3.custom.min.js,
-					vendor/nestedSortable/jquery.ui.touch-punch.min.js,
-					vendor/nestedSortable/jquery.mjs.nestedSortable2.js,
-					vendor/js/plugins/fileupload/bootstrap-fileupload.js,
-					vendor/jquery.responsivetable.min.js
-			');
-			
-			includeIEJS = javaScriptIncludeTag(sources='
-					vendor/js/libs/respond.min.js,
-					vendor/js/libs/selectivizr.js
-			');
-		</cfscript>
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-		<!-- Fav and touch icons 
-		<link rel="shortcut icon" href="img/icons/favicon.ico">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.png">-->
 		
-		<!-- CSS Libs -->
-		#includeCSS#
+		#includePartial(
+			partial="/_partials/publicHeadTags"
+		)#
 		
-		<link href="#themeDir#assets/css/admin-bootstrap.css" rel="stylesheet">
-		<link href="#themeDir#style.css" rel="stylesheet">
+		<cfinclude template="#themeDir#assets/include/head.cfm">
 		
-		<!-- JS Libs -->
-		#includeJS#
-		
-		<script src="#themeDir#assets/js/adminmenu.js" type="text/javascript"></script>
-		<script src="#themeDir#assets/js/shared.js" type="text/javascript"></script>
-		
-		<!-- IE8 support of media queries and CSS 2/3 selectors -->
-		<!--[if lt IE 9]>
-			<!---#includeIECSS#--->
-			#includeIEJS#
-		<![endif]-->
-		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
 		<style type="text/css">
 			*, strong, h1, h2, h3, h4 {
 				font-family:'Montserrat', sans-serif !important

@@ -3,8 +3,7 @@ $(function() {
 	// Align save box to bottom of content area		
 		
 	// Tooltips
-	$('[title]').tooltip();				
-	$('.wysihtml').wysihtml5();			
+	$('[title]').tooltip();		
 		
 	// Highlight gallery item when checkbox is clicked
 	$('.thumbnail-checkbox').click(function() {
