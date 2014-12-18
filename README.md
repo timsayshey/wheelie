@@ -1,5 +1,5 @@
 # Wheelie CMS
-v1.0-RC
+v1.0-RC-1.0.1
  
 **A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi**
 
@@ -7,7 +7,7 @@ v1.0-RC
 
 ## Compatibility
 
-Tested on Tomcat Railo 4.2 with MySQL with Windows 2008 R2.
+Railo 4.2 with MySQL on Windows and Ubuntu
 
 ## Installation
 
@@ -17,7 +17,7 @@ Tested on Tomcat Railo 4.2 with MySQL with Windows 2008 R2.
 http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
 * Login at http://localhost/manager - email: admin@getwheelie.com - password: wheelie
 
-## Docs - quick brain dump
+## Notes
 
 * **Set Password Salt, Datasource, Error Email, Environment:**  /models/services/global/settings.cfm
 * **Custom Routes:** /models/services/global/approutes.cfm
@@ -29,16 +29,13 @@ http://{your domain}/railo-context/admin/server.cfm?action=security.access then 
 * **Put custom app code in:** /modules/adminapp and /modules/publicapp - look at existing models and controllers to get an idea of what controllers and models to extend.
 
 
-## v1.0-RC2 Roadmap
+## Roadmap
 
 To-do
+* Expand notes and documentation
 * Need to Local scope function variables to prevent possible race conditions
 * Users: Filter by role
 * DB Migrate (To replace vanilla sql file)
-
-## Docs
-
-
 
 ## Contribute
 
