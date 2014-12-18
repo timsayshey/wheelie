@@ -1,9 +1,9 @@
 # Wheelie CMS
 v1.0-RC-1.0.1
  
-**A CFML CMS built on CFWheels - Inspired by Wordpress and Xindi**
+##### Built on CFWheels and Railo - Inspired by Wordpress and Xindi**
 
-### Watch a quick [video tour](http://youtu.be/7AAMkGP-y3E)
+##### Watch a quick [video tour](http://youtu.be/7AAMkGP-y3E) (Old demo of initial release)
 
 ## Compatibility
 
@@ -16,6 +16,12 @@ Railo 4.2 with MySQL on Windows and Ubuntu
 * If using Railo, make sure you Log into your server admin:
 http://{your domain}/railo-context/admin/server.cfm?action=security.access then Change "Access Read" to "Open" and save.
 * Login at http://localhost/manager - email: admin@getwheelie.com - password: wheelie
+
+## Support
+
+[Github Issues](https://github.com/timsayshey/wheelie/issues)
+[Google Group](https://groups.google.com/forum/#!forum/wheelie-cms)
+[Twitter](http://twitter.com/wheeliecms)
 
 ## Notes
 
