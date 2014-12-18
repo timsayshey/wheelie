@@ -19,9 +19,9 @@ http://{your domain}/railo-context/admin/server.cfm?action=security.access then 
 
 ## Support
 
-[Github Issues](https://github.com/timsayshey/wheelie/issues)
-[Google Group](https://groups.google.com/forum/#!forum/wheelie-cms)
-[Twitter](http://twitter.com/wheeliecms)
+* [Github Issues](https://github.com/timsayshey/wheelie/issues)
+* [Google Group](https://groups.google.com/forum/#!forum/wheelie-cms)
+* [Twitter](http://twitter.com/wheeliecms)
 
 ## Notes
 
