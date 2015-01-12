@@ -3,7 +3,13 @@
 	{
 		function init()
 		{
-			filters(through="sharedGlobalData,setLogInfo,setMenus");	
+			filters(through="sharedGlobalData,setLogInfo,setMenus,adminMenuDefaults");	
+			filters(through="sharedfilter");
+		}
+		
+		private function sharedfilter()
+		{
+			include "/models/services/global/app/sharedfilter.cfm";
 		}
 		
 		function sharedGlobalData()

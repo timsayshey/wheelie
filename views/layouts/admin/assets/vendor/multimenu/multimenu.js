@@ -3,7 +3,7 @@
 
 /* Credit: http://codepen.io/catalinred/pen/ngBJF */
 
-(function(){
+$(function(){
 		/* Mobile */
 		$('#adminmenu-wrap').prepend('<div id="adminmenu-trigger">Menu</div>');		
 		$("#adminmenu-trigger").on("click", function(){
@@ -13,4 +13,4 @@
 		// iPad
 		var isiPad = navigator.userAgent.match(/iPad/i) != null;
 		if (isiPad) $('#adminmenu ul').addClass('no-transition');      
-})();         
+});         

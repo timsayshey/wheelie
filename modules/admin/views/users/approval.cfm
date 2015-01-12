@@ -1,5 +1,6 @@
 <cfoutput>
 	<cfif !checkPermission("user_noApprovalNeeded")>	
+		Access Denied
 		<cfabort>
 	</cfif>
 

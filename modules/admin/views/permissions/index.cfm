@@ -10,29 +10,25 @@
 			<tbody>
 				<tr>
 					<th>ID</th>
-					<cfloop list="#StructKeyList(permissionCols)#" index="column">
-						<cfif !listfindnocase("id,createdby,updatedby,updatedat",lcase(column))>
-							<th>#column#</th>
-						</cfif>
+					<cfloop list="#permissionCols#" index="column">
+						<th>#column#</th>
 					</cfloop>
 				</tr>				
 				<cfloop query="permissions">
 					<tr>
 						<td>#permissions.id#</td>
-						<cfloop list="#StructKeyList(permissionCols)#" index="column">
-							<cfif !listfindnocase("id,createdby,updatedby,updatedat",lcase(column))>
-								<td class="checkboxes">
-								<input class="setFalse" type="checkbox" name="permissions[#id#][#column#]" value="0" style="display:none;"
-									<cfif permissions[column] eq 0>
-										checked
-									</cfif>
-								>
-								<input class="setTrue" type="checkbox" name="permissions[#id#][#column#]" value="1" 
-									<cfif permissions[column] neq 0>
-										checked
-									</cfif>
-								></td>
-							</cfif>
+						<cfloop list="#permissionCols#" index="column">
+							<td class="checkboxes">
+							<input class="setFalse" type="checkbox" name="permissions[#id#][#column#]" value="0" style="display:none;"
+								<cfif permissions[column] eq 0>
+									checked
+								</cfif>
+							>
+							<input class="setTrue" type="checkbox" name="permissions[#id#][#column#]" value="1" 
+								<cfif permissions[column] neq 0>
+									checked
+								</cfif>
+							></td>
 						</cfloop>
 					</tr>	
 				</cfloop>

@@ -19,7 +19,7 @@
 	<cfif len(gridActive)>				
 	
 		<div class="listbox col-md-6" rel="#currentId#">
-			<cfif checkPermission("user_save_role_admin")>
+			<cfif checkPermission("user_save_others")>
 				#checkboxtag(
 					name	= 'deletelist', 
 					class	= "itemselector",
@@ -48,7 +48,7 @@
 					
 					#tags#
 					
-					<cfif checkPermission("user_save_role_admin")>
+					<cfif checkPermission("user_save_others")>
 						<div class="pull-right">
 							<cfif isNull(params.rearrange)>
 								#linkTo(

@@ -8,12 +8,12 @@
 	
 	// override admin url scope in /config/Routes.cfm
 	
-	application.wheels.showDebugInformation 	= false;	
+	//application.wheels.showDebugInformation 	= false;	
 	application.wheels.isBeta					= false;	
 	
 	if(find("beta",lcase(cgi.http_host))) 
 	{
-		application.wheels.showDebugInformation = true;
+		//application.wheels.showDebugInformation = true;
 		application.wheels.isBeta				= true;
 	}
 </cfscript>

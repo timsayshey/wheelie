@@ -7,7 +7,8 @@
 <!--- URL to user's file storage folder            --->
 
 <cfset mediaPath = Left(application.info.mediaPath,len(application.info.mediaPath) - 1)>
-<cfset settings.UserFilesURL	= "#application.info.domain##mediaPath#"> 
+<cfset settings.UserFilesURL	= "http://#cgi.http_host##mediaPath#"> 
+
 <!--- like : http://myste.com/UserFiles --->
 
 <!--- image size for thubnail images    --->

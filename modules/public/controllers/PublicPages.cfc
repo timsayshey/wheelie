@@ -3,10 +3,14 @@ component extends="_main" output="false"
 {
 	function init() 
 	{
-		super.init();
-		caches(actions="page,geolanding,index", time=300);
-		//filters(through="setCache");		
+		super.init();				
+		filters(through="setCache");		
 	}
+	
+	function setCache()
+	{		
+		caches(actions="page,geolanding,index", time=300);
+	} 
 	
 	function index()
 	{		
@@ -118,10 +122,5 @@ component extends="_main" output="false"
 			};
 		}
 	}
-	
-	function setCache()
-	{		
-		request.cacheThis = true;
-	} 
 }
 </cfscript>

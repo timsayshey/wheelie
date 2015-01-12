@@ -64,11 +64,12 @@
 			#radioButton(objectName="usergroup", property="globalized", tagValue="0", label="No ",labelPlacement="after")#
 		</div>
         
-		<cfset roles = ["","superuser","admin","editor","user","guest"]>	
+		<cfset roles = ListToArray(application.rbs.roleslist)>	
         
         <div class="col-sm-6">	
             #bselect(
-                objectName		= 'usergroup',
+                includeBlank	= true,
+				objectName		= 'usergroup',
                 property		= 'role',
                 label			= 'Role',
                 options			= roles

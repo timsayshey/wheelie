@@ -74,10 +74,10 @@ config.toolbarGroups = [
         "dd", "dl", "dt",
         "table", "th", "tr", "td", "tbody", "thead", "tfoot"
     ].join("; ");*/
-	
+	config.protectedSource = [/<safe>[\s\S]*<\/safe>/g]; 
 	config.allowedContent = true;
 	
-	config.extraPlugins = 'codemirror,filemanager';
+	config.extraPlugins = 'codemirror,filemanager,showprotected';
 	
 	config.codemirror = {
 		
@@ -145,3 +145,42 @@ config.toolbarGroups = [
 		showAutoCompleteButton: true
 	};
 };
+
+(function() {
+	var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+	if (isChrome) {
+		CKEDITOR.on( 'instanceLoaded', function( e ){
+			this.addCss('.cke_editable { line-height: normal; }');
+		});
+	}
+})();
+
+CKEDITOR.on( 'instanceReady', function( ev )
+{
+	var writer = ev.editor.dataProcessor.writer; 	
+ 	var dtd = CKEDITOR.dtd;	
+	for ( var e in CKEDITOR.tools.extend( {}, dtd.$block, dtd.$inline ) )
+	{
+		ev.editor.dataProcessor.writer.setRules( e, {					
+			breakBeforeOpen : true,		
+			breakAfterOpen : true,
+			breakAfterClose : false,
+			breakBeforeClose : true
+		});
+	}
+});
+
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+CKEDITOR.config.forcePasteAsPlainText = false; // default so content won't be manipulated on load
+CKEDITOR.config.basicEntities = true;
+CKEDITOR.config.entities = true;
+CKEDITOR.config.entities_latin = false;
+CKEDITOR.config.entities_greek = false;
+CKEDITOR.config.entities_processNumerical = false;
+CKEDITOR.config.fillEmptyBlocks = function (element) {
+		return true; // DON'T DO ANYTHING!!!!!
+};
+
+CKEDITOR.config.allowedContent = true; // don't filter my data
+
+

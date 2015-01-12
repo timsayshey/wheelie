@@ -172,6 +172,9 @@
 			// Sync Unapproved Fields
 			params.user.zx_firstname = params.user.firstname;				
 			params.user.zx_lastname = params.user.lastname;
+			params.user.zx_about = params.user.about;
+			params.user.zx_designatory_letters = params.user.designatory_letters;
+			params.user.zx_jobtitle = params.user.jobtitle;
 			
 			// Save user
 			user = model("User").new(params.user);
@@ -194,10 +197,12 @@
 				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
 				flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
 				mailgun( 
-					mailTo	= application.wheels.adminEmail,
+					mailTo	= '#application.wheels.adminEmail#,#!isNull(request.hrEmails) AND len(trim(request.hrEmails)) ? ",#request.hrEmails#" : ""#',
 					from	= application.wheels.adminFromEmail,
-					subject	= "New User awaiting approval",
-					html	= "#params.user.firstname# #params.user.lastname#"
+					subject	= "New User Signup: #params.user.firstname# #params.user.lastname#",
+					html	= "User: #params.user.firstname# #params.user.lastname#<br><br>
+								View profile:<br>
+								http://#request.site.domain#/connect/profiles/profile/#user.id#"
 				);
 				
 				userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
@@ -266,6 +271,7 @@
 							imageWrite(img,newFile,1);
 							fileDelete(theFile);
 						} catch(e) {
+							flashInsert(error="File Error: #e.message#");
 							return false;
 						}
 						return true;
@@ -292,10 +298,13 @@
 			if(!isNull(params.user.approval_flag) AND params.user.approval_flag eq 1)
 			{
 				mailgun(
-					mailTo	= application.wheels.adminEmail,
+					mailTo	= '#application.wheels.adminEmail#,#!isNull(request.hrEmails) AND len(trim(request.hrEmails)) ? ",#request.hrEmails#" : ""#',
 					from	= application.wheels.adminFromEmail,
 					subject	= "User Changes Pending",
-					html	= "#params.user.firstname# #params.user.lastname#"
+					html	= "User: #params.user.firstname# #params.user.lastname#<br>
+								<br>
+								Click the link below to approve:<br>
+								http://#request.site.domain#/connect/users/approval"
 				);
 			}
 			

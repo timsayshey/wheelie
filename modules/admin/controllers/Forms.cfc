@@ -8,7 +8,7 @@ component extends="_main" output="false"
 	
 	function index()
 	{	
-		forms = model("form").findAll();
+		forms = model("form").findAll(order="name ASC");
 	}	
 	
 	function show()
@@ -20,7 +20,7 @@ component extends="_main" output="false"
 	function formsubmissions()
 	{			
 		qform = model("Form").findByKey(params.id);
-		formsubmissions = model("formsubmission").findAll(where="formid = '#qform.id#'");
+		formsubmissions = model("formsubmission").findAll(where="formid = '#qform.id#'",order="createdat DESC");
 	}	
 		
 	function formsubmission()
@@ -36,7 +36,7 @@ component extends="_main" output="false"
 	}
 	
 	function formsubmissionSave()
-	{		
+	{	
 		// Spam Checks
 		params.formsubmission.isSpam = spamChecker(params.fielddata);
 		if(params.formsubmission.isSpam)
@@ -125,7 +125,14 @@ component extends="_main" output="false"
 					
 					emailCCList = model("FormUserJoin").findAll(where="formid = #qform.id# AND type = 'cc'",include="User,Form");
 					emailCCList = ValueList(emailCCList.email);
-				}
+					
+					// Inject custom application code
+					customFormHandler = getAdminTemplate("formhandling");
+					if(len(customFormHandler))
+					{
+						include template="#customFormHandler#";
+					}
+				}				
 				
 				// Generate and Send Email			
 				mailgun(

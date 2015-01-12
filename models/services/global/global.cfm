@@ -65,17 +65,18 @@
 	</cfscript>
 	
 	<!--- Set User Permissions --->
-	<cfif isNull(application.rbs.permissionsQuery) or isReload>
-	
+	<cfif isNull(application.rbs.permissionsQuery) or isReload>	
 		<cfset application.rbs.permissionsQuery = db.getRecords("permissions")>
-		<cfloop query="application.rbs.permissionsQuery">
-			<cfscript>				
-				application.rbs.permission["#id#"]["superuser"]		= superuser;
-				application.rbs.permission["#id#"]["admin"]			= admin;
-				application.rbs.permission["#id#"]["editor"]		= editor;
-				application.rbs.permission["#id#"]["user"]			= user;
-				application.rbs.permission["#id#"]["guest"]			= guest;
-			</cfscript>
+		
+		<!--- Get role columns from permissions table - removed non role columns - convert array to remove list nulls - convert back to list --->
+		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(db.getDBFieldList("permissions")),lcase("ID,CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>
+		
+		<cfloop list="#application.rbs.roleslist#" index="thisRole">
+			<cfloop query="application.rbs.permissionsQuery">
+				<cfscript>
+					application.rbs.permission["#id#"]["#thisRole#"]		= application.rbs.permissionsQuery["#thisRole#"];
+				</cfscript>
+			</cfloop>
 		</cfloop>
 	</cfif>
 	

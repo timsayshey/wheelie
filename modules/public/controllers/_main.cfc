@@ -10,8 +10,7 @@ component output="false" extends="controllers.Controller"
 		forceHttp(except=secureActions);
 		filters(through="customPublicAppFilters,redirectSecureSubdomain",except=secureActions);	
 		
-		
-		filters(through="preHandler,adminMenuDefaults");	
+		filters(through="preHandler");	
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,register,registerPost");
 	}
 	
@@ -31,7 +30,7 @@ component output="false" extends="controllers.Controller"
 	
 	function preHandler()
 	{		
-		homeid 			= getOption(qOptions,'home_id').content;
+		homeid = getOption(qOptions,'home_id').content;
 		
 		if(!isNull(params.format)) 
 		{

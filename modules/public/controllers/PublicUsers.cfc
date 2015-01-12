@@ -3,8 +3,7 @@ component extends="_main" output="false"
 {
 	function init() 
 	{
-		super.init();
-		filters(through="setCache");	
+		super.init();	
 	}
 	
 	function index()
@@ -12,16 +11,16 @@ component extends="_main" output="false"
 	}
 	
 	function usertag()
-	{	
-		setCache();
-		//params.id = ListLast(cgi.PATH_INFO,"/");
-		//params.id = ListDeleteAt(params.id,ListLen(params.id,"_"),"_");
-		
+	{			
 		if(!isNull(params.id)) 
 		{
-			// Queries
-			userTag = model("UserTag").findAll(where="#whereSiteid()# AND urlid LIKE '#params.id#'");
-			users = model("UserTagJoin").findAll(where="#whereSiteid()# AND urlid LIKE '#params.id#' AND showOnSite = 1",include="User,UserTag",order="sortorder ASC, about DESC, jobtitle ASC, firstname ASC");			
+			// Queries				
+			usertag = model("UserTag").findAll(where="#whereSiteid()# AND urlid LIKE '#params.id#'");
+			users = model("UserTagJoin").findAll(
+				where="#whereSiteid()# AND categories.id = '#usertag.id#' AND showOnSite = 1",
+				include="User,UserTag",
+				order="sortorder ASC, about DESC, jobtitle ASC, firstname ASC"
+			);
 		}
 		
 		if(isNull(users) OR !len(users.id))
@@ -33,11 +32,6 @@ component extends="_main" output="false"
 		}
 		
 	}
-	
-	function setCache()
-	{
-		request.cacheThis = true;
-	} 
 	
 	function preHandler()
 	{

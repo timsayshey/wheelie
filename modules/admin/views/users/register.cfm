@@ -7,36 +7,8 @@
 		
 	#startFormTag(route="admin~Action", module="admin", controller="users", action="registerPost", enctype="multipart/form-data", id="fileupload")#		
 					
-	<!--- Email --->	
-	<div class="col-sm-12 clearleft">	
-		#btextfield(
-			objectName		= 'user', 
-			property		= 'email', 
-			label			= 'Email',
-			placeholder		= "Ex: gmail@chucknorris.com"
-		)#
-	</div>
-	
-	<!--- Password 
-	,"#passrequired#" = "" --->
-	<div class="col-sm-6 clearleft">	
-		#bPasswordFieldTag(
-			name			 = "user[password]",
-			label			 = passwordLabel,
-			placeholder		 = "Password"			
-		)#
-	</div>
-	
-	<div class="col-sm-6">	
-		#bPasswordFieldTag(
-			label		= "Confirm Password", 
-			placeholder	= "Confirm Password",
-			name		= "user[passwordConfirmation]"
-		)#
-	</div>	
-				
 	<!--- Full name --->
-	<div class="col-sm-6 clearleft">	
+	<div class="col-sm-6">	
 		#btextfield(
 			objectName	= 'user', 
 			property	= 'Firstname', 
@@ -55,6 +27,52 @@
 	</div>
 	
 	<div class="col-sm-6">	
+		#btextfield(
+			objectName	= 'user', 
+			property	= 'jobtitle', 
+			label		= 'Job Title*',
+			placeholder	= "Ex: Teacher"
+		)#
+	</div>	
+	
+	<div class="col-sm-6">	
+		#btextfield(
+			objectName	= 'user', 
+			property	= 'designatory_letters', 
+			label		= 'Credentials*',
+			placeholder	= "Ex: PhD MDA BS"
+		)#
+	</div>	
+	
+	<!--- Password 
+	,"#passrequired#" = "" --->
+	<div class="col-sm-6">	
+		#bPasswordFieldTag(
+			name			 = "user[password]",
+			label			 = passwordLabel,
+			placeholder		 = "Password"			
+		)#
+	</div>
+	
+	<div class="col-sm-6">	
+		#bPasswordFieldTag(
+			label		= "Confirm Password", 
+			placeholder	= "Confirm Password",
+			name		= "user[passwordConfirmation]"
+		)#
+	</div>	
+	
+	<!--- Email --->	
+	<div class="col-sm-6">	
+		#btextfield(
+			objectName		= 'user', 
+			property		= 'email', 
+			label			= 'Email',
+			placeholder		= "Ex: you@#request.site.domain#"
+		)#
+	</div>
+	
+	<div class="col-sm-6">	
 		<cfparam name="user.portrait" default="">
 		#bImageUploadTag(
 			name			= "portrait",
@@ -62,13 +80,25 @@
 			filepath		= user.portrait,
 			label			= 'Portrait'
 		)#
+	</div>	
+	
+	<div class="col-sm-12">	
+		#btextarea(
+			objectName	= 'user', 
+			property	= 'about', 
+			label		= 'Bio',
+			placeholder	= "",
+			style		= "min-height:120px;"
+		)#
 	</div>
 	
+		
 	<br class="clear">
 	
-	#bsubmittag(name="submit",value="Register", class="btn-lg btn-primary")#
-	<a class="lost-password pull-right" href='#urlFor(route="admin~Action", module="admin", controller="users", action="login")#'>Back to login</a>	
+	#bsubmittag(name="submit",value="Register", class="btn-lg btn-primary")#<br><br>
+	<a class="lost-password" href='#urlFor(route="admin~Action", module="admin", controller="users", action="login")#'>Back to login</a>	
 	
 	#endFormTag()#	
+
 		
 </cfoutput>

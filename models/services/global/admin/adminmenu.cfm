@@ -192,6 +192,7 @@
 			type	= 'parent',
 			name	= 'More',
 			icon	= 'icon-cog',
+			permission= 'form_save_others',
 			children= 
 			[				
 				{

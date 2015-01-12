@@ -8,12 +8,12 @@
 		function index()
 		{
 			permissions = model("Permission").findAll();
-			permissionCols = colStruct("Permission");
+			permissionCols = application.rbs.roleslist;
 		}
 		function permissionsSubmit()
 		{
 			permissions = model("Permission").findAll();
-			permissionCols = colStruct("Permission");
+			permissionCols = application.rbs.roleslist;
 			
 			if(!isNull(params.permissions))
 			{

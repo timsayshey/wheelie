@@ -75,7 +75,7 @@ component extends="_main" output="false"
 			route="admin~Index",
 			module="admin",
 			controller="newsletterSections",
-			params="newsletterid=#params.newsletterid#"
+			params="id=#params.newsletterid#"
 		);
 	}
 

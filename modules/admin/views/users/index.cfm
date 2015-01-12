@@ -14,7 +14,7 @@
 		
 		contentFor(headerTitle = '<span class="elusive icon-user"></span> #titleName#');
 		
-		if(checkPermission("user_save_role_admin"))
+		if(checkPermission("user_save_others"))
 		{
 			contentFor(headerButtons = 
 				'<li class="headertab">
@@ -36,7 +36,7 @@
 	
 		#startFormTag(route="admin~Action", module="admin", controller="users", action="deleteSelection", enctype="multipart/form-data", params="currentGroup=#params.currentGroup#")#	
 		
-			<cfif checkPermission("user_save_role_admin")>
+			<cfif checkPermission("user_save_others")>
 				<cfif isNull(params.rearrange)>
 					#includePartial(
 						partial			= "/_partials/statusTabs", 

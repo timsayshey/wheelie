@@ -8,13 +8,22 @@
 			
 			// Validations		
 			validatesConfirmationOf(properties="password", message="Your passwords must match!");			
-			validatesPresenceOf("email");			
+			validatesPresenceOf("email");	
+					
+			validatesPresenceOf(property="about", when="onCreate", message="Bio can't be empty");
+			//validatesPresenceOf(property="jobtitle", when="onCreate", message="Job title can't be empty");
+			validatesPresenceOf(property="firstname", when="onCreate", message="First name can't be empty");
+			validatesPresenceOf(property="lastname", when="onCreate", message="Last name can't be empty");
+			
 			validatesFormatOf(property="email", type="email"); 	
 			validatesUniquenessOf(property="email", scope="siteid"); 
 			validatesLengthOf(property="password", within="4,65", message="The password length must be between 4 and 65 characters.");
 			
 			// Relations
-			hasMany("Logs");
+			hasMany(name="Logs");
+			hasMany(name="UserTagJoins");
+			belongsTo(name="UserTagJoin",foreignKey="id",joinkey="userid");
+			
 			belongsTo(name="Log");
 			belongsTo(name="Post",foreignKey="createdBy");
 			belongsTo(name="Itdevice",foreignKey="userid");

@@ -7,7 +7,7 @@ component output="false" extends="controllers.Controller"
 		
 		forceHttps(except="");
 		
-		filters(through="loginServerUser,deleteEmptyPassword,adminMenuDefaults,customAdminAppFilters,checkUserSessionSite,preHandler,filterDefaults,handleRedirect");
+		filters(through="loginServerUser,deleteEmptyPassword,customAdminAppFilters,checkUserSessionSite,preHandler,filterDefaults,handleRedirect");
 		filters(through="loggedOutOnly",except="login,usermenu,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
 		filters(through="loggedInExcept",only="login,recovery");	
 		filters(through="setUserInfo");	

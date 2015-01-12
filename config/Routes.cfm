@@ -196,21 +196,6 @@
 		pattern="/blog/",
 		action="index",
         controller="blog"
-    );
-	
-	// geolanding	
-	addRoute(
-        name="public~geolanding", 
-		pattern="/Residential-Treatment-Programs/[city]/[state]",
-        controller="publicPages", 
-		action="geolanding"
-    );	
-	
-	addRoute(
-        name="public~geolandingState", 
-		pattern="/Residential-Treatment-Programs/[state]",
-        controller="publicPages", 
-		action="geolanding"
     );	
 	
 	// Public Routes 	

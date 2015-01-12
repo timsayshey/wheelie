@@ -64,6 +64,7 @@
 		<cfargument name="foreignid" type="numeric">
 		<cfargument name="modelid" type="numeric">
 		<cfargument name="metafieldType" type="any">
+		<cfargument name="identifier" type="any" default="">
 		
 		<cfquery name="fieldQuery" datasource="#application.wheels.dataSourceName#">
 			SELECT
@@ -98,15 +99,16 @@
 				metafields
 			LEFT OUTER JOIN metadata AS metadata ON 
 				metafields.id = metadata.metafieldid AND 
-				(
-					metadata.foreignid = <cfqueryparam value="#arguments.foreignid#" cfsqltype="cf_sql_integer"> 
-					OR metadata.foreignid IS NULL
+				(					
+					metadata.foreignid = <cfqueryparam value="#arguments.foreignid#" cfsqltype="cf_sql_integer"> 					
+					OR metadata.foreignid IS NULL				
 				) 	
 				AND metadata.deletedat IS NULL
 			WHERE
 			(
 				metafields.modelid = <cfqueryparam value="#arguments.modelid#" cfsqltype="cf_sql_integer"> AND
 				metafields.metafieldType = <cfqueryparam value="#arguments.metafieldType#" cfsqltype="cf_sql_varchar">
+				<cfif len(arguments.identifier)>AND metafields.identifier = <cfqueryparam value="#arguments.identifier#" cfsqltype="cf_sql_varchar"></cfif>
 			)				
 			AND (metafields.deletedat IS NULL)
 			ORDER BY

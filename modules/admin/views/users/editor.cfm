@@ -51,7 +51,7 @@
 	</div>
 	
 	<cfif checkPermission("user_save_role_admin")>	
-		<cfset roles = ["superuser","admin","editor","user","guest"]>			
+		<cfset roles = ListToArray(application.rbs.roleslist)>			
 		<div class="col-sm-6">	
 			#bselect(
 				includeBlank	= true,
@@ -67,7 +67,7 @@
     <br class="clear" />
 
 	<cfset approvalToggle = "">
-	<cfif checkPermission("user_noApprovalNeeded") OR user.showOnSite eq 0>	
+	<cfif checkPermission("user_save_others") OR user.showOnSite eq 0>	
 		<cfset approvalToggle = "zx_">
 		#hiddenFieldTag(name="user[approval_flag]", value="0")#
 	<cfelse>
@@ -120,7 +120,7 @@
 		#btextfield(
 			objectName	= 'user', 
 			property	= '#approvalToggle#designatory_letters', 
-			label		= 'Designatory Letters',
+			label		= 'Credentials',
 			placeholder	= "Ex: PhD, MSW, etc"
 		)#
 	</div>
@@ -271,7 +271,7 @@
 	#includePartial(partial="/_partials/formFieldsRender")# 
 	<br class="clear">
 	
-	<cfif checkPermission("user_noApprovalNeeded")>	
+	<cfif checkPermission("user_save_others")>	
 		#includePartial(partial="/_partials/formSeperator")#
 			
 		<div class="col-sm-6">
@@ -350,7 +350,7 @@
 				)#
 			</section>
 		</div>	
-		<cfif checkPermission("user_noApprovalNeeded") OR user.showOnSite eq 0>	
+		<cfif checkPermission("user_save_others") OR user.showOnSite eq 0>	
 			<div class="data-block">
 				<section>
 					<cfparam name="user.portrait" default="">
