@@ -1,10 +1,8 @@
 <cfscript>
-	// Add Custom Menu Item
+	// Add Custom Admin Menu Items
 	/////////////////////////////////////////////////////////////////////////////////
-	if(!isNull(adminNavMain) && !isNull(adminNavMore))
-	{		
-		
-		
+	/* if(!isNull(adminNavMain) && !isNull(adminNavMore))
+	{
 		menuitem = ArrayAppend(adminNavMain,{
 			type	= 'link',
 			name	= 'IT Devices',
@@ -35,4 +33,5 @@
 			});	
 		}		
 	}
+	*/
 </cfscript>

@@ -53,7 +53,10 @@
 </head>
 <body>
 <div class="page-wrap">
-    
+		<!--- Admin bar for logged in users --->
+		#includePartial(
+			partial="/_partials/adminmenufull"
+		)#
         <div class="navbar_wrap">
             <div class="navbar_top"></div>
             <div class="navbar">	

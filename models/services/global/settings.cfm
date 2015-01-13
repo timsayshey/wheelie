@@ -14,6 +14,6 @@
 	if(find("beta",lcase(cgi.http_host))) 
 	{
 		//application.wheels.showDebugInformation = true;
-		application.wheels.isBeta				= true;
+		//application.wheels.isBeta				= true;
 	}
 </cfscript>
