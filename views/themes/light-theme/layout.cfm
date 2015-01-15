@@ -53,7 +53,7 @@
 </head>
 <body>
 <div class="page-wrap">
-		<!--- Admin bar for logged in users --->
+		<!--- Admin bar for logged in users // Remove this if you don't want the admin bar on the frontend --->
 		#includePartial(
 			partial="/_partials/adminmenufull"
 		)#

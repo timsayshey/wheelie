@@ -31,7 +31,10 @@
 		</style>
 	</head>
 	<body style="background:##eee; padding-top:50px; font-size:12px;">		
-		
+		<!--- Admin bar for logged in users --->
+		#includePartial(
+			partial="/_partials/adminmenufull"
+		)#
 		<div id="wrapper" class="admin-content">
 			<cfif NOT flashIsEmpty()>
 				<div class="container">				
