@@ -57,7 +57,7 @@ component extends="_main" output="false"
 					
 			if(isObject(metaField))
 			{
-				metaField.update(sortorder=fieldValue.newIndex);
+				metaField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
 		abort;

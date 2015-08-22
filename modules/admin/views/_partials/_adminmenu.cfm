@@ -15,16 +15,16 @@
 			 <ul class="admindropdown-menu">	
 				
 				<li>
-				<a href='#editAccount#'><img style="padding:0 5px;max-width:30px;" src="#fileExists(expandPath('/assets/userpics/#session.user.id#.jpg')) ? '/assets/userpics/#session.user.id#.jpg' : '/assets/img/user_thumbholder.jpg'#">
+				<a href='#editAccount#'><img style="padding-right:5px;max-width:30px;" src="#fileExists(expandPath('/assets/userpics/#session.user.id#.jpg')) ? '/assets/userpics/#session.user.id#.jpg' : '/assets/img/user_thumbholder.jpg'#">
 				#session.user.fullname#</a>
 				</li>
 				<li><a href='#urlFor(route="admin~Action", controller="users", action="logout")#'>Logout</a></li>
 			 </ul>
 		</li>
 		
-		<li class="admin-alignright">
+		<!---<li class="admin-alignright">
 			<a href="/"><span class="elusive icon-eye-open"></span> Visit Site</a>
-		</li>
+		</li>--->
 		
 	</cfif>
 </cfoutput>

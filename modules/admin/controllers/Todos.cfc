@@ -69,7 +69,7 @@ component extends="_main" output="false"
 	function markDone()
 	{
 		todo = model("todo").findByKey(params.id);
-		todoresult = todo.update(isdone=now());
+		todoresult = todo.update(isdone=now(),validate=false);
 		if(todoresult) {
 			json = SerializeJSON({response = "success"});	
 		} else {

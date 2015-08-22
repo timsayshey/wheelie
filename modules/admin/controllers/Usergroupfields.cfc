@@ -26,7 +26,7 @@ component extends="_main" output="false"
 					
 			if(isObject(UsergroupField))
 			{
-				UsergroupField.update(sortorder=fieldValue.newIndex);
+				UsergroupField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
 		abort;

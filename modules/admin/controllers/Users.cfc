@@ -43,7 +43,7 @@
 						
 				if(isObject(sortuser))
 				{
-					sortuser.update(sortorder=sortuserVal.newIndex);
+					sortuser.update(sortorder=sortuserVal.newIndex,validate=false);
 				}
 			}
 			abort;
@@ -434,14 +434,33 @@
 		function loginPost()
 		{
 			param name="params.email" default="";
+
+			// Don't check siteId for main site (that way we can redirect them to their correct site)
+			var siteIdEqualsCheck = "AND #siteIdEqualsCheck()#";
+			if(request.site.subdomain eq "www") {
+				siteIdEqualsCheck = "";
+			}
 			
-			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#' AND #siteIdEqualsCheck()#");
+			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#'");
 			
 			if(user.recordcount AND user.securityApproval eq 1)
 			{
 				session.user.id = user.id;
 				setUserInfo();
-				redirectTo(route="admin~Action", module="admin", controller="main", action="home");	
+
+				// If admin or user on correct site
+				if(user.globalized || user.siteid eq request.site.id) {
+					redirectTo(route="admin~Action", controller="main", action="home");
+				} else {
+					var userSite = model('site').findAll(where="id = '#user.siteid#'");
+					redirectFullUrl(
+						"http://" & userSite.subdomain & "." & 
+							listDeleteAt(cgi.server_name,1,".") & 
+								urlFor(route="admin~Action", controller="main", action="home") & 
+									(len(cgi.query_string) ? "?" : "") & cgi.query_string
+					);
+				}
+					
 			} else if(user.recordcount AND user.securityApproval eq 0) {	
 				flashInsert(error="We sent you an email to verify your account, check your spam or contact support.");	
 				renderPage(route="admin~Action", controller="users", action="login");	
@@ -685,11 +704,10 @@
 			{
 				decryptUserId = passcrypt(password=params.token, type="decrypt");
 				
-				matchUser = model("user").findOne(where="id = '#decryptUserId#'");
-							
-				if(isObject(matchUser))
+				matchUser = model("user").findByKey(decryptUserId);
+				saveResult = matchUser.update(securityApproval=1,validate=false);					
+				if(saveResult)
 				{
-					matchUser.update(securityApproval=1);
 					flashInsert(success="Your email address has been verified. You can now login.");
 				} else {
 					flashInsert(error="There was an issue verifying your address. Please try again.");					
@@ -700,9 +718,6 @@
 		
 		function importUserList()
 		{
-
-			
-			
 				
 		}
 	}

@@ -37,7 +37,7 @@ component extends="_main" output="false"
 					
 			if(isObject(sortItem))
 			{
-				sortItem.update(sortorder=sortVal.newIndex);
+				sortItem.update(sortorder=sortVal.newIndex,validate=false);
 			}
 		}
 		abort;

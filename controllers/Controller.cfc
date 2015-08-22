@@ -5,6 +5,7 @@
 		{
 			filters(through="sharedGlobalData,setLogInfo,setMenus,adminMenuDefaults");	
 			filters(through="sharedfilter");
+			filters(through="setUserInfo");	
 		}
 		
 		private function sharedfilter()

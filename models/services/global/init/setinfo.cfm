@@ -13,7 +13,7 @@
 
 <cfscript>
 	/* Globlal data */
-	fileroot = expandPath(".");
+	fileroot = expandPath("/");
 	privateroot = expandPath("../");
 	
 	info.validCategoryModelsList = ""; // lowercase

@@ -2,12 +2,20 @@
 	
 	<!--- Shared Redirects --->
 	<cffunction name="redirects" hint="Redirects for SEO and other purposes">   
-		<cfscript>			
+		<cfscript>
+			/* Force NO WWW 
 			if(listfirst(cgi.server_name,".") eq "www")
 			{
-				redirectFullUrl("http://#ListDeleteAt(cgi.HTTP_HOST,1,".")##cgi.path_info##len(cgi.query_string) ? "?" : ""##cgi.query_string#");
+				redirectFullUrl(
+					"http://" & 
+						ListDeleteAt(cgi.server_name,1,'.') & 
+							cgi.path_info & 
+								(len(cgi.query_string) ? "?" : "") & 
+									cgi.query_string
+				);
 			}
-			
+			*/
+
 			/* DB Redirects */
 			redirects = db.getRecords("redirects",{siteid=request.site.id});			
 			for (redirect in redirects)

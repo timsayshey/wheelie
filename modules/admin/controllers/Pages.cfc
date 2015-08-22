@@ -122,7 +122,7 @@ component extends="_main" output="false"
 			if(StructKeyExists(params,"isHome")) 
 			{
 				option = model("Option").findOne(where="id = 'home_id'#wherePermission("option","AND")#");
-				option.update(content=page.id);
+				option.update(content=page.id,validate=false);
 			}			
 			
 			flashInsert(success="Page saved. #linkto(text="View page", route="public~secondaryPage", id=page.urlid)#");

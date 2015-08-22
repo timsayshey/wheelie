@@ -10,7 +10,7 @@
 			validatesConfirmationOf(properties="password", message="Your passwords must match!");			
 			validatesPresenceOf("email");	
 					
-			validatesPresenceOf(property="about", when="onCreate", message="Bio can't be empty");
+			//validatesPresenceOf(property="about", when="onCreate", message="Bio can't be empty");
 			//validatesPresenceOf(property="jobtitle", when="onCreate", message="Job title can't be empty");
 			validatesPresenceOf(property="firstname", when="onCreate", message="First name can't be empty");
 			validatesPresenceOf(property="lastname", when="onCreate", message="Last name can't be empty");
@@ -28,6 +28,8 @@
 			belongsTo(name="Post",foreignKey="createdBy");
 			belongsTo(name="Itdevice",foreignKey="userid");
 			
+			belongsTo(name="UsergroupJoin", foreignKey="id", joinKey="userid", joinType="outer");
+
 			super.init();
 			
 			// Permission check override			
@@ -54,15 +56,6 @@
 		private function checkForDeletePermission()
 		{
 			checkForPermission(type="delete", checkid=this.id & "," & this.createdby);
-		}
-		
-		private function resetItDevice()
-		{
-			itdevice = model("Itdevice").findOne(where="userid = '#this.id#'",returnAs="Object");
-			if(isObject(itdevice))
-			{
-				itdevice.update(userid=1);
-			}
 		}
 	 	
 		// Clean strings

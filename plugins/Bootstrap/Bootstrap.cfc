@@ -523,9 +523,16 @@
 				arguments.fieldArgs.append = '</div>' & arguments.fieldArgs.append;
 
 				if (loc.hasPrependedText) {
-					arguments.fieldArgs.prepend &= '<div class="input-group">
-										<span class="input-group-addon">#arguments.fieldArgs.prependedText#</span>';
-					arguments.fieldArgs.append = '</div></div><div class="separator"></div>';
+					if(StructKeyExists(arguments.fieldArgs, "prependedTextAppended") AND arguments.fieldArgs.prependedTextAppended eq true) {
+						arguments.fieldArgs.prepend &= '<div class="input-group">';
+						arguments.fieldArgs.append = '<span class="input-group-addon">#arguments.fieldArgs.prependedText#</span></div></div><div class="separator"></div>';
+					} else {
+						arguments.fieldArgs.prepend &= '<div class="input-group">
+														<span class="input-group-addon">#arguments.fieldArgs.prependedText#</span>';
+						arguments.fieldArgs.append = '</div></div><div class="separator"></div>';
+					}
+					
+					
 				}
 
 				if (loc.hashelp) {

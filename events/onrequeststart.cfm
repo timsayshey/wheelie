@@ -37,9 +37,9 @@
     </cfloop>
 </cfif>
 
-<!--- Share session across subsomains --->
+<!--- Share session across subsomains
 <cfcookie name="cfid" domain="#request.site.domain#" value="#session.cfid#">
-<cfcookie name="cftoken" domain="#request.site.domain#" value="#session.cftoken#">
+<cfcookie name="cftoken" domain="#request.site.domain#" value="#session.cftoken#"> --->
 
 <cfset application.wheels.errorEmailAddress=application.wheels.adminFromEmail>
 

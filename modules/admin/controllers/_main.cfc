@@ -148,37 +148,6 @@ component output="false" extends="controllers.Controller"
 		}	
 	}
 	
-	function setUserInfo()
-	{	
-		// Authenticate
-		if(StructKeyExists(session,"user"))
-		{
-			var user = model("UserGroupJoin").findAll(where="userid = '#session.user.id#'", include="User,UserGroup");
-			//var user = model("User").findAll(where="id = '#session.user.id#'");
-			session.user = {
-				id 			= user.userid,
-				fullname 	= user.firstname & " " & user.lastname,
-				firstname 	= user.firstname,
-				lastname 	= user.lastname,
-				role		= user.usergrouprole,
-				email 		= user.email,
-				siteid		= user.siteid,
-				globalized	= user.globalized
-			};
-			
-			if(len(trim(user.role)))
-			{
-				session.user.role = user.role;
-			}
-			
-			if(len(trim(session.user.id)) eq 0)
-			{
-				flashInsert(error="There was an issue with your account. Try again.");			
-				StructDelete(session,"user");
-			}
-		}
-	}
-	
 	private function preHandler()
 	{	
 		usesLayout("/layouts/admin/layout");

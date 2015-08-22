@@ -79,9 +79,12 @@ component extends="Wheels"
 			// Good to go
 		}
 		else if (checkPermission("#getModelName()#_#permissionType#"))
-		{						
-			if(isNull(request.newRegistration) AND !isNull(session.user.id)) // Override for registration
+		{
+			if(!isNull(request.newRegistration) AND isNull(session.user.id) OR structKeyExists(url,"token") AND findNoCase("users/verifyEmail",cgi.path_info)) 
 			{ 			
+				// Override for registration
+				// Override for email verification
+			} else {
 				if(!ListFindNoCase(checkid, session.user.id) AND checkid neq 0)
 				{
 					session.flash.error="You only have access to #permissionType# your own #getModelName()#s";
@@ -89,6 +92,7 @@ component extends="Wheels"
 					Location(cgi.http_referer,false); abort;
 				}
 			}
+
 		}
 		else
 		{

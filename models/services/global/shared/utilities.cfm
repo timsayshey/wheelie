@@ -1,5 +1,14 @@
 <cfoutput>
-	
+	<cffunction name="cleanNumber" output="no">
+		<cfargument name="dirtystring">
+		
+		<cfscript>
+			cleanstring = removehtml(dirtystring);
+			cleanstring = REReplace(cleanstring,"[^0-9_ .]","","all");
+		</cfscript>
+		
+		<cfreturn trim(cleanstring)>
+	</cffunction>    
 	<cffunction name="deleteThisFile">
 		<cfargument name="filepath">
 		<cfscript>
@@ -137,6 +146,23 @@
 			returnArray[ii] = aOfS[listLast(sortArray[ii],delim)];
 		//return the array
 		return returnArray;
+	}
+	function arrayOfStructsDeduplicate(required aOfS,required fieldName){
+		var cleanArray = [];
+		for(arrayItem in aOfS){
+	 
+			arrayItemExists = false;
+
+			for(cleanArrayItem in cleanArray){
+				if( cleanArrayItem[fieldName] == arrayItem[fieldName] ){
+					arrayItemExists = true;
+					break;
+				}
+			}	 
+
+			!arrayItemExists ? arrayAppend(cleanArray,arrayItem) : false;
+		}
+		return cleanArray;
 	}
 	</cfscript> 
 	

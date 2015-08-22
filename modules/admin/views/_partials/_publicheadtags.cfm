@@ -9,17 +9,20 @@
 	<link href="/assets/css/shared.css" rel="stylesheet" type="text/css"/>
 	
 	<cfparam name="adminHeadColor" default="54a5de">
-	
-	<style type="text/css">
-		.hero {
-			background: ###adminHeadColor# !important;
-		}
-		.data-block header {
-			background: ###adminHeadColor# !important;
-		}
-		.topnav, .navbar {
-			z-index:120 !important;	
-		}
-	</style>
-
+	<cfif findNoCase("admin",params.route)>
+		<style type="text/css">
+			body {
+				background: none !important;
+			}
+			.hero {
+				background: ###adminHeadColor# !important;
+			}
+			.data-block header {
+				background: ###adminHeadColor# !important;
+			}
+			.topnav, .navbar {
+				z-index:120 !important;	
+			}
+		</style>		
+	</cfif>
 </cfoutput>

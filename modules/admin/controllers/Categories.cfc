@@ -3,7 +3,7 @@ component extends="_main" output="false"
 {
 	function init() 
 	{
-		super.init();
+		super.init(); 
 	}
 	
 	function getCategoryType()
@@ -13,6 +13,7 @@ component extends="_main" output="false"
 		{
 			return params.modelName;
 		} else {
+			throw("#params.modelName# not found in application.info.validCategoryModelsList!");
 			return "";
 		}
 	}

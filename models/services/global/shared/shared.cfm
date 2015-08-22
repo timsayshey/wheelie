@@ -145,18 +145,42 @@
 </cffunction>
  
 <cffunction name="siteQuery">
-	<cfargument name="urlid" required="yes">
+	<cfargument name="subdomain" required="yes">
 	<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
 		SELECT * FROM sites
-		WHERE urlid = '#arguments.urlid#' AND deletedAt IS NULL
+		WHERE subdomain = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='#arguments.subdomain#'> AND deletedAt IS NULL
 	</cfquery>
+	
+	<cfif !qSiteData.recordcount>
+		<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
+			SELECT * FROM sites
+			WHERE (
+				urlid = 'localhost' OR
+				subdomain = 'localhost' 
+			)
+			AND deletedAt IS NULL
+		</cfquery>
+	</cfif>
+
 	<cfreturn qSiteData>
 </cffunction>
 
 <cffunction name="setSiteInfo">
 	<cfscript>
 		var loc = {};
-		
+
+		// Redir to WWW
+		if(listlen(cgi.server_name,".") LTE 2) {
+			redirectFullUrl(
+				"http://www." & 
+					cgi.server_name & 
+						cgi.path_info & 
+							(len(cgi.query_string) ? "?" : "") & 
+								cgi.query_string
+			);
+		}
+
+		// Set site info
 		if(isNull(request.site.id))
 		{
 			loc.domain = cgi.http_host;
@@ -166,44 +190,42 @@
 				loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,".") - 2,".");
 				loc.domainName = ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
 				loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
-				if(loc.subdomain eq "www" OR loc.subdomain eq "beta" OR loc.subdomain eq "secure")
-				{
-					loc.domain = loc.domainName & "." & loc.domainExt;	
-				} else {
-					loc.domain = loc.subdomain & "." & loc.domainName & "." & loc.domainExt;
-					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
-				}
+
+				loc.domain = loc.subdomain & "." & loc.domainName & "." & loc.domainExt;
+				loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain					
+			} else {
+				throw("Subdomain required.");
+			}
+
+			// Redir WWW to subdomain
+			if(listlen(cgi.server_name,".") EQ 4) {				
+				redirectFullUrl("http://#loc.domain#");
 			}
 			
 			if(isNull(db)) { datamgrInit(); }			
 			
-			loc.siteResult = siteQuery(urlid=loc.domain);
-			
-			if(!loc.siteResult.recordcount)
-			{
-				// check for localhost
-				loc.siteResult = siteQuery(urlid="localhost");
-				loc.siteResult.urlid = loc.domain;
-			}
-			//writeDump(loc.siteResult); abort;
-			//loc.siteResult = model("site").findAll(where="urlid = '#loc.domain#'");	
+			loc.siteResult = siteQuery(subdomain=loc.subdomain);
+
 			if(loc.siteResult.recordcount)
 			{
 				request.site = 
 				{
 					id 				= loc.siteResult.id,
 					name 			= loc.siteResult.name,
-					domain 			= loc.siteResult.urlid,
-					urlid 			= loc.siteResult.urlid,
+					domain 			= loc.domain,
+					urlid 			= loc.domain,
 					ssl 			= loc.siteResult.sslenabled,
 					theme 			= loc.siteResult.theme,
 					urlExtension 	= loc.siteResult.urlExtension,
+					subdomain		= loc.siteResult.subdomain,					
 					
 					emailMatchDomainRequired = loc.siteResult.emailMatchDomainRequired,
 					emailMatchOtherDomains   = loc.siteResult.emailMatchOtherDomains,
 					registrationDisabled 	 = loc.siteResult.registrationDisabled,
 					enableAdminTheme	 	 = loc.siteResult.enableAdminTheme
 				};
+				var domainLen = listLen(loc.domain,".");
+				request.site.domainNoSubdomain = ListGetAt(loc.domain,domainLen-1,".") & "." & ListGetAt(loc.domain,domainLen,".");
 			}
 			else 
 			{
@@ -212,6 +234,39 @@
 		}
 	</cfscript>
 </cffunction>
+
+<cfscript>
+	function setUserInfo()
+	{	
+		// Authenticate
+		if(StructKeyExists(session,"user"))
+		{
+			var user = model("UserGroupJoin").findAll(where="userid = '#session.user.id#'", include="User,UserGroup");
+			//var user = model("User").findAll(where="id = '#session.user.id#'");
+			session.user = {
+				id 			= user.userid,
+				fullname 	= user.firstname & " " & user.lastname,
+				firstname 	= user.firstname,
+				lastname 	= user.lastname,
+				role		= user.usergrouprole,
+				email 		= user.email,
+				siteid		= user.siteid,
+				globalized	= user.globalized
+			};
+			
+			if(len(trim(user.role)))
+			{
+				session.user.role = user.role;
+			}
+			
+			if(len(trim(session.user.id)) eq 0)
+			{
+				flashInsert(error="There was an issue with your account. Try again.");			
+				StructDelete(session,"user");
+			}
+		}
+	}
+</cfscript>
 
 <cffunction name="getDepartmentEmails">
 	<cfargument name="currentDepartment" default="">
@@ -346,7 +401,7 @@
 
 <cffunction name="mailgun">
 	<cfargument name="mailTo" default="">
-	<cfargument name="from" default="">
+	<cfargument name="from" default="#application.wheels.adminEmail#">
 	<cfargument name="reply" default="">
 	<cfargument name="bcc" default="#application.wheels.adminEmail#">
 	<cfargument name="cc" default="">
