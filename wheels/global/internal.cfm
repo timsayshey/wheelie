@@ -403,7 +403,7 @@
 				
 				if (application.wheels.obfuscateUrls && !ListFindNoCase("cfid,cftoken", loc.temp[1]))
 				{
-					// wrap in double quotes because in railo we have to pass it in as a string otherwise leading zeros are stripped
+					// wrap in double quotes because in lucee we have to pass it in as a string otherwise leading zeros are stripped
 					loc.param = obfuscateParam("#loc.param#");
 				}
 				loc.returnValue = loc.returnValue & loc.param;
@@ -833,7 +833,7 @@
 		{
 			loc.patch = ListGetAt(loc.version, 3);
 		}
-		if (arguments.engine == "Railo")
+		if (arguments.engine == "Lucee")
 		{
 			loc.minimumMajor = "3";
 			loc.minimumMinor = "1";

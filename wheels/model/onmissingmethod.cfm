@@ -23,9 +23,9 @@
 		}
 		else if (Left(arguments.missingMethodName, 9) == "findOneBy" || Left(arguments.missingMethodName, 9) == "findAllBy")
 		{
-			if (StructKeyExists(server, "railo"))
+			if (StructKeyExists(server, "lucee"))
 			{
-				loc.finderProperties = ListToArray(LCase(ReplaceNoCase(ReplaceNoCase(ReplaceNoCase(arguments.missingMethodName, "And", "|", "all"), "findAllBy", "", "all"), "findOneBy", "", "all")), "|"); // since Railo passes in the method name in all upper case we have to do this here
+				loc.finderProperties = ListToArray(LCase(ReplaceNoCase(ReplaceNoCase(ReplaceNoCase(arguments.missingMethodName, "And", "|", "all"), "findAllBy", "", "all"), "findOneBy", "", "all")), "|"); // since lucee passes in the method name in all upper case we have to do this here
 			}
 			else
 			{

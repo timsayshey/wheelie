@@ -60,7 +60,7 @@
 			<cfset loc.endPar = Find(")", loc.sql)>
 			<cfset loc.columnList = ReplaceList(Mid(loc.sql, loc.startPar, (loc.endPar-loc.startPar)), "#Chr(10)#,#Chr(13)#, ", ",,")>
 			<cfif NOT ListFindNoCase(loc.columnList, ListFirst(arguments.primaryKey))>
-				<!--- Railo/ACF doesn't support PostgreSQL natively when it comes to returning the primary key value of the last inserted record so we have to do it manually by using the sequence --->
+				<!--- Lucee/ACF doesn't support PostgreSQL natively when it comes to returning the primary key value of the last inserted record so we have to do it manually by using the sequence --->
 				<cfset loc.returnValue = {}>
 				<cfset loc.tbl = SpanExcluding(Right(loc.sql, Len(loc.sql)-12), " ")>
 				<cfquery attributeCollection="#arguments.queryAttributes#">SELECT currval(pg_get_serial_sequence('#loc.tbl#', '#arguments.primaryKey#')) AS lastId</cfquery>

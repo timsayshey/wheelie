@@ -556,7 +556,7 @@
 						}
 						else if (application.wheels.obfuscateUrls)
 						{
-							// wrap in double quotes because in railo we have to pass it in as a string otherwise leading zeros are stripped
+							// wrap in double quotes because in lucee we have to pass it in as a string otherwise leading zeros are stripped
 							loc.param = obfuscateParam("#loc.param#");
 						}
 						loc.returnValue = loc.returnValue & "/" & loc.param; // get param from arguments
@@ -588,7 +588,7 @@
 				loc.param = $URLEncode(arguments.key);
 				if (application.wheels.obfuscateUrls)
 				{
-					// wrap in double quotes because in railo we have to pass it in as a string otherwise leading zeros are stripped
+					// wrap in double quotes because in lucee we have to pass it in as a string otherwise leading zeros are stripped
 					loc.param = obfuscateParam("#loc.param#");
 				}
 				loc.returnValue = loc.returnValue & "&key=" & loc.param;

@@ -16,7 +16,7 @@
 		{
 			if (!StructKeyExists(variables, "core"))
 			{
-				if (application[$wheels.appKey].serverName == "Railo")
+				if (application[$wheels.appKey].serverName == "Lucee")
 				{
 					// this is to work around a railo bug (https://jira.jboss.org/browse/RAILO-936)
 					variables.core = Duplicate(variables);

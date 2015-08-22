@@ -249,9 +249,9 @@
 		{
 			StructDelete(loc.args, "password", false);
 		}
-		// set queries in Railo to not preserve single quotes on the entire
+		// set queries in Lucee to not preserve single quotes on the entire
 		// cfquery block (we'll handle this individually in the SQL statement instead)
-		if (application.wheels.serverName == "Railo")
+		if (application.wheels.serverName == "Lucee")
 			loc.args.psq = false;
 
 		// overloaded arguments are settings for the query
@@ -271,7 +271,7 @@
 			loc.returnValue.query = query.name;
 
 		// get/set the primary key value if necessary
-		// will be done on insert statement involving auto-incremented primary keys when Railo/ACF cannot retrieve it for us
+		// will be done on insert statement involving auto-incremented primary keys when Lucee/ACF cannot retrieve it for us
 		// this happens on non-supported databases (example: H2) and drivers (example: jTDS)
 		loc.$id = $identitySelect(queryAttributes=loc.args, result=loc.result, primaryKey=arguments.$primaryKey);
 		if (StructKeyExists(loc, "$id"))
