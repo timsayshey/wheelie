@@ -39,7 +39,6 @@ http://{your domain}/railo-context/admin/server.cfm?action=security.access then 
 
 To-do
 * Expand notes and documentation
-* Need to Local scope function variables to prevent possible race conditions
 * Users: Filter by role
 * DB Migrate (To replace vanilla sql file)
 
