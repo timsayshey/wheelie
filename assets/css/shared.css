@@ -2,7 +2,8 @@
 padding: 0;
 background-position: center center;
 background-size: 100%;
-background-color: #000;
+background-color: #eee;
+border: 1px solid #ddd;
 background-repeat: no-repeat;
 display: block;
 }

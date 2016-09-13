@@ -1,0 +1,17 @@
+{
+    "name":"wheelie",
+    "force":true,
+    "web":{
+        "http":{
+            "host":"localhost",
+            "port":60000
+        },
+        "rewrites":{
+            "enable":true,
+            "config":"urlrewrite.xml"
+        }
+    },
+    "app":{
+        "cfengine":"lucee@5"
+    }
+}
