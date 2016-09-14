@@ -23,7 +23,29 @@
 			application.db = CreateObject("component","models.services.vendor.datamgr.DataMgr").init(application.wheels.dataSourceName);		
 		}
 		db = application.db;
+
+		// if (!structKeyExists(application, 'markdown') or isReload) {
 		
+		// 	// Directory containing all the necessary jar files.
+		// 	jarDir = expandPath("/models/services/vendor/cfmarkdown");
+
+		// 	// Array of necessary classes
+		// 	jClass = [
+	 //        "#jarDir#/parboiled-java-1.1.3.jar"
+	 //        ,"#jarDir#/asm-all-4.1.jar"
+	 //        ,"#jarDir#/parboiled-core-1.1.3.jar"
+	 //        ,"#jarDir#/pegdown-1.2.1.jar"
+	 //        ];
+		// 	javaloader = createObject('component','models.services.vendor.javaloader.JavaLoader').init(jClass, false);
+
+		// 	// Hex values for different extensions can be found in org.pegdown.Extensions.java (0x20 is for tables support)
+
+		// 	// Output the HTML conversion --->
+		// 	//<cfoutput>#variables.pegdown.markdownToHtml(markdownString)#</cfoutput>
+		// 	application.markdown = javaloader.create("org.pegdown.PegDownProcessor").init(javaCast("int", InputBaseN("0x20", 16)));;
+		// } 
+		// markdown = application.markdown;
+
 		// Setup Underscore.cfc
 		if (!structKeyExists(application, '_') or isReload) {
 			application._ = CreateObject("component","models.services.vendor.underscore").init();
@@ -51,9 +73,9 @@
 		application.fileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.fileuploads,info.uploadsPath);
 		
 		// Setup private filemanager
-		if (!structKeyExists(application, 'privatefileMgr') or isReload) {
-			application.privateFileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.privateroot,info.privateRootPath);
-		}	
+		// if (!structKeyExists(application, 'privatefileMgr') or isReload) {
+		// 	application.privateFileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.privateroot,info.privateRootPath);
+		// }	
 		
 		// Setup pagination
 		application.pagination = CreateObject("component","models.services.vendor.pagination").init();
@@ -66,7 +88,11 @@
 	
 	<!--- Set User Permissions --->
 	<cfif isNull(application.rbs.permissionsQuery) or isReload>	
-		<cfset application.rbs.permissionsQuery = db.getRecords("permissions")>
+		<cfscript>
+			q = new query( datasource="wheelie" );
+	        q.addParam( name="lastModifiedTime", cfsqltype="cf_sql_timestamp", value=now());
+	        application.rbs.permissionsQuery = q.execute( sql="SELECT * FROM permissions" ).getResult();
+		</cfscript>
 		
 		<!--- Get role columns from permissions table - removed non role columns - convert array to remove list nulls - convert back to list --->
 		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(db.getDBFieldList("permissions")),lcase("ID,CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>

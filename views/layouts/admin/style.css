@@ -4,8 +4,7 @@
 .contentwrapper {
 	margin-top:0;
 }			
-.admin-content {
-	background:#eee;	
+.admin-content {	
 	padding-top: 20px;
 }
 .admin-content .leftside .data-block {
@@ -27,3 +26,58 @@
 .admin-content h1,.admin-content h2,.admin-content h3,.admin-content h4,.admin-content h5,.admin-content h6,.admin-content h7 {
 	border:0;	
 }			
+
+.admin-content .filethumb {
+padding: 0;
+background-position: center center;
+background-size: 100%;
+background-color: #fff;
+border: 1px solid #ddd;
+background-repeat: no-repeat;
+display: block;
+}
+
+.admin-content input[type="checkbox"]{
+    margin-right: 5px;
+}
+
+.column {
+    height: auto; 
+}
+
+.admin-content .label-title {
+	font-size:13px;
+}
+
+.contentwrapper .option label {
+	font-size:11px;
+	font-weight: normal;
+}
+
+.admin-content .media-img {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    display: block;
+    z-index: 10;
+}
+
+.admin-content .media-img-wrap {
+    background: white;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 16px;
+    min-height: 100px;
+}
+
+.admin-content .media-img img {
+    display: block;
+    border: 0;
+    vertical-align: middle;
+    width:100%;
+}
+
+.media-photos {}

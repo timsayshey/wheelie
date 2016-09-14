@@ -49,6 +49,14 @@
 			placeholder		= "Ex: gmail@chucknorris.com"
 		)#
 	</div>
+
+	<div class="col-md-6">
+		#btextfield(
+			objectName	= 'user', 
+			property	= 'username', 
+			label		= 'Display Name'
+		)#<br>
+	</div>
 	
 	<cfif checkPermission("user_save_role_admin")>	
 		<cfset roles = ListToArray(application.rbs.roleslist)>			
@@ -60,11 +68,8 @@
 				label			= 'Override Usergroup Role',
 				options			= roles
 			)#
-		</div>
-	<cfelse>
-		<br class="clear" />							
+		</div>							
 	</cfif> 
-    <br class="clear" />
 
 	<cfset approvalToggle = "">
 	<cfif checkPermission("user_save_others") OR user.showOnSite eq 0>	
@@ -115,8 +120,17 @@
 			placeholder	= "Ex: Norris"
 		)#
 	</div>
+
+	<div class="col-sm-6 ">								
+		#btextfield(
+			objectName	= 'user', 
+			property	= 'Phone', 
+			label		= 'Phone*',
+			placeholder	= "Ex: 555-555-3433"
+		)#
+	</div>
 	
-	<div class="col-sm-6">	
+	<!--- <div class="col-sm-6">	
 		#btextfield(
 			objectName	= 'user', 
 			property	= '#approvalToggle#designatory_letters', 
@@ -132,9 +146,9 @@
 			label		= 'Job Title*',
 			placeholder	= "Ex: Teacher"
 		)#
-	</div>
+	</div> --->
 	
-    <div class="col-sm-6 ">			
+    <!--- <div class="col-sm-6 ">			
 		#bselect(
 			objectName	= 'user', 
 			property	= 'title', 
@@ -186,14 +200,7 @@
 		<div class="separator"></div>
 	</div> 
 	
-	<div class="col-sm-6 ">								
-		#btextfield(
-			objectName	= 'user', 
-			property	= 'Phone', 
-			label		= 'Phone*',
-			placeholder	= "Ex: 555-555-3433"
-		)#
-	</div>
+	
 	 
 		
 	#includePartial(partial="/_partials/formSeperator")#	
@@ -265,7 +272,7 @@
 		property 		= '#approvalToggle#about',
 		label 		 	= "Bio for Website*",
 		style			= "height:150px"
-	)#	
+	)#	 --->
 	
 	<!--- Get Custom Fields --->
 	#includePartial(partial="/_partials/formFieldsRender")# 
@@ -338,18 +345,22 @@
 				
 			</section>
 		</div>	
-		<div class="data-block">
-			<section>
-				#bselecttag(
-					name			= "usergroups",
-					label			= 'Select Group',
-					options			= usergroups,
-					selected		= usergroup.id,
-					valueField 		= "id", 
-					textField 		= "groupname"
-				)#
-			</section>
-		</div>	
+
+		<cfif checkPermission("user_save_others")>	
+			<div class="data-block">
+				<section>
+					#bselecttag(
+						name			= "usergroups",
+						label			= 'Select Group',
+						options			= usergroups,
+						selected		= usergroup.id,
+						valueField 		= "id", 
+						textField 		= "groupname"
+					)#
+				</section>
+			</div>	
+		</cfif>
+		
 		<cfif checkPermission("user_save_others") OR user.showOnSite eq 0>	
 			<div class="data-block">
 				<section>

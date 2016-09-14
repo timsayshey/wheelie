@@ -1,4 +1,5 @@
 <cfoutput>
+	<link href="/assets/vendor/css/font/icons.css" rel="stylesheet" type="text/css">
 <cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Login')>
 	<div class="container">
 		<div class="row-regular">

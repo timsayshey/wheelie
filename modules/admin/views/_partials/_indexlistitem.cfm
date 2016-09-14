@@ -7,13 +7,17 @@
 	<cfparam name="thumbPath" default="">
 	<cfparam name="controllerName" default="">
 	<cfparam name="appendBtns" default="">
+	<cfparam name="prependBtns" default="">	
 	<cfparam name="overlayImage" default="/assets/img/overlay.png">
+
 	<cfset editPath = urlFor(							
-						route		= "admin~Id",
-						module		= "admin",
-						controller	= controllerName,
-						action		= "edit",
-						id			= currentId)> 
+		route		= "admin~Id",
+		module		= "admin",
+		controller	= controllerName,
+		action		= "edit",
+		id			= currentId
+	)> 
+
 	<cfparam name="href" default="href='#editPath#'">
 	<!--- Grid Item --->		
 	<cfif len(gridActive)>				
@@ -50,6 +54,8 @@
 					
 					<div class="pull-right">
 						<cfif isNull(params.rearrange)>
+							#prependBtns#
+
 							<cfif checkPermission("user_save_others")>
 								#linkTo(
 									text		= '<span class="elusive icon-edit"></span> Edit',
@@ -79,6 +85,7 @@
 							</cfif>
 
 							#appendBtns#
+
 						<cfelse>	
 							<span class='elusive icon-move'></span>
 						</cfif>

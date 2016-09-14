@@ -1,10 +1,12 @@
 <cfoutput>
 	<cffunction name="cleanNumber" output="no">
 		<cfargument name="dirtystring">
+		<cfargument name="nospaces" default="false">
 		
 		<cfscript>
 			cleanstring = removehtml(dirtystring);
 			cleanstring = REReplace(cleanstring,"[^0-9_ .]","","all");
+			if(arguments.nospaces) cleanstring = REReplace(cleanstring,"[^0-9.]","","all");
 		</cfscript>
 		
 		<cfreturn trim(cleanstring)>
@@ -20,16 +22,49 @@
 			}
 		</cfscript>
 	</cffunction>
-	
+	<cffunction name="getQuoteUrlId" output="no">
+		<cfargument name="pageQuoteUrl" type="string" default="">
+		<cfparam name="quoteformurl" default="quote">
+
+		<cfif len(trim(arguments.pageQuoteUrl))>
+			<cfset quoteformurl = listDeleteAt(arguments.pageQuoteUrl,listLen(arguments.pageQuoteUrl,"."),".")>
+		</cfif>
+
+		<cfif len(trim(request.site.urlExtension))>
+			<cfset quoteformurl = "/" & quoteformurl & "." & request.site.urlExtension>
+		</cfif>
+
+		<cfreturn quoteformurl>
+	</cffunction>
 	<cffunction name="generateForm">
 		<cfargument name="formid" default="">
+		<cfargument name="formwrap" default="true">
+		<cfargument name="formclass" default="">
+
+		<cfset metaform = model("Form").findAll(where="id = '#arguments.formid#'")>
 		<cfset dataFields = model("FormField").findAll(where="metafieldType = 'formfield' AND modelid = '#arguments.formid#'",order="sortorder ASC")>
-		<cfreturn '<form enctype="multipart/form-data" method="post" 
-			action="#trim(getHttpsDomain())##urlFor(route="admin~Action", controller="forms", action="formsubmissionSave")#">
-			
-			#hiddenfieldtag(name="qform[id]", value="#arguments.formid#")#
-			#includePartial(partial="/_partials/formFieldsRender")#			
-		</form>'>
+
+		<cfif metaform.templated>
+			<cfset formContent =  '				
+				#hiddenfieldtag(name="qform[id]", value="#arguments.formid#")#
+				#processShortcodes(metaform.template)#
+			'>		
+		<cfelse>
+			<cfset formContent =  '				
+				#hiddenfieldtag(name="qform[id]", value="#arguments.formid#")#
+				#includePartial(partial="/_partials/formFieldsRender")#'>
+		</cfif>
+		
+		<cfif isBoolean(formwrap) AND formwrap>
+			<cfset formContent =  '
+			<form enctype="multipart/form-data" method="post" class="#formclass#"
+				action="#urlFor(route="admin~Action", controller="forms", action="formsubmissionSave")#?formid=#arguments.formid#">				
+				#formContent#		
+			</form>'>
+		</cfif>
+
+		<cfreturn formContent>
+		
 	</cffunction>
 	
 	<cffunction name="siteIdEqualsCheck">
@@ -53,10 +88,14 @@
 	</cffunction>
 	
 	<cffunction name="getThemeTemplate">
-		<cfargument name="templateId" default="">		
+		<cfargument name="templateId" default="">
+
+		<cfset themePageTemplatePath = "/views/themes/#request.site.theme#/pagetemplates/#templateId#.cfm">
 		<cfset themeTemplatePath = "/views/themes/#request.site.theme#/templates/#templateId#.cfm">
-		<cfset themeTemplatePathFull = expandPath(themeTemplatePath)>
-		<cfif FileExists(themeTemplatePathFull)>
+
+		<cfif FileExists(expandPath(themePageTemplatePath))>
+			<cfreturn themePageTemplatePath>
+		<cfelseif FileExists(expandPath(themeTemplatePath))>
 			<cfreturn themeTemplatePath>
 		<cfelse>
 			<cfreturn ""> 

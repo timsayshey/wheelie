@@ -5,7 +5,7 @@
 		#qform.successembed#
 	<cfelse>
 		#qform.failcontent#
-		#qform.failembed#
+		#qform.failembed# 
 	</cfif>
 	
 </cfoutput>	

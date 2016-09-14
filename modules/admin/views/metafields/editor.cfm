@@ -5,7 +5,7 @@
 		{
 			currVal = "f" + currVal;
 			console.log(currVal);
-			$(".fieldvalues,.contentblock,.wysiwygtoggle,.fcheckbox").hide();	
+			$(".fieldvalues,.contentblock,.codeblock,.wysiwygtoggle,.fcheckbox").hide();	
 			if( $(".fieldvalues").hasClass( currVal ) )
 			{
 				$(".fieldvalues").show();
@@ -98,12 +98,14 @@
 				{text="Textarea",value="textarea"},
 				{text="Dropdown Options",value="select"},
 				{text="Checkbox",value="checkbox"},
+				{text="Checkbox Options",value="checkbox-options"},
 				{text="Radio Options",value="radio"},
 				{text="Submit",value="submit"},
 				{text="Headline",value="headline"},
 				{text="Label",value="label"},
 				{text="Separator",value="separator"},
-				{text="Content",value="contentblock"}
+				{text="Content",value="contentblock"},
+				{text="Code",value="codeblock"}
 			],
 			selected= metafield.type,
 			class	= "selectize fieldtype",
@@ -113,11 +115,17 @@
 	
 	<br class="clear"><br>
 	
-	<div class="col-sm-6 fieldvalues fradio fselect">		
+	<div class="col-sm-6 fieldvalues fradio fselect fcheckbox-options">		
 		#btextarea(
 			objectName	= 'metafield', 
 			property	= 'fieldvalues', 
 			label		= 'Field Values'
+		)#
+		#bcheckbox(
+			objectName	= 'metafield', 
+			property	= "wrapoptions",
+			label		= "Wrap Options?",
+			help		= "Wraps each option with a 6 column div"
 		)#
 	</div>
 	
@@ -128,6 +136,16 @@
 			label		= 'Content',
 			class		= 'ckeditor'
 		)#
+	</div>
+
+	<div class="col-sm-12 codeblock fcodeblock">		
+		#btextarea(
+			objectName	= 'metafield', 
+			property	= 'codeblock', 
+			label		= 'Code',
+			id 			= "CodeMirror"
+		)#
+		#includePartial(partial="/_partials/codemirror")#
 	</div>
 	
 	<div class="col-sm-6 fcheckbox">	
@@ -168,7 +186,7 @@
 			label		= 'Div Class'
 		)#
 	</div>
-	
+
 	<div class="col-sm-12">	
 	
 		#bselecttag(

@@ -12,5 +12,6 @@
 <cfinclude template="/models/services/global/shared/utilities.cfm">
 <cfinclude template="/models/services/global/shared/forms.cfm">
 <cfinclude template="/models/services/global/shared/redirect.cfm">
+<cfinclude template="/models/services/global/shared/app.cfm">
 
 <cfinclude template="/models/services/global/admin/users.cfm">

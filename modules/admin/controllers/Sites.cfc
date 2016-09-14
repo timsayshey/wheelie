@@ -52,6 +52,12 @@ component extends="_main" output="false"
 	
 	function save()
 	{								
+		siteOptions = model("option").findAll(where="siteid = 0");
+
+		if(!params.site.containsKey("subdomin") || !len(trim(params.site.subdomain))) {
+			params.site.subdomain = listFirst(params.site.urlid,".");
+		}
+
 		// Get site object
 		if(!isNull(params.site.id)) 
 		{

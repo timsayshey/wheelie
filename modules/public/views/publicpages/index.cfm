@@ -1,4 +1,5 @@
-<cfoutput>
+<cfinclude template="page.cfm">
+<!---<cfoutput>
 	<cfset contentFor(siteTitle = getOption(qOptions,'seo_homepage_title').label)>
 	<cfset contentFor(siteDesc = getOption(qOptions,'seo_homepage_description').label)>
 	<cfset contentFor(siteKeywords = getOption(qOptions,'seo_homepage_keywords').label)>	
@@ -35,4 +36,4 @@
         
     </cfif>    
 	
-</cfoutput>
+</cfoutput>--->

@@ -7,17 +7,19 @@
 			beforeSave("sanitize,checkAndSecurePassword,preventRoleHacking");
 			
 			// Validations		
-			validatesConfirmationOf(properties="password", message="Your passwords must match!");			
+			validatesConfirmationOf(properties="email", message="The email addresses that you entered do not match");			
 			validatesPresenceOf("email");	
 					
 			//validatesPresenceOf(property="about", when="onCreate", message="Bio can't be empty");
 			//validatesPresenceOf(property="jobtitle", when="onCreate", message="Job title can't be empty");
-			validatesPresenceOf(property="firstname", when="onCreate", message="First name can't be empty");
-			validatesPresenceOf(property="lastname", when="onCreate", message="Last name can't be empty");
+			// validatesPresenceOf(property="firstname", when="onCreate", message="First name can't be empty");
+			// validatesPresenceOf(property="lastname", when="onCreate", message="Last name can't be empty");
 			
 			validatesFormatOf(property="email", type="email"); 	
 			validatesUniquenessOf(property="email", scope="siteid"); 
-			validatesLengthOf(property="password", within="4,65", message="The password length must be between 4 and 65 characters.");
+			validatesUniquenessOf(property="username", scope="siteid"); 
+			validatesLengthOf(property="username", within="4,65", message="Username length must be between 4 and 65 characters.");
+			validatesLengthOf(property="password", within="4,65", message="Password length must be between 4 and 65 characters.");
 			
 			// Relations
 			hasMany(name="Logs");
@@ -33,7 +35,7 @@
 			super.init();
 			
 			// Permission check override			
-			beforeDelete('checkForDeletePermission,resetItDevice');
+			beforeDelete('checkForDeletePermission');
 			beforeCreate('checkForCreatePermission');
 			beforeUpdate('checkForUpdatePermission');
 		}	

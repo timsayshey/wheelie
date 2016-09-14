@@ -25,7 +25,8 @@
 			placeholder	= "Ex: Norris"
 		)#
 	</div>
-	
+
+	<!--- 
 	<div class="col-sm-6">	
 		#btextfield(
 			objectName	= 'user', 
@@ -42,35 +43,48 @@
 			label		= 'Credentials*',
 			placeholder	= "Ex: PhD MDA BS"
 		)#
-	</div>	
+	</div>	 --->
 	
 	<!--- Password 
 	,"#passrequired#" = "" --->
+
+	<div class="col-sm-6">	
+		#btextfield(
+			objectName		= 'user', 
+			property		= 'username', 
+			label			= 'Username *',
+			placeholder		= "Ex: chucknorris"
+		)#
+	</div>	
+
 	<div class="col-sm-6">	
 		#bPasswordFieldTag(
 			name			 = "user[password]",
 			label			 = passwordLabel,
-			placeholder		 = "Password"			
+			placeholder		 = "Password *"			
 		)#
 	</div>
-	
-	<div class="col-sm-6">	
-		#bPasswordFieldTag(
-			label		= "Confirm Password", 
-			placeholder	= "Confirm Password",
-			name		= "user[passwordConfirmation]"
-		)#
-	</div>	
-	
-	<!--- Email --->	
+
 	<div class="col-sm-6">	
 		#btextfield(
 			objectName		= 'user', 
 			property		= 'email', 
-			label			= 'Email',
-			placeholder		= "Ex: you@#request.site.domain#"
+			label			= 'Email *',
+			placeholder		= "Ex: chucknorris@gmail.com"
 		)#
 	</div>
+	
+	<div class="col-sm-6">	
+		#btextfieldtag(
+			label		= "Confirm Email *", 
+			name		= "user[emailConfirmation]"
+		)#
+	</div>	
+
+	<br>
+	
+	<!--- Email --->
+	
 	
 	<div class="col-sm-6">	
 		<cfparam name="user.portrait" default="">
@@ -81,7 +95,8 @@
 			label			= 'Portrait'
 		)#
 	</div>	
-	
+
+	<!--- 
 	<div class="col-sm-12">	
 		#btextarea(
 			objectName	= 'user', 
@@ -90,7 +105,7 @@
 			placeholder	= "",
 			style		= "min-height:120px;"
 		)#
-	</div>
+	</div>--->	
 	
 		
 	<br class="clear">

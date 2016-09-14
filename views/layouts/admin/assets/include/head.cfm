@@ -21,7 +21,8 @@
 				vendor/nestedSortable/jquery.ui.touch-punch.min.js,
 				vendor/nestedSortable/jquery.mjs.nestedSortable2.js,
 				vendor/js/plugins/fileupload/bootstrap-fileupload.js,
-				vendor/jquery.responsivetable.min.js
+				vendor/jquery.responsivetable.min.js,
+				vendor/underscore.js
 		');
 		
 		includeIEJS = javaScriptIncludeTag(sources='
@@ -45,5 +46,5 @@
 	<!--[if lt IE 9]>
 		#includeIEJS#
 	<![endif]-->
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
+	<link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
 </cfoutput>

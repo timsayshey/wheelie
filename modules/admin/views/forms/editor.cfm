@@ -46,6 +46,46 @@
 		label		= 'Form Name',
 		placeholder	= "Ex: Coolest form Ever"
 	)#
+		
+	#bcheckbox(
+		objectName	= 'qform', 
+		property	= "templated",
+		class 		= "templated",
+		label		= "Custom Template? "
+	)#
+	
+	<div class="templateCode">
+		#btextarea(
+			objectName 	= 'qform', 
+			property 	= 'template',
+			label 		= "Template Code",
+			id 			= "CodeMirror"
+		)#
+		<cfif !isNull(metafields) AND isQuery(metafields)>		
+			<cfloop query="metafields">
+				<span class="label label-primary">#type#: #identifier#</span>
+			</cfloop>
+		</cfif>
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			checkTemplated();
+			$("##qform-templated").change(function(){
+		        checkTemplated();
+		    });
+		});
+
+		function checkTemplated() {
+			if($("##qform-templated").is(":checked")) {
+	            $(".templateCode").show();	
+	        } else {
+	        	$(".templateCode").hide();	
+	        }    
+	    }		
+	</script>
+
+	#includePartial(partial="/_partials/codemirror")#
 		 
 	#includePartial(partial="/_partials/formSeperator")#
 	

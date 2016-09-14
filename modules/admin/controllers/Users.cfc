@@ -170,12 +170,14 @@
 			request.newRegistration = true;
 			
 			// Sync Unapproved Fields
-			params.user.zx_firstname = params.user.firstname;				
-			params.user.zx_lastname = params.user.lastname;
-			params.user.zx_about = params.user.about;
-			params.user.zx_designatory_letters = params.user.designatory_letters;
-			params.user.zx_jobtitle = params.user.jobtitle;
+			// params.user.zx_firstname = params.user.firstname;				
+			// params.user.zx_lastname = params.user.lastname;
+			// params.user.zx_about = params.user.about;
+			// params.user.zx_designatory_letters = params.user.designatory_letters;
+			// params.user.zx_jobtitle = params.user.jobtitle;
 			
+			params.user.password = passcrypt(params.user.password, "encrypt");
+
 			// Save user
 			user = model("User").new(params.user);
 			saveResult = user.save(); 
@@ -195,24 +197,18 @@
 				// Default usergroup to staff ("1")
 				defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
 				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
-				flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
-				mailgun( 
-					mailTo	= '#application.wheels.adminEmail#,#!isNull(request.hrEmails) AND len(trim(request.hrEmails)) ? ",#request.hrEmails#" : ""#',
-					from	= application.wheels.adminFromEmail,
-					subject	= "New User Signup: #params.user.firstname# #params.user.lastname#",
-					html	= "User: #params.user.firstname# #params.user.lastname#<br><br>
-								View profile:<br>
-								http://#request.site.domain#/connect/profiles/profile/#user.id#"
-				);
+				// flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
 				
-				userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
-				mailgun(
-					mailTo	= user.email, 
-					from	= application.wheels.adminFromEmail,
-					subject	= "Verify your email address",
-					html	= "Click the link below to verify your email address:<br>
-							   <a href='#userVerifyUrl#'>#userVerifyUrl#</a>"
-				);
+				// userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
+				// mailgun(
+				// 	mailTo	= user.email, 
+				// 	from	= application.wheels.adminFromEmail,
+				// 	subject	= "Verify your email address",
+				// 	html	= "Click the link below to verify your email address:<br>
+				// 			   <a href='#userVerifyUrl#'>#userVerifyUrl#</a>"
+				// );
+				flashInsert(success="Your account was created");
+				session.user.id = user.id;
 				redirectTo(route="admin~Action", module="admin", controller="users", action="login");									
 			} 
 			else 
@@ -287,8 +283,7 @@
 			param name="params.usertags" default="";		
 			param name="params.usergroups" default="";		
 			
-			try{	
-			
+					
 			// Handle submit button type (publish,draft,trash,etc)
 			if(!isNull(params.submit))
 			{
@@ -318,8 +313,7 @@
 			} else {
 				user = model("User").new(params.user);
 				saveResult = user.save();
-			}
-			
+			}			
 			
 			// Insert or update user object with properties
 			if (saveResult)   
@@ -368,7 +362,8 @@
 				if(!isNull(params.fromEditor))
 				{
 					model("userTagJoin").deleteAll(where="userid = #user.id#");	
-				}				
+				}
+								
 				if(len(params.usertags))
 				{		
 					// Insert new user category associations	
@@ -378,18 +373,20 @@
 					}
 				}
 				
-				// Clear existing usergroups associations
-				if(!isNull(params.fromEditor))
-				{
-					model("UsergroupJoin").deleteAll(where="userid = #user.id#");	
-				}
-				
-				if(len(params.usergroups))
-				{		
-					// Insert usergroups associations	
-					for(id in ListToArray(params.usergroups))
-					{				
-						model("UsergroupJoin").create(usergroupid = id, userid = user.id);			
+				if(checkPermission("user_save_others")) {
+					// Clear existing usergroups associations
+					if(!isNull(params.fromEditor))
+					{
+						model("UsergroupJoin").deleteAll(where="userid = #user.id#");	
+					}
+					
+					if(len(params.usergroups))
+					{		
+						// Insert usergroups associations	
+						for(id in ListToArray(params.usergroups))
+						{				
+							model("UsergroupJoin").create(usergroupid = id, userid = user.id);			
+						}
 					}
 				}
 				
@@ -415,9 +412,6 @@
 				renderPage(route="admin~Action", module="admin", controller="users", action="editor");		
 			}	
 			
-			} catch(e) {
-				writeDump(e); abort;
-			}
 		}
 		
 		function login()
@@ -483,7 +477,7 @@
 				mailgun(
 					mailTo	= user.email,
 					bcc		= application.wheels.adminEmail,
-					from	= application.wheels.errorEmailAddress,
+					from	= application.wheels.adminFromEmail,
 					subject	= "Your Account",
 					html	= 
 					"<span style='font-family:Arial'>
@@ -522,7 +516,7 @@
 				mailgun(
 					mailTo	= user.email,
 					bcc		= application.wheels.adminEmail,
-					from	= application.wheels.errorEmailAddress,
+					from	= application.wheels.adminFromEmail,
 					subject	= "Account Recovery",
 					html	= 
 					"Your password is:<br> 

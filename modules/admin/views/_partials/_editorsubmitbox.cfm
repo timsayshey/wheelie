@@ -5,7 +5,19 @@
 	
 	<div class="#rightBottomClass# data-block">
 		<section>
-			<div class="btn-group dropdown">
+			
+				<button type="submit" name="submit" value="published" class="btn btn-primary">
+					<cfif isNew OR currentStatus eq "draft">Save<cfelse>Update</cfif>	
+				</button> 
+
+				&nbsp;&nbsp;
+				
+				<cfif !isNew>	
+					<button type="submit" name="submit" value="trash" class="btn btn-danger confirmDelete pull-right">
+						Delete
+					</button>					
+				</cfif>
+			<!--- <div class="btn-group dropdown">
 			
 				<button type="submit" name="submit" value="published" class="btn btn-primary">
 					<cfif isNew OR currentStatus eq "draft">Save<cfelse>Update</cfif>	
@@ -29,7 +41,7 @@
 					</cfif>
 					
 				</ul>
-			</div>
+			</div> --->
 		</section>
 	</div>
 </cfoutput>

@@ -161,7 +161,7 @@
 	
 	<cffunction name="removehtml" output="no">
 		<cfargument name="dirtystring">
-		<cfreturn REReplace(dirtystring,'<[^>]*>','','all')>
+		<cfreturn REReplaceNoCase(dirtystring,'<[^>]*>','','all')>
 	</cffunction>
 	
 	<!--- Cleans strings of html and special chars --->

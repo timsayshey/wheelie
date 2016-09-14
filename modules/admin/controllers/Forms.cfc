@@ -37,121 +37,131 @@ component extends="_main" output="false"
 	
 	function formsubmissionSave()
 	{	
-		// Spam Checks
-		params.formsubmission.isSpam = spamChecker(params.fielddata);
-		if(params.formsubmission.isSpam)
-		{
-			// Spam From Bad Country?
-			try {
-				http method="GET" url="http://ip-api.com/json/#getIpAddress()#" result="jsonResult";
-				jsonResult = DeserializeJSON(jsonResult.filecontent);
-				if(jsonResult.countryCode eq 'CN')
-				{
-					isSpamFromBadCountry = true;
+		if(params.containsKey("fielddata")) {
+
+			// Spam Checks
+			params.formsubmission.isSpam = spamChecker(params.fielddata);
+			if(params.formsubmission.isSpam)
+			{
+				// Spam From Bad Country?
+				try {
+					http method="GET" url="http://ip-api.com/json/#getIpAddress()#" result="jsonResult";
+					jsonResult = DeserializeJSON(jsonResult.filecontent);
+					if(jsonResult.countryCode eq 'CN')
+					{
+						isSpamFromBadCountry = true;
+					}
+				} catch(e) {
 				}
-			} catch(e) {
-			}
-		}
-		
-		// Get Form
-		qform = model("Form").findByKey(params.qform.id);		
-		
-		// If not bad country spam, continue
-		if(isNull(isSpamFromBadCountry))
-		{				
-			if(!isNull(params.qform.optin))
-			{
-				params.formsubmission.optin = params.qform.optin;
 			}
 			
-			// Set Meta Data
-			if(!isNull(session.referer))
-			{
-				params.formsubmission.referrer = session.referer;
-			}			
+			// Get Form
+			qform = model("Form").findByKey(params.qform.id);		
 			
-			if(!isNull(session.entryPage))
-			{
-				params.formsubmission.entryPage = session.entryPage;
-			}	
-			
-			params.formsubmission.fromPage = cgi.HTTP_REFERER;		
-			params.formsubmission.mobile = isMobile();			
-			params.formsubmission.ip = getIpAddress();		
-			params.formsubmission.useragent = cgi.HTTP_USER_AGENT;
-			params.formsubmission.formid = qform.id;
-			
-			// Insert into database
-			if(!isNull(params.formsubmission.id)) 
-			{
-				formsubmission = model("formsubmission").findByKey(params.formsubmission.id);
-				saveResult = formsubmission.update(params.formsubmission);
-			} else {
-				formsubmission = model("formsubmission").new(params.formsubmission);
-				saveResult = formsubmission.save();
-			}
-			
-			//writeDump(formsubmission.ALLERRORS()); abort;		
-			if (saveResult)   
-			{			
-				// Save custom metafeild data
-				if(!isNull(params.fielddata))
-				{ 
-					model("FieldData").saveFielddata(
-						fields		= params.fielddata,
-						foreignid	= formsubmission.id
+			// If not bad country spam, continue
+			if(isNull(isSpamFromBadCountry))
+			{				
+				if(!isNull(params.qform.optin))
+				{
+					params.formsubmission.optin = params.qform.optin;
+				}
+				
+				// Set Meta Data
+				if(!isNull(session.referer))
+				{
+					params.formsubmission.referrer = session.referer;
+				}			
+				
+				if(!isNull(session.entryPage))
+				{
+					params.formsubmission.entryPage = session.entryPage;
+				}	
+				
+				params.formsubmission.fromPage = cgi.HTTP_REFERER;		
+				params.formsubmission.mobile = isMobile();			
+				params.formsubmission.ip = getIpAddress();		
+				params.formsubmission.useragent = cgi.HTTP_USER_AGENT;
+				params.formsubmission.formid = qform.id;
+				
+				// Insert into database
+				if(!isNull(params.formsubmission.id)) 
+				{
+					formsubmission = model("formsubmission").findByKey(params.formsubmission.id);
+					saveResult = formsubmission.update(params.formsubmission);
+				} else {
+					formsubmission = model("formsubmission").new(params.formsubmission);
+					saveResult = formsubmission.save();
+				}
+				
+				//writeDump(formsubmission.ALLERRORS()); abort;		
+				if (saveResult)   
+				{			
+					// Save custom metafeild data
+					if(!isNull(params.fielddata))
+					{ 
+						model("FieldData").saveFielddata(
+							fields		= params.fielddata,
+							foreignid	= formsubmission.id
+						);
+					}
+					
+					// Get Form Meta Data
+					dataFields = model("FieldData").getAllFieldsAndUserData(
+						modelid = qform.id,
+						foreignid = formsubmission.id,
+						metafieldType = "formfield"
+					);	
+					
+					emailSubject = "#qform.name#";
+					
+					if(params.formsubmission.isSpam) // IS SPAM!
+					{
+						emailToList = application.wheels.adminEmail;
+						emailCCList = "";
+						emailSubject = "[SPAM] " & emailSubject;
+					}
+					else
+					{
+						emailToList = model("FormUserJoin").findAll(where="formid = #qform.id# AND type = 'to'",include="User,Form");
+						emailToList = ValueList(emailToList.email);
+						
+						emailCCList = model("FormUserJoin").findAll(where="formid = #qform.id# AND type = 'cc'",include="User,Form");
+						emailCCList = ValueList(emailCCList.email);
+						
+						// Inject custom application code
+						customFormHandler = getAdminTemplate("formhandling");
+						if(len(customFormHandler))
+						{
+							include template="#customFormHandler#";
+						}
+					}				
+					
+					// Generate and Send Email			
+					mailgun(
+						mailTo	= emailToList,
+						cc		= emailCCList,
+						bcc		= application.wheels.adminEmail,
+						from	= application.wheels.adminFromEmail,
+						subject	= emailSubject,
+						html	= "<div style='font-family:Arial'>#includePartial(partial="/_partials/presentFieldData")# #includePartial(partial="/_partials/presentFormMeta")#</div>"
 					);
 				}
-				
-				// Get Form Meta Data
-				dataFields = model("FieldData").getAllFieldsAndUserData(
-					modelid = qform.id,
-					foreignid = formsubmission.id,
-					metafieldType = "formfield"
-				);	
-				
-				emailSubject = "#qform.name#";
-				
-				if(params.formsubmission.isSpam) // IS SPAM!
-				{
-					emailToList = application.wheels.adminEmail;
-					emailCCList = "";
-					emailSubject = "[SPAM] " & emailSubject;
-				}
-				else
-				{
-					emailToList = model("FormUserJoin").findAll(where="formid = #qform.id# AND type = 'to'",include="User,Form");
-					emailToList = ValueList(emailToList.email);
-					
-					emailCCList = model("FormUserJoin").findAll(where="formid = #qform.id# AND type = 'cc'",include="User,Form");
-					emailCCList = ValueList(emailCCList.email);
-					
-					// Inject custom application code
-					customFormHandler = getAdminTemplate("formhandling");
-					if(len(customFormHandler))
-					{
-						include template="#customFormHandler#";
-					}
-				}				
-				
-				// Generate and Send Email			
-				mailgun(
-					mailTo	= emailToList,
-					cc		= emailCCList,
-					bcc		= application.wheels.adminEmail,
-					from	= application.wheels.adminFromEmail,
-					subject	= emailSubject,
-					html	= "<div style='font-family:Arial'>#includePartial(partial="/_partials/presentFieldData")# #includePartial(partial="/_partials/presentFormMeta")#</div>"
-				);
+			} else {
+				saveresult = false;
 			}
+
 		} else {
 			saveresult = false;
 		}
 		
-		if(isNull(params.adminLayout))
+		if(isNull(params.adminLayout) AND !isNull(params.formid))
 		{			
-			redirectTo(route="public~id", controller="pforms", action="formsubmissionSave", id=qform.id, params="saveResult=#saveResult#");
-			abort;
+			params.saveResult = saveResult;
+			request.bypassAdminBody = true;
+			qform = isNull(qform) ? model("Form").findByKey(params.formid) : qform;
+			renderPage(controller="pforms", action="formsubmissionSave", id=params.formid);
+		} else {
+			location("/");
 		}
 		
 		// route to response page with success or fail message
@@ -193,6 +203,8 @@ component extends="_main" output="false"
 	function edit()
 	{			
 		sharedObjects(params.id);
+
+		metafields = model("formfield").findAll(where="modelid = #params.id# AND metafieldType = 'formfield'", order="sortorder ASC");
 		
 		if(isDefined("params.id")) 
 		{			

@@ -11,17 +11,72 @@ component extends="_main" output="false"
 	{		
 		caches(actions="page,geolanding,index", time=300);
 	} 
+
+	function shared() {
+		footerPageBlock = '';
+		if(!isNull(page.footerPageBlockId) && len(page.footerPageBlockId) && isNumeric(page.footerPageBlockId)) {
+			footerPageBlock = model("PageBlock").findAll(where="id = '#page.footerPageBlockId#'");
+			footerPageBlock = footerPageBlock.content;			
+		}
+	}
 	
 	function index()
-	{		
+	{
 		page = model("Page").findAll(where="#whereSiteid()# AND id = '#homeid#'");
+		shared();
 		if(!page.recordcount) 
 		{
 			writeOutput("No homepage has been set. Please try again.");abort;
 		}
+		editBtn = { controllerName = "pages", currentId = page.id };
 		home = true; 
 	} 
-	
+
+	function page()
+	{	
+		footerPageBlock = '';
+
+		urlId = RemoveChars(cgi.path_info,1,1);
+		if(listLen(urlId,".") GTE 2) {
+			urlId = listDeleteAt(urlId,listLen(urlId,"."),".");
+		}
+		
+		if(isDefined("params.id")) 
+		{
+			// Queries
+			page = model("Page").findAll(where="#whereSiteid()# AND urlid = '#urlId#'");
+			if(!page.recordcount) {
+				page = model("Page").findAll(where="#whereSiteid()# AND urlid = '#params.id#'");			
+			}
+
+			if(len(trim(page.quoteUrlId))) {
+				quoteformurl = page.quoteUrlId;
+			}
+
+			shared();			
+
+			editBtn = { controllerName = "pages", currentId = page.id };
+			
+			if(!isNull(page.template) AND page.template eq "letter")
+			{
+				usesLayout("/layouts/layout.letter");		
+			}
+					
+			if(page.postType eq "post")
+			{
+				location("/blog/post/#params.id#", false, 301);
+			}
+		}
+		
+		if(isNull(page) OR !len(page.id))
+		{
+			page = {
+				name = "Page not found",
+				content = "We apologize for the inconvenience. Please try clicking the menu above to find the page you are looking for."
+			};
+		}
+	}
+
 	function geolanding()
 	{
 		gStateAbbr = "unknown";
@@ -89,38 +144,8 @@ component extends="_main" output="false"
 			}
 			
 		}
-		else		
-		{
-			redirectFullUrl("/Residential-Treatment-Programs");	
-		} 
 		
-	} 
-	 
-	function page()
-	{				
-		if(isDefined("params.id")) 
-		{
-			// Queries
-			page = model("Page").findAll(where="#whereSiteid()# AND urlid = '#params.id#'");
-			
-			if(!isNull(page.template) AND page.template eq "letter")
-			{
-				usesLayout("/layouts/layout.letter");		
-			}
-					
-			if(page.postType eq "post")
-			{
-				location("/blog/post/#params.id#", false, 301);
-			}
-		}
-		
-		if(isNull(page) OR !len(page.id))
-		{
-			page = {
-				name = "Page not found",
-				content = "We apologize for the inconvenience. Please try clicking the menu above to find the page you are looking for."
-			};
-		}
-	}
+	}  
+
 }
 </cfscript>
