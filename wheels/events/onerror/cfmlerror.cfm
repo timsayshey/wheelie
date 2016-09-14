@@ -31,7 +31,7 @@
 	<cfif IsDefined("application.wheels.rewriteFile")>
 		<p>
 			<strong>URL:</strong><br>
-			#LCase(ListFirst(cgi.server_protocol, "/"))#://#cgi.server_name##Replace(cgi.script_name, "/#application.wheels.rewriteFile#", "")##cgi.path_info#<cfif cgi.query_string IS NOT "">?#cgi.query_string#</cfif>
+			http<cfif cgi.server_port_secure>s</cfif>://#cgi.server_name##Replace(cgi.script_name, "/#application.wheels.rewriteFile#", "")#<cfif IsDefined("request.cgi.path_info")>#request.cgi.path_info#<cfelse>#cgi.path_info#</cfif><cfif cgi.query_string IS NOT "">?#cgi.query_string#</cfif>
 		</p>
 	</cfif>
 	<cfif Len(cgi.http_referer)>
@@ -39,11 +39,16 @@
 	</cfif>
 	<p><strong>Method:</strong><br>#cgi.request_method#</p>
 	<p><strong>IP Address:</strong><br>#cgi.remote_addr#</p>
-	<p><strong>Host Name:</strong><br>#get("hostName")#</p>
+	<cfif IsDefined("application.wheels.hostName")>
+		<p><strong>Host Name:</strong><br>#application.wheels.hostName#</p>
+	</cfif>
 	<p><strong>User Agent:</strong><br>#cgi.http_user_agent#</p>
 	<p><strong>Date & Time:</strong><br>#DateFormat(now(), "MMMM D, YYYY")# at #TimeFormat(now(), "h:MM TT")#</p>
 	<cfset loc.scopes = "CGI,Form,URL,Application,Session,Request,Cookie,Arguments.Exception">
-	<cfset loc.skip = get("excludeFromErrorEmail")>
+	<cfset loc.skip = "">
+	<cfif IsDefined("application.wheels.excludeFromErrorEmail")>
+		<cfset loc.skip = application.wheels.excludeFromErrorEmail>
+	</cfif>
 	<!--- always skip cause since it's just a copy of rootCause anyway --->
 	<cfset loc.skip = ListAppend(loc.skip, "exception.cause")>
 	<h1>Details</h1>

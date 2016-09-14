@@ -3,9 +3,11 @@
 	{
 		function init()
 		{
+			
 			filters(through="sharedGlobalData,setLogInfo,setMenus,adminMenuDefaults");	
 			filters(through="sharedfilter");
-			filters(through="setUserInfo");	
+			filters(through="setUserInfo");
+
 		}
 		
 		private function sharedfilter()
@@ -16,7 +18,6 @@
 		function sharedGlobalData()
 		{
 			qOptions = model("Option").findAll();
-			//qUsergroups = model("Usergroup").findAll();
 		}
 	
 		function setMenus()
@@ -42,19 +43,19 @@
 				activeMenuItem 	= model("Menu").findAll(where="#whereSiteid()# AND id = #activeMenuId#", maxRows=1, include="AllPost");
 			}		
 			
-			menuitems = model("Menu").findAll(where="#whereSiteid()# AND menuid = 'primary' AND parentid = 0", order="sortOrder ASC, name ASC", include="AllPost");
+			menuitems = model("Menu").findAll(where="#whereSiteid()# AND parentid = 0", order="sortOrder ASC, name ASC", include="AllPost");
 			
 			if(activeMenuItem.parentid neq 0)
 			{
 				subParentId = len(activeMenuItem.parentid) GT 0 ? activeMenuItem.parentid : 999;
-				activeParent = model("Menu").findAll(where="#whereSiteid()# AND menuid = 'primary' AND id = #subParentId#", maxRows=1, include="AllPost");
+				activeParent = model("Menu").findAll(where="#whereSiteid()# AND id = #subParentId#", maxRows=1, include="AllPost");
 			}		
 			else  
 			{
 				subParentId = activeMenuId;
 			}
 			
-			subMenuItems = model("Menu").findAll(where="#whereSiteid()# AND menuid = 'primary' AND parentid = #subParentId#", order="sortOrder ASC, name ASC", include="AllPost");
+			subMenuItems = model("Menu").findAll(where="#whereSiteid()# AND parentid = #subParentId#", order="sortOrder ASC, name ASC", include="AllPost");
 		}
 		
 		function renderPage(string template="") 

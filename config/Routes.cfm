@@ -30,6 +30,12 @@
 			pattern="#thisAdminUrlPath#/categories/[action]/[modelName]",
 			controller="categories"	
 		);
+
+		addRoute(
+			name="admin~Mediafile", 
+			pattern="#thisAdminUrlPath#/mediafiles/[action]/[modelName]",
+			controller="mediafiles"	
+		);
 		
 		addRoute(
 			name="admin~FieldId", 
@@ -97,6 +103,13 @@
 		controller="main"
     );
 	
+	addRoute(
+        name="appfront~Id", 
+		pattern="/app/[action]/[id]",
+		controller="pfront",
+		id=""
+    );
+
 	/* Custom App Module Routes 
 	addRoute(
         name="appfront~Id", 
@@ -229,22 +242,16 @@
 		pattern="/p/[controller]/[action]"
     );
 	
-	addRoute(
+	addRoute( 
         name="public~otherPagesOld", 
 		pattern="/o/[action]",
         controller="otherPages"
     );
 	
 	addRoute(
-        name="public~otherPages", 
-		pattern="/p/[action]",
-        controller="pageapps"
-    );
-	
-	addRoute( 
-        name="public~pageapps", 
-		pattern="/p/[action]",
-        controller="pageapps"
+        name="publicapp~publicapp", 
+		pattern="/pa/[action]",
+        controller="publicapp"
     );
 	
 	addRoute(
@@ -260,8 +267,7 @@
         controller="publicPages", 
 		action="page"
     );	
-	
-	// Home root has to be last otherwise it will takeover every route
+
 	addRoute(
 		name="public~home", 
 		pattern="/",
