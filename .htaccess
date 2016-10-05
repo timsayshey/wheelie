@@ -17,4 +17,4 @@ RewriteRule ^(.*)$ ./rewrite.cfm/$1 [NS,L]
 
 AddType video/ogg .ogv
 AddType video/mp4 .mp4
-AddType video/webm .webm
+AddType video/webm .webm 
