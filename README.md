@@ -5,6 +5,10 @@
 ##### Demo: [https://wheeliecms.herokuapp.com](https://wheeliecms.herokuapp.com) 
 ##### Note: If you get an "Application Error" message just hit refresh, that's a Heroku bug caused by sleep mode
 
+## Heroku Installation
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie-heroku&template=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie-heroku)
+
 ## Compatibility
 
 Lucee and MySQL/PostgreSQL
@@ -14,21 +18,17 @@ Lucee and MySQL/PostgreSQL
 * Settings Location: /models/services/global/settings.cfm
 * Wheelie Admin: Email: admin@getwheelie.com Password: wheelie
 
-## Heroku Installation
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie-heroku&template=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie-heroku)
-
 ### Requirements
 
 - [Maven](http://maven.apache.org/) to build the project
 - [Foreman](https://github.com/ddollar/foreman) to run locally
 
-### Instructions
+### Heroku Instructions
 
 To get started, run the following commands in GitBash (or your terminal of preference):
 
 ```bash
-$ git clone https://github.com/timsayshey/wheelie.git
+$ git clone https://github.com/timsayshey/wheelie-heroku.git
 $ cd wheelie
 $ mvn package
 $ foreman start
