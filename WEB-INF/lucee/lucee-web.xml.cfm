@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?><cfLuceeConfiguration hspw="a020f798f6510784ed29550597cd4d3a3699bc2e1b808bd738e6127e44c74997" salt="9D115BF2-F713-41C1-86BED8A900C3C986" version="5.1">
+=======
+<?xml version="1.0" encoding="UTF-8"?><cfLuceeConfiguration hspw="cf99f92ce62b19fec28d9addb73eb2655d5de960384e36269da9b8cc1b3967bd" salt="9D115BF2-F713-41C1-86BED8A900C3C986" version="5.1">
+>>>>>>> 357a7cb91375a74814b282778ef82df058bbda03
 
 <!-- 
 Path placeholders:
@@ -30,8 +34,12 @@ Path placeholders:
 <!--	 - http://sourceforge.net 																		-->
 <!--	or ask your database distributor 																-->
 
+<<<<<<< HEAD
 	<data-sources>
 	</data-sources>
+=======
+	<data-sources></data-sources>
+>>>>>>> 357a7cb91375a74814b282778ef82df058bbda03
 	
 	<resources>
     	<!--
