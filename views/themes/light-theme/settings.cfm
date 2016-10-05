@@ -1,0 +1,5 @@
+<cfscript>
+	themeSettings = {
+		
+	};
+</cfscript>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	metadata-complete="true"
+	version="2.5">
+
+  <filter>
+    <filter-name>UrlRewriteFilter</filter-name>
+    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+
+    <!-- interval to check urlrewrite.xml config in seconds, or 0 for every request, -1 for never -->
+    <init-param>
+        <param-name>confReloadCheckInterval</param-name>
+        <param-value>0</param-value>
+    </init-param>
+
+     <init-param>
+            <param-name>confPath</param-name>
+            <param-value>/urlrewrite.xml</param-value>
+    </init-param>
+
+    <!-- TRACE, DEBUG, INFO, WARN, ERROR, FATAL -->
+    <init-param>
+      <param-name>logLevel</param-name>
+      <param-value>INFO</param-value>
+    </init-param>
+
+    <!-- enable status page at /rewrite-status  -->
+    <init-param>
+        <param-name>statusEnabled</param-name>
+        <param-value>false</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>UrlRewriteFilter</filter-name>
+    <url-pattern>*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+
+  <servlet id="Railo">
+    <description>Railo CFML Engine</description>
+    <servlet-name>CFMLServlet</servlet-name>
+    <servlet-class>railo.loader.servlet.CFMLServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CFMLServlet</servlet-name>
+    <url-pattern>*.cfc</url-pattern>
+    <url-pattern>*.cfm</url-pattern>
+    <url-pattern>*.cfml</url-pattern>
+    <url-pattern>/index.cfc/*</url-pattern>
+    <url-pattern>/index.cfm/*</url-pattern>
+    <url-pattern>/index.cfml/*</url-pattern>
+
+  </servlet-mapping>
+
+
+  <servlet id="RESTServlet">
+    <description>Railo Servlet for RESTful services</description>
+    <servlet-name>RESTServlet</servlet-name>
+    <servlet-class>railo.loader.servlet.RestServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>RESTServlet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+
+	<!-- default file to execute if directory is called with no file name, e.g. http://mysite.com/ !-->
+	<welcome-file-list>
+		<welcome-file>index.cfm</welcome-file>
+		<welcome-file>index.cfml</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>

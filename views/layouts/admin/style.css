@@ -1,0 +1,83 @@
+.admin-content *, .admin-content strong, .admin-content h1, .admin-content h2, .admin-content h3, .admin-content h4 {
+	font-family:'Montserrat', sans-serif !important;
+}
+.contentwrapper {
+	margin-top:0;
+}			
+.admin-content {	
+	padding-top: 20px;
+}
+.admin-content .leftside .data-block {
+	border-bottom: 3px solid #ddd;
+	background:white;
+}		
+.admin-content .rightbar .data-block {
+	border-bottom: 3px solid #ddd;
+	background:white;
+	color:#333
+}
+.admin-content h2 span { display: inline-block; } .admin-content article, .admin-content aside, .admin-content details, .admin-content figcaption, .admin-content figure, .admin-content footer, .admin-content header, .admin-content hgroup, .admin-content nav, .admin-content section, .admin-content summary{display:block} .admin-content audio, .admin-content canvas, .admin-content video{display:inline-block;*display:inline;*zoom:1} .admin-content audio:not([controls]){display:none;height:0} .admin-content [hidden]{display:none}.admin-content, .admin-content button, .admin-content input, .admin-content select, .admin-content textarea{font-family:sans-serif}.admin-content{margin:0} .admin-content a:focus{outline:thin dotted} .admin-content a:active, .admin-content a:hover{outline:0} .admin-content h1, .admin-content h2, .admin-content h3, .admin-content h4, .admin-content h5 { background:none; } .admin-content h1{font-size:2em;} .admin-content h2{font-size:1.5em;} .admin-content h3{font-size:1.17em;} .admin-content h4{font-size:1em;} .admin-content h5{font-size:.83em;} .admin-content h6{font-size:.75em;} .admin-content abbr[title]{border-bottom:1px dotted} .admin-content b, .admin-content strong{font-weight:bold} .admin-content blockquote{margin:1em 40px} .admin-content dfn{font-style:italic} .admin-content mark{background:#ff0;color:#000} .admin-content p{margin:1em 0} .admin-content code, .admin-content kbd, .admin-content pre, .admin-content samp{font-family:monospace,serif;_font-family:'courier new',monospace;font-size:1em} .admin-content pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word} .admin-content q{quotes:none} .admin-content q:before, .admin-content q:after{content:'';content:none} .admin-content small{font-size:75%} .admin-content sub, .admin-content sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline} .admin-content sup{top:-0.5em} .admin-content sub{bottom:-0.25em} .admin-content dl, .admin-content menu, .admin-content ol, .admin-content dd{margin:0 0 0 40px} .admin-content menu, .admin-content ol, .admin-content ul{padding:0 0 0 40px} .admin-content nav ul, .admin-content nav ol{list-style:none;list-style-image:none} .admin-content img{border:0;-ms-interpolation-mode:bicubic} .admin-content svg:not(:root){overflow:hidden} .admin-content figure{margin:0} .admin-content form{margin:0} .admin-content fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em} .admin-content legend{border:0;padding:0;white-space:normal;*margin-left:-7px} .admin-content button, .admin-content input{line-height:normal} .admin-content button, .admin-content input[type="button"], .admin-content input[type="reset"], .admin-content input[type="submit"]{-webkit-appearance:button;cursor:pointer;*overflow:visible} .admin-content button[disabled], .admin-content input[disabled]{cursor:default} .admin-content input[type="checkbox"], .admin-content input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px} .admin-content input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box} .admin-content input[type="search"]::-webkit-search-cancel-button, .admin-content input[type="search"]::-webkit-search-decoration{-webkit-appearance:none} .admin-content button::-moz-focus-inner, .admin-content input::-moz-focus-inner{border:0;padding:0} .admin-content textarea{overflow:auto;vertical-align:top} .admin-content table{border-collapse:collapse;border-spacing:0}
+.admin-content div, .admin-content input, .admin-content label, .admin-content select, .admin-content textarea {
+	font-size:12px;
+}
+.topnav {
+	margin-bottom:0;	
+}
+.admin-content h1,.admin-content h2,.admin-content h3,.admin-content h4,.admin-content h5,.admin-content h6,.admin-content h7 {
+	border:0;	
+}			
+
+.admin-content .filethumb {
+padding: 0;
+background-position: center center;
+background-size: 100%;
+background-color: #fff;
+border: 1px solid #ddd;
+background-repeat: no-repeat;
+display: block;
+}
+
+.admin-content input[type="checkbox"]{
+    margin-right: 5px;
+}
+
+.column {
+    height: auto; 
+}
+
+.admin-content .label-title {
+	font-size:13px;
+}
+
+.contentwrapper .option label {
+	font-size:11px;
+	font-weight: normal;
+}
+
+.admin-content .media-img {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    display: block;
+    z-index: 10;
+}
+
+.admin-content .media-img-wrap {
+    background: white;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 16px;
+    min-height: 100px;
+}
+
+.admin-content .media-img img {
+    display: block;
+    border: 0;
+    vertical-align: middle;
+    width:100%;
+}
+
+.media-photos {}
