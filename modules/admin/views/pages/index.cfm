@@ -65,15 +65,27 @@
 							<span class="elusive icon-eye-close color-danger" title="#capitalize(qPages.status)#"></span>
 						</cfif>
 					</cfsavecontent> 
-					
+
+					<cfsavecontent variable="prependBtns">
+						<cfif checkPermission("superadmin")>
+							#linkTo(									
+								text		= '<span class="elusive icon-eye-open"></span> View',
+								class		= "btn btn-default btn-xs",
+								route		= "public~secondaryPage", 
+								id 			= qPages.urlid
+							)#	
+						</cfif>
+					</cfsavecontent> 
+
 					#includePartial(
 						partial="/_partials/indexListItem", 
 						currentid		= qPages.id, 
 						tags			= tags,
 						gridActive		= gridActive,
-						title			= qPages.name,
+						title			= qPages.sysname.trim().length() ? qPages.sysname : qPages.name,
 						description		= "",
-						controllerName	= "pages"
+						controllerName	= "pages",
+						prependBtns 	= prependBtns
 					)#
 					
 				</cfloop>

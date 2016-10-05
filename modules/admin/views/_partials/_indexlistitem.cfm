@@ -6,15 +6,19 @@
 	<cfparam name="description">
 	<cfparam name="thumbPath" default="">
 	<cfparam name="controllerName" default="">
+	<cfparam name="appendBtns" default="">
+	<cfparam name="prependBtns" default="">	
 	<cfparam name="overlayImage" default="/assets/img/overlay.png">
+
 	<cfset editPath = urlFor(							
-						route		= "admin~Id",
-						module		= "admin",
-						controller	= controllerName,
-						action		= "edit",
-						id			= currentId)> 
+		route		= "admin~Id",
+		module		= "admin",
+		controller	= controllerName,
+		action		= "edit",
+		id			= currentId
+	)> 
+
 	<cfparam name="href" default="href='#editPath#'">
-	
 	<!--- Grid Item --->		
 	<cfif len(gridActive)>				
 	
@@ -46,11 +50,13 @@
 					<a #href# class="boxtitle">#title#</a>								
 					<br class="clear" />
 					
-					#tags#
+					#tags#					
 					
-					<cfif checkPermission("user_save_others")>
-						<div class="pull-right">
-							<cfif isNull(params.rearrange)>
+					<div class="pull-right">
+						<cfif isNull(params.rearrange)>
+							#prependBtns#
+
+							<cfif checkPermission("user_save_others")>
 								#linkTo(
 									text		= '<span class="elusive icon-edit"></span> Edit',
 									class		= "btn btn-primary btn-xs",
@@ -76,11 +82,14 @@
 									id			= currentId,								
 									params		= urlparams
 								)#
-							<cfelse>	
-								<span class='elusive icon-move'></span>
 							</cfif>
-						</div>
-					</cfif>
+
+							#appendBtns#
+
+						<cfelse>	
+							<span class='elusive icon-move'></span>
+						</cfif>
+					</div>					
 					
 					<cfif !isNull(params.currentGroup)> 
 						<div class="userdetails">
@@ -160,6 +169,8 @@
 							action		= "delete", 
 							id			= currentId
 						)#	
+
+						#appendBtns#
 					</div>
 				</cfif>
 				

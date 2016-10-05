@@ -29,12 +29,12 @@
 				
 		<div id="about" style="margin:0 auto; text-align:center; max-width:500px">
 		
-			<cfset thumbpath = fileExists(expandPath("/assets/userpics/#user.id#.jpg")) ? "/assets/userpics/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
+			<cfset thumbpath = fileExists(expandThis("/assets/userpics/#user.id#.jpg")) ? assetUrlPrefix() & "/assets/userpics/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
 			
-			<cfset thumbpathfull = fileExists(expandPath("/assets/userpics_full/#user.id#.jpg")) ? "/assets/userpics_full/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
+			<cfset thumbpathfull = fileExists(expandThis("/assets/userpics_full/#user.id#.jpg")) ? assetUrlPrefix() & "/assets/userpics_full/#user.id#.jpg" : '/assets/img/user_thumbholder.jpg'>
 			
 			<a data-lightbox="image-1" href='#thumbpathfull#' class="filethumb col-md-3 col-sm-3 col-xs-4 roundy" style="												
-				<cfif fileExists(expandPath(thumbPath))>
+				<cfif !findNoCase(thumbPath,"thumbholder")>
 					background-image:url('#thumbPath#');
 				</cfif>
 			">

@@ -12,7 +12,20 @@ component extends="_main" output="false"
 		currentPageIsHome = model("option").findAll(where="id = 'home_id' AND content = '#pageid#'#wherePermission("option","AND")#");		
 		currentPageIsHome = currentPageIsHome.recordcount ? true : false;
 		
-		homeOptions = model("option").findAll(where="id LIKE 'home_%' AND (editContent = 1 OR editLabel = 1 OR editAttachment = 1)#wherePermission("option","AND")#");		
+		homeOptions = model("option").findAll(where="id LIKE 'home_%' AND (editContent = 1 OR editLabel = 1 OR editAttachment = 1)#wherePermission("option","AND")#");
+		
+		qPageBlocks = model("PageBlock").findAll();
+		pageBlockOptions = [];
+
+		for(var pageBlock in qPageBlocks){
+			arrayAppend(
+				pageBlockOptions,
+				{
+					text=pageBlock.name,
+					value=pageBlock.id
+				}
+			);
+		}
 	}
 	
 	function index()
@@ -115,14 +128,29 @@ component extends="_main" output="false"
 			page = model("Page").new(params.page);
 			saveResult = page.save();
 		}
-		
+
 		// Insert or update page object with properties
 		if (saveResult)
 		{				
+			// Delete featuredImg
+			if(!isNull(params.featuredImg_delete))
+			{
+				deleteThisFile("/assets/images/featured/feat-#page.id#.jpg");
+			}
+
+			// Save featuredImg
+			if(!isNull(form.featuredImg) AND len(form.featuredImg) AND FileExists(form.featuredImg))
+			{								
+				if(uploadImage(field="featuredImg",filename='feat-#page.id#'))
+				{
+					user.featuredImg = "";
+				}
+			}
+
 			if(StructKeyExists(params,"isHome")) 
 			{
 				option = model("Option").findOne(where="id = 'home_id'#wherePermission("option","AND")#");
-				option.update(content=page.id);
+				option.update(content=page.id,validate=false);
 			}			
 			
 			flashInsert(success="Page saved. #linkto(text="View page", route="public~secondaryPage", id=page.urlid)#");
@@ -137,6 +165,35 @@ component extends="_main" output="false"
 			flashInsert(error="There was an error.");
 			renderPage(route="admin~Action", module="admin", controller="pages", action="editor");		
 		}		
+	}
+
+	function uploadImage(field,filename)
+	{
+		var loc = {};
+		
+		if(arguments.containsKey("filename"))
+		{
+			var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
+
+			if(result.fileWasSaved) {
+				var theFile = result.serverdirectory & "/" & result.serverFile;
+				var fullFile = expandPath("/assets/images/featured/#arguments.filename#.jpg");
+				if(!isImageFile(thefile)) {
+					fileDelete(theFile);
+					return false;
+				} else {					
+					var img = imageRead(thefile);
+					try {
+						imageWrite(img,fullFile,1,1);
+						fileDelete(theFile);
+					} catch(e) {
+						flashInsert(error="File Error: #e.message#");
+						return false;
+					}
+					return true;
+				}
+			} else return false;			
+		}
 	}
 	
 	function deleteSelection()

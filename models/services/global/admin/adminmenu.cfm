@@ -14,7 +14,7 @@
 			
 			Icon
 		*/
-		qUsergroups = model("Usergroup").findAll();
+		var qUsergroups = model("Usergroup").findAll();
 		adminNavMain = [];
 		adminNavMore = [];
 		
@@ -26,53 +26,41 @@
 			url		= urlFor(route="admin~Action", controller="main", action="home")
 		});
 		
-		menuitem = arrayAppend(adminNavMain,{
-			type		= 'parent',
-			name		= 'Content',
-			icon		= 'icon-th-list',
-			permission  = 'page_save',
-			children= 
-			[
+		menuitem = adminNavMain.addAll([
 				{
-					type	   = 'subparent',
+					type	   = 'parent',
 					name	   = 'Pages',
 					icon	   = 'icon-file-new',
 					permission = 'page_save',
-					url		   = urlFor(route="admin~Action", controller="pages", action="index"),
+					url		   = urlFor(route="admin~Action", controller="Pages", action="index"),
 					children   = [
 						{
 							type	   = 'link',
 							name	   = 'All Pages',
-							url		   = urlFor(route="admin~Action", controller="pages", action="index")
+							url		   = urlFor(route="admin~Action", controller="Pages", action="index")
 						},
 						{
 							type	   = 'link',
 							name	   = 'Add New',
-							url		   = urlFor(route="admin~Action", controller="pages", action="new")
+							url		   = urlFor(route="admin~Action", controller="Pages", action="new")
+						},
+						{
+							type	   = 'link',
+							name	   = 'Page Blocks',
+							permission = 'page_save',
+							url		   = urlFor(route="admin~Action", controller="pageblocks", action="index")
 						}
 					]
-				},
-				{
-					type	   = 'subparent',
-					name	   = 'Posts',
+				}
+				,{
+					type	   = 'link',
+					name	   = 'Blog',
 					icon	   = 'icon-pencil',
 					permission = 'post_save',
-					url		   = urlFor(route="admin~Action", controller="posts", action="index"),
-					children   = [
-						{
-							type	   = 'link',
-							name	   = 'All Posts',
-							url		   = urlFor(route="admin~Action", controller="posts", action="index")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Add New',
-							url		   = urlFor(route="admin~Action", controller="posts", action="new")
-						}
-					]
-				},
-				{
-					type	   = 'subparent',
+					url		   = urlFor(route="admin~Action", controller="posts", action="index")
+				}
+				,{
+					type	   = 'parent',
 					name	   = 'Videos',
 					icon	   = 'icon-youtube',
 					permission = 'video_save',
@@ -94,23 +82,15 @@
 							url		   = urlFor(route="admin~Category", action="rearrange", modelName="videoCategory")
 						}
 					]
-				},
-				{
+				}
+				,{
 					type	   = 'link',
 					name	   = 'Site Menu',
-					icon	   = 'icon-list',
+					icon	   = 'icon-align-justify',
 					permission = 'menu_save',
 					url		   = urlFor(route="admin~Action", controller="menus", action="rearrange")
-				},
-				{
-					type	   = 'link',
-					name	   = 'Newsletters',
-					icon	   = 'icon-envelope',
-					permission = 'newsletter_save',
-					url		   = urlFor(route="admin~Action", controller="newsletters", action="index")
 				}
-			]
-		});	
+		]);	
 		
 		// Create Children for People Menu
 		usergroupLinks = [];
@@ -118,7 +98,7 @@
 		{
 			ArrayAppend(usergroupLinks,{
 				type	= 'link',
-				name	= usergroup.groupname,
+				name	= pluralize(usergroup.groupname),
 				url		= urlFor(route="admin~peopleTypes", currentGroup=usergroup.id)
 			});
 		}
@@ -130,7 +110,7 @@
 			},
 			{
 				type	   = 'link',
-				name	   = 'Tags',
+				name	   = 'User Tags',
 				url		   = urlFor(route="admin~Category", action="rearrange", modelName="userTag"),
 				permission = "user_save_others"
 			},
@@ -138,12 +118,6 @@
 				type	   = 'link',
 				name	   = 'User Groups',
 				url		   = urlFor(route="admin~Action", controller="usergroups", action="index"),
-				permission = "user_save_others"
-			},
-			{
-				type	   = 'link',
-				name	   = 'Pending Changes',
-				url		   = urlFor(route="admin~Action", controller="users", action="approval"),
 				permission = "user_save_others"
 			}
 		], true);
@@ -153,84 +127,50 @@
 		// menu item
 		menuitem = arrayAppend(adminNavMain,{
 			type	= 'parent',
-			name	= 'People',
+			name	= 'Users',
+			permission = 'page_save',
 			icon	= 'icon-user',
 			children= peopleLinks
-		});
-		
-		/* menu item
-		menuitem = arrayAppend(adminNavMain,{
-			type	= 'link',
-			name	= 'Training',
-			icon	= 'icon-youtube',
-			url		= urlFor(route="admin~Action", controller="videos", action="category")
-		}); */
-		
-		// menu item
-		menuitem = arrayAppend(adminNavMain,{
-			type	= 'link',
-			name	= 'To-Dos',
-			icon	= 'icon-list-alt',
-			url		= urlFor(route="admin~Action", controller="todos", action="rearrange")
 		});		
 		
 		// adminNavMore
-		/*
-			{
-				type	   = 'link',
-				name	   = 'Emails',
-				url		   = urlFor(route="admin~Action", controller="emails", action="index"),
-				permission  = "email_full_control"
-			},
-			{
-				type	   = 'link',
-				name	   = 'Share Pics',
-				url		   = urlFor(route="public~otherPagesOld", action="sharepics")
-			}			
-		*/
 		menuitem = arrayAppend(adminNavMore,{
 			type	= 'parent',
-			name	= 'More',
+			name	= 'Advanced',
 			icon	= 'icon-cog',
 			permission= 'form_save_others',
 			children= 
 			[				
 				{
-					type	  = 'subparent',
-					name	  = 'Super Admin',
-					url		  = '##',
-					permission= 'superuser_menu',
-					children= 
-					[
-						{
-							type	   = 'link',
-							name	   = 'Permissions',
-							url		   = urlFor(route="admin~index", controller="permissions")
-						},
-						{
-							type	   = 'link',
-							name	   = 'Sites',
-							url		   = urlFor(route="admin~Action", controller="sites", action="index")
-						},
-						{
-							type	   = 'link',
-							name	   = 'User Groups',
-							url		   = urlFor(route="admin~Action", controller="usergroups", action="index")
-						}
-					]
+					type	   = 'link',
+					name	   = 'Permissions',
+					url		   = urlFor(route="admin~index", controller="permissions")
 				},
 				{
 					type	   = 'link',
-					name	   = 'Site Options',
-					url		   = urlFor(route="admin~Action", controller="options", action="index"),
-					permission  = "option_save_others"					
+					name	   = 'Sites',
+					url		   = urlFor(route="admin~Action", controller="sites", action="index")
 				},
 				{
 					type	   = 'link',
+					// icon	   = 'icon-comment',
 					name	   = 'Forms',
 					url		   = urlFor(route="admin~Action", controller="forms", action="index"),
 					permission  = "form_save_others"		
-				}				
+				}	
+				,{
+					type	   = 'link',
+					name	   = 'Newsletters',
+					// icon	   = 'icon-envelope',
+					permission = 'newsletter_save',
+					url		   = urlFor(route="admin~Action", controller="newsletters", action="index")
+				},
+				{
+					type	= 'link',
+					// name	= 'To-Dos',
+					icon	= 'icon-list-alt',
+					url		= urlFor(route="admin~Action", controller="todos", action="rearrange")
+				}	
 			]
 		});	
 	

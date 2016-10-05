@@ -1,4 +1,5 @@
 <cfoutput>	
+	
 	<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> #newsletter.subject# Sections')>
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">

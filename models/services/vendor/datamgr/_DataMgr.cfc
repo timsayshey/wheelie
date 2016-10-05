@@ -16,7 +16,6 @@
 	<cfargument name="SpecialDateType" type="string" default="CF">
 	<cfargument name="XmlData" type="string" required="no">
 	<cfargument name="logfile" type="string" required="no">
-	
 	<cfset var me = 0>
 	
 	<cfset variables.datasource = arguments.datasource>
@@ -58,7 +57,7 @@
 	<cfif ListLast(getMetaData(this).name,".") EQ "DataMgr">
 		<cfif NOT StructKeyExists(arguments,"database")>
 			<cfset addEngineEnhancements(true)>
-			<cfset arguments.database = getDatabase()>
+			<cfset arguments.database = StructKeyExists(variables,"defaultdatabase") ? variables.defaultdatabase : getDatabase()>
 		</cfif>
 		
 		<!--- This will make sure that if a database is passed the component for that database is returned --->
@@ -92,6 +91,8 @@
 	<cfelseif variables.CFServer EQ "BlueDragon">
 		<cfset oMixer = CreateObject("component","DataMgrEngine_openbd")>
 	<cfelseif variables.CFServer EQ "Railo">
+		<cfset oMixer = CreateObject("component","DataMgrEngine_railo")>
+	<cfelseif variables.CFServer EQ "Lucee">
 		<cfset oMixer = CreateObject("component","DataMgrEngine_railo")>
 	</cfif>
 	

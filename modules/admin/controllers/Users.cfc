@@ -43,7 +43,7 @@
 						
 				if(isObject(sortuser))
 				{
-					sortuser.update(sortorder=sortuserVal.newIndex);
+					sortuser.update(sortorder=sortuserVal.newIndex,validate=false);
 				}
 			}
 			abort;
@@ -170,12 +170,14 @@
 			request.newRegistration = true;
 			
 			// Sync Unapproved Fields
-			params.user.zx_firstname = params.user.firstname;				
-			params.user.zx_lastname = params.user.lastname;
-			params.user.zx_about = params.user.about;
-			params.user.zx_designatory_letters = params.user.designatory_letters;
-			params.user.zx_jobtitle = params.user.jobtitle;
+			// params.user.zx_firstname = params.user.firstname;				
+			// params.user.zx_lastname = params.user.lastname;
+			// params.user.zx_about = params.user.about;
+			// params.user.zx_designatory_letters = params.user.designatory_letters;
+			// params.user.zx_jobtitle = params.user.jobtitle;
 			
+			params.user.password = passcrypt(params.user.password, "encrypt");
+
 			// Save user
 			user = model("User").new(params.user);
 			saveResult = user.save(); 
@@ -195,24 +197,18 @@
 				// Default usergroup to staff ("1")
 				defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
 				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
-				flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
-				mailgun( 
-					mailTo	= '#application.wheels.adminEmail#,#!isNull(request.hrEmails) AND len(trim(request.hrEmails)) ? ",#request.hrEmails#" : ""#',
-					from	= application.wheels.adminFromEmail,
-					subject	= "New User Signup: #params.user.firstname# #params.user.lastname#",
-					html	= "User: #params.user.firstname# #params.user.lastname#<br><br>
-								View profile:<br>
-								http://#request.site.domain#/connect/profiles/profile/#user.id#"
-				);
+				// flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
 				
-				userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
-				mailgun(
-					mailTo	= user.email, 
-					from	= application.wheels.adminFromEmail,
-					subject	= "Verify your email address",
-					html	= "Click the link below to verify your email address:<br>
-							   <a href='#userVerifyUrl#'>#userVerifyUrl#</a>"
-				);
+				// userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
+				// mailgun(
+				// 	mailTo	= user.email, 
+				// 	from	= application.wheels.adminFromEmail,
+				// 	subject	= "Verify your email address",
+				// 	html	= "Click the link below to verify your email address:<br>
+				// 			   <a href='#userVerifyUrl#'>#userVerifyUrl#</a>"
+				// );
+				flashInsert(success="Your account was created");
+				session.user.id = user.id;
 				redirectTo(route="admin~Action", module="admin", controller="users", action="login");									
 			} 
 			else 
@@ -258,8 +254,8 @@
 				var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
 				if(result.fileWasSaved) {
 					var theFile = result.serverdirectory & "/" & result.serverFile;
-					var newFile = expandPath("/assets/userpics#approvalToggle#/#loc.user.id#.jpg");
-					var fullFile = expandPath("/assets/userpics_full/#loc.user.id#.jpg");
+					var newFile = expandThis("/assets/userpics#approvalToggle#/#loc.user.id#.jpg");
+					var fullFile = expandThis("/assets/userpics_full/#loc.user.id#.jpg");
 					if(!isImageFile(thefile)) {
 						fileDelete(theFile);
 						return false;
@@ -271,6 +267,7 @@
 							imageWrite(img,newFile,1);
 							fileDelete(theFile);
 						} catch(e) {
+							throw(e);
 							flashInsert(error="File Error: #e.message#");
 							return false;
 						}
@@ -287,8 +284,7 @@
 			param name="params.usertags" default="";		
 			param name="params.usergroups" default="";		
 			
-			try{	
-			
+					
 			// Handle submit button type (publish,draft,trash,etc)
 			if(!isNull(params.submit))
 			{
@@ -318,21 +314,20 @@
 			} else {
 				user = model("User").new(params.user);
 				saveResult = user.save();
-			}
-			
+			}			
 			
 			// Insert or update user object with properties
 			if (saveResult)   
 			{				
 				// Approve Portrait
-				pendingPortraitPath = expandPath("/assets/userpics_pending/#user.id#.jpg");
+				pendingPortraitPath = expandThis("/assets/userpics_pending/#user.id#.jpg");
 				if(!isNull(params.handlePortrait) AND fileExists(pendingPortraitPath))
 				{
 					if(params.handlePortrait eq "live")
 					{					
 						FileMove(
 							pendingPortraitPath,
-							expandPath("/assets/userpics/#user.id#.jpg")
+							expandThis("/assets/userpics/#user.id#.jpg")
 						);
 					}
 					else if(params.handlePortrait eq "delete")
@@ -368,7 +363,8 @@
 				if(!isNull(params.fromEditor))
 				{
 					model("userTagJoin").deleteAll(where="userid = #user.id#");	
-				}				
+				}
+								
 				if(len(params.usertags))
 				{		
 					// Insert new user category associations	
@@ -378,18 +374,20 @@
 					}
 				}
 				
-				// Clear existing usergroups associations
-				if(!isNull(params.fromEditor))
-				{
-					model("UsergroupJoin").deleteAll(where="userid = #user.id#");	
-				}
-				
-				if(len(params.usergroups))
-				{		
-					// Insert usergroups associations	
-					for(id in ListToArray(params.usergroups))
-					{				
-						model("UsergroupJoin").create(usergroupid = id, userid = user.id);			
+				if(checkPermission("user_save_others")) {
+					// Clear existing usergroups associations
+					if(!isNull(params.fromEditor))
+					{
+						model("UsergroupJoin").deleteAll(where="userid = #user.id#");	
+					}
+					
+					if(len(params.usergroups))
+					{		
+						// Insert usergroups associations	
+						for(id in ListToArray(params.usergroups))
+						{				
+							model("UsergroupJoin").create(usergroupid = id, userid = user.id);			
+						}
 					}
 				}
 				
@@ -415,9 +413,6 @@
 				renderPage(route="admin~Action", module="admin", controller="users", action="editor");		
 			}	
 			
-			} catch(e) {
-				writeDump(e); abort;
-			}
 		}
 		
 		function login()
@@ -434,14 +429,33 @@
 		function loginPost()
 		{
 			param name="params.email" default="";
+
+			// Don't check siteId for main site (that way we can redirect them to their correct site)
+			var siteIdEqualsCheck = "AND #siteIdEqualsCheck()#";
+			if(request.site.subdomain eq "www") {
+				siteIdEqualsCheck = "";
+			}
 			
-			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#' AND #siteIdEqualsCheck()#");
+			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#'");
 			
 			if(user.recordcount AND user.securityApproval eq 1)
 			{
 				session.user.id = user.id;
 				setUserInfo();
-				redirectTo(route="admin~Action", module="admin", controller="main", action="home");	
+
+				// If admin or user on correct site
+				if(user.globalized || user.siteid eq request.site.id) {
+					redirectTo(route="admin~Action", controller="main", action="home");
+				} else {
+					var userSite = model('site').findAll(where="id = '#user.siteid#'");
+					redirectFullUrl(
+						"http://" & userSite.subdomain & "." & 
+							listDeleteAt(cgi.server_name,1,".") & 
+								urlFor(route="admin~Action", controller="main", action="home") & 
+									(len(cgi.query_string) ? "?" : "") & cgi.query_string
+					);
+				}
+					
 			} else if(user.recordcount AND user.securityApproval eq 0) {	
 				flashInsert(error="We sent you an email to verify your account, check your spam or contact support.");	
 				renderPage(route="admin~Action", controller="users", action="login");	
@@ -464,7 +478,7 @@
 				mailgun(
 					mailTo	= user.email,
 					bcc		= application.wheels.adminEmail,
-					from	= application.wheels.errorEmailAddress,
+					from	= application.wheels.adminFromEmail,
 					subject	= "Your Account",
 					html	= 
 					"<span style='font-family:Arial'>
@@ -503,7 +517,7 @@
 				mailgun(
 					mailTo	= user.email,
 					bcc		= application.wheels.adminEmail,
-					from	= application.wheels.errorEmailAddress,
+					from	= application.wheels.adminFromEmail,
 					subject	= "Account Recovery",
 					html	= 
 					"Your password is:<br> 
@@ -685,11 +699,10 @@
 			{
 				decryptUserId = passcrypt(password=params.token, type="decrypt");
 				
-				matchUser = model("user").findOne(where="id = '#decryptUserId#'");
-							
-				if(isObject(matchUser))
+				matchUser = model("user").findByKey(decryptUserId);
+				saveResult = matchUser.update(securityApproval=1,validate=false);					
+				if(saveResult)
 				{
-					matchUser.update(securityApproval=1);
 					flashInsert(success="Your email address has been verified. You can now login.");
 				} else {
 					flashInsert(error="There was an issue verifying your address. Please try again.");					
@@ -700,9 +713,6 @@
 		
 		function importUserList()
 		{
-
-			
-			
 				
 		}
 	}

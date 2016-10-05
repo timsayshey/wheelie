@@ -8,12 +8,87 @@ component extends="_main" output="false"
 	
 	function getMetafieldType()
 	{
-		if(ListFind("usergroupfield,pagefield,formfield",LCase(params.modelName)))
+		if(ListFind("usergroupfield,pagefield,formfield,propertyfield",LCase(params.modelName)))
 		{
 			return params.modelName;
 		} else {
 			return "";
 		}
+	}
+
+	function removeFirstChar(string) {
+		if(Len(string) GT 0) {
+			var n = Len(string)-1;
+			return Right(string,n);
+		}
+		return string;
+	}
+
+	function importlistSubmit()
+	{
+		var linebreak = Chr(13) & Chr(10);
+		var metafieldArray = ListToArray(params.importlist,linebreak);		
+		
+		var sortorder = 1;
+		for(var metafield in metafieldArray)
+		{
+			if(len(metafield)) {
+				var typeCheck = left(metafield,1);
+				
+				var data = { 
+					modelid		   = params.modelid,		
+					sortorder	   = sortorder++
+				};
+
+				// Checkbox
+				if(typeCheck eq '/') {
+					data.type 		    = 'checkbox';
+					data.divwrap 	    = 1;
+					data.divclass 	    = 'col-sm-6';
+					data.labelplacement = 'after';
+					data.styleattribute = 'margin-right:10px;';
+					metafield = removeFirstChar(metafield);	
+				}
+
+				// Radio options
+				if(typeCheck eq '*' AND find("%", metafield)) {
+					data.type 		    = 'checkbox-options';
+					data.divwrap 	    = 1;
+					data.divclass 	    = 'col-sm-6';
+					data.labelplacement = 'after';
+					data.fieldvalues 	= replace(listLast(metafield,'%'),",",linebreak,"ALL");				
+					metafield = listFirst(removeFirstChar(metafield), "%");
+				}
+
+				// Radio options
+				if(typeCheck eq '+' AND find("%", metafield)) {
+					data.type 		    = 'radio';
+					data.divwrap 	    = 1;
+					data.divclass 	    = 'col-sm-6';
+					data.labelplacement = 'after';
+					data.fieldvalues 	= replace(listLast(metafield,'%'),",",linebreak,"ALL");				
+					metafield = listFirst(removeFirstChar(metafield), "%");
+				}
+
+				// Headline
+				if(typeCheck eq '-') {
+					data.type = 'headline';
+					metafield = removeFirstChar(metafield);	
+				}
+
+				data.name 		   = metafield;
+				data.identifier	   = metafield;	
+
+				var savemetafield = model(getMetafieldType()).new(data);
+				var saveResult = savemetafield.save();
+
+				if(arrayLen(savemetafield.allErrors())) {
+					writeDump([data,savemetafield.allErrors()]); abort;
+				}
+			}
+		}
+		flashInsert(success="Metafields imported successfully!");
+		redirectTo(route="admin~Field", controller="metafields", action="index", modelName="propertyfield", params="modelid=3");
 	}
 	
 	function sharedData()
@@ -57,7 +132,7 @@ component extends="_main" output="false"
 					
 			if(isObject(metaField))
 			{
-				metaField.update(sortorder=fieldValue.newIndex);
+				metaField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
 		abort;
@@ -161,7 +236,7 @@ component extends="_main" output="false"
 			);
 		} else {						
 			
-			errorMessagesName = getMetafieldType();
+			errorMessagesName = "metafield";
 			param name="metafield.id" default="0";
 			
 			flashInsert(error="There was an error.");

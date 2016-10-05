@@ -13,6 +13,7 @@
 			// Validations
 			validatesUniquenessOf(property="urlid", scope="siteid");
 			validatesPresenceOf(property="urlid", when="onCreate");
+			validatesPresenceOf(property="name", when="onCreate");
 			
 			// Other
 			super.init();			

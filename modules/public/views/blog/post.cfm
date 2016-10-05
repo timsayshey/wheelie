@@ -1,4 +1,5 @@
 <cfoutput>
+
 	<div class="blog-post">
     <cfset currentPageUrl = "http://#request.site.domain##cgi.PATH_INFO#">
     
@@ -46,6 +47,13 @@
     <cfif FileExists(staticPathFull)>
     	<cfset contentFor(staticpost = true)>
     	<cfmodule template="#staticPath#">
+
+    <cfelseif post.containsKey("template") AND post.template.trim().length()>
+		<cfset postTemplate = getThemeTemplate(post.template)>
+		<cfset pagetitle = capitalize(post.name)>
+		<cfset pagecontent = post.content>
+		<cfinclude template="#postTemplate#">
+
     <cfelse> 
     	<cfset blogTemplate = getThemeTemplate("blog-single")>
 		<cfset post.content = processShortcodes(post.content)>

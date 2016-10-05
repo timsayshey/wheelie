@@ -91,11 +91,11 @@
 					</cfsavecontent> 
 					
 					#includePartial(
-						partial			= "/_partials/indexListItem", 
-						currentid		= qUsers.id, 
+						partial			= "/_partials/indexListItem",
+						currentid		= qUsers.id,
 						tags			= tags,
 						gridActive		= gridActive,
-						thumbPath		= fileExists(expandPath("/assets/userpics/#qUsers.id#.jpg")) ? "/assets/userpics/#qUsers.id#.jpg" : '/assets/img/user_thumbholder.jpg',
+						thumbPath		= fileExists(expandThis("/assets/userpics/#qUsers.id#.jpg")) ? assetUrlPrefix() & "/assets/userpics/#qUsers.id#.jpg" : '/assets/img/user_thumbholder.jpg',
 						title			= capitalize(qUsers.zx_firstName) & " " & capitalize(qUsers.zx_lastName),
 						description		= "",
 						controllerName	= "users",

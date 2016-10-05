@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://codemirror.net/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>CodeMirror</title>
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="codemirror.css">
+<script src="codemirror.js"></script>
+<script src="xml.js"></script>
+<script src="javascript.js"></script>
+<script src="css.js"></script>
+<script src="htmlmixed.js"></script>
+<script src="matchbrackets.js"></script>
+
+<script src="activebookmark.js"></script>
+
+<style>
+  .CodeMirror { height: auto; border: 1px solid #ddd; }
+  .CodeMirror-scroll { max-height: 200px; }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+</style>
+
+<style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head><body style="zoom: 1;"><div id="nav">
+  <a href="codemirror.html" class=""><h1>CodeMirror</h1><img id="logo" src="logo.png"></a>
+
+  <ul>
+    <li class="active"><a class="active" data-default="true" href="http://codemirror.net/#description">Home</a>
+    </li><li class=""><a href="http://codemirror.net/doc/manual.html" class="">Manual</a>
+    </li><li class=""><a href="https://github.com/codemirror/codemirror" class="">Code</a>
+  </li></ul>
+  <ul>
+    <li class=""><a href="http://codemirror.net/#features" class="">Features</a>
+    </li><li class=""><a href="http://codemirror.net/#community" class="">Community</a>
+    </li><li class=""><a href="http://codemirror.net/#browsersupport" class="">Browser support</a>
+  </li></ul>
+</div>
+
+<article>
+
+<section id="description" class="first">
+  <p><strong>CodeMirror</strong> is a versatile text editor
+  implemented in JavaScript for the browser. It is specialized for
+  editing code, and comes with a number of <a href="http://codemirror.net/mode/index.html">language modes</a> and <a href="http://codemirror.net/doc/manual.html#addons">addons</a>
+  that implement more advanced editing functionality.</p>
+
+  <p>A rich <a href="http://codemirror.net/doc/manual.html#api">programming API</a> and a
+  CSS <a href="http://codemirror.net/doc/manual.html#styling">theming</a> system are
+  available for customizing CodeMirror to fit your application, and
+  extending it with new functionality.</p>
+</section>
+
+<section id="demo">
+  <h2>This is CodeMirror</h2>
+  <form style="position: relative; margin-top: .5em;"><textarea id="demotext" style="display: none;">&lt;!-- Create a simple CodeMirror instance --&gt;
+&lt;link rel="stylesheet" href="lib/codemirror.css"&gt;
+&lt;script src="lib/codemirror.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var editor = CodeMirror.fromTextArea(myTextarea, {
+    lineNumbers: true
+  });
+&lt;/script&gt;</textarea><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 117px; left: 108.21142578125px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -15px; border-right-width: 15px; min-height: 136px; min-width: 415.65625px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors" style=""><div class="CodeMirror-cursor" style="left: 77.21142578125px; top: 112px; height: 16px;">&nbsp;</div></div><div class="CodeMirror-code"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-comment">&lt;!-- Create a simple CodeMirror instance --&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">link</span> <span class="cm-attribute">rel</span>=<span class="cm-string">"stylesheet"</span> <span class="cm-attribute">href</span>=<span class="cm-string">"lib/codemirror.css"</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">script</span> <span class="cm-attribute">src</span>=<span class="cm-string">"lib/codemirror.js"</span><span class="cm-tag cm-bracket">&gt;&lt;/</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">  <span class="cm-keyword">var</span> <span class="cm-variable">editor</span> <span class="cm-operator">=</span> <span class="cm-variable">CodeMirror</span>.<span class="cm-property">fromTextArea</span>(<span class="cm-variable">myTextarea</span>, {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">    <span class="cm-property">lineNumbers</span>: <span class="cm-atom">true</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">  });</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 15px; width: 1px; top: 136px;"></div><div class="CodeMirror-gutters" style="height: 151px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div>
+  <select id="demolist" onchange="document.location = this.options[this.selectedIndex].value;">
+    <option value="#">Other demos...</option>
+    <option value="demo/complete.html">Autocompletion</option>
+    <option value="demo/folding.html">Code folding</option>
+    <option value="demo/theme.html">Themes</option>
+    <option value="mode/htmlmixed/index.html">Mixed language modes</option>
+    <option value="demo/bidi.html">Bi-directional text</option>
+    <option value="demo/variableheight.html">Variable font sizes</option>
+    <option value="demo/search.html">Search interface</option>
+    <option value="demo/vim.html">Vim bindings</option>
+    <option value="demo/emacs.html">Emacs bindings</option>
+    <option value="demo/sublime.html">Sublime Text bindings</option>
+    <option value="demo/tern.html">Tern integration</option>
+    <option value="demo/merge.html">Merge/diff interface</option>
+    <option value="demo/fullscreen.html">Full-screen editor</option>
+    <option value="demo/simplescrollbars.html">Custom scrollbars</option>
+  </select></form>
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+      lineNumbers: true,
+      mode: "text/html",
+      matchBrackets: true
+    });
+  </script>
+
+  <div class="actions">
+    <div class="actionspicture">
+      <img src="yinyang.png" class="yinyang">
+      <div class="actionlink download">
+        <a href="http://codemirror.net/codemirror.zip">DOWNLOAD</a>
+      </div>
+      <div class="actionlink fund">
+        <a href="https://marijnhaverbeke.nl/fund/">FUND</a>
+      </div>
+    </div>
+    <div class="actionsleft">
+      Get the current version: <a href="http://codemirror.net/codemirror.zip">5.6</a>.<br>
+      You can see the <a href="https://github.com/codemirror/codemirror" title="Github repository">code</a> or<br>
+      read the <a href="http://codemirror.net/doc/releases.html">release notes</a>.<br>
+      There is a <a href="http://codemirror.net/doc/compress.html">minification helper</a>.
+    </div>
+    <div class="actionsright">
+      Software needs maintenance,<br>
+      maintainers need to subsist.<br>
+      Current funding status = <img src="status_s.png" title="Current maintainer happiness" style="vertical-align: middle; height: 16px; width: 16px"><br>
+      You can help <a href="https://marijnhaverbeke.nl/fund/" title="Set up a monthly contribution">per month</a> or
+      <a title="Donate with Paypal" href="javascript:document.getElementById('paypal').submit();">once</a>.
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="3FVHS5FGUY7CC">
+      </form>
+    </div>
+  </div>
+  
+</section>
+
+<section id="features">
+  <h2>Features</h2>
+  <ul>
+    <li>Support for <a href="http://codemirror.net/mode/index.html">over 100 languages</a> out of the box
+    </li><li>A powerful, <a href="http://codemirror.net/mode/htmlmixed/index.html">composable</a> language mode <a href="http://codemirror.net/doc/manual.html#modeapi">system</a>
+    </li><li><a href="http://codemirror.net/doc/manual.html#addon_show-hint">Autocompletion</a> (<a href="http://codemirror.net/demo/xmlcomplete.html">XML</a>)
+    </li><li><a href="http://codemirror.net/doc/manual.html#addon_foldcode">Code folding</a>
+    </li><li><a href="http://codemirror.net/doc/manual.html#option_extraKeys">Configurable</a> keybindings
+    </li><li><a href="http://codemirror.net/demo/vim.html">Vim</a>, <a href="http://codemirror.net/demo/emacs.html">Emacs</a>, and <a href="http://codemirror.net/demo/sublime.html">Sublime Text</a> bindings
+    </li><li><a href="http://codemirror.net/doc/manual.html#addon_search">Search and replace</a> interface
+    </li><li><a href="http://codemirror.net/doc/manual.html#addon_matchbrackets">Bracket</a> and <a href="http://codemirror.net/doc/manual.html#addon_matchtags">tag</a> matching
+    </li><li>Support for <a href="http://codemirror.net/demo/buffers.html">split views</a>
+    </li><li><a href="http://codemirror.net/doc/manual.html#addon_lint">Linter integration</a>
+    </li><li><a href="http://codemirror.net/demo/variableheight.html">Mixing font sizes and styles</a>
+    </li><li><a href="http://codemirror.net/demo/theme.html">Various themes</a>
+    </li><li>Able to <a href="http://codemirror.net/demo/resize.html">resize to fit content</a>
+    </li><li><a href="http://codemirror.net/doc/manual.html#mark_replacedWith">Inline</a> and <a href="http://codemirror.net/doc/manual.html#addLineWidget">block</a> widgets
+    </li><li>Programmable <a href="http://codemirror.net/demo/marker.html">gutters</a>
+    </li><li>Making ranges of text <a href="http://codemirror.net/doc/manual.html#markText">styled, read-only, or atomic</a>
+    </li><li><a href="http://codemirror.net/demo/bidi.html">Bi-directional text</a> support
+    </li><li>Many other <a href="http://codemirror.net/doc/manual.html#api">methods</a> and <a href="http://codemirror.net/doc/manual.html#addons">addons</a>...
+  </li></ul>
+</section>
+
+<section id="community">
+  <h2>Community</h2>
+
+  <p>CodeMirror is an open-source project shared under
+  an <a href="http://codemirror.net/LICENSE">MIT license</a>. It is the editor used in the
+  dev tools for
+  both <a href="https://hacks.mozilla.org/2013/11/firefox-developer-tools-episode-27-edit-as-html-codemirror-more/">Firefox</a>
+  and <a href="https://developers.google.com/chrome-developer-tools/">Chrome</a>, <a href="http://www.lighttable.com/">Light
+  Table</a>, <a href="http://brackets.io/">Adobe
+  Brackets</a>, <a href="http://blog.bitbucket.org/2013/05/14/edit-your-code-in-the-cloud-with-bitbucket/">Bitbucket</a>,
+  and <a href="http://codemirror.net/doc/realworld.html">many other projects</a>.</p>
+
+  <p>Development and bug tracking happens
+  on <a href="https://github.com/codemirror/CodeMirror/">github</a>
+  (<a href="http://marijnhaverbeke.nl/git/codemirror">alternate git
+  repository</a>).
+  Please <a href="http://codemirror.net/doc/reporting.html">read these
+  pointers</a> before submitting a bug. Use pull requests to submit
+  patches. All contributions must be released under the same MIT
+  license that CodeMirror uses.</p>
+
+  <p>Discussion around the project is done on
+  a <a href="http://discuss.codemirror.net/">discussion forum</a>.
+  There is also
+  the <a href="http://groups.google.com/group/codemirror-announce">codemirror-announce</a>
+  list, which is only used for major announcements (such as new
+  versions). If needed, you can
+  contact <a href="mailto:marijnh@gmail.com">the maintainer</a>
+  directly. We aim to be an inclusive, welcoming community. To make
+  that explicit, we have
+  a <a href="http://contributor-covenant.org/version/1/1/0/">code of
+  conduct</a> that applies to communication around the project.</p>
+
+  <p>A list of CodeMirror-related software that is not part of the
+  main distribution is maintained
+  on <a href="https://github.com/codemirror/CodeMirror/wiki/CodeMirror-addons">our
+  wiki</a>. Feel free to add your project.</p>
+</section>
+
+<section id="browsersupport">
+  <h2>Browser support</h2>
+  <p>The <em>desktop</em> versions of the following browsers,
+  in <em>standards mode</em> (HTML5 <code>&lt;!doctype&nbsp;html&gt;</code>
+  recommended) are supported:</p>
+  <table style="margin-bottom: 1em">
+    <tbody><tr><th>Firefox</th><td>version 4 and up</td></tr>
+    <tr><th>Chrome</th><td>any version</td></tr>
+    <tr><th>Safari</th><td>version 5.2 and up</td></tr>
+    <tr><th style="padding-right: 1em;">Internet Explorer</th><td>version 8 and up</td></tr>
+    <tr><th>Opera</th><td>version 9 and up</td></tr>
+  </tbody></table>
+  <p>Support for modern mobile browsers is experimental. Recent
+  versions of the iOS browser and Chrome on Android should work
+  pretty well.</p>
+</section>
+
+</article>
+<div id="banner" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: black; position: fixed; left: 0px; right: 0px; top: 0px; transition: top 1s linear; padding: 0.1em 20px; font-size: 90%; text-align: center; display: block; z-index: 50; background: white;">
+  <a id="hushbanner" style="float: right; cursor: pointer">[hush]</a>
+  CodeMirror's author is launching a <a href="http://prosemirror.net/">new project</a>. If your company could use a good in-browser rich text editor, maybe <a href="http://indiegogo.com/projects/prosemirror/">back ProseMirror</a>.
+</div>
+
+<script>
+  (function() {
+  if (document.cookie.indexOf("hush-banner=true") == -1) {
+    var banner = document.querySelector("#banner")
+    banner.style.display = "block"
+    getComputedStyle(banner).top
+    banner.style.top = "0"
+    banner.querySelector("#hushbanner").addEventListener("click", function() {
+      document.cookie = "hush-banner=true"
+      hush()
+    })
+    function hush() {
+      if (!banner) return
+      var b = banner
+      banner.style.top = "-1.8em"
+      setTimeout(function() { b.parentNode.removeChild(b) }, 1200)
+      window.removeEventListener("scroll", hush)
+      banner = null
+    }
+    setTimeout(function() { window.addEventListener("scroll", hush) }, 5000)
+  }
+  })()
+</script>
+</body></html>

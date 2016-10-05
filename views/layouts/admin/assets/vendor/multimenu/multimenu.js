@@ -12,5 +12,10 @@ $(function(){
 
 		// iPad
 		var isiPad = navigator.userAgent.match(/iPad/i) != null;
-		if (isiPad) $('#adminmenu ul').addClass('no-transition');      
-});         
+		if (isiPad) $('#adminmenu ul').addClass('no-transition');    
+
+		// Fix disappearing menu
+		window.addEventListener('resize', function(){
+	    	$("#adminmenu").removeAttr("style");
+	    }, true);  
+});

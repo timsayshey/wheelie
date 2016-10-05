@@ -6,9 +6,10 @@ component output="false" extends="controllers.Controller"
 		super.init();
 		
 		secureActions = "mailUs,jobapp,jobappSubmit,newsletter,newsletterSubmit,footerbar";
-		forceHttps(only=secureActions);
-		forceHttp(except=secureActions);
-		filters(through="customPublicAppFilters,redirectSecureSubdomain",except=secureActions);	
+		//forceHttps(only=secureActions);
+		//forceHttp(except=secureActions);
+
+		filters(through="customPublicAppFilters",except=secureActions);	
 		
 		filters(through="preHandler");	
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,register,registerPost");

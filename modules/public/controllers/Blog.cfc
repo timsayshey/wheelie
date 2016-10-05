@@ -29,7 +29,8 @@ component extends="_main" output="false"
 	}  
 	 
 	function post()
-	{						
+	{			
+		
 		if(isDefined("params.id")) 
 		{
 			// Queries
@@ -46,7 +47,7 @@ component extends="_main" output="false"
 				content = "We apologize for the inconvenience. Please try clicking the menu above to find the post you are looking for."
 			};
 		}
-		
+					
 		
 	}
 	

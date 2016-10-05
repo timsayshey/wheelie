@@ -5,10 +5,8 @@ component output="false" extends="controllers.Controller"
 	{
 		super.init();
 		
-		forceHttps(except="");
-		
 		filters(through="loginServerUser,deleteEmptyPassword,customAdminAppFilters,checkUserSessionSite,preHandler,filterDefaults,handleRedirect");
-		filters(through="loggedOutOnly",except="login,usermenu,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
+		filters(through="loggedOutOnly",except="getOodle,login,usermenu,loginPost,recovery,recoveryPost,jobapp,emailForm,register,registerPost,verifyEmail,formsubmissionSave");	//
 		filters(through="loggedInExcept",only="login,recovery");	
 		filters(through="setUserInfo");	
 	}
@@ -66,9 +64,9 @@ component output="false" extends="controllers.Controller"
 		
 		if(!isNull(session.loginRedir) AND !isNull(session.user.id) AND !find("http",session.loginRedir))
 		{
-			tempRedir = session.loginRedir;
-			StructDelete(session,"loginRedir");
-			location(tempRedir,false); abort;	
+			// tempRedir = session.loginRedir;
+			// StructDelete(session,"loginRedir");
+			// location(tempRedir,false); abort;	
 		}
 	}
 	
@@ -146,37 +144,6 @@ component output="false" extends="controllers.Controller"
 		{			
 			redirectTo(route="admin~Action", module="admin", controller="main", action="home");
 		}	
-	}
-	
-	function setUserInfo()
-	{	
-		// Authenticate
-		if(StructKeyExists(session,"user"))
-		{
-			var user = model("UserGroupJoin").findAll(where="userid = '#session.user.id#'", include="User,UserGroup");
-			//var user = model("User").findAll(where="id = '#session.user.id#'");
-			session.user = {
-				id 			= user.userid,
-				fullname 	= user.firstname & " " & user.lastname,
-				firstname 	= user.firstname,
-				lastname 	= user.lastname,
-				role		= user.usergrouprole,
-				email 		= user.email,
-				siteid		= user.siteid,
-				globalized	= user.globalized
-			};
-			
-			if(len(trim(user.role)))
-			{
-				session.user.role = user.role;
-			}
-			
-			if(len(trim(session.user.id)) eq 0)
-			{
-				flashInsert(error="There was an issue with your account. Try again.");			
-				StructDelete(session,"user");
-			}
-		}
 	}
 	
 	private function preHandler()

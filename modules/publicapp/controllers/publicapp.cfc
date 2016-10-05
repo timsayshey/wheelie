@@ -10,5 +10,14 @@
 		{
 			
 		}
+
+		function errortest()
+		{
+			
+		}
+		function archive()
+		{
+			
+		}
 	}
 </cfscript>

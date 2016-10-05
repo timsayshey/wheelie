@@ -27,31 +27,59 @@
 	<!--- Title --->	
 	#btextfield(
 		objectName	= 'page', 
+		property	= 'sysname', 
+		label		= 'System Label',
+		placeholder	= "Ex: Homepage",
+		help		= 'For internal system reference'
+	)#
+
+	<!--- Title --->	
+	#btextfield(
+		objectName	= 'page', 
 		property	= 'name', 
 		label		= 'Title',
-		placeholder	= "Ex: Coolest Page Ever",
-		help		= 'Message inbox test'
+		placeholder	= "Ex: Welcome to our Website",
+		help		= 'Main title that shows at the top of the page'
+	)#
+
+	<!--- Title --->	
+	#btextfield(
+		objectName	= 'page', 
+		property	= 'subname', 
+		label		= 'Sub-Title',
+		placeholder	= "Ex: You really are welcome",
+		help		= 'Title that shows under the main title'
 	)#
 	
-	<!--- Password --->	
+	<!--- Password
 	#btextfield(
 		objectName	= 'page', 
 		property	= 'password', 
 		label		= 'Password',
 		placeholder	= "Ex: Password"
-	)#
+	)# --->	
 	
-	<!--- Page URL --->	
+	<!--- Page URL 
+		,disabled = !isNew
+	--->	
 	#btextfield(
-		prependedText	= '#cgi.HTTP_HOST#/page/', 
-		label			= "Page URL",
+		prependedText	= '#cgi.HTTP_HOST#/', 
+		label			= "Permalink",
 		objectName		= 'page', 
 		property		= 'urlid', 												
 		placeholder	 	= "Coolest-Page-Ever",
-		help 			= "This is name of the page's url address (Can't be changed in the future)",
-		disabled 		= !isNew
+		help 			= "This page's permalink"
 	)#	
-								
+
+	#btextfield(
+		prependedText	= '#cgi.HTTP_HOST#/', 
+		label			= "Quote Permalink",
+		objectName		= 'page', 
+		property		= 'quoteUrlId', 												
+		placeholder	 	= "quote",
+		help 			= "This page's quote form permalink"
+	)#	
+
 	<!--- Description --->
 	#btextarea(
 		objectName 		= 'page', 
@@ -60,20 +88,55 @@
 		label 		 	= "Content",
 		help 			= "Shows on the page"
 	)#	
-	
+
+	<a href="javascript:void(0)" class="btn btn-default btn-large" data-html="true" data-toggle="popover" title="Shortcodes" data-content='
+		[bootwrap class="row"][/bootwrap]<br>
+		[bootgrid cols="12" colsize="md"][/bootgrid]<br>		
+		[formly formid="11"]<br>
+		<sup>Pro tip: Switch to Source view and wrap shortcodes with &prec;safe&succ;&prec;/safe&succ;</sup>
+	'>Shortcodes</a>
+	<br class="clear"><br>
+
+	<script>
+	$(function() {
+		$('[data-toggle="popover"]').popover();
+	});
+	</script>
+
+	<cfscript>
+		templates = [];
+		templateFiles = DirectoryList(path='#info.fileroot#/views/themes/#request.site.theme#/pagetemplates/');		
+
+		ArraySort(templateFiles, "textnocase", "asc");
+
+		for(templateFile in templateFiles) {
+			templateFile = replaceNoCase(listLast(templateFile,"/"),".cfm","","ALL");
+			arrayAppend(templates,{ text = templateFile, value = templateFile });
+		}	
+	</cfscript>
+
 	#bselecttag(
 		name	 = 'page[template]',
 		label	 = 'Template',
-		options	 = [
-			{text = "Default", value = "default"},
-			{text = "Hide Sidebar", value = "hide_sidebar"},
-			{text = "Normal Form", value = "normal_form"},
-			{text = "Hide Sidebar and Call to Action", value = "hide_sidebar_and_call_to_action"},
-			{text = "Letter Style", value = "letter"}
-		],
+		options	 = templates,
 		selected = page.template,
 		class	 = "selectize",
 		append	 = ""
+	)#
+
+	<cfparam name="page.featuredImg" default="">
+	#bImageUploadTag(
+		name			= "featuredImg",
+		value			= "", 	
+		filepath		= "/assets/images/featured/feat-#page.id#.jpg",
+		label			= 'Hero Template Image (JPG Only)'
+	)#
+
+	#bselect(
+		objectName	= 'page', 
+		property	= 'footerPageBlockId', 
+		label		= 'Hero Footer Page Block',
+		options		= pageBlockOptions
 	)#
 	
 	#includePartial(partial="/_partials/formSeperator")#	
@@ -157,7 +220,7 @@
 	
 	<cfsavecontent variable="rightColumn">
 		<div class="rightbarinner">			
-			#includePartial(partial="/_partials/editorSubmitBox", controllerName="pages", currentStatus=currentStatus)#					
+			#includePartial(partial="/_partials/editorSubmitBox", controllerName="pages", currentStatus=currentStatus)#				
 		</div>
 		</div>
 		<div class="rightBottomBox  hidden-xs hidden-sm">

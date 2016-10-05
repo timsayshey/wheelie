@@ -283,3 +283,23 @@ a.featured_event {
 * {
 	font-family: "Montserrat", sans-serif !important;
 }
+.fa,.fa * {
+	font-family: "FontAwesome", sans-serif !important;
+}
+.img-responsive {
+    display: inline-block;
+ }
+ .features div {
+ padding-bottom: 35px;	
+ text-align: center;
+ }
+ .features h4 {
+ 	padding-bottom: 10px;
+ 	text-align: center;
+ }
+  .features i {
+  	text-align: center;
+  	font-size:40px;
+  	display: block;
+  	margin-bottom: 20px;
+  }

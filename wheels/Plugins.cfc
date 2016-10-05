@@ -3,7 +3,7 @@
 	<cfset variables.$class = {}>
 	<cfset variables.$class.plugins = {}>
 	<cfset variables.$class.mixins = {}>
-	<cfset variables.$class.mixableComponents = "application,dispatch,controller,model,base,connection,microsoftsqlserver,mysql,oracle,postgresql,h2,test">
+	<cfset variables.$class.mixableComponents = "application,dispatch,controller,model,base,connection,sqlserver,mysql,oracle,postgresql,h2,test">
 	<cfset variables.$class.incompatiblePlugins = "">
 	<cfset variables.$class.dependantPlugins = "">
 
@@ -17,7 +17,7 @@
 		<cfargument name="wheelsVersion" type="string" required="false" default="#application.wheels.version#">
 		<cfset var loc = {}>
 
-		<cfset structAppend(variables.$class, arguments)>		
+		<cfset structAppend(variables.$class, arguments)>
 		<!--- handle pathing for different operating systems --->
 		<cfset variables.$class.pluginPathFull = ReplaceNoCase(ExpandPath(variables.$class.pluginPath), "\", "/", "all")>
 		<!--- extract out plugins --->
@@ -41,25 +41,31 @@
 
 	<cffunction name="$pluginFolders" returntype="struct">
 		<cfset var loc = {}>
-		
+
 		<cfset loc.plugins = {}>
 		<cfset loc.folders = $folders()>
-		
+
 		<cfloop query="loc.folders">
+			<cfdirectory name="loc.subfolder" action="list" directory="#loc.folders.directory#/#loc.folders.name#">
+			<cfquery name="loc.pluginCfc" dbtype="query">
+			SELECT name
+			FROM loc.subfolder
+			WHERE LOWER(name) = '#LCase(loc.folders.name)#.cfc'
+			</cfquery>
 			<cfset loc.temp = {}>
-			<cfset loc.temp.name = loc.folders.name>
+			<cfset loc.temp.name = Replace(loc.pluginCfc.name, ".cfc", "")>
 			<cfset loc.temp.folderPath = $fullPathToPlugin(loc.folders.name)>
-			<cfset loc.temp.componentName = lcase(loc.folders.name) & "." & loc.folders.name>
+			<cfset loc.temp.componentName = loc.folders.name & "." & Replace(loc.pluginCfc.name, ".cfc", "")>
 			<cfset loc.plugins[loc.folders.name] = loc.temp>
 		</cfloop>
-		
+
 		<cfreturn loc.plugins>
 	</cffunction>
-	
-	
+
+
 	<cffunction name="$pluginFiles" returntype="struct">
 		<cfset var loc = {}>
-		
+
 		<!--- get all plugin zip files --->
 		<cfset loc.files = $files()>
 		<cfset loc.plugins = {}>
@@ -69,33 +75,37 @@
 			<cfset loc.temp = {}>
 			<cfset loc.temp.file = $fullPathToPlugin(loc.files.name)>
 			<cfset loc.temp.name = loc.files.name>
-			<cfset loc.temp.folderPath = lcase($fullPathToPlugin(loc.name))>
+			<cfset loc.temp.folderPath = $fullPathToPlugin(LCase(loc.name))>
 			<cfset loc.temp.folderExists = directoryExists(loc.temp.folderPath)>
 			<cfset loc.plugins[loc.name] = loc.temp>
 		</cfloop>
 
 		<cfreturn loc.plugins>
 	</cffunction>
-	
-	
+
+
 	<cffunction name="$pluginsExtract">
 		<cfset var loc = {}>
 		<!--- get all plugin zip files --->
 		<cfset loc.plugins = $pluginFiles()>
-		
+
 		<cfloop collection="#loc.plugins#" item="loc.p">
 			<cfset loc.plugin = loc.plugins[loc.p]>
 			<cfif not loc.plugin.folderExists OR (loc.plugin.folderExists AND variables.$class.overwritePlugins)>
 				<cfif not loc.plugin.folderExists>
-					<cfdirectory action="create" directory="#loc.plugin.folderPath#">
+					<cftry>
+						<cfdirectory action="create" directory="#loc.plugin.folderPath#">
+						<cfcatch type="any">
+						</cfcatch>
+					</cftry>
 				</cfif>
 				<cfzip action="unzip" destination="#loc.plugin.folderPath#" file="#loc.plugin.file#" overwrite="true" />
 			</cfif>
 		</cfloop>
 
 	</cffunction>
-	
-	
+
+
 	<cffunction name="$pluginDelete">
  		<cfset var loc = {}>
 		<!--- get all plugin folders --->
@@ -114,24 +124,26 @@
  		</cfloop>
 
  	</cffunction>
-	
-	
+
+
 	<cffunction name="$pluginsProcess">
 		<cfset var loc = {}>
-		
+
 		<cfset loc.plugins = $pluginFolders()>
+		<cfset loc.pluginKeys = StructKeyList(loc.plugins)>
 		<cfset loc.wheelsVersion = SpanExcluding(variables.$class.wheelsVersion, " ")>
-		<cfloop collection="#loc.plugins#" item="loc.iPlugins">
-			<cfset loc.plugin = createobject("component", $componentPathToPlugin(loc.iPlugins)).init()>
-			<cfif not StructKeyExists(loc.plugin, "version") OR ListFind(loc.plugin.version, loc.wheelsVersion) OR variables.$class.loadIncompatiblePlugins>
-				<cfset variables.$class.plugins[loc.iPlugins] = loc.plugin>
-				<cfif StructKeyExists(loc.plugin, "version") AND not ListFind(loc.plugin.version, loc.wheelsVersion)>
-					<cfset variables.$class.incompatiblePlugins = ListAppend(variables.$class.incompatiblePlugins, loc.iPlugins)>
+		<cfloop list="#loc.pluginKeys#" index="loc.pluginKey">
+			<cfset loc.pluginValue = loc.plugins[loc.pluginKey]>
+			<cfset loc.plugin = CreateObject("component", $componentPathToPlugin(loc.pluginKey, loc.pluginValue.name)).init()>
+			<cfif not StructKeyExists(loc.plugin, "version") or ListFind(loc.plugin.version, loc.wheelsVersion) or variables.$class.loadIncompatiblePlugins>
+				<cfset variables.$class.plugins[loc.pluginKey] = loc.plugin>
+				<cfif StructKeyExists(loc.plugin, "version") and not ListFind(loc.plugin.version, loc.wheelsVersion)>
+					<cfset variables.$class.incompatiblePlugins = ListAppend(variables.$class.incompatiblePlugins, loc.pluginKey)>
 				</cfif>
 			</cfif>
 		</cfloop>
 	</cffunction>
-	
+
 
 	<cffunction name="$determineIncompatible">
 		<cfset var loc = {}>
@@ -143,17 +155,17 @@
 			<cfloop collection="#loc.plugin#" item="loc.method">
 				<cfif not ListFindNoCase(loc.excludeMethods, loc.method)>
 					<cfif StructKeyExists(loc.loadedMethods, loc.method)>
-						<cfthrow type="Wheels.IncompatiblePlugin" message="#loc.iPlugins# is incompatible with a previously installed plugin." extendedInfo="Make sure none of the plugins you have installed override the same Wheels functions.">
+						<cfthrow type="Wheels.IncompatiblePlugin" message="#loc.iPlugins# is incompatible with a previously installed plugin." extendedInfo="Make sure none of the plugins you have installed override the same CFWheels functions.">
 					<cfelse>
 						<cfset loc.loadedMethods[loc.method] = "">
 					</cfif>
 				</cfif>
 			</cfloop>
 		</cfloop>
-		
+
 	</cffunction>
-	
-	
+
+
 	<cffunction name="$determineDependancy">
 		<cfset var loc = {}>
 
@@ -168,13 +180,13 @@
 				</cfloop>
 			</cfif>
 		</cfloop>
-	
+
 	</cffunction>
-	
-	
+
+
 	<!--- mixins --->
-	
-	
+
+
 	<cffunction name="$processMixins">
 		<cfset var loc = {}>
 		<!--- setup a container for each mixableComponents type --->
@@ -215,52 +227,53 @@
 			</cfif>
 		</cfloop>
 	</cffunction>
-	
+
 
 	<!--- getters --->
-	
-	
+
+
 	<cffunction name="getPlugins">
 		<cfreturn variables.$class.plugins>
 	</cffunction>
-	
+
 	<cffunction name="getIncompatiblePlugins">
 		<cfreturn variables.$class.incompatiblePlugins>
 	</cffunction>
-	
+
 	<cffunction name="getDependantPlugins">
 		<cfreturn variables.$class.dependantPlugins>
 	</cffunction>
-	
+
 	<cffunction name="getMixins">
 		<cfreturn variables.$class.mixins>
 	</cffunction>
-	
+
 	<cffunction name="getMixableComponents">
 		<cfreturn variables.$class.mixableComponents>
 	</cffunction>
-	
+
 	<cffunction name="inspect">
 		<cfreturn variables>
 	</cffunction>
-	
+
 	<!--- private methods --->
-	
+
 	<cffunction name="$fullPathToPlugin">
 		<cfargument name="folder" type="string" required="true">
 		<cfreturn ListAppend(variables.$class.pluginPathFull, arguments.folder, "/")>
 	</cffunction>
-	
+
 	<cffunction name="$componentPathToPlugin">
 		<cfargument name="folder" type="string" required="true">
+		<cfargument name="file" type="string" required="true">
 		<cfset var loc = {}>
-		<cfset loc.path = [ListChangeDelims(variables.$class.pluginPath, ".", "/"), arguments.folder, arguments.folder]>
+		<cfset loc.path = [ListChangeDelims(variables.$class.pluginPath, ".", "/"), arguments.folder, arguments.file]>
 		<cfreturn ArrayToList(loc.path, ".")>
 	</cffunction>
 
 	<cffunction name="$folders" returntype="query">
 		<cfset var q = "">
-		
+
 		<cfdirectory action="list" directory="#variables.$class.pluginPathFull#" type="dir" name="q">
 		<cfquery name="q" dbtype="query">
 		select * from q where name not like '.%'
@@ -270,12 +283,12 @@
 
 	<cffunction name="$files" returntype="query">
 		<cfset var q = "">
-		
+
 		<cfdirectory directory="#variables.$class.pluginPathFull#" action="list" filter="*.zip" type="file" sort="name DESC" name="q">
 		<cfquery name="q" dbtype="query">
 		select * from q where name not like '.%' order by name
 		</cfquery>
-		
+
 		<cfreturn q>
 	</cffunction>
 

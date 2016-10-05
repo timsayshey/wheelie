@@ -42,6 +42,15 @@
 							params		= buttonParams,
 							class		= "btn btn-default"
 						)#	
+						#linkTo(
+							text		= "<span class=""elusive icon-list""></span> Import",
+							route		= "admin~Field", 
+							controller	= "metafields", 
+							modelName	= "propertyfield", 
+							params		= "modelid=3", 
+							action		= "importlist",
+							class		= "btn btn-default"
+						)#	
 					</li>')>
 			
 		<style type="text/css">

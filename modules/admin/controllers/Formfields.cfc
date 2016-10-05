@@ -26,7 +26,7 @@ component extends="_main" output="false"
 					
 			if(isObject(formField))
 			{
-				formField.update(sortorder=fieldValue.newIndex);
+				formField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
 		abort;

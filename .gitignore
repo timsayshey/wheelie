@@ -1,3 +1,9 @@
-*.bak
-WEB-INF/
-_notes/
+.tags
+.htaccess
+target
+Procfile
+webroot/WEB-INF/lucee
+!webroot/WEB-INF/lucee/lucee-web.xml.cfm
+webroot/WEB-INF/lib
+webroot/WEB-INF/lucee-server
+!webroot/WEB-INF/lucee-server/lucee-server.xml

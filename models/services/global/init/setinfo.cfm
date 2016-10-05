@@ -13,10 +13,10 @@
 
 <cfscript>
 	/* Globlal data */
-	fileroot = expandPath(".");
+	fileroot = expandPath("/");
 	privateroot = expandPath("../");
 	
-	info.validCategoryModelsList = ""; // lowercase
+	info.validCategoryModelsList = "itemcategory,propertycategory"; // lowercase
 	info.serverIp = "";
 	
 	info.adminUrlPath = "/manager";
@@ -30,7 +30,7 @@
 	info.videosPath  = "/assets/uploads/videos/";
 	info.mediaPath   = "/assets/uploads/media/";
 	info.videoThumbPath   = "/assets/uploads/videos/thumbs/";	
-	info.privateRootPath  = "/Copy/";	
+	info.privateRootPath  = "/privatedata/";	
 	
 	info.privateroot    = fixFilePathSlashes("#privateroot##info.privateRootPath#");
 	info.fileroot    	= fixFilePathSlashes("#fileroot#");
@@ -75,6 +75,10 @@
 		// Page filter defaults
 		param name="session.pages.sortby" default="name";
 		param name="session.pages.order" default="asc";
+
+		// Page filter defaults
+		param name="session.pageblocks.sortby" default="name";
+		param name="session.pageblocks.order" default="asc";
 		
 		// Post filter defaults
 		param name="session.posts.sortby" default="name";
@@ -113,6 +117,10 @@
 		// Page filter defaults
 		session.pages.sortby = "name";
 		session.pages.order = "asc";
+
+		// Page filter defaults
+		session.pageblocks.sortby = "name";
+		session.pageblocks.order = "asc";
 		
 		// Option filter defaults
 		session.options.sortby = "label";

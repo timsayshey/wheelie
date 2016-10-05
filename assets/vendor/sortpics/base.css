@@ -1,0 +1,66 @@
+.pic-options,.pic-options * {
+	background: #333;
+	color: #fff;
+}
+.pic-options {
+	padding:5px;
+	clear:both;
+}
+
+
+
+
+
+/* ------------------------
+*
+* 		ul#Sortable Gallery
+*
+*  -------------------------- */
+ul.sortable {width: 100%; float: left; margin: 0; padding: 0; list-style: none; position: relative !important;}
+ul.sortable li {height: 223px; float: left; margin: 0 7px 7px 0; border: 2px solid #fff; cursor: move; overflow: hidden;}
+ul.sortable li img { float: left;}
+ul.sortable li.ui-sortable-helper {border-color: #3498db;}
+
+
+ul.sortable li.placeholder {width: 196px; height: 223px; float: left; background: #eee; border: 2px dashed #bbb; display: block; opacity: 0.6;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+
+
+button.save {float: left; padding: 10px 13px; border: none; outline: none; background: #27ae60; color: #fff; font-family: 'Montserrat', Arial, sans-serif; text-transform: uppercase; cursor: pointer; letter-spacing: 1px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+button.save:hover {background: #2ecc71;}
+
+
+
+
+
+
+
+/* ------------------------
+*
+* 		download button
+*
+*  -------------------------- */
+.holder {width: 100%; float: left; margin: 20px 0; text-align: center;}
+a.download {display:inline-block; padding: 13px 22px; color: #fff; background: #9b59b6; font-family: 'Montserrat', Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+
+
+
+/* ------------------------
+*
+* 			Footer
+*
+*  -------------------------- */
+footer {width: 100%; float: left; margin-top: 20px; padding: 35px 0; background: #e3e3e3; color: #aaa; font-family: 'Montserrat'; text-align: center; font-size: 12px;}

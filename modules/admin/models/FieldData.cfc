@@ -26,25 +26,24 @@
 		
 		function saveFielddata(fields,foreignid)
 		{
-			fields = arguments.fields;
-			response = "";
+			var response = "";
 			if(isStruct(fields))
 			{
-				fieldIds = StructKeyList(fields);
+				var fieldIds = StructKeyList(fields);
 				
-				for(i=1; i LTE ListLen(fieldIds); i = i + 1)
+				for(var i=1; i LTE ListLen(fieldIds); i = i + 1)
 				{
-					fieldId = ListGetAt(fieldIds,i);
-					thisField = fields[fieldId];
+					var fieldId = ListGetAt(fieldIds,i);
+					var thisField = fields[fieldId];
 					
-					fielddataParams = {
+					var fielddataParams = {
 						foreignid	= arguments.foreignid,
 						Fieldid		= fieldId,
 						fielddata	= thisField
 					};
 					
 					// Save field
-					FieldData = model("FieldData").findOne(where="foreignid = #arguments.foreignid# AND Fieldid = #fieldId#");
+					var FieldData = model("FieldData").findOne(where="foreignid = #arguments.foreignid# AND Fieldid = #fieldId#");
 					 
 					if(isObject(FieldData))
 					{
@@ -92,8 +91,10 @@
 				metafields.append,
 				metafields.styleattribute,
 				metafields.class,
+				metafields.codeblock,
+				metafields.wrapoptions,
 				metadata.foreignid,
-				metadata.metafieldid,
+				metadata.metafieldid,				
 				metadata.fielddata				
 			FROM
 				metafields

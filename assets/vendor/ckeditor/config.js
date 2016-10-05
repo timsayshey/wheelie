@@ -26,24 +26,23 @@ CKEDITOR.editorConfig = function( config ) {
 	];*/
 	
 
-config.toolbarGroups = [		
+	config.toolbarGroups = [
 		{ name: 'others' },
-		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },	
-		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },		
-		{ name: 'tools' },		
-		'/',
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },		
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' },
-		{ name: 'colors' },
-		{ name: 'links' },
-		{ name: 'forms' }
+		'/',
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	// Remove some buttons, provided by the standard plugins, which we don't
-	// need to have in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
+	config.removeButtons = 'NewPage,Save,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Styles,About,Preview,Print,Templates,Find,Replace,SelectAll,Language,Image,Flash,CreateDivContainer,BidiLtr,BidiRtl,CreateDiv,Smiley,Iframe,Font';
 
 	// Se the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
@@ -56,6 +55,8 @@ config.toolbarGroups = [
 	
 	config.htmlEncodeOutput = false;
 	config.entities = false;
+
+	config.bodyClass = 'content-body';
 	
 	/*config.extraAllowedContent = [	
         "*[class,id]",
@@ -127,22 +128,22 @@ config.toolbarGroups = [
 		mode: 'htmlmixed',
 	
 		 // Whether or not to show the search Code button on the toolbar
-		showSearchButton: true,
+		showSearchButton: false,
 	
 		 // Whether or not to show Trailing Spaces
 		showTrailingSpace: true,
 		
 		// Whether or not to show the format button on the toolbar
-		showFormatButton: true,
+		showFormatButton: false,
 		
 		// Whether or not to show the comment button on the toolbar
-		showCommentButton: true,
+		showCommentButton: false,
 		
 		// Whether or not to show the uncomment button on the toolbar
-		showUncommentButton: true,
+		showUncommentButton: false,
 	
 		 // Whether or not to show the showAutoCompleteButton button on the toolbar
-		showAutoCompleteButton: true
+		showAutoCompleteButton: false
 	};
 };
 
@@ -180,7 +181,6 @@ CKEDITOR.config.entities_processNumerical = false;
 CKEDITOR.config.fillEmptyBlocks = function (element) {
 		return true; // DON'T DO ANYTHING!!!!!
 };
-
+// CKEDITOR.config.contentsCss = ['/assets/vendor/ckeditor/contents.css','/assets/css/ltc.css'];
 CKEDITOR.config.allowedContent = true; // don't filter my data
-
 
