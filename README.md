@@ -30,7 +30,7 @@ To get started, run the following commands in GitBash (or your terminal of prefe
 
 ```bash
 $ git clone https://github.com/timsayshey/wheelie-heroku.git
-$ cd wheelie
+$ cd wheelie-heroku
 $ mvn package
 $ foreman start
 ```
