@@ -58,9 +58,7 @@
 			partial="/_partials/adminmenufull"
 		)#
         <div class="navbar_wrap">
-        	<div class="container">
-        		<h2 class="logo-text">#request.site.name#</h2>
-        	</div>
+            <div class="navbar_top"></div>
             <div class="navbar">	
                 <div class="container">
                     
@@ -69,7 +67,8 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
-                        </button>                        
+                        </button>
+                        <h2 class="logo-text">#request.site.name#</h2>
                     </div>
             
                     <div class="navbar-collapse collapse">
@@ -87,6 +86,7 @@
                 
                 </div>		
             </div>		
+            <div class="navbar_bottom"></div>
             
         </div>
 		<cfif len(includeContent("adminbody"))>
