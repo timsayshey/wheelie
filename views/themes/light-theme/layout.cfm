@@ -32,16 +32,32 @@
 		partial="/_partials/publicHeadTags", 
 		adminHeadColor = "54a5de"
 	)#
-	
+	    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="#themeDir#assets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
+    <link href="#themeDir#assets/todc-bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
+    <link href="#themeDir#assets/jquery.bxslider.css" media="all" rel="stylesheet" type="text/css">
+    <link href="#themeDir#assets/menu.css" media="all" rel="stylesheet" type="text/css">
+
+    <script src="#themeDir#assets/jquery-1.10.1.min.js"></script>
+    <script src="#themeDir#assets/jquery-migrate-1.2.1.min.js"></script>
+    <script src="#themeDir#assets/modernizr.js" type="text/javascript"></script>
+    <script src="#themeDir#assets/bootstrap.min.js" type="text/javascript"></script>
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
-	
-	<link href="#themeDir#assets/css/bootstrap.min.css" rel="stylesheet">
-	
-	<link href="#themeDir#assets/css/style.css" rel="stylesheet">
-	
-	<link href="#themeDir#assets/css/vendor.css" rel="stylesheet">
-	<link href="#themeDir#assets/css/sub.css" rel="stylesheet">	
-		
+
+    <link href="#themeDir#style.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    </style>
+    <script src="#themeDir#assets/jquery.bxslider.min.js" type="text/javascript"></script>
+    <script src="#themeDir#assets/jquery.placeholder.js" type="text/javascript"></script>
+    <script>
+    $(function() {
+        $('input, textarea').placeholder();
+    });
+    </script>
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -53,83 +69,167 @@
 </head>
 <body>
 <div class="page-wrap">
-		<!--- Admin bar for logged in users // Remove this if you don't want the admin bar on the frontend --->
-		#includePartial(
-			partial="/_partials/adminmenufull"
-		)#
-        <div class="navbar_wrap">
-        	<div class="container">
-        		<h2 class="logo-text">#request.site.name#</h2>
-        	</div>
-            <div class="navbar">	
-                <div class="container">
-                    
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>                        
+	<!--- Admin bar for logged in users // Remove this if you don't want the admin bar on the frontend --->
+	#includePartial(
+		partial="/_partials/adminmenufull"
+	)#
+	<div id="wrapper">
+        <div class="headerWrap">
+            <header id="header" class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="logo pull-left">#request.site.name#</h1>
                     </div>
-            
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
+                    <div class="col-md-4">
+                        <!-- <div class="callUs">
+                            <h5>Call us for more information</h5>
+                            <h6>555-555-5555</h6>
+                        </div> -->
+                    </div>
+                </div>
+            </header>
+            <div class="navwrap">
+                <div class="topnav">
+                    <nav id="menu-wrap" class="container">
+                        <ul id="menu" style="display: none;">
                             <li> 
-								<a href="/"
-									<cfif !isNull(home)>class="active"</cfif>>
-									Home
-								</a>
-							</li>
-							
-							#generateMenu(false)#
+                                <a href="/"
+                                    <cfif !isNull(home)>class="active"</cfif>>
+                                    Home
+                                </a>
+                            </li>
+                            
+                            #generateMenu(false)#
+                            </li>
                         </ul>
-                    </div><!--/.navbar-collapse -->
-                
-                </div>		
-            </div>		
-            
+                    </nav>
+                </div>
+            </div>
         </div>
-		<cfif len(includeContent("adminbody"))>
-			#includeContent("adminbody")#
-		<cfelse>
-			<cfif isNull(request.templateActive)>
-				<section class="page-wrapper">
-					<article class="page-content-full">    
-						#includeContent()#
-					</article>
-				</section>
-			<cfelse>
-				#includeContent()#
-			</cfif>
-		</cfif>
+    </div>
+    <div class="bg-slider-wrap">
+        <ul class="bg-slider">
+            <li style="background-image:url(#themeDir#assets/bg.jpg);">
+                <img width="1280" height="190" src="#themeDir#assets/bg.jpg" title="A safe place for healing">
+            </li>
+        </ul>
+    </div>
+    <div class="wrap container">
+        <div class="content row">
+            <div class="main col-sm-12">
+                <div class="main-container heads-up">
+                    <div class="row contentwrapper">
+                        <div class="col-md-9 leftside">
+                            <cfif len(includeContent("adminbody"))>
+                                #includeContent("adminbody")#
+                            <cfelse>
+                                <cfif isNull(request.templateActive)>
+                                    <section class="page-wrapper">
+                                        <article class="page-content-full">    
+                                            #includeContent()#
+                                        </article>
+                                    </section>
+                                <cfelse>
+                                    #includeContent()#
+                                </cfif>
+                            </cfif>
+
+                        </div>
+                        <div class="col-md-3 rightbar">
+                            <div class="data-block">
+                                <section>
+                                    <form enctype="multipart/form-data" method="post" action="##">
+                                        <input id="qform-id" name="qform[id]" type="hidden" value="12">
+                                        <div class="col-md-12">
+                                            <h2>
+										Contact Us
+										</h2>
+                                            <p>
+                                                Fill out the form below.
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="" for="fielddata-74">Name</label>
+                                            <input class="form-control  " id="fielddata-74" name="fielddata[74]" placeholder="" style="" type="text" value="">
+                                            <div class="separator"></div>
+                                        </div>
+                                       
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-sm btn-warning btn-block">Send</button>
+                                        </div>
+                                    </form>
+                                    <br class="clear">
+                                </section>
+                            </div>
+                            <div class="extras"></div>
+                        </div>
+                        <br class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footerNav">
+        <div class="container">
+            <ul class="footerMenu">
+                <li> 
+                    <a href="/"
+                        <cfif !isNull(home)>class="active"</cfif>>
+                        Home
+                    </a>
+                </li>
+                
+                #generateMenu(false)#
+            </ul>
+        </div>
+    </div>
+
 </div>
 
-
-<footer class="site-footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-2">
-				<img src="#getOption(qOptions,'site_name_and_logo').attachment#" alt="#getOption(qOptions,'site_name_and_logo').label#" class="footer_logo">				
-			</div>
-			<div class="col-lg-9">
-				<ul class="nav-footer">
-					<li> 
-						<a href="/"
-							<cfif !isNull(home)>class="active"</cfif>>
-							Home
-						</a>
-					</li>
-					
-					#generateMenu(false)#
-				</ul>
-			</div>
-			<div class="col-lg-1">
-				<a href="##"><img src="#themeDir#assets/images/ico_fb.png" class="social_icon"></a>
-			</div>
-		</div>
-	</div>
-</footer>
-
+<script src="#themeDir#assets/menu.js"></script>
+<script>
+    jQuery(document).ready(function($) {
+        var pageSlides = $('.bg-slider').children(),
+            slideIndex = 0,
+            slideCount = pageSlides.length;
+        pageSlides.each(function(i) {
+            var $el = $(this),
+                $img = $el.find('img');
+            if (i == 0) {
+                slideIndex++;
+            } else {
+                var myImage = new Image();
+                myImage.onload = function() {
+                    $img.css('visibility', 'hidden');
+                    slideIndex++;
+                    if (slideIndex == slideCount) {
+                        $('.bg-slider').bxSlider({
+                            touchEnabled: false,
+                            captions: false,
+                            pager: false,
+                            controls: false,
+                            auto: true,
+                            mode: 'fade',
+                            onSliderLoad: function() {
+                                pageSlides.find('img').each(function() {
+                                    var $my = $(this);
+                                    $my.closest('li').css('backgroundImage', 'url(' + $my.attr('src') + ')');
+                                });
+                                // Captions
+                                $(".bx-caption").addClass("slider-caption").addClass("container").removeClass("bx-caption");
+                            },
+                            onSlideNext: function($slideElement) {
+                                $(".slider-caption").text($slideElement.find("img").attr("title"));
+                            }
+                        });
+                    }
+                };
+                myImage.src = $img.attr('src');
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

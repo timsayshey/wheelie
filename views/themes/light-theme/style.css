@@ -90,7 +90,6 @@
 	padding: 12px 21px;
 }
 #menu-trigger {
-	background-color: #f06060;
 }
 #modal_loader {
 	background: url(../../images/ajax-loader.gif) no-repeat scroll center center #FFF;
@@ -344,14 +343,12 @@
 	text-align: center;
 }
 .callUs h5 {
-	color: #f06060;
 	font-size: 18px;
 	font-weight: 400;
 	margin: 0;
 	padding: 0;
 }
 .callUs h6 {
-	color: #f06060;
 	font-size: 34px;
 	font-weight: 400;
 	margin: 0;
@@ -516,7 +513,6 @@
 	border-radius: 0 2px 2px 0;
 }
 .footerNav {
-	background: #f06060;
 	margin-top: 20px;
 	padding: 20px;
 }
@@ -883,7 +879,6 @@
 	width: 100%;
 }
 .slider-caption {
-	background-color: #f06060;
 	color: #fff;
 	display: inline-block;
 	font-size: 41px;
@@ -934,7 +929,6 @@
 	padding-bottom: 30px;
 }
 .topnav, .navwrap {
-	background: #f06060;
 }
 .userinfo {
 	margin: 20px 0 0;
@@ -1064,7 +1058,6 @@ body.login .container .login-logo a, .control-group {
 	background: 0;
 }
 h1 {
-	background-color: #f06060;
 	display: inline-block;
 	font-size: 31px;
 	font-weight: 700;
@@ -1098,10 +1091,8 @@ h1.logo a {
 	-ms-transition: all .4s ease-in-out;
 	-o-transition: all .4s ease-in-out;
 	-webkit-transition: all .4s ease-in-out;
-	color: #f06060;
 }
 h1.logo a:hover {
-	color: #f06060;
 }
 h1.pghead {
 	margin-bottom: 40px;
@@ -1325,6 +1316,22 @@ ul.listy, ol.listy {
 }
 @media(max-width:991px) {
 	.callUs h5, .callUs h6 {
-		color: #f06060 !important
+		!important
 	}
+}
+.hero {
+	background: #348AA7 !important;
+}
+.data-block header {
+	background: #348AA7 !important;
+}
+.topnav, .navbar {
+	z-index: 120 !important;
+}
+.topnav, .data-block section, .data-block section h2, .data-block section p, .contentwrapper h1, .footerNav, .navwrap, #menu-trigger, .slider-caption {
+	color: #fff;
+	background: #0a7e95 !important;
+}
+#menu li:hover > a, #menu li > a.active, .callUs h5, .callUs h6, h1.logo a, h1.logo a:hover {
+	color: #5DD39E !important;
 }

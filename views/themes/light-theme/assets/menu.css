@@ -7,7 +7,6 @@ body {
 	list-style: none;
 }
 #menu {
-	width: 960px;
 	margin: 0px auto;
 	z-index: 999;
 }
