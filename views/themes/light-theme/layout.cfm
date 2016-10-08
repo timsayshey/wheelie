@@ -47,7 +47,7 @@
     
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
-
+    <link href="/assets/css/shared.css" rel="stylesheet" type="text/css"/>
     <link href="#themeDir#style.css" rel="stylesheet" type="text/css">
     <style type="text/css">
     </style>
@@ -68,7 +68,7 @@
 	
 </head>
 <body>
-<div class="page-wrap">
+<div class="page-wrap #len(includeContent("adminbody")) ? 'adminmode' : ''#">
 	<!--- Admin bar for logged in users // Remove this if you don't want the admin bar on the frontend --->
 	#includePartial(
 		partial="/_partials/adminmenufull"
@@ -90,7 +90,8 @@
             </header>
             <div class="navwrap">
                 <div class="topnav">
-                    <nav id="menu-wrap" class="container">
+                    <nav class="container">
+                        <div id="menu-wrap"  class="row">
                         <ul id="menu" style="display: none;">
                             <li> 
                                 <a href="/"
@@ -102,6 +103,7 @@
                             #generateMenu(false)#
                             </li>
                         </ul>
+                        </div>
                     </nav>
                 </div>
             </div>
@@ -119,8 +121,20 @@
             <div class="main col-sm-12">
                 <div class="main-container heads-up">
                     <div class="row contentwrapper">
-                        <div class="col-md-9 leftside">
+                        <!--- <div class="col-md-9 leftside"> --->
                             <cfif len(includeContent("adminbody"))>
+                                <style>
+                                    .main-container.heads-up {
+                                        padding:0px !important; 
+                                    }
+                                    .admin-content {
+                                        padding-top: 0px !important;
+                                        margin-top: -80px !important;
+                                    }
+                                    .main-container {
+                                        background: none;
+                                    }
+                                </style>
                                 #includeContent("adminbody")#
                             <cfelse>
                                 <cfif isNull(request.templateActive)>
@@ -134,7 +148,7 @@
                                 </cfif>
                             </cfif>
 
-                        </div>
+                        <!--- </div>
                         <div class="col-md-3 rightbar">
                             <div class="data-block">
                                 <section>
@@ -162,7 +176,7 @@
                                 </section>
                             </div>
                             <div class="extras"></div>
-                        </div>
+                        </div> --->
                         <br class="clear">
                     </div>
                 </div>

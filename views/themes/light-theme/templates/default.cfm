@@ -1,16 +1,8 @@
 <cfoutput>
 	<cfparam name="pagetitle" default="">
 	<cfparam name="pagecontent" default="">
-	
-	<section class="page-wrapper">	
-
-		<article class="page-content-full">
 			
-			<h1>#capitalize(pagetitle)#</h1>
-			
-			<p>#pagecontent#</p>
+	<h1 class="content-title">#capitalize(pagetitle)#</h1>
 	
-		</article>
-	
-	</section>
+	<div class="content-wrapped">#pagecontent#</div>
 </cfoutput>

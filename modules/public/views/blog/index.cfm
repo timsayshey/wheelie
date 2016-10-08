@@ -10,7 +10,7 @@
 		<cfinclude template="#blogTemplate#">
 	<cfelse>			
 		<div class="blog-post">          
-			<h1>Our Blog</h1>
+			<h1 class="content-title">Our Blog</h1>
 			<cfif request.site.id eq 1>
 				<br class="clear">
 			</cfif>

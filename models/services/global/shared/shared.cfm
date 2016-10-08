@@ -45,10 +45,8 @@
 <cffunction name="facebookLikeButton">
 	<cfargument name="facebookid" default="#getOption(qOptions,'facebook_id').content#">
 	<cfargument name="style" default="width:100px; height:20px; display:inline-block; margin-right:10px; margin-top:5px;">
-	<cfif request.site.id eq 1>
+	<cfif len(facebookid)>
 		<cfreturn '<iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;send=false&amp;layout=button_count&amp;colorscheme=light&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FPAGE%2F#arguments.facebookid#" scrolling="no" frameborder="0" allowtransparency="true" class="fb-like-widget" style="#arguments.style#"></iframe><br>'>
-	<cfelseif request.site.id eq 2>
-		<cfreturn '<br>'>
 	</cfif>
 </cffunction>
 

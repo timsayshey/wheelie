@@ -42,14 +42,14 @@
 		help		= 'Main title that shows at the top of the page'
 	)#
 
-	<!--- Title --->	
+	<!--- Title	
 	#btextfield(
 		objectName	= 'page', 
 		property	= 'subname', 
 		label		= 'Sub-Title',
 		placeholder	= "Ex: You really are welcome",
 		help		= 'Title that shows under the main title'
-	)#
+	)# --->
 	
 	<!--- Password
 	#btextfield(
@@ -58,10 +58,7 @@
 		label		= 'Password',
 		placeholder	= "Ex: Password"
 	)# --->	
-	
-	<!--- Page URL 
-		,disabled = !isNew
-	--->	
+
 	#btextfield(
 		prependedText	= '#cgi.HTTP_HOST#/', 
 		label			= "Permalink",
@@ -71,14 +68,14 @@
 		help 			= "This page's permalink"
 	)#	
 
-	#btextfield(
+	<!--- #btextfield(
 		prependedText	= '#cgi.HTTP_HOST#/', 
 		label			= "Quote Permalink",
 		objectName		= 'page', 
 		property		= 'quoteUrlId', 												
 		placeholder	 	= "quote",
 		help 			= "This page's quote form permalink"
-	)#	
+	)#	 --->
 
 	<!--- Description --->
 	#btextarea(
@@ -124,6 +121,8 @@
 		append	 = ""
 	)#
 
+	<!---
+
 	<cfparam name="page.featuredImg" default="">
 	#bImageUploadTag(
 		name			= "featuredImg",
@@ -137,7 +136,7 @@
 		property	= 'footerPageBlockId', 
 		label		= 'Hero Footer Page Block',
 		options		= pageBlockOptions
-	)#
+	)# --->
 	
 	#includePartial(partial="/_partials/formSeperator")#	
 	

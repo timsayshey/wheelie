@@ -33,15 +33,14 @@
 </style>
 
 <cfif !isSingleCategory>
-	<h1>Browse videos by topic</h1>
+	<h1 class="content-title">Browse videos by topic</h1>
 	<cfif request.site.id eq 1>
 		<br class="clear"><br>
 	</cfif>
-	Explore the most recently updated topics below.<br><br>
 </cfif>
 
 <cfif isNull(qCategoryOfVideos)>
-	<h1>Sorry, couldn't find that category. Please try again.</h1>
+	<h1 class="content-title">Sorry, couldn't find that category. Please try again.</h1>
 <cfelse>
 	
 	<cfoutput query="qCategoryOfVideos" group="videocategoryid">
@@ -61,7 +60,7 @@
 				</cfif>			
 			</div><br>			
 		<cfelse>
-			<h1>#name#</h1>
+			<h1 class="content-title">#name#</h1>
 			<cfif request.site.id eq 1>
 				<br class="clear"><br>
 			</cfif>

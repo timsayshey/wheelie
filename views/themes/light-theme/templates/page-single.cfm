@@ -28,9 +28,9 @@
 			<article class="page-content-full">
 		</cfif>
 			
-			<h1>#capitalize(pagetitle)#</h1>
+			<h1 class="content-title">#capitalize(pagetitle)#</h1>
 			
-			<p>#pagecontent#</p>
+			<div class="content-wrapped">#pagecontent#</div>
 	
 		</article>
 	
