@@ -126,7 +126,14 @@
 	<cfargument name="tablename" type="string" required="yes">
 	
 	<cfscript>
-	var qTable = runSQL("SELECT tablename FROM pg_tables WHERE tableowner = current_user AND tablename = '#LCase(arguments.tablename)#'");
+	var sqlarray = ArrayNew(1);
+	ArrayAppend(sqlarray,"SELECT	tablename");
+	ArrayAppend(sqlarray,"FROM	pg_tables");
+	ArrayAppend(sqlarray,"WHERE	tableowner = current_user");
+	ArrayAppend(sqlarray,"	AND tablename = ");
+	ArrayAppend(sqlarray,queryparam(cfsqltype="CF_SQL_VARCHAR",value=LCase(arguments.tablename)));
+	var qTable = runSQLArray(sqlarray);
+
 	var qFields = 0;
 	var qPrimaryKeys = 0;
 	var qSequences = 0;
@@ -160,8 +167,9 @@
 	<cfset ArrayAppend(sqlarray,"	ON		c.oid = d.adrelid")>
 	<cfset ArrayAppend(sqlarray,"		AND	d.adnum = a.attnum")>
 	<cfset ArrayAppend(sqlarray,"WHERE		a.attnum > 0")>
-	<cfset ArrayAppend(sqlarray,"	AND		c.relname = '#LCase(arguments.tablename)#'")>
-	<cfset ArrayAppend(sqlarray,"ORDER BY	a.attnum")>
+	<cfset ArrayAppend(sqlarray,"	AND		c.relname = ")>
+	<cfset ArrayAppend(sqlarray,queryparam(cfsqltype="CF_SQL_VARCHAR",value=LCase(arguments.tablename)))>
+	<cfset ArrayAppend(sqlarray," ORDER BY	a.attnum")>
 	<cfset qFields = runSQLArray(sqlarray)>
 	
 	<cfset sqlarray = ArrayNew(1)>
@@ -169,8 +177,10 @@
 	<cfset ArrayAppend(sqlarray,"FROM	pg_constraint")>
 	<cfset ArrayAppend(sqlarray,"JOIN	pg_class")>
 	<cfset ArrayAppend(sqlarray,"	ON	pg_class.oid=conrelid")>
-	<cfset ArrayAppend(sqlarray,"WHERE	contype='p'")>
-	<cfset ArrayAppend(sqlarray,"	AND	relname = '#LCase(arguments.tablename)#'")>
+	<cfset ArrayAppend(sqlarray,"WHERE	contype=")>
+	<cfset ArrayAppend(sqlarray,queryparam(cfsqltype="CF_SQL_VARCHAR",value=LCase('p')))>
+	<cfset ArrayAppend(sqlarray,"	AND	relname = ")>
+	<cfset ArrayAppend(sqlarray,queryparam(cfsqltype="CF_SQL_VARCHAR",value=LCase(arguments.tablename)))>
 	<cfset qPrimaryKeys = runSQLArray(sqlarray)>
 	
 	<cfset PrimaryKeys = ValueList(qPrimaryKeys.conkey)>
@@ -178,8 +188,10 @@
 	<cfset sqlarray = ArrayNew(1)>
 	<cfset ArrayAppend(sqlarray,"SELECT	relname")>
 	<cfset ArrayAppend(sqlarray,"FROM	pg_class")>
-	<cfset ArrayAppend(sqlarray,"WHERE	relkind = 'S'")>
-	<cfset ArrayAppend(sqlarray,"	AND	relname LIKE '#LCase(arguments.tablename)#%'")>
+	<cfset ArrayAppend(sqlarray,"WHERE	relkind = ")>
+	<cfset ArrayAppend(sqlarray,queryparam(cfsqltype="CF_SQL_VARCHAR",value='S'))>
+	<cfset ArrayAppend(sqlarray,"	AND	relname LIKE ")>
+	<cfset ArrayAppend(sqlarray,queryparam(cfsqltype="CF_SQL_VARCHAR",value="#LCase(arguments.tablename)#%"))>
 	<cfset qSequences = runSQLArray(sqlarray)>
 	
 	<cfoutput query="qSequences">

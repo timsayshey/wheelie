@@ -6,22 +6,22 @@
 	</div>
 	
 	<div class="row">		
-		<a class="icon-btn-lg col-md-3" href='#urlFor(route="admin~action", controller="pages", action="new")#'>
+		<a class="icon-btn-lg col-xs-3" href='#urlFor(route="admin~action", controller="pages", action="new")#'>
 			<span class="large-icon elusive icon-file-new-alt"></span>
 			<strong>Add page</strong>
 		</a>
 		
-		<a class="icon-btn-lg col-md-3" href='#urlFor(route="admin~action", controller="videos", action="new")#'>
+		<a class="icon-btn-lg col-xs-3" href='#urlFor(route="admin~action", controller="videos", action="new")#'>
 			<span class="large-icon elusive icon-video-alt"></span>
 			<strong>Add video</strong>
 		</a>
 		
-		<a class="icon-btn-lg col-md-3" href='#urlFor(route="admin~action", controller="users", action="index")#'>
+		<a class="icon-btn-lg col-xs-3" href='#urlFor(route="admin~action", controller="users", action="index")#'>
 			<span class="large-icon elusive icon-group-alt"></span>
 			<strong>Users</strong>
 		</a>
 		
-		<a class="icon-btn-lg col-md-3" href='#urlFor(route="admin~action", controller="options", action="index")#'>
+		<a class="icon-btn-lg col-xs-3" href='#urlFor(route="admin~action", controller="options", action="index")#'>
 			<span class="large-icon elusive icon-cog-alt"></span>
 			<strong>Settings</strong>
 		</a>

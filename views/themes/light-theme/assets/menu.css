@@ -213,7 +213,6 @@
 		position: absolute;
 		top: 40px;
 		width: 100%;
-		z-index: 10;
 		background-color: #444;
 		display: none;
 		box-shadow: none

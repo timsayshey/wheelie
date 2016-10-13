@@ -139,6 +139,9 @@
 .allowwrap {
 	white-space: normal;
 }
+.headerWrap {
+	background: #fff;
+}
 .bg-slider {
 	list-style: none;
 	margin: 0;
@@ -166,7 +169,6 @@
 	background-color: #FFF;
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-size: 100%;
 	min-height: 190px;
 	position: absolute;
 	top: 0;
@@ -1229,9 +1231,6 @@ ul.listy, ol.listy {
 		padding: 0 30px;
 		display: block
 	}
-	.rightbar {
-		display: none
-	}
 	h1.logo .logo-title {
 		font-size: 18px;
 		text-align: center;
@@ -1241,7 +1240,6 @@ ul.listy, ol.listy {
 		background-image: none !important
 	}
 	.callUs h5, .callUs h6 {
-		color: #e07736 !important;
 		text-shadow: none !important
 	}
 	.footer_form .form-control {

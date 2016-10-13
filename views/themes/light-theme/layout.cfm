@@ -15,25 +15,24 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="#getOption(qOptions,'seo_description').label#">
-	<meta name="keywords" content="#getOption(qOptions,'seo_keywords').label#">
-	
-	<title>		
-		<cfif !isHome>#capitalize(activeMenuItem.name)# <cfif len(activeMenuItem.name)>-</cfif></cfif> 
-		<cfif len(getOption(qOptions,'seo_title').label)>
-			#getOption(qOptions,'seo_title').label#
-		<cfelse>
-			#request.site.name#
-		</cfif>
-		
-	</title>
+    <meta name="keywords" content="#getOption(qOptions,'seo_keywords').label#">
+    
+    <title>     
+        <cfif !isHome>#capitalize(activeMenuItem.name)# <cfif len(activeMenuItem.name)>-</cfif></cfif> 
+        <cfif len(getOption(qOptions,'seo_title').label)>
+            #getOption(qOptions,'seo_title').label#
+        <cfelse>
+            #request.site.name#
+        </cfif>     
+    </title>
 	
 	<!--- Public head sets admin colors and adds tags: jquery, bootstrap, modernizer, adminmenu --->
 	#includePartial(
 		partial="/_partials/publicHeadTags", 
 		adminHeadColor = "54a5de"
 	)#
-	    <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	   
+    <meta name="robots" content="index, follow">
 
     <link href="#themeDir#assets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
     <link href="#themeDir#assets/todc-bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
@@ -44,8 +43,7 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
     <link href="/assets/css/shared.css" rel="stylesheet" type="text/css"/>
     <link href="#themeDir#style.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-    </style>
+    
     <script src="#themeDir#assets/jquery.bxslider.min.js" type="text/javascript"></script>
     <script src="#themeDir#assets/jquery.placeholder.js" type="text/javascript"></script>
     <script>
