@@ -17,8 +17,8 @@
 			*/
 
 			/* DB Redirects */
-			redirects = db.getRecords("redirects",{siteid=request.site.id});			
-			for (redirect in redirects)
+			var redirects = new Query(sql="SELECT * FROM redirects WHERE siteid='#request.site.id#'",datasource=application.wheels.dataSourceName).execute().getResult();
+			for (var redirect in redirects)
 			{
 				findThenRedirect(redirect.if_matches_this,redirect.then_redirect_to);
 			} 

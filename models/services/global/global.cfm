@@ -16,13 +16,6 @@
 		{
 			isReload = true;
 		}
-		
-		// Setup DataMgr
-		if (!structKeyExists(application, 'db') or isReload) 
-		{
-			application.db = CreateObject("component","models.services.vendor.datamgr.DataMgr").init(datasource=application.wheels.dataSourceName,defaultdatabase=application.wheels.dbtype);		
-		}
-		db = application.db;
 
 		// if (!structKeyExists(application, 'markdown') or isReload) {
 		
@@ -95,7 +88,7 @@
 		</cfscript>
 		
 		<!--- Get role columns from permissions table - removed non role columns - convert array to remove list nulls - convert back to list --->
-		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(db.getDBFieldList("permissions")),lcase("ID,CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>
+		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(application.rbs.permissionsQuery.columnList),lcase("ID,CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>
 		
 		<cfloop list="#application.rbs.roleslist#" index="thisRole">
 			<cfloop query="application.rbs.permissionsQuery">

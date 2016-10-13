@@ -1,8 +1,4 @@
 <cfscript>	
-	// Only available after initial run
-	if (!isNull(application.db)) 
-	{ db = application.db; }
-	
 	if (!isNull(application.yt)) 
 	{ youtube = application.yt; }
 	

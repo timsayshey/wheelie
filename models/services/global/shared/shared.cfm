@@ -131,16 +131,6 @@
 		return request.site.id;
 	</cfscript>
 </cffunction>
-
-<cffunction name="datamgrInit">
-	<cfscript>
-		if (!structKeyExists(application, 'db')) 
-		{
-			application.db = CreateObject("component","models.services.vendor.datamgr.DataMgr").init(application.wheels.dataSourceName);		
-		}
-		db = application.db;
-	</cfscript>	
-</cffunction>
  
 <cffunction name="siteQuery">
 	<cfargument name="subdomain" required="yes">
@@ -202,9 +192,7 @@
 				loc.domain = loc.subdomain & "." & loc.domainExt;
 				loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain	
 				request.site.domainNoSubdomain = loc.domain;
-			}
-			
-			if(isNull(db)) { datamgrInit(); }			
+			}	
 			
 			loc.siteResult = siteQuery(subdomain=loc.subdomain,domain=loc.domainNameSingle & "." & loc.domainExt);
 

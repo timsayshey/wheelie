@@ -136,16 +136,44 @@ component extends="Wheels"
 		{			
 			loc.thisModelName = getModelName();
 			
-			loc.logit 			 = request.logit;
-			loc.logit.model		 = loc.thisModelName;
-			loc.logit.modelid	 = this.id;
-			loc.logit.savetype	 = arguments.savetype;	
-			loc.logit.useragent  = CGI.HTTP_USER_AGENT;
-			loc.logit.ip         = getIpAddress();		
-			loc.logit.siteid     = request.site.id;		
-			
+			loc.logit = request.logit;
+			loc.logit.model		  = loc.thisModelName;
+			loc.logit.modelid	  = this.id;
+			loc.logit.savetype	  = arguments.savetype;	
+			loc.logit.useragent   = CGI.HTTP_USER_AGENT;
+			loc.logit.ip          = getIpAddress();		
+			loc.logit.siteid      = request.site.id;
+
 			// Can't use the Model().create function here because it'll throw an error, gotta go vanilla
-			db.insertRecord("logs", loc.logit);
+			
+			var q = new Query(datasource=application.wheels.dataSourceName);
+			var sql = '';
+			var columns = '';
+			var values = '';
+
+			for(var column in structKeyList(loc.logit)) {
+				q.addParam(name='#column#', value=loc.logit[column], cfsqltype=getSqlType(loc.logit[column]));
+				columns = listAppend(columns, uCase(column));
+				values = listAppend(values, ":" & column);
+			}
+			q.setSql(trim("
+				INSERT INTO logs(
+					#columns#
+				) VALUES (
+					#values#
+				)
+			"));
+			var result = q.execute();
+		}
+	}
+
+	private function getSqlType(value) {
+		if(isDate(arguments.value)) {
+			return 'cf_sql_timestamp';
+		} else if(isNumeric(arguments.value)) {
+			return 'cf_sql_integer';
+		} else {
+			return 'cf_sql_varchar';
 		}
 	}
 
