@@ -39,11 +39,6 @@
     <link href="#themeDir#assets/todc-bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
     <link href="#themeDir#assets/jquery.bxslider.css" media="all" rel="stylesheet" type="text/css">
     <link href="#themeDir#assets/menu.css" media="all" rel="stylesheet" type="text/css">
-
-    <script src="#themeDir#assets/jquery-1.10.1.min.js"></script>
-    <script src="#themeDir#assets/jquery-migrate-1.2.1.min.js"></script>
-    <script src="#themeDir#assets/modernizr.js" type="text/javascript"></script>
-    <script src="#themeDir#assets/bootstrap.min.js" type="text/javascript"></script>
     
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
@@ -100,7 +95,7 @@
                                 </a>
                             </li>
                             
-                            #generateMenu(false)#
+                            #generateMenu(true)#
                             </li>
                         </ul>
                         </div>

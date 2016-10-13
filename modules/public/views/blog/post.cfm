@@ -48,7 +48,7 @@
     	<cfset contentFor(staticpost = true)>
     	<cfmodule template="#staticPath#">
 
-    <cfelseif post.containsKey("template") AND post.template.trim().length()>
+    <cfelseif post.containsKey("template") AND post.template.trim().length() AND getThemeTemplate(post.template).trim().length()>    	
 		<cfset postTemplate = getThemeTemplate(post.template)>
 		<cfset pagetitle = capitalize(post.name)>
 		<cfset pagecontent = post.content>

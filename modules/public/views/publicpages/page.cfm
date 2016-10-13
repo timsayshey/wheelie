@@ -66,7 +66,7 @@
 	{
 		// Load DB Page
 		pageTemplate = 
-			page.containsKey("template") AND page.template.trim().length() ?
+			page.containsKey("template") AND page.template.trim().length() AND getThemeTemplate(page.template).trim().length() ?
 				getThemeTemplate(page.template) :
 					getThemeTemplate("page-single");
 					

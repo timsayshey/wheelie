@@ -373,7 +373,7 @@
 		<li>
 			#menuitemLink()#		
 			<cfif includeChildren>
-				<cfset children = model("Menu").findAll(where="parentid LIKE '#menuitems.id#'", order="sortOrder ASC, name ASC", include="AllPost")>
+				<cfset children = model("Menu").findAll(where="parentid = '#menuitems.id#'", order="sortOrder ASC, name ASC", include="AllPost")>
 				<cfif children.recordcount>
 					<ul>
 					<cfloop query="children">
