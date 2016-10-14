@@ -2,8 +2,8 @@
 .htaccess
 target
 Procfile
-webroot/WEB-INF/lucee
-!webroot/WEB-INF/lucee/lucee-web.xml.cfm
-webroot/WEB-INF/lib
-webroot/WEB-INF/lucee-server
-!webroot/WEB-INF/lucee-server/lucee-server.xml
+WEB-INF/lucee
+!WEB-INF/lucee/lucee-web.xml.cfm
+WEB-INF/lib
+WEB-INF/lucee-server
+!WEB-INF/lucee-server/lucee-server.xml
