@@ -80,5 +80,18 @@
         controller="pcheckout",
 		action="index"
     );
+
+    addRoute( 
+        name="public~propertyId", 
+        pattern="/property/[action]/[id]",
+        controller="pproperties"
+    );
+
+    addRoute( 
+        name="public~propertyIndex", 
+        pattern="/property/[id]",
+        controller="pproperties",
+        action="index"
+    );
 	
 </cfscript>

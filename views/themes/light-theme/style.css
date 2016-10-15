@@ -1328,11 +1328,11 @@ ul.listy, ol.listy {
     padding: 0 10px;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
-.hero,.data-block header ,h3.formHeader ,.topnav, .rightbar .data-block section, .data-block section h2, .data-block section p, .contentwrapper h1, .footerNav, .navwrap, #menu-trigger, .slider-caption,.jumbotron,.admin-content .icon-btn-lg:hover {
+.hero,.data-block header  ,.topnav, .rightbar .data-block section, .data-block section h2, .data-block section p, .contentwrapper h1, .footerNav, .navwrap, #menu-trigger, .slider-caption,.jumbotron,.admin-content .icon-btn-lg:hover {
 	color: #fff;
 	background: #076079 !important;
 }
-.contentwrapper h1.content-title {
+.contentwrapper h1.content-title,h3.formHeader {
 	color: #fff;
 	background: #1ba062 !important;
 }
@@ -1345,8 +1345,8 @@ ul.listy, ol.listy {
 	background: #fff !important;
 	color:#111;
 }
-.adminmode.page-wrap {
-	background: #eee;
+.adminmode.page-wrap, body.adminmode {
+	background: #eee !important;
 }
 @media(min-width:991px) {
 	.page-content-full { 
@@ -1361,4 +1361,20 @@ ul.listy, ol.listy {
 }
 .topnav, .navbar {
 	z-index: 120;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footerNav {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  background-color: #f5f5f5;
 }

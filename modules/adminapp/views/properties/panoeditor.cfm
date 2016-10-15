@@ -47,7 +47,7 @@
 		<script>
 			window.propertyid = #params.propertyid#;
 			window.mediafileid = #params.id#;
-			window.panoramaImg = "/assets/uploads/properties/#panorama.fileid#-lg.jpg";
+			window.panoramaImg = "/assets/uploads/mediafiles/#panorama.fileid#-lg.jpg";
 			window.update_link_endpoint = "#urlFor(
 				route 		= "admin~Id", 
 				controller 	= "properties", 
@@ -109,7 +109,7 @@
 									<b>Choose panorama to link to:</b>
 									<cfloop query="panoramas">
 										<div id="#id#" data-childfileid="#fileid#" data-type="pano">
-											<img src="/assets/uploads/properties/#fileid#-md.jpg"> #name#
+											<img src="/assets/uploads/mediafiles/#fileid#-md.jpg"> #name#
 										</div>	
 									</cfloop>
 								</div>
@@ -122,7 +122,7 @@
 							    	<b>Choose photo to pop-up:</b>
 									<cfloop query="photos">
 										<div id="#id#" data-childfileid="#fileid#" data-type="photo">
-											<img src="/assets/uploads/properties/#fileid#-sm.jpg"> #name#
+											<img src="/assets/uploads/mediafiles/#fileid#-sm.jpg"> #name#
 										</div>	
 									</cfloop>
 								</div>

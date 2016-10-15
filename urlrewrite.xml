@@ -12,7 +12,7 @@
 	</rule>
 	<rule enabled="true">
 		<name>CFWheels pretty URLs</name>
-		<condition type="request-uri" operator="notequal">^/(flex2gateway|jrunscripts|cfide|cfformgateway|cffileservlet|lucee|files|images|javascripts|miscellaneous|stylesheets|assets|views|robots.txt|favicon.ico|sitemap.xml|rewrite.cfm|index.cfm)</condition>
+		<condition type="request-uri" operator="notequal">^/(flex2gateway|jrunscripts|models/services/vendor|cfide|cfformgateway|cffileservlet|lucee|files|images|javascripts|miscellaneous|stylesheets|assets|views|robots.txt|favicon.ico|sitemap.xml|rewrite.cfm|index.cfm)</condition>
 		<from>^/(.*)$</from>
 		<to type="passthrough">/index.cfm/$1</to>
 	</rule>

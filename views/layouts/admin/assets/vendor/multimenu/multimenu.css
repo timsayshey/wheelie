@@ -196,10 +196,8 @@
         margin-left: -20px;
     }
 }
-
 #adminmenu ul {    
     box-shadow: none;
-    top: 39px;
 }
 #adminmenu ul li { box-shadow: none }
 #adminmenu ul li:first-child>a:after { border: none }
@@ -269,9 +267,10 @@
 	.admin-alignright {
 		float:right !important; 		
 	} 
-	.admin-pad-right {
-		margin-right:20px !important;
-	}
+    #adminmenu .admin-alignright ul {
+        left: auto;
+        right: 0;
+    }
 	#adminmenu li a {
 		border-right: 1px solid #333;
 	}
@@ -283,3 +282,4 @@
 		font-size: 10px;
 	}
 }
+

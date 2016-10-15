@@ -3,7 +3,7 @@ $(function() {
 
 	$.ajax({
 		type: "GET",
-		url: "/app/panoJson/" + window.propertyid + "?editorUrls="+window.mediafileid,
+		url: "/property/panoJson/" + window.propertyid + "?editorUrls="+window.mediafileid,
 		success: function(config)
 		{			
 			pannellum.viewer('panorama',config);

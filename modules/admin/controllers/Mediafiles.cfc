@@ -72,11 +72,11 @@ component extends="_main" output="false"
 			}
 
 			if(result.fileWasSaved) {
-				var thumbFile = expandPath("/assets/uploads/properties/#arguments.filename#-thumb.jpg");
-				var smFile = expandPath("/assets/uploads/properties/#arguments.filename#-sm.jpg");
-				var mdFile = expandPath("/assets/uploads/properties/#arguments.filename#-md.jpg");
-				var xmFile = expandPath("/assets/uploads/properties/#arguments.filename#-xm.jpg"); // xtra medium
-				var lgFile = expandPath("/assets/uploads/properties/#arguments.filename#-lg.jpg");
+				var thumbFile = expandPath("/assets/uploads/mediafiles/#arguments.filename#-thumb.jpg");
+				var smFile = expandPath("/assets/uploads/mediafiles/#arguments.filename#-sm.jpg");
+				var mdFile = expandPath("/assets/uploads/mediafiles/#arguments.filename#-md.jpg");
+				var xmFile = expandPath("/assets/uploads/mediafiles/#arguments.filename#-xm.jpg"); // xtra medium
+				var lgFile = expandPath("/assets/uploads/mediafiles/#arguments.filename#-lg.jpg");
 				
 				if(!isImageFile(thefile)) {
 					fileDelete(theFile);

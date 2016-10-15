@@ -41,7 +41,12 @@
                 action		= "index",
 				class		= 'btn btn-default'
 			)#
-			<a class="btn btn-default" target="_blank" href="//#property.urlid#.propertylure.com"><span class="elusive icon-eye-open"></span> Preview</a>
+			
+			<a class="btn btn-default" target="_blank" href="#urlFor(
+				route		= "public~propertyIndex",
+				id 			= property.id,
+				class		= 'btn btn-default'
+			)#"><span class="elusive icon-eye-open"></span> Preview</a>
 		  </li>')>
 
 	<cfif !isNew>

@@ -5,7 +5,7 @@
 
 		    <cfloop query="#panoramas#">
 				<li id="#fileid#">
-					<img src="/assets/uploads/properties/#fileid#-lg.jpg">
+					<img src="/assets/uploads/mediafiles/#fileid#-lg.jpg">
 					<div class="pic-options">
 						<a href="##captionModal" data-toggle="modal" class="captionMedia" data-id="#id#" title="#len(trim(name)) ? name : "Add caption"#"><span class="elusive icon-tag"></span></a>
 						<a href="#urlFor(

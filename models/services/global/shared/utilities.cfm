@@ -11,7 +11,7 @@
 		
 		<cfreturn trim(cleanstring)>
 	</cffunction>    
-	<cffunction name="deleteThisFile">
+	<cffunction name="deleteThisFile" output="no">
 		<cfargument name="filepath">
 		<cfscript>
 			var loc = {};
@@ -36,7 +36,7 @@
 
 		<cfreturn quoteformurl>
 	</cffunction>
-	<cffunction name="generateForm">
+	<cffunction name="generateForm" output="no">
 		<cfargument name="formid" default="">
 		<cfargument name="formwrap" default="true">
 		<cfargument name="formclass" default="">
@@ -44,7 +44,7 @@
 		<cfset metaform = model("Form").findAll(where="id = '#arguments.formid#'")>
 		<cfset dataFields = model("FormField").findAll(where="metafieldType = 'formfield' AND modelid = '#arguments.formid#'",order="sortorder ASC")>
 
-		<cfif metaform.templated>
+		<cfif isBoolean(metaform.templated) AND metaform.templated>
 			<cfset formContent =  '				
 				#hiddenfieldtag(name="qform[id]", value="#arguments.formid#")#
 				#processShortcodes(metaform.template)#
@@ -67,7 +67,7 @@
 		
 	</cffunction>
 	
-	<cffunction name="siteIdEqualsCheck">
+	<cffunction name="siteIdEqualsCheck" output="no">
 		<cfargument name="allowAllSiteRecords" default="true">
 		
 		<cfif !arguments.allowAllSiteRecords>
@@ -87,7 +87,7 @@
 		</cfif>
 	</cffunction>
 	
-	<cffunction name="getThemeTemplate">
+	<cffunction name="getThemeTemplate" output="no">
 		<cfargument name="templateId" default="">
 
 		<cfset themePageTemplatePath = "/views/themes/#request.site.theme#/pagetemplates/#templateId#.cfm">
@@ -102,7 +102,7 @@
 		</cfif>
 	</cffunction>
     
-    <cffunction name="getAllUserFieldData">
+    <cffunction name="getAllUserFieldData" output="no">
     	<cfargument name="userid">
     	<cfscript>
 			var loc = {};
@@ -120,7 +120,7 @@
 		#getDatafieldVal(identifier="my-hairs-color",qData=qUserfieldData)#
 		#getDatafieldVal(identifier="my-hairs-color",userid=session.user.id)#
 	--->
-    <cffunction name="getDatafieldVal">
+    <cffunction name="getDatafieldVal" output="no">
 		<cfargument name="identifier">
         <cfargument name="qData" default="">
         <cfargument name="userid" default="">
@@ -137,7 +137,57 @@
             <cfreturn qQuery.fielddata>
         </cfif>
 	</cffunction>  
-    
+    <cffunction returntype="String" name="getDataField" output="false">
+	    <cfargument name="field">
+	    <cfif dataFieldsMap.containsKey(field) AND listLen(dataFieldsMap[field])>
+	        <cfreturn replace(dataFieldsMap[field],",",", ","ALL")>
+	    <cfelse>
+	        <cfreturn "">
+	    </cfif>
+	</cffunction>
+	<cffunction name="dataFieldHtml">
+	    <cfargument name="label">
+	    <cfargument name="field">
+	    <cfargument name="groupLimit">
+	    <cfif dataFieldsMap.containsKey(field) AND listLen(dataFieldsMap[field])>
+	        <div class="col-md-6 feature-boxes">
+	            <h4>#label#</h4>
+	            #dataFieldListHtml(field,groupLimit)#
+	        </div>
+	    </cfif> 
+	</cffunction>
+	<cffunction name="dataFieldListHtml">
+	    <cfargument name="field">
+	    <cfargument name="groupLimit" default="2">
+	    <cfset var count = 0>
+	    <cfset var totalCount = 0>
+
+	    <cfif dataFieldsMap.containsKey(field)>
+	        <cfset var list = dataFieldsMap[field]>
+	        <cfloop list="#list#" index="item">
+	            <cfset count++>
+	            <cfset totalCount++>
+	            <cfif count eq 1><ul></cfif>
+	            <li>#item#</li>
+	            <cfif totalCount GTE listLen(list) OR count GTE groupLimit>
+	                </ul>
+	                <cfset count = 0>
+	            </cfif>        
+	        </cfloop> 
+	    </cfif>
+	</cffunction>
+	<cffunction name="dataListItemHtml">
+	    <cfargument name="field">
+	    <cfargument name="label">
+	    <cfif len(property[field])><li>#label#: #property[field]#</li></cfif>
+	</cffunction>
+	<cffunction name="dataFieldListItemHtml">
+	    <cfargument name="field">
+	    <cfargument name="label">
+	    <cfset var fieldData = getDataField(field)>
+	    <cfif len(trim(fieldData))><li>#label#: #fieldData#</li></cfif>
+	</cffunction>
+	
     <cfscript>
 	/**
 	* Sorts an array of structures based on a key in the structures.

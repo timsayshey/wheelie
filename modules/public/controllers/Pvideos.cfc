@@ -34,7 +34,7 @@ component extends="_main" output="false"
 		} else {
 			// Get default category
 			videoCategory = model("VideoCategory").findAll(where="#whereSiteid()# AND defaultpublic = 1");
-			categoryWhere = "parentid = '#videoCategory.id#' AND #whereSiteid()#";
+			categoryWhere = "parentid = '#videoCategory.id#' AND #whereSiteid()# AND onSite = 1";
 			isSingleCategory = false;
 			videoLimitPerCategory = 4;
 		}

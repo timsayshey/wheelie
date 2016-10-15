@@ -60,8 +60,9 @@
 	<!-- Place anything custom after this. -->
 	
 </head>
-<body>
-<div class="page-wrap #len(includeContent("adminbody")) ? 'adminmode' : ''#">
+<cfset adminmode = len(includeContent("adminbody")) ? 'adminmode' : ''>
+<body class="#adminmode#">
+<div class="page-wrap #adminmode#">
 	<!--- Admin bar for logged in users // Remove this if you don't want the admin bar on the frontend --->
 	#includePartial(
 		partial="/_partials/adminmenufull"
