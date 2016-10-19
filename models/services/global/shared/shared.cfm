@@ -316,7 +316,7 @@
 	<cfelse>
 		<cfreturn false>
 	</cfif>
-</cffunction>.
+</cffunction>
 
 <cffunction name="getIpAddress">
 	<cfset ip = cgi.REMOTE_ADDR>	

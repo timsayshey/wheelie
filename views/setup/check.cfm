@@ -1,9 +1,15 @@
 <cfscript>	
-	if(!application.wheels.containsKey("dbtype") OR !isNull(url.reload)) {
+	if(!isNull(url.reload)) {
+		structDelete(application.wheels, "dbtype");
+		structDelete(application, "dbSetupCheck");
+		structDelete(application, "appSettings");
+	}
+
+	if(!application.wheels.containsKey("dbtype")) {
 		application.wheels.dbtype = getSqlAdapter(application.wheels.dataSourceName);
 	}	
 
-	if(!application.containsKey("dbSetupCheck") OR !isNull(url.reload)) setupDatabase();
+	if(!application.containsKey("dbSetupCheck")) setupDatabase();
 	function setupDatabase() {
 		var SQL = "SELECT EXISTS(
 				    SELECT * 
@@ -15,7 +21,7 @@
 		var qCheckDB = q.execute().getResult();
 
 		if(!qCheckDB.tableExists && form.containsKey("setupDatabase") && form.setupDatabase) {	
-			var sqlPath = "/wheelie";
+			var sqlPath = "/setup/wheelie";
 			if(application.wheels.dbtype eq "PostgreSQL") {
 				sqlPath &= ".psql";
 			} else if(application.wheels.dbtype eq "MySQL") {
@@ -32,7 +38,7 @@
 		}
 	}
 
-	if(!application.containsKey("appSettings") OR !isNull(url.reload)) checkSetup();
+	if(!application.containsKey("appSettings")) checkSetup();
 	function checkSetup() {
 		var SQL = "SELECT content FROM options WHERE siteid = 0 AND id = 'site_settings'";
 		var q = new Query(sql=sql,datasource=application.wheels.dataSourceName);

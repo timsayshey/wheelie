@@ -1,0 +1,1571 @@
+-- ----------------------------
+--  Table structure for _default
+-- ----------------------------
+DROP TABLE IF EXISTS "_default";
+CREATE TABLE "_default" (
+    "id" SERIAL,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for categories
+-- ----------------------------
+DROP TABLE IF EXISTS "categories";
+CREATE TABLE "categories" (
+    "id" SERIAL,
+    "name" varchar(800) NOT NULL COLLATE "default",
+    "categorytype" varchar(510) DEFAULT NULL,
+    "urlid" varchar(800) DEFAULT NULL,
+    "parentid" int4,
+    "description" varchar(10000) DEFAULT NULL,
+    "defaultpublic" int4 DEFAULT 0,
+    "defaultadmin" int4 DEFAULT 0,
+    "sortorder" int4 NOT NULL DEFAULT 0,
+    "siteid" int4 DEFAULT 1,
+    "globalized" int4 DEFAULT 0,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of categories
+-- ----------------------------
+BEGIN;
+INSERT INTO "categories" VALUES ('1', 'Public Videos', 'video', 'public-videos', '0', 'Welcome to the videos', '1', '0', '2', '60', '0', '2014-11-17 11:10:38+00', '1', '2016-09-12 16:57:21+00', '1', null, null);
+INSERT INTO "categories" VALUES ('2', 'CFWheels', 'video', 'cfwheels', '1', 'CFWheels Training Videos', '0', '0', '3', '60', '0', '2014-11-17 11:13:52+00', '1', '2016-09-12 16:57:27+00', '1', null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for emailoptouts
+-- ----------------------------
+DROP TABLE IF EXISTS "emailoptouts";
+CREATE TABLE "emailoptouts" (
+    "id" SERIAL,
+    "email" varchar(510) DEFAULT NULL
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for emails
+-- ----------------------------
+DROP TABLE IF EXISTS "emails";
+CREATE TABLE "emails" (
+    "id" SERIAL,
+    "firstname" varchar(2510) DEFAULT NULL,
+    "lastname" varchar(2510) DEFAULT NULL,
+    "email" varchar(500) DEFAULT NULL
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for forms
+-- ----------------------------
+DROP TABLE IF EXISTS "forms";
+CREATE TABLE "forms" (
+    "id" SERIAL,
+    "name" varchar(2000) DEFAULT NULL,
+    "siteid" int4,
+    "templated" int4 DEFAULT 0,
+    "template" text COLLATE "default",
+    "successcontent" text COLLATE "default",
+    "successembed" text COLLATE "default",
+    "failcontent" text COLLATE "default",
+    "failembed" text COLLATE "default",
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of forms
+-- ----------------------------
+BEGIN;
+INSERT INTO "forms" VALUES ('1', 'Contact', '60', '0', null, 'Thanks for contacting us!', '<!-- google success conversion js here -->', 'Whoopsies there was an issue!', '<!-- google fail conversion js here -->', '2014-11-17 15:55:18+00', '1', '2014-11-17 15:55:18+00', '1', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for forms_users
+-- ----------------------------
+DROP TABLE IF EXISTS "forms_users";
+CREATE TABLE "forms_users" (
+    "formid" int4 NOT NULL DEFAULT 1,
+    "userid" int4 NOT NULL,
+    "type" varchar(510) NOT NULL DEFAULT 'to',
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of forms_users
+-- ----------------------------
+BEGIN;
+INSERT INTO "forms_users" VALUES ('1', '1', 'to', '2014-11-17 15:55:18+00', '1', '2014-11-17 15:55:18+00', '1');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for formsubmissions
+-- ----------------------------
+DROP TABLE IF EXISTS "formsubmissions";
+CREATE TABLE "formsubmissions" (
+    "id" SERIAL,
+    "formid" int4,
+    "submission" text COLLATE "default",
+    "followup" text COLLATE "default",
+    "referrer" text COLLATE "default",
+    "entrypage" text COLLATE "default",
+    "frompage" text COLLATE "default",
+    "isspam" varchar(6000) DEFAULT NULL,
+    "optin" int4,
+    "mobile" varchar(6000) DEFAULT NULL,
+    "siteid" int4 DEFAULT 1,
+    "ip" text COLLATE "default",
+    "useragent" text COLLATE "default",
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for logs
+-- ----------------------------
+DROP TABLE IF EXISTS "logs";
+CREATE TABLE "logs" (
+    "id" SERIAL,
+    "userid" int4,
+    "modelid" varchar(1000) DEFAULT NULL,
+    "savetype" varchar(510) DEFAULT NULL,
+    "model" varchar(510) DEFAULT NULL,
+    "controller" varchar(510) DEFAULT NULL,
+    "action" varchar(510) DEFAULT NULL,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "ip" varchar(1600) DEFAULT NULL,
+    "useragent" varchar(1600) DEFAULT NULL,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for majorcities
+-- ----------------------------
+DROP TABLE IF EXISTS "majorcities";
+CREATE TABLE "majorcities" (
+    "id" SERIAL,
+    "state" varchar(510) DEFAULT NULL,
+    "state_acronym" varchar(4) DEFAULT NULL,
+    "city" varchar(510) DEFAULT NULL,
+    "templateid" int4,
+    "type" varchar(510) DEFAULT NULL,
+    "siteid" int4 DEFAULT 1,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of majorcities
+-- ----------------------------
+BEGIN;
+INSERT INTO "majorcities" VALUES ('9', 'Alabama', 'AL', 'Huntsville', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('8', 'Alabama', 'AL', 'Birmingham', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('10', 'Alabama', 'AL', 'Mobile', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('11', 'Alabama', 'AL', 'Montgomery', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('12', 'Alaska', 'AK', 'Anchorage', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('13', 'Arizona', 'AZ', 'Chandler', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('14', 'Arizona', 'AZ', 'Gilbert', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('15', 'Arizona', 'AZ', 'Glendale', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('16', 'Arizona', 'AZ', 'Mesa', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('17', 'Arizona', 'AZ', 'Peoria', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('18', 'Arizona', 'AZ', 'Phoenix', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('19', 'Arizona', 'AZ', 'Scottsdale', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('20', 'Arizona', 'AZ', 'Surprise', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('21', 'Arizona', 'AZ', 'Tempe', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('22', 'Arizona', 'AZ', 'Tucson', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('23', 'Arkansas', 'AR', 'Little Rock', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('24', 'California', 'CA', 'Anaheim', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('25', 'California', 'CA', 'Antioch', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('26', 'California', 'CA', 'Bakersfield', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('27', 'California', 'CA', 'Berkeley', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('28', 'California', 'CA', 'Burbank', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('29', 'California', 'CA', 'Carlsbad', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('30', 'California', 'CA', 'Chula Vista', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('31', 'California', 'CA', 'Concord', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('32', 'California', 'CA', 'Corona', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('33', 'California', 'CA', 'Costa Mesa', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('34', 'California', 'CA', 'Daly City', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('35', 'California', 'CA', 'Downey', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('36', 'California', 'CA', 'El Cajon', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('37', 'California', 'CA', 'El Monte', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('38', 'California', 'CA', 'Elk Grove', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('39', 'California', 'CA', 'Escondido', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('40', 'California', 'CA', 'Fairfield', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('41', 'California', 'CA', 'Fontana', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('42', 'California', 'CA', 'Fremont', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('43', 'California', 'CA', 'Fresno', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('44', 'California', 'CA', 'Fullerton', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('45', 'California', 'CA', 'Garden Grove', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('46', 'California', 'CA', 'Glendale', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('47', 'California', 'CA', 'Hayward', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('48', 'California', 'CA', 'Huntington Beach', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('49', 'California', 'CA', 'Inglewood', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('50', 'California', 'CA', 'Irvine', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('51', 'California', 'CA', 'Lancaster', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('52', 'California', 'CA', 'Long Beach', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('53', 'California', 'CA', 'Los Angeles', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('54', 'California', 'CA', 'Modesto', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('55', 'California', 'CA', 'Moreno Valley', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('56', 'California', 'CA', 'Murrieta', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('57', 'California', 'CA', 'Norwalk', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('58', 'California', 'CA', 'Oakland', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('59', 'California', 'CA', 'Oceanside', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('60', 'California', 'CA', 'Ontario', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('61', 'California', 'CA', 'Orange', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('62', 'California', 'CA', 'Oxnard', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('63', 'California', 'CA', 'Palmdale', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('64', 'California', 'CA', 'Pasadena', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('65', 'California', 'CA', 'Pomona', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('66', 'California', 'CA', 'Rancho Cucamonga', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('67', 'California', 'CA', 'Rialto', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('68', 'California', 'CA', 'Richmond', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('69', 'California', 'CA', 'Riverside', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('70', 'California', 'CA', 'Roseville', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('71', 'California', 'CA', 'Sacramento', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('72', 'California', 'CA', 'Salinas', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('73', 'California', 'CA', 'San Bernardino', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('74', 'California', 'CA', 'San Buenaventura', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('75', 'California', 'CA', 'San Diego', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('76', 'California', 'CA', 'San Francisco', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('77', 'California', 'CA', 'San Jose', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('78', 'California', 'CA', 'Santa Ana', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('79', 'California', 'CA', 'Santa Clara', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('80', 'California', 'CA', 'Santa Clarita', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('81', 'California', 'CA', 'Santa Maria', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('82', 'California', 'CA', 'Santa Rosa', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('83', 'California', 'CA', 'Simi Valley', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('84', 'California', 'CA', 'Stockton', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('85', 'California', 'CA', 'Sunnyvale', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('86', 'California', 'CA', 'Temecula', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('87', 'California', 'CA', 'Thousand Oaks', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('88', 'California', 'CA', 'Torrance', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('89', 'California', 'CA', 'Vallejo', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('90', 'California', 'CA', 'Victorville', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('91', 'California', 'CA', 'Visalia', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('92', 'California', 'CA', 'West Covina', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('93', 'Colorado', 'CO', 'Arvada', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('94', 'Colorado', 'CO', 'Aurora', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('95', 'Colorado', 'CO', 'Boulder', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('96', 'Colorado', 'CO', 'Centennial', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('97', 'Colorado', 'CO', 'Colorado Springs', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('98', 'Colorado', 'CO', 'Denver', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('99', 'Colorado', 'CO', 'Fort Collins', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('100', 'Colorado', 'CO', 'Lakewood', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('101', 'Colorado', 'CO', 'Pueblo', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('102', 'Colorado', 'CO', 'Thornton', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('103', 'Colorado', 'CO', 'Westminster', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('104', 'Connecticut', 'CT', 'Bridgeport', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('105', 'Connecticut', 'CT', 'Hartford', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('106', 'Connecticut', 'CT', 'New Haven', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('107', 'Connecticut', 'CT', 'Stamford', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('108', 'Connecticut', 'CT', 'Waterbury', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('109', 'District of Columbia', 'DC', 'Washington', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('110', 'Florida', 'FL', 'Cape Coral', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('111', 'Florida', 'FL', 'Clearwater', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('112', 'Florida', 'FL', 'Coral Springs', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('113', 'Florida', 'FL', 'Fort Lauderdale', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('114', 'Florida', 'FL', 'Gainesville', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('115', 'Florida', 'FL', 'Hialeah', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('116', 'Florida', 'FL', 'Hollywood', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('117', 'Florida', 'FL', 'Jacksonville', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('118', 'Florida', 'FL', 'Miami', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('119', 'Florida', 'FL', 'Miami Gardens', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('120', 'Florida', 'FL', 'Miramar', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('121', 'Florida', 'FL', 'Orlando', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('122', 'Florida', 'FL', 'Palm Bay', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('123', 'Florida', 'FL', 'Pembroke Pines', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('124', 'Florida', 'FL', 'Pompano Beach', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('125', 'Florida', 'FL', 'Port St Lucie', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('126', 'Florida', 'FL', 'St Petersburg', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('127', 'Florida', 'FL', 'Tallahassee', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('128', 'Florida', 'FL', 'Tampa', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('129', 'Florida', 'FL', 'West Palm Beach', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('130', 'Georgia', 'GA', 'Athens', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('131', 'Georgia', 'GA', 'Atlanta', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('132', 'Georgia', 'GA', 'Augusta', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('133', 'Georgia', 'GA', 'Columbus', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('134', 'Georgia', 'GA', 'Savannah', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('135', 'Hawaii', 'HI', 'Honolulu', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('136', 'Idaho', 'ID', 'Boise', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('137', 'Illinois', 'IL', 'Aurora', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('138', 'Illinois', 'IL', 'Chicago', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('139', 'Illinois', 'IL', 'Elgin', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('140', 'Illinois', 'IL', 'Joliet', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('141', 'Illinois', 'IL', 'Naperville', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('142', 'Illinois', 'IL', 'Peoria', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('143', 'Illinois', 'IL', 'Rockford', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('144', 'Illinois', 'IL', 'Springfield', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('145', 'Indiana', 'IN', 'Evansville', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('146', 'Indiana', 'IN', 'Fort Wayne', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('147', 'Indiana', 'IN', 'Indianapolis', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('148', 'Indiana', 'IN', 'South Bend', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('149', 'Iowa', 'IA', 'Cedar Rapids', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('150', 'Iowa', 'IA', 'Davenport', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('151', 'Iowa', 'IA', 'Des Moines', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('152', 'Kansas', 'KS', 'Kansas City', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('153', 'Kansas', 'KS', 'Olathe', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('154', 'Kansas', 'KS', 'Overland Park', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('155', 'Kansas', 'KS', 'Topeka', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('156', 'Kansas', 'KS', 'Wichita', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('157', 'Kentucky', 'KY', 'Lexington', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('158', 'Kentucky', 'KY', 'Louisville', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('159', 'Louisiana', 'LA', 'Baton Rouge', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('160', 'Louisiana', 'LA', 'Lafayette', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('161', 'Louisiana', 'LA', 'New Orleans', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('162', 'Louisiana', 'LA', 'Shreveport', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('163', 'Maryland', 'MD', 'Baltimore', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('164', 'Massachusetts', 'MA', 'Boston', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('165', 'Massachusetts', 'MA', 'Cambridge', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('166', 'Massachusetts', 'MA', 'Lowell', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('167', 'Massachusetts', 'MA', 'Springfield', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('168', 'Massachusetts', 'MA', 'Worcester', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('169', 'Michigan', 'MI', 'Ann Arbor', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('170', 'Michigan', 'MI', 'Detroit', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('171', 'Michigan', 'MI', 'Flint', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('172', 'Michigan', 'MI', 'Grand Rapids', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('173', 'Michigan', 'MI', 'Lansing', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('174', 'Michigan', 'MI', 'Sterling Heights', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('175', 'Michigan', 'MI', 'Warren', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('176', 'Minnesota', 'MN', 'Minneapolis', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('177', 'Minnesota', 'MN', 'Rochester', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('178', 'Minnesota', 'MN', 'Saint Paul', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('179', 'Mississippi', 'MS', 'Jackson', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('180', 'Missouri', 'MO', 'Columbia', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('181', 'Missouri', 'MO', 'Independence', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('182', 'Missouri', 'MO', 'Kansas City', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('183', 'Missouri', 'MO', 'Springfield', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('184', 'Missouri', 'MO', 'St Louis', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('185', 'Montana', 'MT', 'Billings', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('186', 'Nebraska', 'NE', 'Lincoln', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('187', 'Nebraska', 'NE', 'Omaha', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('188', 'Nevada', 'NV', 'Henderson', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('189', 'Nevada', 'NV', 'Las Vegas', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('190', 'Nevada', 'NV', 'North Las Vegas', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('191', 'Nevada', 'NV', 'Reno', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('192', 'New Hampshire', 'NH', 'Manchester', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('193', 'New Jersey', 'NJ', 'Elizabeth', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('194', 'New Jersey', 'NJ', 'Jersey City', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('195', 'New Jersey', 'NJ', 'Newark', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('196', 'New Jersey', 'NJ', 'Paterson', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('197', 'New Mexico', 'NM', 'Albuquerque', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('198', 'New Mexico', 'NM', 'Las Cruces', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('199', 'New York', 'NY', 'Buffalo', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('200', 'New York', 'NY', 'Rochester', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('201', 'New York', 'NY', 'Syracuse', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('202', 'New York', 'NY', 'Yonkers', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('203', 'North Carolina', 'NC', 'Cary', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('204', 'North Carolina', 'NC', 'Charlotte', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('205', 'North Carolina', 'NC', 'Durham', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('206', 'North Carolina', 'NC', 'Fayetteville', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('207', 'North Carolina', 'NC', 'Greensboro', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('208', 'North Carolina', 'NC', 'High Point', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('209', 'North Carolina', 'NC', 'Raleigh', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('210', 'North Carolina', 'NC', 'Wilmington', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('211', 'North Carolina', 'NC', 'Winston Salem', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('212', 'North Dakota', 'ND', 'Fargo', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('213', 'Ohio', 'OH', 'Akron', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('214', 'Ohio', 'OH', 'Cincinnati', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('215', 'Ohio', 'OH', 'Cleveland', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('216', 'Ohio', 'OH', 'Columbus', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('217', 'Ohio', 'OH', 'Dayton', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('218', 'Ohio', 'OH', 'Toledo', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('219', 'Oklahoma', 'OK', 'Broken Arrow', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('220', 'Oklahoma', 'OK', 'Norman', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('221', 'Oklahoma', 'OK', 'Oklahoma City', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('222', 'Oklahoma', 'OK', 'Tulsa', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('223', 'Oregon', 'OR', 'Eugene', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('224', 'Oregon', 'OR', 'Gresham', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('225', 'Oregon', 'OR', 'Portland', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('226', 'Oregon', 'OR', 'Salem', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('227', 'Pennsylvania', 'PA', 'Allentown', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('228', 'Pennsylvania', 'PA', 'Erie', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('229', 'Pennsylvania', 'PA', 'Philadelphia', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('230', 'Pennsylvania', 'PA', 'Pittsburgh', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('231', 'Rhode Island', 'RI', 'Providence', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('232', 'South Carolina', 'SC', 'Charleston', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('233', 'South Carolina', 'SC', 'Columbia', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('234', 'South Carolina', 'SC', 'North Charleston', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('235', 'South Dakota', 'SD', 'Sioux Falls', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('236', 'Tennessee', 'TN', 'Chattanooga', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('237', 'Tennessee', 'TN', 'Clarksville', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('238', 'Tennessee', 'TN', 'Knoxville', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('239', 'Tennessee', 'TN', 'Memphis', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('240', 'Tennessee', 'TN', 'Murfreesboro', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('241', 'Tennessee', 'TN', 'Nashville', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('242', 'Texas', 'TX', 'Abilene', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('243', 'Texas', 'TX', 'Amarillo', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('244', 'Texas', 'TX', 'Arlington', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('245', 'Texas', 'TX', 'Austin', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('246', 'Texas', 'TX', 'Beaumont', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('247', 'Texas', 'TX', 'Brownsville', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('248', 'Texas', 'TX', 'Carrollton', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('249', 'Texas', 'TX', 'Corpus Christi', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('250', 'Texas', 'TX', 'Dallas', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('251', 'Texas', 'TX', 'Denton', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('252', 'Texas', 'TX', 'El Paso', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('253', 'Texas', 'TX', 'Fort Worth', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('254', 'Texas', 'TX', 'Frisco', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('255', 'Texas', 'TX', 'Garland', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('256', 'Texas', 'TX', 'Grand Prairie', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('257', 'Texas', 'TX', 'Houston', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('258', 'Texas', 'TX', 'Irving', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('259', 'Texas', 'TX', 'Killeen', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('260', 'Texas', 'TX', 'Laredo', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('261', 'Texas', 'TX', 'Lubbock', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('262', 'Texas', 'TX', 'McAllen', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('263', 'Texas', 'TX', 'McKinney', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('264', 'Texas', 'TX', 'Mesquite', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('265', 'Texas', 'TX', 'Midland', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('266', 'Texas', 'TX', 'Odessa', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('267', 'Texas', 'TX', 'Pasadena', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('268', 'Texas', 'TX', 'Plano', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('269', 'Texas', 'TX', 'Richardson', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('270', 'Texas', 'TX', 'Round Rock', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('271', 'Texas', 'TX', 'San Antonio', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('272', 'Texas', 'TX', 'Waco', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('273', 'Texas', 'TX', 'Wichita Falls', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('274', 'Utah', 'UT', 'Provo', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('275', 'Utah', 'UT', 'Salt Lake City', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('276', 'Utah', 'UT', 'West Jordan', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('277', 'Utah', 'UT', 'West Valley City', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('278', 'Virginia', 'VA', 'Alexandria', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('279', 'Virginia', 'VA', 'Chesapeake', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('280', 'Virginia', 'VA', 'Hampton', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('281', 'Virginia', 'VA', 'Newport News', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('282', 'Virginia', 'VA', 'Norfolk', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('283', 'Virginia', 'VA', 'Richmond', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('284', 'Virginia', 'VA', 'Virginia Beach', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('285', 'Washington', 'WA', 'Bellevue', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('286', 'Washington', 'WA', 'Everett', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('287', 'Washington', 'WA', 'Kent', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('288', 'Washington', 'WA', 'Seattle', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('289', 'Washington', 'WA', 'Spokane', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('290', 'Washington', 'WA', 'Tacoma', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('291', 'Washington', 'WA', 'Vancouver', '4', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('292', 'Wisconsin', 'WI', 'Green Bay', '5', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('293', 'Wisconsin', 'WI', 'Kenosha', '1', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('294', 'Wisconsin', 'WI', 'Madison', '2', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('295', 'Wisconsin', 'WI', 'Milwaukee', '3', 'city', '1', '0');
+INSERT INTO "majorcities" VALUES ('296', 'Arkansas', 'AR', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('297', 'California', 'CA', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('298', 'Colorado', 'CO', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('299', 'Connecticut', 'CT', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('300', 'District of Columbia', 'DC', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('301', 'Florida', 'FL', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('302', 'Georgia', 'GA', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('303', 'Hawaii', 'HI', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('304', 'Idaho', 'ID', null, '4', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('305', 'Illinois', 'IL', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('306', 'Indiana', 'IN', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('307', 'Iowa', 'IA', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('308', 'Kansas', 'KS', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('309', 'Kentucky', 'KY', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('310', 'Louisiana', 'LA', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('311', 'Maryland', 'MD', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('312', 'Massachusetts', 'MA', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('313', 'Michigan', 'MI', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('314', 'Minnesota', 'MN', null, '4', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('315', 'Mississippi', 'MS', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('316', 'Missouri', 'MO', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('317', 'Montana', 'MT', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('318', 'Nebraska', 'NE', null, '4', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('319', 'Nevada', 'NV', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('320', 'New Hampshire', 'NH', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('321', 'New Jersey', 'NJ', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('322', 'New Mexico', 'NM', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('323', 'New York', 'NY', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('324', 'North Carolina', 'NC', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('325', 'North Dakota', 'ND', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('326', 'Ohio', 'OH', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('327', 'Oklahoma', 'OK', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('328', 'Oregon', 'OR', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('329', 'Pennsylvania', 'PA', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('330', 'Rhode Island', 'RI', null, '4', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('331', 'South Carolina', 'SC', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('332', 'South Dakota', 'SD', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('333', 'Tennessee', 'TN', null, '4', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('334', 'Texas', 'TX', null, '5', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('335', 'Utah', 'UT', null, '2', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('336', 'Virginia', 'VA', null, '1', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('337', 'Washington', 'WA', null, '3', 'state', '1', '0');
+INSERT INTO "majorcities" VALUES ('338', 'Wisconsin', 'WI', null, '5', 'state', '1', '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for mediafiles
+-- ----------------------------
+DROP TABLE IF EXISTS "mediafiles";
+CREATE TABLE "mediafiles" (
+    "id" SERIAL,
+    "mediafiletype" varchar(510) DEFAULT NULL,
+    "modelid" int4,
+    "fileid" varchar(1000) DEFAULT NULL,
+    "name" varchar(1000) DEFAULT NULL,
+    "type" varchar COLLATE "default",
+    "settings" text COLLATE "default",
+    "sortorder" int4 DEFAULT 9999,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of mediafiles
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+--  Table structure for menus
+-- ----------------------------
+DROP TABLE IF EXISTS "menus";
+CREATE TABLE "menus" (
+    "id" SERIAL,
+    "name" varchar(800) NOT NULL COLLATE "default",
+    "itemtype" varchar(510) DEFAULT NULL,
+    "itemid" int4,
+    "customurl" varchar(510) DEFAULT NULL,
+    "menuid" varchar(510) DEFAULT NULL,
+    "parentid" int4 DEFAULT 0,
+    "description" varchar(10000) DEFAULT NULL,
+    "sortorder" int4 NOT NULL DEFAULT 0,
+    "siteid" int4 DEFAULT 1,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of menus
+-- ----------------------------
+BEGIN;
+INSERT INTO "menus" VALUES ('2', 'Videos', 'custom', null, '/videos', 'Primary', '0', null, '2', '60', '2014-11-17 11:09:59+00', '1', '2014-11-17 15:59:34+00', '1', null, null, '0');
+INSERT INTO "menus" VALUES ('5', 'asdf', 'page', '1', null, 'Primary', '0', null, '0', '60', '2016-09-12 16:50:02+00', '1', '2016-09-12 16:50:02+00', '1', '2016-09-12 16:50:05+00', '1', '0');
+INSERT INTO "menus" VALUES ('3', 'Contact', 'custom', null, '/p/pforms/show/1', 'Primary', '0', null, '6', '60', '2014-11-17 15:59:18+00', '1', '2016-10-12 22:59:43.057+00', '1', null, null, '0');
+INSERT INTO "menus" VALUES ('4', 'Login', 'custom', null, '/manager', 'Primary', '0', null, '3', '60', '2014-11-17 16:00:41+00', '1', '2016-10-14 03:46:05.371+00', '1', null, null, '0');
+INSERT INTO "menus" VALUES ('1', 'Blog', 'custom', null, '/blog', 'Primary', '0', null, '4', '60', '2014-11-17 11:07:03+00', '1', '2016-10-14 03:46:05.678+00', '1', null, null, '0');
+INSERT INTO "menus" VALUES ('7', 'test', 'custom', null, '/', 'Primary', '1', null, '5', '60', '2016-10-12 22:59:33.393+00', '1', '2016-10-14 03:46:06.042+00', '1', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for metadata
+-- ----------------------------
+DROP TABLE IF EXISTS "metadata";
+CREATE TABLE "metadata" (
+    "foreignid" int4 NOT NULL,
+    "metafieldid" int4 NOT NULL,
+    "fielddata" text COLLATE "default",
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of metadata
+-- ----------------------------
+BEGIN;
+INSERT INTO "metadata" VALUES ('1', '1', 'test', '2014-12-10 14:21:49+00', '1', '2014-12-10 14:21:49+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('1', '2', 'test', '2014-12-10 14:21:49+00', '1', '2014-12-10 14:21:49+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('1', '3', 'test', '2014-12-10 14:21:49+00', '1', '2014-12-10 14:21:49+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('3', '3', null, '2016-10-08 04:30:09.26+00', '1', '2016-10-08 04:30:09.26+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('3', '2', null, '2016-10-08 04:30:09.557+00', '1', '2016-10-08 04:30:09.557+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('3', '1', null, '2016-10-08 04:30:09.846+00', '1', '2016-10-08 04:30:09.846+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('4', '3', null, '2016-10-12 21:59:06.086+00', null, '2016-10-12 21:59:06.086+00', null, null, null);
+INSERT INTO "metadata" VALUES ('4', '2', null, '2016-10-12 21:59:06.409+00', null, '2016-10-12 21:59:06.409+00', null, null, null);
+INSERT INTO "metadata" VALUES ('4', '1', null, '2016-10-12 21:59:06.799+00', null, '2016-10-12 21:59:06.799+00', null, null, null);
+INSERT INTO "metadata" VALUES ('1', '7', '1', '2016-10-15 16:19:49.382+00', '1', '2016-10-15 16:19:49.383+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('1', '9', 'Option 2', '2016-10-15 16:19:49.621+00', '1', '2016-10-15 16:19:49.621+00', '1', null, null);
+INSERT INTO "metadata" VALUES ('1', '10', 'Option 2', '2016-10-15 16:19:49.903+00', '1', '2016-10-15 16:19:49.903+00', '1', null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for metafields
+-- ----------------------------
+DROP TABLE IF EXISTS "metafields";
+CREATE TABLE "metafields" (
+    "id" SERIAL,
+    "metafieldtype" varchar(510) DEFAULT NULL,
+    "modelid" int4,
+    "name" varchar(1000) DEFAULT NULL,
+    "type" varchar(1000) DEFAULT NULL,
+    "contentblock" text COLLATE "default",
+    "codeblock" text COLLATE "default",
+    "wysiwyg" int4 DEFAULT 0,
+    "fieldvalues" text COLLATE "default",
+    "class" text COLLATE "default",
+    "checked" int4 DEFAULT 0,
+    "wrapoptions" int4 DEFAULT 0,
+    "divwrap" int4,
+    "divclass" text COLLATE "default",
+    "labelplacement" varchar(510) DEFAULT 'before',
+    "prepend" text COLLATE "default",
+    "append" text COLLATE "default",
+    "styleattribute" text COLLATE "default",
+    "identifier" varchar(1000) DEFAULT NULL,
+    "sortorder" int4 DEFAULT 9999,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of metafields
+-- ----------------------------
+BEGIN;
+INSERT INTO "metafields" VALUES ('1', 'formfield', '1', 'Your Name', 'text', null, null, '0', null, null, '0', '0', '0', null, 'before', null, null, null, 'name', '1', '60', '2014-11-17 15:55:44+00', '1', '2014-11-17 15:58:08+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('2', 'formfield', '1', 'Your Email', 'text', null, null, '0', null, null, '0', '0', '0', null, 'before', null, null, null, 'email', '2', '60', '2014-11-17 15:56:06+00', '1', '2014-11-17 15:58:08+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('3', 'formfield', '1', 'Your Message', 'textarea', null, null, '0', null, null, '0', '0', '0', null, 'before', null, null, null, 'message', '3', '60', '2014-11-17 15:56:25+00', '1', '2014-11-17 15:58:08+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('4', 'formfield', '1', 'Send', 'submit', null, null, '0', null, 'btn btn-md btn-primary', '0', '0', '0', null, 'before', null, null, null, null, '4', '60', '2014-11-17 15:56:53+00', '1', '2014-11-17 15:58:08+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('5', 'formfield', '1', 'Contact Us', 'headline', null, null, '0', null, null, '0', '0', '0', null, 'before', null, null, null, 'Contact Us', '0', '60', '2014-11-17 15:57:40+00', '1', '2014-11-17 15:58:08+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('7', 'propertyfield', '3', ' Checkbox', 'checkbox', null, null, '0', null, null, '0', '0', '1', 'col-sm-6', 'after', null, null, 'margin-right:10px;', 'checkbox', '1', '60', '2016-10-15 16:18:53.167+00', '1', '2016-10-15 16:18:53.167+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('8', 'propertyfield', '3', ' Headline', 'headline', null, null, '0', null, null, '0', '0', null, null, 'before', null, null, null, 'headline', '2', '60', '2016-10-15 16:18:53.455+00', '1', '2016-10-15 16:18:53.455+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('9', 'propertyfield', '3', 'Pick an Option', 'radio', null, null, '0', 'Option 1
+Option 2
+Option 3', null, '0', '0', '1', 'col-sm-6', 'after', null, null, null, 'pick-an-option', '3', '60', '2016-10-15 16:18:53.752+00', '1', '2016-10-15 16:18:53.752+00', '1', null, null, '0');
+INSERT INTO "metafields" VALUES ('10', 'propertyfield', '3', 'Pick an Option', 'checkbox-options', null, null, '0', 'Option 1
+Option 2
+Option 3', null, '0', '0', '1', 'col-sm-6', 'after', null, null, null, 'pick-an-option', '4', '60', '2016-10-15 16:18:54.036+00', '1', '2016-10-15 16:18:54.036+00', '1', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for newsletter_sections
+-- ----------------------------
+DROP TABLE IF EXISTS "newsletter_sections";
+CREATE TABLE "newsletter_sections" (
+    "id" SERIAL,
+    "newsletterid" int4,
+    "title" varchar(2000) DEFAULT NULL,
+    "content" text COLLATE "default",
+    "status" varchar(510) DEFAULT 'draft',
+    "siteid" int4 DEFAULT 1,
+    "createdby" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for newsletters
+-- ----------------------------
+DROP TABLE IF EXISTS "newsletters";
+CREATE TABLE "newsletters" (
+    "id" SERIAL,
+    "subject" varchar(510) DEFAULT NULL,
+    "status" varchar(510) DEFAULT 'draft',
+    "siteid" int4 DEFAULT 1,
+    "createdby" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of newsletters
+-- ----------------------------
+BEGIN;
+INSERT INTO "newsletters" VALUES ('1', 'adsf dasfadfs adfs', 'published', '60', '1', '2016-09-12 16:57:35+00', '1', '2016-09-12 16:57:35+00', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for notfounds
+-- ----------------------------
+DROP TABLE IF EXISTS "notfounds";
+CREATE TABLE "notfounds" (
+    "urlpath" varchar(660) NOT NULL COLLATE "default",
+    "referrer" varchar(4510) DEFAULT NULL,
+    "occurences" int4 DEFAULT 0,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of notfounds
+-- ----------------------------
+BEGIN;
+INSERT INTO "notfounds" VALUES ('/assets/vendor/js/bootstrap/bootstrap.min.js', null, '0', null, '2016-09-12 16:37:37+00', '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for options
+-- ----------------------------
+DROP TABLE IF EXISTS "options";
+CREATE TABLE "options" (
+    "id" varchar(400) NOT NULL COLLATE "default",
+    "siteid" int4 NOT NULL,
+    "label" varchar(1000) DEFAULT NULL,
+    "content" varchar(10000) DEFAULT NULL,
+    "attachment" varchar(1000) DEFAULT NULL,
+    "inputlabel" varchar(1000) DEFAULT NULL,
+    "inputtype" varchar(1000) DEFAULT NULL,
+    "editcontent" int4 NOT NULL DEFAULT 0,
+    "editlabel" int4 NOT NULL DEFAULT 0,
+    "editattachment" int4 NOT NULL DEFAULT 0,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of options
+-- ----------------------------
+BEGIN;
+INSERT INTO "options" VALUES ('home_id', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('home_id', '60', null, '1', null, null, null, '0', '0', '0', null, null, '2014-11-17 11:09:15+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_blog_description', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_blog_description', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_blog_keywords', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_blog_keywords', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_blog_title', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_blog_title', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_description', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_description', '60', null, null, null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_homepage_description', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_homepage_description', '60', null, null, null, null, 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_homepage_keywords', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_homepage_keywords', '60', null, null, null, null, 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_homepage_title', '0', null, null, null, '', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_homepage_title', '60', null, null, null, null, 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_keywords', '0', null, null, null, '', '', '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_keywords', '60', null, null, null, null, null, '0', '0', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_subpage_title', '0', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_subpage_title', '60', null, null, null, 'SEO Subpage Title', 'text', '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('seo_title', '0', null, null, null, '', '', '0', '1', '0', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('seo_title', '60', null, null, null, null, null, '0', '1', '0', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+INSERT INTO "options" VALUES ('site_logo', '0', null, null, null, '', '', '0', '1', '1', null, null, null, null, null, null, '0');
+INSERT INTO "options" VALUES ('site_logo', '60', null, null, null, null, null, '0', '1', '1', null, null, '2014-11-17 12:10:57+00', '1', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for orderitems
+-- ----------------------------
+DROP TABLE IF EXISTS "orderitems";
+CREATE TABLE "orderitems" (
+    "id" SERIAL,
+    "orderid" int4 NOT NULL,
+    "vendorid" int4 NOT NULL,
+    "itemid" int4 NOT NULL,
+    "itemname" varchar(2000) NOT NULL COLLATE "default",
+    "itemprice" numeric(10,2) NOT NULL,
+    "itemquantity" numeric(10,0) NOT NULL,
+    "status" varchar(2000) NULL COLLATE "default",
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for orders
+-- ----------------------------
+DROP TABLE IF EXISTS "orders";
+CREATE TABLE "orders" (
+    "id" SERIAL,
+    "customerid" int4 NOT NULL,
+    "eventid" int4,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for ordertransactions
+-- ----------------------------
+DROP TABLE IF EXISTS "ordertransactions";
+CREATE TABLE "ordertransactions" (
+    "id" SERIAL,
+    "vendorid" int4 NOT NULL,
+    "orderid" int4 NOT NULL,
+    "ordertotal" numeric(10,2) NOT NULL,
+    "appfee" numeric(10,2) DEFAULT 0.00,
+    "totalafterfee" numeric(10,2) DEFAULT 0.00,
+    "gateway" varchar(2000) NULL COLLATE "default",
+    "stripe_response" text COLLATE "default",
+    "status" varchar(2000) NULL COLLATE "default",
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for permissions
+-- ----------------------------
+DROP TABLE IF EXISTS "permissions";
+CREATE TABLE "permissions" (
+    "id" varchar(1000) NOT NULL COLLATE "default",
+    "superuser" bool NOT NULL,
+    "admin" bool NOT NULL,
+    "editor" bool NOT NULL,
+    "user" bool NOT NULL,
+    "guest" bool NOT NULL,
+    "createdby" int4,
+    "updatedby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of permissions
+-- ----------------------------
+BEGIN;
+INSERT INTO "permissions" VALUES ('admin_menu', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('category_delete', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('category_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('category_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('category_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('category_save', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('category_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('email_full_control', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('form_delete', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('form_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('form_read', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('form_read_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('form_save', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('form_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('itdevice_full_control', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('jobapp', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('log_read_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('menu_delete', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('menu_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('menu_save', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('menu_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('newsletter_save', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('option_delete', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('option_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('option_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('option_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('option_save', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('option_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('page_delete', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('page_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('page_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('page_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('page_save', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('page_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('permission_delete', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('permission_delete_others', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('permission_read', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('permission_read_others', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('permission_save', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('permission_save_others', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('post_delete', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('post_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('post_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('post_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('post_save', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('post_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('superadmin', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('superuser_menu', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('todo_delete', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('todo_delete_others', 'f', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('todo_read', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('todo_read_others', 'f', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('todo_save', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('todo_save_others', 'f', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('usertag_delete', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('usertag_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('usertag_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('usertag_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('usertag_save', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('usertag_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('user_delete', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('user_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('user_noApprovalNeeded', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('user_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('user_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('user_save', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('user_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('user_save_role', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('user_save_role_admin', 't', 'f', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('video_delete', 't', 't', 't', 't', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('video_delete_others', 't', 't', 'f', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('video_read', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('video_read_others', 't', 't', 't', 't', 't', null, null, null);
+INSERT INTO "permissions" VALUES ('video_save', 't', 't', 't', 'f', 'f', null, null, null);
+INSERT INTO "permissions" VALUES ('video_save_others', 't', 't', 'f', 'f', 'f', null, null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for posts
+-- ----------------------------
+DROP TABLE IF EXISTS "posts";
+CREATE TABLE "posts" (
+    "id" SERIAL,
+    "posttype" varchar(510) DEFAULT NULL,
+    "urlid" varchar(300) DEFAULT NULL,
+    "name" varchar(300) DEFAULT NULL,
+    "subname" varchar(300) DEFAULT NULL,
+    "sysname" varchar(300) DEFAULT NULL,
+    "content" text COLLATE "default",
+    "template" varchar(510) DEFAULT 'default',
+    "metagenerated" int4 DEFAULT 1,
+    "metatitle" varchar(2400) DEFAULT NULL,
+    "metadescription" varchar(2400) DEFAULT NULL,
+    "metakeywords" varchar(2400) DEFAULT NULL,
+    "status" varchar(510) DEFAULT 'draft',
+    "quoteimg" varchar(910) DEFAULT NULL,
+    "youtubeid" varchar(510) DEFAULT NULL,
+    "sidecontent" varchar(4110) DEFAULT NULL,
+    "redirect" varchar(1600) DEFAULT NULL,
+    "password" varchar(510) DEFAULT NULL,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "oldurl" varchar(1000) DEFAULT NULL,
+    "authorname" varchar(1000) DEFAULT NULL,
+    "globalized" int4 DEFAULT 0,
+    "footerpageblockid" int4,
+    "quoteurlid" varchar(300) DEFAULT NULL
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of posts
+-- ----------------------------
+BEGIN;
+INSERT INTO "posts" VALUES ('1', 'page', 'home', 'Home', null, null, '<h2>Welcome to bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl capicola short ribs. Frankfurter strip steak meatloaf sirloin, jowl shank alcatra fatback.</h2>
+<br />
+Tail ham hock cow leberkas hamburger. Doner prosciutto porchetta, turducken biltong jowl tri-tip. Shankle corned beef frankfurter strip steak. Tenderloin sirloin landjaeger pork chop ham prosciutto. Chuck turkey ham hock drumstick, tail meatball sausage ball tip swine ground round boudin t-bone.<br />
+<br />
+Landjaeger swine ribeye, ball tip biltong cow shoulder leberkas pig flank pork loin frankfurter. T-bone chicken spare ribs tail. Brisket venison shank frankfurter jowl pig pork loin strip steak cow t-bone beef ribs flank ribeye. Pork leberkas picanha, cupim pig prosciutto ball tip. Frankfurter andouille pancetta tri-tip.', 'default', '1', 'Home', 'Welcome to bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue rib', 'andouille,alcatra,capicola,Pork,bacon,tip,dolor,sausage,Chuck,loin,Turkey,tail,hamburger,Tenderloin,ipsum,Brisket,drumstick,hock,ground,t-bone,tenderloin,kevin,chicken,turducken,short,tri-tip,steak,ba', 'published', null, null, null, null, null, '60', null, null, '2014-11-17 11:19:42+00', '1', null, null, null, null, '0', null, null);
+INSERT INTO "posts" VALUES ('2', 'post', 'hello-world', 'Hello world', null, null, '<h2>Bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl capicola short ribs. Frankfurter strip steak meatloaf sirloin, jowl shank alcatra fatback.</h2>
+
+<p>Tail ham hock cow leberkas hamburger. Doner prosciutto porchetta, turducken biltong jowl tri-tip. Shankle corned beef frankfurter strip steak. Tenderloin sirloin landjaeger pork chop ham prosciutto. Chuck turkey ham hock drumstick, tail meatball sausage ball tip swine ground round boudin t-bone.</p>
+
+<p>Landjaeger swine ribeye, ball tip biltong cow shoulder leberkas pig flank pork loin frankfurter. T-bone chicken spare ribs tail. Brisket venison shank frankfurter jowl pig pork loin strip steak cow t-bone beef ribs flank ribeye. Pork leberkas picanha, cupim pig prosciutto ball tip. Frankfurter andouille pancetta tri-tip.</p>', 'default', '1', 'Hello world', 'Bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl ca', 'andouille,alcatra,capicola,Pork,tip,dolor,sausage,Chuck,loin,Turkey,tail,hamburger,Tenderloin,ipsum,Brisket,drumstick,hock,ground,t-bone,tenderloin,kevin,chicken,turducken,short,tri-tip,steak,ball,Sha', 'published', null, null, null, null, null, '60', '2014-11-17 11:08:36+00', '1', '2014-11-17 11:08:36+00', '1', null, null, null, null, '0', null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for properties
+-- ----------------------------
+DROP TABLE IF EXISTS "properties";
+CREATE TABLE "properties" (
+    "id" SERIAL,
+    "ownerid" int4,
+    "urlid" varchar(1800) DEFAULT NULL,
+    "siteid" int4,
+    "name" varchar(510) DEFAULT NULL,
+    "description" text COLLATE "default",
+    "address" varchar(260) NOT NULL DEFAULT '',
+    "city" varchar(260) NOT NULL DEFAULT '',
+    "state" varchar(260) NOT NULL DEFAULT '',
+    "zip" int4 NOT NULL,
+    "price" numeric(10,2) DEFAULT NULL,
+    "phone_number" varchar(60) DEFAULT NULL,
+    "home_status" varchar DEFAULT 'For Sale',
+    "home_type" varchar DEFAULT 'Single family',
+    "video_walkthrough_url" varchar(510) DEFAULT NULL,
+    "virtual_tour_url" varchar(510) DEFAULT NULL,
+    "hoa_dues" numeric(10,2) DEFAULT NULL,
+    "beds" int4,
+    "three_quarter_baths" int4,
+    "half_baths" int4,
+    "full_baths" int4,
+    "quarter_baths" int4,
+    "garage_square_feet" int4,
+    "finished_square_feet" int4,
+    "lot_size" int4,
+    "lot_size_type" varchar DEFAULT 'Sq ft',
+    "year_built" int4,
+    "structural_remodel_year" int4,
+    "related_website" varchar(510) DEFAULT NULL,
+    "love_description" text COLLATE "default",
+    "total_rooms" int4,
+    "number_of_stories" int4,
+    "covered_parking" int4,
+    "additional_features" text COLLATE "default",
+    "published" int4 DEFAULT 0,
+    "isfeatured" int4 DEFAULT 0,
+    "sortorder" int4 DEFAULT 9999,
+    "status" varchar(20) DEFAULT 'draft',
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "todelete" int4 DEFAULT 0,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 NOT NULL DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of properties
+-- ----------------------------
+BEGIN;
+INSERT INTO "properties" VALUES ('1', '1', '4693-beverly-dr', '60', 'Beverly Hills', 'Ewxdcy lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '4693 Beverly Dr', 'Beverly Hills', 'CA', '90210', '0.00', '3105554693', 'Pending', 'Apartment', 'Huaja', 'Qgcss', '1.00', '1', '1', '1', '1', '1', '1', '1', '1', 'Acres', '1', '1', 'Fhenm', 'Ualliw lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '1', '1', '1', 'Cyych', '0', '0', '9999', 'published', '2016-10-14 22:14:08.85+00', '1', '2016-10-15 15:27:40.398+00', '1', '0', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for properties_categories
+-- ----------------------------
+DROP TABLE IF EXISTS "properties_categories";
+CREATE TABLE "properties_categories" (
+    "categoryid" int4 NOT NULL,
+    "propertyid" int4 NOT NULL,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for redirects
+-- ----------------------------
+DROP TABLE IF EXISTS "redirects";
+CREATE TABLE "redirects" (
+    "if_matches_this" varchar(500) NOT NULL COLLATE "default",
+    "then_redirect_to" varchar(500) NOT NULL COLLATE "default",
+    "siteid" int4 DEFAULT 1,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for sites
+-- ----------------------------
+DROP TABLE IF EXISTS "sites";
+CREATE TABLE "sites" (
+    "id" SERIAL,
+    "name" varchar(510) DEFAULT NULL,
+    "subdomain" varchar(510) DEFAULT NULL,
+    "urlid" varchar(510) DEFAULT NULL,
+    "enableadmintheme" int4 DEFAULT 0,
+    "registrationdisabled" int4 DEFAULT 0,
+    "emailmatchdomainrequired" int4 DEFAULT 0,
+    "emailmatchotherdomains" varchar(2000) DEFAULT NULL,
+    "sslenabled" int4 DEFAULT 0,
+    "theme" varchar(510) DEFAULT 'freshcart',
+    "urlextension" varchar(510) DEFAULT NULL,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of sites
+-- ----------------------------
+BEGIN;
+INSERT INTO "sites" VALUES ('60', 'Wheelie CMS', 'localhost', 'localhost', '0', '0', '0', null, '0', 'light-theme', null, '60', '2014-10-05 19:10:06+00', '1', '2016-10-08 04:23:36.739+00', '1', null, null, '1');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for todos
+-- ----------------------------
+DROP TABLE IF EXISTS "todos";
+CREATE TABLE "todos" (
+    "id" SERIAL,
+    "name" varchar(800) NOT NULL COLLATE "default",
+    "isdone" date,
+    "isdone_old" int4,
+    "duedate" timestamp(6) WITH TIME ZONE,
+    "priority" varchar(510) DEFAULT 'medium',
+    "todogroupid" int4,
+    "parentid" int4,
+    "description" text COLLATE "default",
+    "sortorder" int4 NOT NULL DEFAULT 0,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of todos
+-- ----------------------------
+BEGIN;
+INSERT INTO "todos" VALUES ('1', 'Add a video', '2014-11-17', null, '2014-11-17 00:00:00+00', 'low', null, '3', null, '4', '60', '2014-11-17 15:53:41+00', '1', '2014-11-17 15:54:09+00', '1', null, null, '0');
+INSERT INTO "todos" VALUES ('2', 'Add a page', null, null, '2014-11-17 00:00:00+00', 'low', null, '3', null, '3', '60', '2014-11-17 15:53:50+00', '1', '2014-11-17 15:54:08+00', '1', null, null, '0');
+INSERT INTO "todos" VALUES ('3', 'Add site content', null, null, '2014-11-17 00:00:00+00', 'low', null, null, null, '2', '60', '2014-11-17 15:54:06+00', '1', '2014-11-17 15:54:07+00', '1', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for usergroups
+-- ----------------------------
+DROP TABLE IF EXISTS "usergroups";
+CREATE TABLE "usergroups" (
+    "id" SERIAL,
+    "groupname" varchar(2000) DEFAULT NULL,
+    "siteid" int4,
+    "role" varchar(510) DEFAULT NULL,
+    "globalized" int4 DEFAULT 0,
+    "defaultgroup" int4 DEFAULT 0,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of usergroups
+-- ----------------------------
+BEGIN;
+INSERT INTO "usergroups" VALUES ('1', 'Users', '1', null, '1', '1', null, null, null, null, null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS "users";
+CREATE TABLE "users" (
+    "id" SERIAL,
+    "sortorder" int4 NOT NULL DEFAULT 9999,
+    "approval_flag" int4,
+    "securityapproval" int4 DEFAULT 1,
+    "username" varchar(510) DEFAULT NULL,
+    "zx_company" varchar(510) DEFAULT NULL,
+    "zx_firstname" varchar(510) DEFAULT NULL,
+    "zx_lastname" varchar(510) DEFAULT NULL,
+    "zx_jobtitle" varchar(510) DEFAULT NULL,
+    "zx_designatory_letters" varchar(510) DEFAULT NULL,
+    "zx_about" text COLLATE "default",
+    "company" varchar(510) DEFAULT NULL,
+    "firstname" varchar(510) DEFAULT NULL,
+    "lastname" varchar(510) DEFAULT NULL,
+    "jobtitle" varchar(510) DEFAULT NULL,
+    "designatory_letters" varchar(510) DEFAULT NULL,
+    "about" text COLLATE "default",
+    "title" varchar(510) DEFAULT NULL,
+    "email" varchar(300) DEFAULT NULL,
+    "phone" varchar(510) DEFAULT NULL,
+    "password" varchar(510) DEFAULT NULL,
+    "address1" varchar(510) DEFAULT NULL,
+    "address2" varchar(510) DEFAULT NULL,
+    "city" varchar(510) DEFAULT NULL,
+    "state" varchar(510) DEFAULT NULL,
+    "zip" int4,
+    "country" varchar(510) DEFAULT NULL,
+    "gender" int4 DEFAULT 0,
+    "fulllastname" int4 DEFAULT 0,
+    "birthday" timestamp(6) WITH TIME ZONE,
+    "showonsite" int4 DEFAULT 0,
+    "start_date" timestamp(6) WITH TIME ZONE,
+    "role" varchar(510) DEFAULT '',
+    "stripe_customer_id" varchar(600) DEFAULT NULL,
+    "stripe_vendor_active" int4 DEFAULT 0,
+    "stripe_publishable_key" varchar(600) DEFAULT NULL,
+    "stripe_token_type" varchar(600) DEFAULT NULL,
+    "stripe_livemode" varchar(20) DEFAULT '0',
+    "stripe_user_id" varchar(600) DEFAULT NULL,
+    "stripe_refresh_token" varchar(600) DEFAULT NULL,
+    "stripe_access_token" varchar(600) DEFAULT NULL,
+    "stripe_scope" varchar(600) DEFAULT NULL,
+    "status" varchar(510) DEFAULT 'published',
+    "ip" varchar(510) DEFAULT NULL,
+    "siteid" int4,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of users
+-- ----------------------------
+BEGIN;
+INSERT INTO "users" VALUES ('1', '9999', '0', '1', 'sadfdsafssd', null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'F58319B6389F308D77D8D07DEBA42398', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', null, '0', null, null, '0', null, null, null, null, 'published', null, '60', null, null, '2016-10-13 21:25:43.043+00', '1', null, null, '1');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for users_categories
+-- ----------------------------
+DROP TABLE IF EXISTS "users_categories";
+CREATE TABLE "users_categories" (
+    "categoryid" int4 NOT NULL,
+    "userid" int4 NOT NULL,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Table structure for users_usergroups
+-- ----------------------------
+DROP TABLE IF EXISTS "users_usergroups";
+CREATE TABLE "users_usergroups" (
+    "usergroupid" int4 NOT NULL DEFAULT 1,
+    "userid" int4 NOT NULL,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of users_usergroups
+-- ----------------------------
+BEGIN;
+INSERT INTO "users_usergroups" VALUES ('1', '2', '2014-12-09 15:50:23+00', null, '2014-12-09 15:50:23+00', null);
+INSERT INTO "users_usergroups" VALUES ('1', '4', '2014-12-09 15:54:10+00', null, '2014-12-09 15:54:10+00', null);
+INSERT INTO "users_usergroups" VALUES ('1', '5', '2014-12-09 15:57:09+00', null, '2014-12-09 15:57:09+00', null);
+INSERT INTO "users_usergroups" VALUES ('1', '1', '2016-10-13 22:56:01.847+00', '1', '2016-10-13 22:56:01.847+00', '1');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for videos
+-- ----------------------------
+DROP TABLE IF EXISTS "videos";
+CREATE TABLE "videos" (
+    "id" SERIAL,
+    "urlid" varchar(510) NOT NULL COLLATE "default",
+    "name" varchar(510) NOT NULL COLLATE "default",
+    "teaser" text NOT NULL COLLATE "default",
+    "description" varchar(4000) NOT NULL COLLATE "default",
+    "videosubheader" text COLLATE "default",
+    "videolink" varchar(510) DEFAULT NULL,
+    "isfeatured" int4,
+    "youtubeid" varchar(510) DEFAULT NULL,
+    "vimeoid" varchar(510) DEFAULT NULL,
+    "sortorder" int4,
+    "typeid" varchar(800) DEFAULT NULL,
+    "filestatus" varchar(510) DEFAULT NULL,
+    "status" varchar(20) DEFAULT 'draft',
+    "isplaylist" int4 DEFAULT 0,
+    "videofileid" int4,
+    "siteid" int4,
+    "password" varchar(510) DEFAULT NULL,
+    "onsite" int4 DEFAULT 0,
+    "customthumb" int4 DEFAULT 0,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4,
+    "deletedat" timestamp(6) WITH TIME ZONE,
+    "deletedby" int4,
+    "globalized" int4 DEFAULT 0
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of videos
+-- ----------------------------
+BEGIN;
+INSERT INTO "videos" VALUES ('1', 'setting-up-coldfusion-on-wheels', 'Setting up ColdFusion on Wheels', 'Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels.', '<span style="font-family: arial, sans-serif; font-size: 12.7272720336914px; line-height: 17px;">Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels. He shows how to configure a data source and test that it''s working. This is part of a screencast series on building a social networking site using the ColdFusion on Wheels framework.</span>', null, null, '0', 'J3xdxp29ig4', null, null, null, null, 'published', '0', null, '60', null, '1', '0', '2014-11-17 11:12:18+00', '1', '2014-12-10 12:07:27+00', '1', null, null, '0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for videos_categories
+-- ----------------------------
+DROP TABLE IF EXISTS "videos_categories";
+CREATE TABLE "videos_categories" (
+    "videocategoryid" int4 NOT NULL,
+    "videoid" int4 NOT NULL,
+    "createdat" timestamp(6) WITH TIME ZONE,
+    "createdby" int4,
+    "updatedat" timestamp(6) WITH TIME ZONE,
+    "updatedby" int4
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Records of videos_categories
+-- ----------------------------
+BEGIN;
+INSERT INTO "videos_categories" VALUES ('1', '1', '2014-12-10 12:07:27+00', '1', '2014-12-10 12:07:27+00', '1');
+INSERT INTO "videos_categories" VALUES ('2', '1', '2014-12-10 12:07:27+00', '1', '2014-12-10 12:07:27+00', '1');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for zipcodes
+-- ----------------------------
+DROP TABLE IF EXISTS "zipcodes";
+CREATE TABLE "zipcodes" (
+    "id" SERIAL,
+    "zip" varchar(510) DEFAULT NULL,
+    "type" varchar(510) DEFAULT NULL,
+    "primary_city" varchar(510) DEFAULT NULL,
+    "acceptable_cities" varchar(510) DEFAULT NULL,
+    "unacceptable_cities" varchar(510) DEFAULT NULL,
+    "state" varchar(510) DEFAULT NULL,
+    "county" varchar(510) DEFAULT NULL,
+    "timezone" varchar(510) DEFAULT NULL,
+    "area_codes" varchar(510) DEFAULT NULL,
+    "latitude" varchar(510) DEFAULT NULL,
+    "longitude" varchar(510) DEFAULT NULL,
+    "world_region" varchar(510) DEFAULT NULL,
+    "country" varchar(510) DEFAULT NULL,
+    "decommissioned" varchar(510) DEFAULT NULL,
+    "estimated_population" varchar(510) DEFAULT NULL,
+    "notes" varchar(510) DEFAULT NULL
+)
+WITH (OIDS=FALSE);
+
+-- ----------------------------
+--  Primary key structure for table _default
+-- ----------------------------
+ALTER TABLE "_default" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table categories
+-- ----------------------------
+ALTER TABLE "categories" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table emailoptouts
+-- ----------------------------
+ALTER TABLE "emailoptouts" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table emails
+-- ----------------------------
+ALTER TABLE "emails" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table forms
+-- ----------------------------
+ALTER TABLE "forms" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table forms_users
+-- ----------------------------
+ALTER TABLE "forms_users" ADD PRIMARY KEY ("formid", "userid", "type") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table formsubmissions
+-- ----------------------------
+ALTER TABLE "formsubmissions" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table logs
+-- ----------------------------
+ALTER TABLE "logs" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table majorcities
+-- ----------------------------
+ALTER TABLE "majorcities" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table mediafiles
+-- ----------------------------
+ALTER TABLE "mediafiles" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table menus
+-- ----------------------------
+ALTER TABLE "menus" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table metadata
+-- ----------------------------
+ALTER TABLE "metadata" ADD PRIMARY KEY ("foreignid", "metafieldid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table metafields
+-- ----------------------------
+ALTER TABLE "metafields" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table newsletter_sections
+-- ----------------------------
+ALTER TABLE "newsletter_sections" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table newsletters
+-- ----------------------------
+ALTER TABLE "newsletters" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table notfounds
+-- ----------------------------
+ALTER TABLE "notfounds" ADD PRIMARY KEY ("urlpath") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table options
+-- ----------------------------
+ALTER TABLE "options" ADD PRIMARY KEY ("id", "siteid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table orderitems
+-- ----------------------------
+ALTER TABLE "orderitems" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table orders
+-- ----------------------------
+ALTER TABLE "orders" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table ordertransactions
+-- ----------------------------
+ALTER TABLE "ordertransactions" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table permissions
+-- ----------------------------
+ALTER TABLE "permissions" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table posts
+-- ----------------------------
+ALTER TABLE "posts" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table properties
+-- ----------------------------
+ALTER TABLE "properties" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table properties_categories
+-- ----------------------------
+ALTER TABLE "properties_categories" ADD PRIMARY KEY ("categoryid", "propertyid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table redirects
+-- ----------------------------
+ALTER TABLE "redirects" ADD PRIMARY KEY ("if_matches_this", "then_redirect_to") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table sites
+-- ----------------------------
+ALTER TABLE "sites" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table todos
+-- ----------------------------
+ALTER TABLE "todos" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table usergroups
+-- ----------------------------
+ALTER TABLE "usergroups" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table users
+-- ----------------------------
+ALTER TABLE "users" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table users_categories
+-- ----------------------------
+ALTER TABLE "users_categories" ADD PRIMARY KEY ("categoryid", "userid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table users_usergroups
+-- ----------------------------
+ALTER TABLE "users_usergroups" ADD PRIMARY KEY ("usergroupid", "userid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table videos
+-- ----------------------------
+ALTER TABLE "videos" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table videos_categories
+-- ----------------------------
+ALTER TABLE "videos_categories" ADD PRIMARY KEY ("videocategoryid", "videoid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-- ----------------------------
+--  Primary key structure for table zipcodes
+-- ----------------------------
+ALTER TABLE "zipcodes" ADD PRIMARY KEY ("id") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
