@@ -269,7 +269,33 @@
 			return "";
 		}		
 	}
-
+	function cacheThis(type,name,data) {
+		if(!session.containsKey("cacheThis")) {
+			session.cacheThis = {};
+		}
+		if(arguments.type eq "check") {
+			return session.cacheThis.containsKey("name");
+		} else if(arguments.type eq "get" AND session.cacheThis.containsKey("name")){
+			return session.cacheThis[name];
+		} else if(arguments.type eq "add"){
+			session.cacheThis[name] = data;
+			return true;
+		}
+	}
+	function jsonToQuery(arrayOfObjects) {
+		var columns = structKeyList(arrayOfObjects[1]);
+		var columnTypes = [];
+		for(var column in columns) arrayAppend(columnTypes, "varchar");
+		var query = queryNew(columns,arrayToList(columnTypes), []);
+		for(var item in arrayOfObjects) {
+			var insert = {};
+			for(var column in columns) {
+				insert[column] = !isNull(item[column]) ? item[column] : "";
+			}
+			queryAddRow(query, insert);
+		}
+		return query;
+	}
 	</cfscript> 
 	
 </cfoutput>

@@ -8,7 +8,7 @@
 
 	include template="/views/setup/check.cfm";
 
-	if(application.appSettings.accessKeyId.trim().len()) {
+	if(application.appSettings.containsKey("accessKeyId") && application.appSettings.accessKeyId.trim().len()) {
 		application.s3 = {
 			"accessKeyId" : application.appSettings.accessKeyId, 
 			"awsSecretKey" : application.appSettings.awsSecretKey,

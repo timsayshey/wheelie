@@ -1,4 +1,4 @@
-<cfscript>
+.<cfscript>
 	
 	adminUrlPath = "/manager";
 	application.wheels.adminUrlPath = adminUrlPath;
@@ -70,13 +70,6 @@
 			pattern="#thisAdminUrlPath#/todos/[action]/[modelName]",
 			controller="todos"	
 		);	
-		
-		addRoute(
-			name="admin~secureSSN", 
-			pattern="#thisAdminUrlPath#/secure/jobssn/",
-			controller="jobapps", 
-			action="jobssn"	
-		);
 	}
 	
 	// Default Module Routes

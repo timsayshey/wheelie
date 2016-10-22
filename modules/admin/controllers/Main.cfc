@@ -19,5 +19,55 @@ component extends="_main"
 			qLogFull = model("Log").findAll(where=wherePermission("Log"),include="User", maxRows=50, order="createdAt DESC");	
 		}
 	}
+	function scaffold() 
+	{
+		var nameVars = {
+			"@capLcasePlural@" 	: "Cliants",
+			"@ucaseSingular@" 	: "Cliant",
+			"@lcaseSingular@" 	: "cliant",
+			"@ucasePlural@" 	: "cliants",
+			"@lcasePlural@" 	: "cliants"
+		};
+
+		var templates = {
+			'/modules/adminapp/controllers/_Template.cfc'			:'/modules/adminapp/controllers/@capLcasePlural@.cfc',
+			'/modules/adminapp/controllers/_Templatefields.cfc'		:'/modules/adminapp/controllers/@capLcasePlural@fields.cfc',
+			'/modules/adminapp/models/_Template.cfc'				:'/modules/adminapp/models/templates/@ucaseSingular@.cfc',
+			'/modules/adminapp/models/_TemplateCategory.cfc'		:'/modules/adminapp/models/templates/@ucaseSingular@Category.cfc',
+			'/modules/adminapp/models/_TemplateCategoryJoin.cfc'	:'/modules/adminapp/models/templates/@ucaseSingular@CategoryJoin.cfc',
+			'/modules/adminapp/models/_TemplateField.cfc'			:'/modules/adminapp/models/templates/@ucaseSingular@Field.cfc',
+			'/modules/adminapp/models/_TemplateMediafile.cfc'		:'/modules/adminapp/models/templates/@ucaseSingular@Mediafile.cfc',
+			'/modules/adminapp/models/_TemplateMetafield.cfc'		:'/modules/adminapp/models/templates/@ucaseSingular@Metafield.cfc',
+			'/modules/adminapp/views/_templates/editor.cfm'			:'/modules/adminapp/views/@lcasePlural@/editor.cfm',
+			'/modules/adminapp/views/_templates/index.cfm'			:'/modules/adminapp/views/@lcasePlural@/index.cfm',
+			'/modules/adminapp/views/_templates/photos.cfm'			:'/modules/adminapp/views/@lcasePlural@/photos.cfm'
+		};
+
+		var viewDir = expandPath("/modules/adminapp/views/#nameVars['@lcasePlural@']#/");
+		if(!directoryExists(viewDir)) {
+			directoryCreate(viewDir);
+		}
+
+		for(var sourcePath in templates) {
+			var destinationPath = templates[sourcePath];
+			var template = fileRead(expandPath(sourcePath));
+
+			for(var nameVar in nameVars) {
+				destinationPath = replaceNoCase(destinationPath, nameVar, nameVars[nameVar],"ALL");
+				template = replaceNoCase(template, nameVar, nameVars[nameVar],"ALL");
+			}
+			try {
+				if(fileExists( destinationPath )) {
+					fileDelete( destinationPath );
+				}
+				fileWrite(expandPath(destinationPath), template);
+			}catch(any e) {
+				writeDump([e, destinationPath, template]); abort;
+			}
+		}
+
+		writeDump("SUCCESS"); abort;
+
+	}
 }
 </cfscript>
