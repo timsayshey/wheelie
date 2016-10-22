@@ -12,7 +12,7 @@ component extends="_main" output="false"
 	function switchuser(){
 		if (params.containsKey("id") AND isNumeric(params.id) AND checkPermission("superadmin")) {
 			session.user.id = params.id;
-			location("/"); 
+			goLocation("/"); 
 			abort;
 		} else {
 			writeOutput("fail."); abort;

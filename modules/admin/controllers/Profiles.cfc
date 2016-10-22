@@ -22,7 +22,7 @@
 					metafieldType = "usergroupfield"
 				);
 			} catch(e) {
-				Location("/#application.info.adminUrlPath#/users/edit/#params.id#"); abort;
+				golocation("/#application.info.adminUrlPath#/users/edit/#params.id#"); abort;
 			}
 		}			
 	}

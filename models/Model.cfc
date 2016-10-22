@@ -89,7 +89,7 @@ component extends="Wheels"
 				{
 					session.flash.error="You only have access to #permissionType# your own #getModelName()#s";
 					
-					Location(cgi.http_referer,false); abort;
+					goLocation(cgi.http_referer,false); abort;
 				}
 			}
 
@@ -97,7 +97,7 @@ component extends="Wheels"
 		else
 		{
 			session.flash.error="You don't have permission to #permissionType# #getModelName()#s";
-			Location(cgi.http_referer,false); abort;
+			goLocation(cgi.http_referer,false); abort;
 		}
 	}
 	

@@ -129,6 +129,6 @@
 		// App specific
 		include "/models/services/global/app/resetIndexFilters.cfm";
 		
-		Location(cgi.http_referer,false);
+		goLocation(cgi.http_referer,false);
 	}
 </cfscript>

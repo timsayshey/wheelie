@@ -29,6 +29,13 @@
 		<cfargument name="URL" required="yes">		
 		<cfset redirectFullUrl("http://#cgi.SERVER_NAME##arguments.URL##len(cgi.query_string) ? "?" : ""##cgi.query_string#")>	
 	</cffunction>
+
+	<cffunction name="golocation">
+		<cfargument name="URL" required="yes">
+		<cfset urlPath = "http://#cgi.SERVER_NAME##arguments.URL#">
+		<cfset replaceNoCase(urlPath, "//", "/")>
+		<cfset redirectFullUrl(urlPath)>	
+	</cffunction>
 	
 	<cffunction name="redirectFullUrl">
 		<cfargument name="URL" required="yes">

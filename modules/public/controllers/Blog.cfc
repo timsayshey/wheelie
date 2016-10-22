@@ -57,12 +57,12 @@ component extends="_main" output="false"
 		{
 			// Queries
 			post = model("Post").findAll(where="#whereSiteid()# AND postType = 'post' AND urlid = '#ListLast(params.id,"/")#'");		
-			location("/blog/post/#params.id#", false, 301);
+			goLocation("/blog/post/#params.id#", false, 301);
 			abort;			
 		}
 		
 		log404();
-		location("/blog", false, 301);
+		goLocation("/blog", false, 301);
 	}
 	
 	function setCache()

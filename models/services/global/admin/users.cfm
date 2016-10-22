@@ -50,7 +50,7 @@
 			{
 				flashInsert(error="Sorry, you don't have permission to do that.");
 			}
-			Location("/m/admin");
+			goLocation("/m/admin");
 		}
 	</cfscript>
 </cffunction>

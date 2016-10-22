@@ -161,7 +161,7 @@ component extends="_main" output="false"
 			qform = isNull(qform) ? model("Form").findByKey(params.formid) : qform;
 			renderPage(controller="pforms", action="formsubmissionSave", id=params.formid);
 		} else {
-			location("/");
+			golocation("/");
 		}
 		
 		// route to response page with success or fail message

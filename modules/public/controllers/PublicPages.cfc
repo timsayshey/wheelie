@@ -64,7 +64,7 @@ component extends="_main" output="false"
 					
 			if(page.postType eq "post")
 			{
-				location("/blog/post/#params.id#", false, 301);
+				goLocation("/blog/post/#params.id#", false, 301);
 			}
 		}
 		
