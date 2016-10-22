@@ -30,17 +30,17 @@ component extends="_main"
 		};
 
 		var templates = {
-			'/modules/adminapp/controllers/_Template.cfc'			:'/modules/adminapp/controllers/@capLcasePlural@.cfc',
-			'/modules/adminapp/controllers/_Templatefields.cfc'		:'/modules/adminapp/controllers/@capLcasePlural@fields.cfc',
-			'/modules/adminapp/models/_Template.cfc'				:'/modules/adminapp/models/templates/@ucaseSingular@.cfc',
-			'/modules/adminapp/models/_TemplateCategory.cfc'		:'/modules/adminapp/models/templates/@ucaseSingular@Category.cfc',
-			'/modules/adminapp/models/_TemplateCategoryJoin.cfc'	:'/modules/adminapp/models/templates/@ucaseSingular@CategoryJoin.cfc',
-			'/modules/adminapp/models/_TemplateField.cfc'			:'/modules/adminapp/models/templates/@ucaseSingular@Field.cfc',
-			'/modules/adminapp/models/_TemplateMediafile.cfc'		:'/modules/adminapp/models/templates/@ucaseSingular@Mediafile.cfc',
-			'/modules/adminapp/models/_TemplateMetafield.cfc'		:'/modules/adminapp/models/templates/@ucaseSingular@Metafield.cfc',
-			'/modules/adminapp/views/_templates/editor.cfm'			:'/modules/adminapp/views/@lcasePlural@/editor.cfm',
-			'/modules/adminapp/views/_templates/index.cfm'			:'/modules/adminapp/views/@lcasePlural@/index.cfm',
-			'/modules/adminapp/views/_templates/photos.cfm'			:'/modules/adminapp/views/@lcasePlural@/photos.cfm'
+			'/modules/adminapp/controllers/_Template.cfc'					:'/modules/adminapp/controllers/@capLcasePlural@.cfc',
+			'/modules/adminapp/controllers/_Templatefields.cfc'				:'/modules/adminapp/controllers/@capLcasePlural@fields.cfc',
+			'/modules/adminapp/models/templates/_Template.cfc'				:'/modules/adminapp/models/@ucaseSingular@.cfc',
+			'/modules/adminapp/models/templates/_TemplateCategory.cfc'		:'/modules/adminapp/models/@ucaseSingular@Category.cfc',
+			'/modules/adminapp/models/templates/_TemplateCategoryJoin.cfc'	:'/modules/adminapp/models/@ucaseSingular@CategoryJoin.cfc',
+			'/modules/adminapp/models/templates/_TemplateField.cfc'			:'/modules/adminapp/models/@ucaseSingular@Field.cfc',
+			'/modules/adminapp/models/templates/_TemplateMediafile.cfc'		:'/modules/adminapp/models/@ucaseSingular@Mediafile.cfc',
+			'/modules/adminapp/models/templates/_TemplateMetafield.cfc'		:'/modules/adminapp/models/@ucaseSingular@Metafield.cfc',
+			'/modules/adminapp/views/_templates/editor.cfm'					:'/modules/adminapp/views/@lcasePlural@/editor.cfm',
+			'/modules/adminapp/views/_templates/index.cfm'					:'/modules/adminapp/views/@lcasePlural@/index.cfm',
+			'/modules/adminapp/views/_templates/photos.cfm'					:'/modules/adminapp/views/@lcasePlural@/photos.cfm'
 		};
 
 		var viewDir = expandPath("/modules/adminapp/views/#nameVars['@lcasePlural@']#/");
