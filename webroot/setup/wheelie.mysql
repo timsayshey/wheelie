@@ -40,16 +40,10 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `categories` WRITE;
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-
 INSERT INTO `categories` (`id`, `name`, `categoryType`, `urlid`, `parentid`, `description`, `defaultpublic`, `defaultadmin`, `sortorder`, `siteid`, `globalized`, `createdAt`, `createdBy`, `updatedAt`, `updatedBy`, `deletedAt`, `deletedBy`)
 VALUES
   (1,'Public Videos','video','public-videos',NULL,'Welcome to the videos',1,0,2,60,0,'2014-11-17 11:10:38',1,'2014-11-17 11:14:11',1,NULL,NULL),
   (2,'CFWheels','video','cfwheels',1,'CFWheels Training Videos',0,0,3,60,0,'2014-11-17 11:13:52',1,'2014-11-17 11:14:11',1,NULL,NULL);
-
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table emailoptouts
@@ -104,15 +98,9 @@ CREATE TABLE `forms` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `forms` WRITE;
-/*!40000 ALTER TABLE `forms` DISABLE KEYS */;
-
 INSERT INTO `forms` (`id`, `name`, `siteid`, `successcontent`, `successembed`, `failcontent`, `failembed`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `globalized`, `templated`)
 VALUES
   (1,'Contact',60,'Thanks for contacting us!','<!-- google success conversion js here -->','Whoopsies there was an issue!','<!-- google fail conversion js here -->','2014-11-17 15:55:18',1,'2014-11-17 15:55:18',1,NULL,NULL,0,0);
-
-/*!40000 ALTER TABLE `forms` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table forms_users
@@ -131,15 +119,9 @@ CREATE TABLE `forms_users` (
   PRIMARY KEY (`formid`,`userid`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `forms_users` WRITE;
-/*!40000 ALTER TABLE `forms_users` DISABLE KEYS */;
-
 INSERT INTO `forms_users` (`formid`, `userid`, `type`, `createdat`, `createdby`, `updatedat`, `updatedby`)
 VALUES
   (1,1,'to','2014-11-17 15:55:18',1,'2014-11-17 15:55:18',1);
-
-/*!40000 ALTER TABLE `forms_users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table formsubmissions
@@ -171,15 +153,9 @@ CREATE TABLE `formsubmissions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `formsubmissions` WRITE;
-/*!40000 ALTER TABLE `formsubmissions` DISABLE KEYS */;
-
 INSERT INTO `formsubmissions` (`id`, `formid`, `submission`, `followup`, `referrer`, `entryPage`, `fromPage`, `isSpam`, `optin`, `mobile`, `siteid`, `ip`, `useragent`, `createdAt`, `createdBy`, `updatedAt`, `updatedBy`, `deletedAt`, `deletedBy`, `globalized`)
 VALUES
   (1,1,NULL,NULL,'','/','','false',NULL,'false',60,'12.232.137.226','Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36','2014-12-10 14:21:49',1,'2014-12-10 14:21:49',1,NULL,NULL,0);
-
-/*!40000 ALTER TABLE `formsubmissions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table logs
@@ -202,9 +178,6 @@ CREATE TABLE `logs` (
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-LOCK TABLES `logs` WRITE;
-/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
 
 INSERT INTO `logs` (`id`, `userid`, `modelid`, `savetype`, `model`, `controller`, `action`, `siteid`, `createdat`, `ip`, `useragent`, `globalized`)
 VALUES
@@ -231,9 +204,6 @@ VALUES
   (195,1,'seo_homepage_title','Update','Option','Sites','save',60,'2016-10-22 02:02:26','127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',0),
   (196,1,'seo_subpage_title','Update','Option','Sites','save',60,'2016-10-22 02:02:26','127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',0);
 
-/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 # Dump of table majorcities
 # ------------------------------------------------------------
@@ -251,9 +221,6 @@ CREATE TABLE `majorcities` (
   `globalized` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-LOCK TABLES `majorcities` WRITE;
-/*!40000 ALTER TABLE `majorcities` DISABLE KEYS */;
 
 INSERT INTO `majorcities` (`id`, `state`, `state_acronym`, `city`, `templateid`, `type`, `siteid`, `globalized`)
 VALUES
@@ -589,9 +556,6 @@ VALUES
   (337,'Washington','WA',NULL,3,'state',1,0),
   (338,'Wisconsin','WI',NULL,5,'state',1,0);
 
-/*!40000 ALTER TABLE `majorcities` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 # Dump of table menus
 # ------------------------------------------------------------
@@ -619,18 +583,12 @@ CREATE TABLE `menus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `menus` WRITE;
-/*!40000 ALTER TABLE `menus` DISABLE KEYS */;
-
 INSERT INTO `menus` (`id`, `name`, `itemType`, `itemId`, `customUrl`, `menuid`, `parentid`, `description`, `sortorder`, `siteid`, `createdAt`, `createdBy`, `updatedAt`, `updatedBy`, `deletedAt`, `deletedBy`, `globalized`)
 VALUES
   (1,'Blog','custom',NULL,'/blog','Primary',0,NULL,3,60,'2014-11-17 11:07:03',1,'2014-11-17 15:59:34',1,NULL,NULL,0),
   (2,'Videos','custom',NULL,'/videos','Primary',0,NULL,2,60,'2014-11-17 11:09:59',1,'2014-11-17 15:59:34',1,NULL,NULL,0),
   (3,'Contact','custom',NULL,'/p/pforms/show/1','Primary',0,NULL,5,60,'2014-11-17 15:59:18',1,'2014-11-17 16:00:53',1,NULL,NULL,0),
   (4,'Login','custom',NULL,'/manager','Primary',0,NULL,4,60,'2014-11-17 16:00:41',1,'2014-11-17 16:00:53',1,NULL,NULL,0);
-
-/*!40000 ALTER TABLE `menus` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table metadata
@@ -651,17 +609,11 @@ CREATE TABLE `metadata` (
   PRIMARY KEY (`foreignid`,`metafieldid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `metadata` WRITE;
-/*!40000 ALTER TABLE `metadata` DISABLE KEYS */;
-
 INSERT INTO `metadata` (`foreignid`, `metafieldid`, `fielddata`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`)
 VALUES
   (1,1,'test','2014-12-10 14:21:49',1,'2014-12-10 14:21:49',1,NULL,NULL),
   (1,2,'test','2014-12-10 14:21:49',1,'2014-12-10 14:21:49',1,NULL,NULL),
   (1,3,'test','2014-12-10 14:21:49',1,'2014-12-10 14:21:49',1,NULL,NULL);
-
-/*!40000 ALTER TABLE `metadata` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table metafields
@@ -701,9 +653,6 @@ CREATE TABLE `metafields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `metafields` WRITE;
-/*!40000 ALTER TABLE `metafields` DISABLE KEYS */;
-
 INSERT INTO `metafields` (`id`, `metafieldType`, `modelid`, `name`, `type`, `contentblock`, `codeblock`, `wrapoptions`, `wysiwyg`, `fieldvalues`, `class`, `checked`, `divwrap`, `divclass`, `labelplacement`, `prepend`, `append`, `styleattribute`, `identifier`, `sortorder`, `siteid`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `globalized`)
 VALUES
   (1,'formfield',1,'Your Name','text',NULL,NULL,NULL,0,NULL,NULL,0,0,NULL,'before',NULL,NULL,NULL,'name',1,60,'2014-11-17 15:55:44',1,'2014-11-17 15:58:08',1,NULL,NULL,0),
@@ -711,9 +660,6 @@ VALUES
   (3,'formfield',1,'Your Message','textarea',NULL,NULL,NULL,0,NULL,NULL,0,0,NULL,'before',NULL,NULL,NULL,'message',3,60,'2014-11-17 15:56:25',1,'2014-11-17 15:58:08',1,NULL,NULL,0),
   (4,'formfield',1,'Send','submit',NULL,NULL,NULL,0,NULL,'btn btn-md btn-primary',0,0,NULL,'before',NULL,NULL,NULL,NULL,4,60,'2014-11-17 15:56:53',1,'2014-11-17 15:58:08',1,NULL,NULL,0),
   (5,'formfield',1,'Contact Us','headline',NULL,NULL,NULL,0,NULL,NULL,0,0,NULL,'before',NULL,NULL,NULL,'Contact Us',0,60,'2014-11-17 15:57:40',1,'2014-11-17 15:58:08',1,NULL,NULL,0);
-
-/*!40000 ALTER TABLE `metafields` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table newsletter_sections
@@ -805,9 +751,6 @@ CREATE TABLE `options` (
   PRIMARY KEY (`id`,`siteid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `options` WRITE;
-/*!40000 ALTER TABLE `options` DISABLE KEYS */;
-
 INSERT INTO `options` (`id`, `siteid`, `label`, `content`, `attachment`, `inputlabel`, `inputtype`, `editContent`, `editLabel`, `editAttachment`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `globalized`)
 VALUES
   ('home_id',0,NULL,NULL,NULL,'','',0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,0),
@@ -847,9 +790,6 @@ VALUES
   ('site_logo',60,NULL,NULL,NULL,NULL,NULL,0,1,1,NULL,NULL,'2014-11-17 12:10:57',1,NULL,NULL,0),
   ('site_logo',61,NULL,NULL,NULL,NULL,NULL,0,1,1,'2016-10-22 02:02:35',1,'2016-10-22 02:02:35',1,NULL,NULL,0);
 
-/*!40000 ALTER TABLE `options` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 # Dump of table permissions
 # ------------------------------------------------------------
@@ -868,9 +808,6 @@ CREATE TABLE `permissions` (
   `updatedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-LOCK TABLES `permissions` WRITE;
-/*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
 
 INSERT INTO `permissions` (`id`, `superuser`, `admin`, `editor`, `user`, `guest`, `createdBy`, `updatedBy`, `updatedAt`)
 VALUES
@@ -950,9 +887,6 @@ VALUES
   ('video_save',1,1,1,0,0,NULL,NULL,NULL),
   ('video_save_others',1,1,0,0,0,NULL,NULL,NULL);
 
-/*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 # Dump of table posts
 # ------------------------------------------------------------
@@ -990,16 +924,10 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `posts` WRITE;
-/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-
 INSERT INTO `posts` (`id`, `postType`, `urlid`, `sysname`, `name`, `content`, `template`, `metagenerated`, `metatitle`, `metadescription`, `metakeywords`, `status`, `quoteImg`, `youtubeId`, `sideContent`, `redirect`, `password`, `siteid`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `oldUrl`, `authorName`, `globalized`)
 VALUES
   (1,'page','home',NULL,'Home','<h2>Welcome to bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl capicola short ribs. Frankfurter strip steak meatloaf sirloin, jowl shank alcatra fatback.</h2>\r\n<br />\r\nTail ham hock cow leberkas hamburger. Doner prosciutto porchetta, turducken biltong jowl tri-tip. Shankle corned beef frankfurter strip steak. Tenderloin sirloin landjaeger pork chop ham prosciutto. Chuck turkey ham hock drumstick, tail meatball sausage ball tip swine ground round boudin t-bone.<br />\r\n<br />\r\nLandjaeger swine ribeye, ball tip biltong cow shoulder leberkas pig flank pork loin frankfurter. T-bone chicken spare ribs tail. Brisket venison shank frankfurter jowl pig pork loin strip steak cow t-bone beef ribs flank ribeye. Pork leberkas picanha, cupim pig prosciutto ball tip. Frankfurter andouille pancetta tri-tip.','default',1,'Home','Welcome to bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue rib','andouille,alcatra,capicola,Pork,bacon,tip,dolor,sausage,Chuck,loin,Turkey,tail,hamburger,Tenderloin,ipsum,Brisket,drumstick,hock,ground,t-bone,tenderloin,kevin,chicken,turducken,short,tri-tip,steak,ba','published',NULL,NULL,NULL,NULL,NULL,60,NULL,NULL,'2014-11-17 11:19:42',1,NULL,NULL,NULL,NULL,0),
   (2,'post','hello-world',NULL,'Hello world','<h2>Bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl capicola short ribs. Frankfurter strip steak meatloaf sirloin, jowl shank alcatra fatback.</h2>\r\n\r\n<p>Tail ham hock cow leberkas hamburger. Doner prosciutto porchetta, turducken biltong jowl tri-tip. Shankle corned beef frankfurter strip steak. Tenderloin sirloin landjaeger pork chop ham prosciutto. Chuck turkey ham hock drumstick, tail meatball sausage ball tip swine ground round boudin t-bone.</p>\r\n\r\n<p>Landjaeger swine ribeye, ball tip biltong cow shoulder leberkas pig flank pork loin frankfurter. T-bone chicken spare ribs tail. Brisket venison shank frankfurter jowl pig pork loin strip steak cow t-bone beef ribs flank ribeye. Pork leberkas picanha, cupim pig prosciutto ball tip. Frankfurter andouille pancetta tri-tip.</p>','default',1,'Hello world','Bacon ipsum dolor amet shankle pork spare ribs kevin ground round prosciutto. Turkey hamburger kevin bresaola frankfurter leberkas biltong picanha, flank jowl tenderloin. Venison tongue ribeye jowl ca','andouille,alcatra,capicola,Pork,tip,dolor,sausage,Chuck,loin,Turkey,tail,hamburger,Tenderloin,ipsum,Brisket,drumstick,hock,ground,t-bone,tenderloin,kevin,chicken,turducken,short,tri-tip,steak,ball,Sha','published',NULL,NULL,NULL,NULL,NULL,60,'2014-11-17 11:08:36',1,'2014-11-17 11:08:36',1,NULL,NULL,NULL,NULL,0);
-
-/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table redirects
@@ -1045,15 +973,9 @@ CREATE TABLE `sites` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `sites` WRITE;
-/*!40000 ALTER TABLE `sites` DISABLE KEYS */;
-
 INSERT INTO `sites` (`id`, `name`, `subdomain`, `urlid`, `enableAdminTheme`, `registrationDisabled`, `emailMatchDomainRequired`, `emailMatchOtherDomains`, `sslenabled`, `theme`, `urlExtension`, `siteid`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `globalized`)
 VALUES
   (60,'Wheelie CMS',NULL,'localhost',0,0,0,NULL,0,'light-theme',NULL,60,'2014-10-05 19:10:06',1,'2014-11-17 12:10:56',1,NULL,NULL,1);
-
-/*!40000 ALTER TABLE `sites` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table todos
@@ -1083,17 +1005,11 @@ CREATE TABLE `todos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `todos` WRITE;
-/*!40000 ALTER TABLE `todos` DISABLE KEYS */;
-
 INSERT INTO `todos` (`id`, `name`, `isdone`, `isdone_old`, `duedate`, `priority`, `todogroupid`, `parentid`, `description`, `sortorder`, `siteid`, `createdAt`, `createdBy`, `updatedAt`, `updatedBy`, `deletedAt`, `deletedBy`, `globalized`)
 VALUES
   (1,'Add a video','2014-11-17',NULL,'2014-11-17 00:00:00','low',NULL,3,NULL,4,60,'2014-11-17 15:53:41',1,'2014-11-17 15:54:09',1,NULL,NULL,0),
   (2,'Add a page',NULL,NULL,'2014-11-17 00:00:00','low',NULL,3,NULL,3,60,'2014-11-17 15:53:50',1,'2014-11-17 15:54:08',1,NULL,NULL,0),
   (3,'Add site content',NULL,NULL,'2014-11-17 00:00:00','low',NULL,NULL,NULL,2,60,'2014-11-17 15:54:06',1,'2014-11-17 15:54:07',1,NULL,NULL,0);
-
-/*!40000 ALTER TABLE `todos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table usergroups
@@ -1117,15 +1033,9 @@ CREATE TABLE `usergroups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `usergroups` WRITE;
-/*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
-
 INSERT INTO `usergroups` (`id`, `groupname`, `siteid`, `role`, `globalized`, `defaultgroup`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`)
 VALUES
   (1,'Users',1,NULL,1,1,NULL,NULL,NULL,NULL,NULL,NULL);
-
-/*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table users
@@ -1176,15 +1086,9 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-
 INSERT INTO `users` (`id`, `sortorder`, `approval_flag`, `securityApproval`, `zx_firstname`, `zx_lastname`, `zx_jobtitle`, `zx_designatory_letters`, `zx_about`, `firstname`, `lastname`, `jobtitle`, `designatory_letters`, `about`, `title`, `email`, `phone`, `password`, `address1`, `address2`, `city`, `state`, `zip`, `country`, `gender`, `fullLastname`, `birthday`, `showOnSite`, `start_date`, `role`, `status`, `siteid`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `globalized`)
 VALUES
   (1,9999,0,1,'Get','Wheelie','Wheelie',NULL,NULL,'Get','Wheelie','Wheelie',NULL,NULL,NULL,'admin@getwheelie.com',NULL,'F58319B6389F308D77D8D07DEBA42398',NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,0,NULL,'superuser','draft',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
-
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table users_categories
@@ -1219,18 +1123,12 @@ CREATE TABLE `users_usergroups` (
   PRIMARY KEY (`usergroupid`,`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `users_usergroups` WRITE;
-/*!40000 ALTER TABLE `users_usergroups` DISABLE KEYS */;
-
 INSERT INTO `users_usergroups` (`usergroupid`, `userid`, `createdat`, `createdby`, `updatedat`, `updatedby`)
 VALUES
   (1,1,'2014-08-18 14:01:09',1,'2014-08-18 14:01:09',1),
   (1,2,'2014-12-09 15:50:23',NULL,'2014-12-09 15:50:23',NULL),
   (1,4,'2014-12-09 15:54:10',NULL,'2014-12-09 15:54:10',NULL),
   (1,5,'2014-12-09 15:57:09',NULL,'2014-12-09 15:57:09',NULL);
-
-/*!40000 ALTER TABLE `users_usergroups` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table videos
@@ -1269,15 +1167,9 @@ CREATE TABLE `videos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `videos` WRITE;
-/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
-
 INSERT INTO `videos` (`id`, `urlid`, `name`, `teaser`, `description`, `videoSubHeader`, `videoLink`, `isFeatured`, `youtubeid`, `vimeoid`, `sortorder`, `typeId`, `filestatus`, `status`, `isPlaylist`, `videofileid`, `siteid`, `password`, `onSite`, `customThumb`, `createdat`, `createdby`, `updatedat`, `updatedby`, `deletedat`, `deletedby`, `globalized`)
 VALUES
   (1,'setting-up-coldfusion-on-wheels','Setting up ColdFusion on Wheels','Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels.','<span style=\"font-family: arial, sans-serif; font-size: 12.7272720336914px; line-height: 17px;\">Chris Peters starts the webcast series by demonstrating how to set up ColdFusion on Wheels. He shows how to configure a data source and test that it\'s working. This is part of a screencast series on building a social networking site using the ColdFusion on Wheels framework.</span>',NULL,NULL,0,'J3xdxp29ig4',NULL,NULL,NULL,NULL,'published',0,NULL,60,NULL,1,0,'2014-11-17 11:12:18',1,'2014-12-10 12:07:27',1,NULL,NULL,0);
-
-/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table videos_categories
@@ -1295,16 +1187,10 @@ CREATE TABLE `videos_categories` (
   PRIMARY KEY (`videocategoryid`,`videoid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `videos_categories` WRITE;
-/*!40000 ALTER TABLE `videos_categories` DISABLE KEYS */;
-
 INSERT INTO `videos_categories` (`videocategoryid`, `videoid`, `createdAt`, `createdBy`, `updatedAt`, `updatedBy`)
 VALUES
   (1,1,'2014-12-10 12:07:27',1,'2014-12-10 12:07:27',1),
   (2,1,'2014-12-10 12:07:27',1,'2014-12-10 12:07:27',1);
-
-/*!40000 ALTER TABLE `videos_categories` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table zipcodes
