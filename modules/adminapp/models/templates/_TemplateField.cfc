@@ -4,7 +4,7 @@
 		{
 			// Set
 			table("metafields");
-			@lcaseSingular@(name="metafieldType", defaultValue="@lcaseSingular@field");
+			property(name="metafieldType", defaultValue="@lcaseSingular@field");
 			
 			// Other
 			super.init();
@@ -17,10 +17,10 @@
 			hasMany(name="FieldDatas", foreignKey="fieldid", joinType="outer");
 			
 			// Map column
-			//@lcaseSingular@(name="@lcaseSingular@id", column="@lcaseSingular@id")
+			//property(name="@lcaseSingular@id", column="@lcaseSingular@id")
 			
-			validatesUniquenessOf(@lcaseSingular@="identifier", scope="siteid");
-			// validatesPresenceOf(@lcaseSingular@="identifier", when="onCreate");
+			validatesUniquenessOf(property="identifier", scope="siteid");
+			// validatesPresenceOf(property="identifier", when="onCreate");
 			beforeSave("sanitizeIdentifier");
 			
 		}	

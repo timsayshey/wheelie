@@ -1,5 +1,3 @@
-<cftry>
-
 <cfoutput>
 	
 	<cfscript>
@@ -17,15 +15,12 @@
 					controller	= '@lcasePlural@',
 					action		= 'new', 
 					class		= 'btn btn-default'
-				)#		
-
+				)#
 				#linkTo(
 					text		= '<span class=''elusive icon-plus''></span> Edit Fields',
 					href		= '/manager/fields/index/@lcaseSingular@field?modelid=3',
 					class		= 'btn btn-default'
 				)#	
-
-				
 			</li>"
 		);
 	</cfscript>
@@ -58,7 +53,7 @@
 			
 			<div id="@lcaseSingular@" class="sortable col-md-12">
 			
-				<cfif !isNull(@ucaseSingular@) and isObject(@ucaseSingular@)>
+				<cfif !isDefined("@ucaseSingular@") and isObject(variables.@ucaseSingular@)>
 					#errorMessagesFor("@ucaseSingular@")#
 					<br /><br />
 				</cfif>
@@ -74,6 +69,7 @@
 						)#
 					</div>	
 				</cfif>
+				<cfset info.@lcaseSingular@ThumbPath = isNull(info.@lcaseSingular@ThumbPath) ? "" : info.@lcaseSingular@ThumbPath>
 				<cfloop query="q@ucasePlural@" startrow="#request.reStartRow#" endrow="#request.reEndRow#">		
 					<cfset @lcaseSingular@thumbpath = "#info.@lcaseSingular@ThumbPath#sm/#q@ucasePlural@.id#.jpg">
 					#includePartial(
@@ -183,7 +179,7 @@
 											#btextfieldtag(
 												name			= 'search', 
 												label			= 'Search',
-												placeholder		= "Ex: green burrito",
+												placeholder		= "Ex: Keyword",
 												value			= params.search
 											)#
 										</div>
@@ -212,8 +208,3 @@
 	</cfif>	
 	
 </cfoutput>
-		
-<cfcatch>
-	<cfdump var="#cfcatch#">
-</cfcatch>
-</cftry>

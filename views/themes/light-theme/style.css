@@ -1306,10 +1306,6 @@ ul.listy, ol.listy {
 .topnav, .navbar {
 }
 
-.admin-content .data-block section p {
-	color: #fff;
-	background: none;
-}
 .page-wrapper img {
 	padding-left:10px;
 	padding-bottom:10px;
@@ -1328,13 +1324,25 @@ ul.listy, ol.listy {
     padding: 0 10px;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
-.hero,.data-block header  ,.topnav, .rightbar .data-block section, .data-block section h2, .data-block section p, .contentwrapper h1, .footerNav, .navwrap, #menu-trigger, .slider-caption,.jumbotron,.admin-content .icon-btn-lg:hover {
+.hero,.data-block header  ,.topnav, .rightbar .data-block section, .data-block section h2, .contentwrapper h1, .footerNav, .navwrap, #menu-trigger, .slider-caption,.jumbotron,.admin-content .icon-btn-lg:hover {
 	color: #fff;
 	background: #076079 !important;
 }
 .contentwrapper h1.content-title,h3.formHeader {
 	color: #fff;
 	background: #1ba062 !important;
+}
+
+.adminmode .contentwrapper h1.content-title,.adminmode h3.formHeader {
+	color: #222;
+	background: #eee !important;
+	display: block !important;
+	clear: both;
+	position: inherit;
+	 text-shadow: none;
+}
+.filter-bar section {
+	padding:10px !important;
 }
 
 
@@ -1378,3 +1386,13 @@ body {
   /* Set the fixed height of the footer here */
   background-color: #f5f5f5;
 }
+.admin-content .nav>li>a,.nav-sidebar{
+	border-right: 0 !important;
+	background: #eee;
+	color:#222 !important;
+}
+.admin-content .nav>li>a:hover, .admin-content .nav>li>a:focus, .admin-content .nav .active a {
+    text-decoration: none;
+    background-color: #fff !important;
+    color:#222 !important;
+}=

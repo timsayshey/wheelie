@@ -5,7 +5,7 @@
 
 $(function(){
 		/* Mobile */
-		$('#adminmenu-wrap').prepend('<div id="adminmenu-trigger">Menu</div>');		
+		$('#adminmenu-wrap').prepend('<div id="adminmenu-trigger"><span class="elusive icon-align-justify"></span> &nbsp; Manage</div>');		
 		$("#adminmenu-trigger").on("click", function(){
 			$("#adminmenu").slideToggle();
 		});

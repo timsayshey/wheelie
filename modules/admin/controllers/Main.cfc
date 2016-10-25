@@ -19,15 +19,30 @@ component extends="_main"
 			qLogFull = model("Log").findAll(where=wherePermission("Log"),include="User", maxRows=50, order="createdAt DESC");	
 		}
 	}
+
 	function scaffold() 
 	{
 		var nameVars = {
-			"@capLcasePlural@" 	: "Cliants",
-			"@ucaseSingular@" 	: "Cliant",
-			"@lcaseSingular@" 	: "cliant",
-			"@ucasePlural@" 	: "cliants",
-			"@lcasePlural@" 	: "cliants"
+			"@tableNamew@" 		: "api_provider",
+			"@capLcasePlural@" 	: "Providers",
+			"@ucaseSingular@" 	: "Provider",
+			"@lcaseSingular@" 	: "provider",
+			"@ucasePlural@" 	: "Providers",
+			"@lcasePlural@" 	: "providers"
 		};
+
+		var SQL = "SELECT * FROM #nameVars['@tableNamew@']#";
+		var q = new Query(sql=sql,datasource=application.wheels.dataSourceName);
+		var qModel = q.execute().getResult();
+
+		var SQL = "SHOW COLUMNS FROM #nameVars['@tableNamew@']#";
+		var q = new Query(sql=sql,datasource=application.wheels.dataSourceName);
+		var qColumns = q.execute().getResult();
+
+		var columns = {};
+		for(var column in qColumns) {
+			columns[column.field] = column.type;
+		}
 
 		var templates = {
 			'/modules/adminapp/controllers/_Template.cfc'					:'/modules/adminapp/controllers/@capLcasePlural@.cfc',
@@ -42,6 +57,14 @@ component extends="_main"
 			'/modules/adminapp/views/_templates/index.cfm'					:'/modules/adminapp/views/@lcasePlural@/index.cfm',
 			'/modules/adminapp/views/_templates/photos.cfm'					:'/modules/adminapp/views/@lcasePlural@/photos.cfm'
 		};
+
+		// vuild form
+		savecontent variable="formfields" {
+			for(var column in columns) {
+				include template="/modules/adminapp/views/_templates/formfield.cfm";
+			}
+		}
+		nameVars["@formfields@"] = formfields;
 
 		var viewDir = expandPath("/modules/adminapp/views/#nameVars['@lcasePlural@']#/");
 		if(!directoryExists(viewDir)) {
@@ -69,5 +92,9 @@ component extends="_main"
 		writeDump("SUCCESS"); abort;
 
 	}
+
+
+
+
 }
 </cfscript>

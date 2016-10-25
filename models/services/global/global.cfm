@@ -88,8 +88,8 @@
 		</cfscript>
 		
 		<!--- Get role columns from permissions table - removed non role columns - convert array to remove list nulls - convert back to list --->
-		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(application.rbs.permissionsQuery.columnList),lcase("ID,CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>
-		
+		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(application.rbs.permissionsQuery.columnList),lcase("CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>
+		<cfset application.rbs.roleslist = replaceNoCase(application.rbs.roleslist, "ID,", "")>
 		<cfloop list="#application.rbs.roleslist#" index="thisRole">
 			<cfloop query="application.rbs.permissionsQuery">
 				<cfscript>

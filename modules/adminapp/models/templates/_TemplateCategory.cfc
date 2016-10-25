@@ -5,7 +5,7 @@
 			super.init();
 			
 			// @ucasePlural@
-			@lcaseSingular@(name="categoryType", defaultValue="@lcaseSingular@");			
+			property(name="categoryType", defaultValue="@lcaseSingular@");			
 			this.setWhere = setWhere();	
 			
 			// Set
@@ -16,8 +16,8 @@
 			belongsTo(name="@ucaseSingular@CategoryJoin", foreignKey="id", joinKey="categoryid", joinType="inner");
 			
 			// Validations
-			validatesUniquenessOf(@lcaseSingular@="urlid", scope="siteid");
-			validatesUniquenessOf(@lcaseSingular@="name", scope="siteid");
+			validatesUniquenessOf(property="urlid", scope="siteid");
+			validatesUniquenessOf(property="name", scope="siteid");
 			
 			// Other
 			beforeSave("sanitizeNameAndURLId");

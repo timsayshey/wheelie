@@ -4,7 +4,7 @@
 		{
 			// Set
 			table("mediafiles");
-			@lcaseSingular@(name="mediafileType", defaultValue="@lcaseSingular@");
+			property(name="mediafileType", defaultValue="@lcaseSingular@");
 			
 			// Other
 			super.init();

@@ -8,12 +8,7 @@ component extends="_main" output="false"
 	
 	function getMediafileType()
 	{
-		if(ListFindNoCase("propertyMediafile,panoramaMediafile",trim(params.modelName)))
-		{
-			return params.modelName;
-		} else {
-			throw('model is not in whitelist. #params.modelName# not valid.');
-		}
+		return params.modelName;
 	}
 
 	function updateSorting()

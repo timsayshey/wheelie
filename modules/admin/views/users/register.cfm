@@ -22,7 +22,7 @@
 			objectName	= 'user', 
 			property	= 'Lastname', 
 			label		= 'Last name',
-			placeholder	= "Ex: Norris"
+			placeholder	= "Ex: Swanson"
 		)#
 	</div>
 
@@ -53,7 +53,7 @@
 			objectName		= 'user', 
 			property		= 'username', 
 			label			= 'Username *',
-			placeholder		= "Ex: chucknorris"
+			placeholder		= "Ex: chuckswanson"
 		)#
 	</div>	
 
@@ -70,7 +70,7 @@
 			objectName		= 'user', 
 			property		= 'email', 
 			label			= 'Email *',
-			placeholder		= "Ex: chucknorris@gmail.com"
+			placeholder		= "Ex: chuckswanson@gmail.com"
 		)#
 	</div>
 	

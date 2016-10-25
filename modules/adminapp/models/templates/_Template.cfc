@@ -3,6 +3,7 @@
 		function init()
 		{						
 			// @ucasePlural@
+			table("@tableNamew@");
 			this.setWhere = setWhere;	
 			
 			// Relations		
@@ -12,8 +13,8 @@
 			beforeValidation("sanitizePrice");
 			afterFind("sanitizePrice");
 			beforeSave("sanitizeNameAndURLId");	
-			validatesUniquenessOf(@lcaseSingular@="address");
-			validatesUniquenessOf(@lcaseSingular@="urlid");
+			validatesUniquenessOf(property="address");
+			validatesUniquenessOf(property="urlid");
 			
 			// Other
 			super.init(); 			

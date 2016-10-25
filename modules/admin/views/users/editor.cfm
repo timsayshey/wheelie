@@ -46,7 +46,7 @@
 			objectName		= 'user', 
 			property		= 'email', 
 			label			= 'Email',
-			placeholder		= "Ex: gmail@chucknorris.com"
+			placeholder		= "Ex: john@gmail.com"
 		)#
 	</div>
 
@@ -108,8 +108,7 @@
 			objectName	= 'user', 
 			property	= '#approvalToggle#firstname', 
 			label		= 'First name*',
-			placeholder	= "Ex: Chuck"
-		)#
+			placeholder	= "Ex: John")#
 	</div>
 	
 	<div class="col-sm-6">	
@@ -117,7 +116,7 @@
 			objectName	= 'user', 
 			property	= '#approvalToggle#lastname', 
 			label		= 'Last name*',
-			placeholder	= "Ex: Norris"
+			placeholder	= "Ex: Swanson"
 		)#
 	</div>
 

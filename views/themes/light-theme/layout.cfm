@@ -75,10 +75,18 @@
                         <h1 class="logo pull-left">#request.site.name#</h1>
                     </div>
                     <div class="col-md-4">
-                        <!-- <div class="callUs">
-                            <h5>Call us for more information</h5>
-                            <h6>555-555-5555</h6>
-                        </div> -->
+                       <div class="col-md-4">
+                            <cfif !isNull(session.user)>    
+                                <cfset editAccount = urlFor(                                    
+                                    route       = "admin~Id",
+                                    module      = "admin",
+                                    controller  = "profiles",
+                                    action      = "profile",
+                                    id          = session.user.id
+                                )>  
+                                <a href='#editAccount#'><img class="img-circle img-responsive pull-right" src="#fileExists(expandThis('/assets/userpics/#session.user.id#.jpg')) ? assetUrlPrefix() & '/assets/userpics/#session.user.id#.jpg' : '/assets/img/user_thumbholder.jpg'#" style="max-width: 50px;"></a>
+                            </cfif>
+                        </div>
                     </div>
                 </div>
             </header>

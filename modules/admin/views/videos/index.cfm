@@ -167,7 +167,7 @@
 											#btextfieldtag(
 												name			= 'search', 
 												label			= 'Search',
-												placeholder		= "Ex: green burrito",
+												placeholder		= "Ex: keywords",
 												value			= params.search
 											)#
 										</div>

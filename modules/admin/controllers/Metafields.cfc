@@ -8,12 +8,7 @@ component extends="_main" output="false"
 	
 	function getMetafieldType()
 	{
-		if(ListFind("usergroupfield,pagefield,formfield,propertyfield",LCase(params.modelName)))
-		{
-			return params.modelName;
-		} else {
-			return "";
-		}
+		return params.modelName;
 	}
 
 	function removeFirstChar(string) {

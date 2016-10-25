@@ -50,6 +50,10 @@
 					<a #href# class="boxtitle">#title#</a>								
 					<br class="clear" />
 					
+					<cfif len(sanitize(description))>
+						#sanitize(description)#<br>
+					</cfif>
+
 					#tags#					
 					
 					<div class="pull-right">

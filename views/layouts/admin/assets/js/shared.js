@@ -39,12 +39,14 @@ $(function() {
 	});
 	
 	// Show/hide filter
-	$(".togglediv").hide();
-	$(".togglediv#show").show();
-	$(".toggle").click(function() {
-			$(".togglediv").toggle( "slow", function() {
-		});
-	});	
+	// $(".togglediv").hide();
+	// $(".togglediv#show").show();
+	// $(".toggle").click(function() {
+	// 		$(".togglediv").toggle( "slow", function() {
+	// 	});
+	// });	
+
+	$(".toggle").hide();
 	
 	// Delete confirmation	
 	$(document).off("click", ".confirmDelete");

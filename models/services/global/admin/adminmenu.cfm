@@ -104,22 +104,6 @@
 		}
 		
 		arrayAppend(usergroupLinks,[
-			{
-				type		= 'divider',
-				permission  = "user_save_others"
-			},
-			{
-				type	   = 'link',
-				name	   = 'User Tags',
-				url		   = urlFor(route="admin~Category", action="rearrange", modelName="userTag"),
-				permission = "user_save_others"
-			},
-			{
-				type	   = 'link',
-				name	   = 'User Groups',
-				url		   = urlFor(route="admin~Action", controller="usergroups", action="index"),
-				permission = "user_save_others"
-			}
 		], true);
 		
 		peopleLinks = usergroupLinks;
@@ -170,7 +154,19 @@
 					// name	= 'To-Dos',
 					icon	= 'icon-list-alt',
 					url		= urlFor(route="admin~Action", controller="todos", action="rearrange")
-				}	
+				},
+				{
+					type	   = 'link',
+					name	   = 'User Tags',
+					url		   = urlFor(route="admin~Category", action="rearrange", modelName="userTag"),
+					permission = "user_save_others"
+				},
+				{
+					type	   = 'link',
+					name	   = 'User Groups',
+					url		   = urlFor(route="admin~Action", controller="usergroups", action="index"),
+					permission = "user_save_others"
+				}
 			]
 		});	
 	

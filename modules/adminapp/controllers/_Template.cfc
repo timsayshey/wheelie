@@ -28,16 +28,6 @@ component extends="_main" output="false"
 			@lcaseSingular@ = model("@lcaseSingular@").findAll(where="id = '#params.id#'");
 		}
 	}
-
-	function testEmail(){
-		mailgun(
-			mailTo	= application.wheels.noReplyEmail,
-			from	= application.wheels.noReplyEmail,
-			subject	= 'TEST EMAIL',
-			html	= "TEST"
-		);
-		writeOutput("SUCCESS"); abort;
-	}
 	
 	function updateOrder()
 	{
@@ -73,38 +63,38 @@ component extends="_main" output="false"
 		
 		if(@lcaseSingular@Category.recordcount)
 		{				
-			distinct@ucaseSingular@Columns = "id, sortorder, name, description, status, createdat, updatedat";
-			@lcaseSingular@Columns = "#distinct@ucaseSingular@Columns#, description, status, category_id";
-			
 			q@ucasePlural@ = model("@ucaseSingular@").findAll(
 				where	= buildWhereStatement(modelName="@ucaseSingular@", prepend="categoryid = '#@lcaseSingular@Category.id#' AND"), 
 				order	= "sortorder ASC", 
-				select	= @lcaseSingular@Columns,
 				include = "@lcaseSingular@categoryjoin(@lcaseSingular@category)"
 			);
-			
+
+			distinct@ucaseSingular@Columns = q@ucasePlural@.columnList;
+			@lcaseSingular@Columns = q@ucasePlural@.columnList;
+
 			filterResults();
 		}
 	}
 	
 	function index()
 	{
+		if(isNull(session.@lcasePlural@)) {
+			session.@lcasePlural@.sortby = "sortorder";
+			session.@lcasePlural@.order = "asc";
+		}
+
 		sharedObjects(0);
-		distinct@ucaseSingular@Columns = "id, sortorder, name, description, status, createdat, updatedat";
-		@lcaseSingular@Columns = "#distinct@ucaseSingular@Columns#, description, status, category_id";
-		
-		statusTabs("@lcaseSingular@");
-		
 		q@ucasePlural@ = model("@ucaseSingular@").findAll(
 			where	= buildWhereStatement("@ucaseSingular@"), 
-			order	= !isNull(params.rearrange) ? "sortorder ASC" : session.@lcasePlural@.sortby & " " & session.@lcasePlural@.order, 
-			select	= @lcaseSingular@Columns
+			order	= !isNull(params.rearrange) ? "sortorder ASC" : session.@lcasePlural@.sortby & " " & session.@lcasePlural@.order
 		);
-				
-		if(isNull(params.rearrange))
-		{
-			filterResults();
-		}
+
+		distinct@ucaseSingular@Columns = q@ucasePlural@.columnList;
+		@lcaseSingular@Columns = q@ucasePlural@.columnList;
+		
+		//statusTabs("@lcaseSingular@");
+
+		if(isNull(params.rearrange)) filterResults();
 		
 		// Paginate me batman
 		pagination = application.pagination;
@@ -125,20 +115,21 @@ component extends="_main" output="false"
 		{
 			// Queries
 			sharedObjects(params.id);						
-			@lcaseSingular@ = model("@ucaseSingular@").findAll(where="id = '#params.id#'#wherePermission("@ucaseSingular@","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(@lcaseSingular@))
+			my@UcaseSingular@ = model("@ucaseSingular@").findAll(where="id = '#params.id#'#wherePermission("@ucaseSingular@","AND")#", maxRows=1, returnAs="Object");
+
+			if(ArrayLen(my@UcaseSingular@))
 			{				
-				@lcaseSingular@ = @lcaseSingular@[1];
+				my@UcaseSingular@ = my@UcaseSingular@[1];
 			}
 
 			photos = model("@ucaseSingular@Mediafile").findAll(where="modelid = '#params.id#' AND mediafileType = '@lcaseSingular@'",order="sortorder ASC"); 
 			
 			// @ucaseSingular@ not found?
-			if (!IsObject(@lcaseSingular@))
+			if (!IsObject(my@UcaseSingular@))
 			{
 				flashInsert(error="Not found");
-				redirectTo(route="admin~Index", module="admin", controller="@lcasePlural@");
-			}		
+				redirectTo(route="admin~Index", controller="@lcasePlural@");
+			}
 
 			dataFields = model("FieldData").getAllFieldsAndUserData(
 				modelid = 3,
@@ -150,125 +141,10 @@ component extends="_main" output="false"
 
 		renderPage(action="editor");		
 	}
-
-	function panoedit()
-	{						
-		if(isDefined("params.id")) 
-		{
-			@lcaseSingular@ = model("@ucaseSingular@").findAll(where="id = '#params.id#'#wherePermission("@ucaseSingular@","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(@lcaseSingular@))
-			{				
-				@lcaseSingular@ = @lcaseSingular@[1];
-			}
-			panoramas = model("PanoramaMediafile").findAll(where="modelid = '#@lcaseSingular@.id#' AND mediafileType = 'panorama'",order="sortorder ASC"); 
-		}	
-	}
-
-	function panoeditor()
-	{						
-		if(isDefined("params.id")) 
-		{
-			@lcaseSingular@ = model("@ucaseSingular@").findAll(where="id = '#params.@lcaseSingular@id#'#wherePermission("@ucaseSingular@","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(@lcaseSingular@))
-			{				
-				@lcaseSingular@ = @lcaseSingular@[1];
-			}
-			panorama = model("PanoramaMediafile").findAll(where="id = '#params.id#' AND mediafileType = 'panorama'",order="sortorder ASC"); 
-			panoramas = model("PanoramaMediafile").findAll(where="modelid = '#params.@lcaseSingular@id#' AND mediafileType = 'panorama'",order="sortorder ASC"); 
-			photos = model("@ucaseSingular@Mediafile").findAll(where="modelid = '#params.@lcaseSingular@id#' AND mediafileType = '@lcaseSingular@'",order="sortorder ASC");
-		}	
-	}
-
-	function panoramas()
-	{						
-		usesLayout("/layouts/layout.blank");
-		if(isDefined("params.id")) {
-			panoramas = model("PanoramaMediafile").findAll(where="modelid = '#params.id#' AND mediafileType = 'panorama'",order="sortorder ASC"); 
-		} else {abort;}		
-	}
-
-	function addLink()
-	{			
-		mediafile = model("PanoramaMediafile").findByKey(key=params.parentid,reload=true);
-		
-		if(isJson(mediafile.settings) AND isArray(deserializeJSON(mediafile.settings))) {
-			var settings = deserializeJSON(mediafile.settings);
-		} else {
-			var settings = [];
-		}
-		
-		arrayAppend(settings, {"mediafileid":params.childid,"fileid":params.childfileid,"yaw":params.yaw,"uuid":params.containsKey("uuid") ? params.uuid : createUUID(),"caption": params.containsKey("caption") ? params.caption : "","type": params.containsKey("type") ? params.type : "pano"});
-
-		saveResult = mediafile.update({ "id":params.parentid, "settings":serializeJSON(settings) });
-
-		var response = getPageContext().getResponse(); 
-		response.setContentType("application/json");
-		writeOutput(serializeJSON({"success":saveResult,"save":settings})); abort;
-	}
-
-	function removeLink()
-	{			
-		mediafile = model("PanoramaMediafile").findByKey(key=params.parentid,reload=true);
-		if(isJson(mediafile.settings) AND isArray(deserializeJSON(mediafile.settings))) {
-			var settings = deserializeJSON(mediafile.settings);
-			
-			for (var i=1;i LTE ArrayLen(settings);i=i+1) {
-
-				if(settings[i].containsKey("uuid") AND settings[i].uuid eq params.uuid) {
-					if(params.containsKey("caption")) {
-						structAppend(params, {"childid":settings[i].mediafileid,"childfileid":settings[i].fileid,"yaw":settings[i].yaw,"uuid":settings[i].uuid,"caption": params.caption,"type":settings[i].containsKey("type") ? settings[i].type : "pano"}, true);
-
-					}
-					arrayDeleteAt(settings, i);
-				}
-			}
-		}
-		
-		saveResult = mediafile.update({ "id":params.parentid, "settings":serializeJSON(settings) });		
-		
-		if(params.action neq "updateLink") { 
-			var response = getPageContext().getResponse(); 
-			//response.setContentType("application/json"); 
-			writeOutput(serializeJSON({"success":saveResult})); 
-			abort; 
-		}
-	}
-
-	function updateLink()
-	{
-		removeLink();
-		addLink();
-	}
-
-	function panoLinks()
-	{			
-		usesLayout("/layouts/layout.blank");
-
-		var mediafile = model("PanoramaMediafile").findByKey(params.id);
-		if(isJson(mediafile.settings) AND isArray(deserializeJSON(mediafile.settings))) {
-			var settingslist = deserializeJSON(mediafile.settings);
-			settings = [];
-			for(var setting in settingslist) {
-				mediafile = model("PanoramaMediafile").findAll(where="id = '#setting.mediafileid#'");
-				arrayAppend(settings,{"uuid":setting.uuid,"data":mediafile,"caption":setting.containsKey("caption") ? setting.caption : ""});
-			}
-		} else {
-			settings = [];
-		}
-	}
-	
-	function photos()
-	{						
-		usesLayout("/layouts/layout.blank");
-		if(isDefined("params.id")) {
-			photos = model("@ucaseSingular@Mediafile").findAll(where="modelid = '#params.id#' AND mediafileType = '@lcaseSingular@'",order="sortorder ASC"); 
-		} else {abort;}		
-	}
-
 	function new()
 	{
 		// Queries
-		@lcaseSingular@ = model("@ucaseSingular@").new(colStruct("@ucaseSingular@"));
+		my@ucaseSingular@ = model("@ucaseSingular@").new(colStruct("@ucaseSingular@"));
 
 		dataFields = model("FormField").findAll(where="metafieldType = '@lcaseSingular@field' AND modelid = 3",order="sortorder ASC");
 
@@ -284,7 +160,7 @@ component extends="_main" output="false"
 
 	function delete()
 	{
-		@lcaseSingular@ = model("@ucaseSingular@").findByKey(params.id);
+		my@ucaseSingular@ = model("@ucaseSingular@").findByKey(params.id);
 		
 		if(@lcaseSingular@.delete())
 		{
@@ -338,25 +214,20 @@ component extends="_main" output="false"
 		// Get @lcaseSingular@ object
 		if(!isNull(params.@lcaseSingular@.id)) 
 		{
-			@lcaseSingular@ = model("@ucaseSingular@").findByKey(params.@lcaseSingular@.id);
+			my@ucaseSingular@ = model("@ucaseSingular@").findByKey(params.@lcaseSingular@.id);
 			saveResult = @lcaseSingular@.update(params.@lcaseSingular@);	
 			
 			// Clear existing @lcaseSingular@ category associations
 			model("@lcaseSingular@CategoryJoin").deleteAll(where="@lcaseSingular@id = #params.@lcaseSingular@.id#");
 		} else {
 
-			if(len(trim(params.@lcaseSingular@.address)) AND !len(trim(params.@lcaseSingular@.name))) {
-				params.@lcaseSingular@.name = params.@lcaseSingular@.address;
-			}
-
-			@lcaseSingular@ = model("@ucaseSingular@").new(params.@lcaseSingular@);
-			saveResult = @lcaseSingular@.save();
+			my@ucaseSingular@ = model("@ucaseSingular@").new(params.@lcaseSingular@);
+			saveResult = my@ucaseSingular@.save();
 		}
 		
 		// Insert or update @lcaseSingular@ object with @lcasePlural@
 		if (saveResult) 
 		{
-			
 			// Insert new @lcaseSingular@ category associations			
 			for(id in ListToArray(params.@lcaseSingular@categories)) {				
 				model("@lcaseSingular@CategoryJoin").create(categoryid = id, @lcaseSingular@id = @lcaseSingular@.id);				
@@ -371,15 +242,15 @@ component extends="_main" output="false"
 			}
 			
 			flashInsert(success="@ucaseSingular@ saved.");
-			redirectTo(route="admin~Id", module="admin", controller="@lcasePlural@", action="edit", id=@lcaseSingular@.id);	
+			redirectTo(route="admin~Id", controller="@lcasePlural@", action="edit", id=@lcaseSingular@.id);	
 		} else {						
 			
-			errorMessagesName = "@lcaseSingular@";
-			param name="@lcaseSingular@.id" default="0";
-			sharedObjects(@lcaseSingular@.id);
+			errorMessagesName = "my@ucaseSingular@";
+			param name="my@ucaseSingular@.id" default="0";
+			sharedObjects(my@ucaseSingular@.id);
 			
 			flashInsert(error="There was an error.");
-			renderPage(route="admin~Action", module="admin", controller="@lcasePlural@", action="editor");		
+			renderPage(route="admin~Action", controller="@lcasePlural@", action="editor");		
 		}		
 	}
 	
@@ -412,6 +283,16 @@ component extends="_main" output="false"
 			controller="@lcasePlural@"
 		);
 	}
+	
+	function photos()
+	{						
+		usesLayout("/layouts/layout.blank");
+		if(isDefined("params.id")) {
+			photos = model("@ucaseSingular@Mediafile").findAll(where="modelid = '#params.id#' AND mediafileType = '@lcaseSingular@'",order="sortorder ASC"); 
+		} else {abort;}		
+	}
+
+	
 	
 	function filterResults()
 	{
@@ -514,7 +395,7 @@ component extends="_main" output="false"
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 			
-			//renderPage(route="admin~Action", module="admin", controller="@lcasePlural@", action="index");		
+			//renderPage(route="admin~Action", controller="@lcasePlural@", action="index");		
 		}
 	}
 }
