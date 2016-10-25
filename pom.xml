@@ -11,7 +11,7 @@
     <lucee.version>5.1.0.31</lucee.version>
     <mysqlconnector.version>6.0.4</mysqlconnector.version>
     <tomcatrunner.version>8.0.33.0</tomcatrunner.version>
-    <versioneye.version>3.10.2</versioneye.version>
+    <versioneye.version>3.11.0</versioneye.version>
     <mvnclean.version>3.0.0</mvnclean.version>
     <mvndep.version>2.10</mvndep.version>
     <tuckeyurl.version>4.0.4</tuckeyurl.version>
@@ -73,7 +73,7 @@
   </pluginRepositories>
 
   <build>
-    <plugins>      <!-- 
+    <plugins>      
       <plugin>
         <groupId>com.versioneye</groupId>
         <artifactId>versioneye-maven-plugin</artifactId>
@@ -90,7 +90,7 @@
           <apiKey>6c98055bd75fdb10f5e0</apiKey>
           <projectId>57673e8c276f0f0052974a19</projectId>
         </configuration>
-      </plugin> -->
+      </plugin>
 
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -122,7 +122,10 @@
           </filesets>
         </configuration>
       </plugin>
-      <!-- <plugin>
+      <!-- 
+      Cool way to pull in a github project without submodules since heroku doesn't support them
+      disabling because we can't update web-inf setting in production :/
+      <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
           <version>1.3.2</version>
