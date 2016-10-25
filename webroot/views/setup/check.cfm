@@ -39,7 +39,7 @@
 		}
 	}
 
-	if(!application.containsKey("appSettings")) checkSetup();
+	/*if(!application.containsKey("appSettings")) checkSetup();
 	function checkSetup() {
 		var SQL = "SELECT content FROM options WHERE siteid = 0 AND id = 'site_settings'";
 		var q = new Query(sql=sql,datasource=application.wheels.dataSourceName);
@@ -58,7 +58,7 @@
 		} else if (!qSettings.recordcount) {
 			include template="/views/setup/index.cfm"; abort;
 		}
-	}	
+	}*/
 
 	function getSqlAdapter(datasourceName) {
 		var loc = {};

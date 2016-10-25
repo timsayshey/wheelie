@@ -21,7 +21,7 @@
 
 				#linkTo(
 					text		= '<span class=''elusive icon-plus''></span> Edit Fields',
-					href		= '/manager/fields/index/propertyfield?modelid=3',
+					href		= '/m/admin/fields/index/propertyfield?modelid=3',
 					class		= 'btn btn-default'
 				)#	
 

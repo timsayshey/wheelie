@@ -19,7 +19,7 @@
 	info.validCategoryModelsList = "itemcategory,propertycategory"; // lowercase
 	info.serverIp = "";
 	
-	info.adminUrlPath = "/manager";
+	info.adminUrlPath = getSiteSetting("wheelsAdminUrlPath","/manager");
 	info.domainshort = cgi.HTTP_HOST;
 	siteUrl 		 = info.domainshort;
 	info.domain		 = "http://#info.domainshort#";

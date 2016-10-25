@@ -18,7 +18,7 @@
 				)#
 				#linkTo(
 					text		= '<span class=''elusive icon-plus''></span> Edit Fields',
-					href		= '/manager/fields/index/@lcaseSingular@field?modelid=3',
+					href		= '/m/admin/fields/index/@lcaseSingular@field?modelid=3',
 					class		= 'btn btn-default'
 				)#	
 			</li>"

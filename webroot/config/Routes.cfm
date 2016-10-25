@@ -1,6 +1,6 @@
 .<cfscript>
 	
-	adminUrlPath = "/manager";
+	adminUrlPath = getSiteSetting("wheelsAdminUrlPath","/manager");
 	application.wheels.adminUrlPath = adminUrlPath;
 	
 	// Custom routes

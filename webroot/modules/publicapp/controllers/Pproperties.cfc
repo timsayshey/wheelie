@@ -103,7 +103,7 @@ component extends="_main" output="false"
 	        			hotspotSet["URL"] = "javascript:showPhoto('/assets/uploads/mediafiles/#hotspot.fileid#-xm.jpg','#hotspot.containsKey("caption") && len(hotspot.caption) ? hotspot.caption : "Photo"#');";
 						hotspotSet["type"] = "info";
 	        		} else if(params.containsKey("editorUrls")) {
-	        			hotspotSet["URL"] = "/manager/properties/panoeditor/#hotspot.mediafileid#?propertyid=#mediafile.modelid#";
+	        			hotspotSet["URL"] = "/m/admin/properties/panoeditor/#hotspot.mediafileid#?propertyid=#mediafile.modelid#";
 						hotspotSet["type"] = "info";
 	        		} else {
 	        			hotspotSet["sceneId"] = hotspot.fileid;
