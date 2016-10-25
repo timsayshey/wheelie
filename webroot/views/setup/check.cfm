@@ -11,27 +11,28 @@
 
 	if(!application.containsKey("dbSetupCheck")) setupDatabase();
 	function setupDatabase() {
-		var SQL = "SELECT EXISTS(
-				    SELECT * 
-				    FROM information_schema.tables 
-				    WHERE 
-				      table_name = 'sites'
-				) AS tableExists;";
-		var q = new Query(sql=sql,datasource=application.wheels.dataSourceName);
-		var qCheckDB = q.execute().getResult();
 
-		if(!qCheckDB.tableExists && form.containsKey("setupDatabase") && form.setupDatabase) {	
+		cfdbinfo(name="dbtables",type="tables",datasource=application.wheels.dataSourceName);
+
+		var tableExists = false;
+		for(var table in dbtables) {
+			if(table.TABLE_NAME eq "sites") {
+				tableExists = true; break;
+			}
+		}
+
+		if(!tableExists && form.containsKey("setupDatabase") && form.setupDatabase) {	
 			var sqlPath = "/setup/wheelie";
 			if(application.wheels.dbtype eq "PostgreSQL") {
 				sqlPath &= ".psql";
 			} else if(application.wheels.dbtype eq "MySQL") {
-				sqlPath &= ".mysql";
+				writeOutput("You are using MySql. Please go run the MySql script on your database:<br>/setup/wheelie.mysql"); abort;
 			} else {
 				throw("#application.wheels.dbtype# is not supported by Wheelie. Feel free to add support and send pull request.");
 			}
 			var q = new Query(sql=FileRead(expandPath(sqlPath)),datasource=application.wheels.dataSourceName);
 			var loadDB = q.execute();
-		} else if(!qCheckDB.tableExists) {
+		} else if(!tableExists) {
 			include template="/views/setup/dbconfirm.cfm"; abort;
 		} else {
 			application.dbSetupCheck = true;
