@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><cfLuceeConfiguration hspw="a020f798f6510784ed29550597cd4d3a3699bc2e1b808bd738e6127e44c74997" salt="9D115BF2-F713-41C1-86BED8A900C3C986" version="5.1">
+<?xml version="1.0" encoding="UTF-8"?><cfLuceeConfiguration hspw="f37084ffbbd26e08d052fc512441d763e984fe7baa3c6f5570b804e420b17e8a" salt="9D115BF2-F713-41C1-86BED8A900C3C986" version="5.1">
 
 <!-- 
 Path placeholders:
@@ -31,7 +31,7 @@ Path placeholders:
 <!--	or ask your database distributor 																-->
 
 	<data-sources>
-	</data-sources>
+	<data-source allow="511" blob="false" class="org.postgresql.Driver" clob="false" connectionTimeout="1" custom="" database="wheelie" dbdriver="Other" dsn="jdbc:postgresql://ec2-54-221-245-174.compute-1.amazonaws.com:5432/d1qtb40tv71i2l?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory" host="" metaCacheTimeout="60000" name="wheelie" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:f1bd45f55eaae64ab44b04a4e966ff739917862f005eea7a0bfcf720ab6c1d3bfef9ff91617f99f5db5a23db715fd7ffa911222192bcbc01cb306119b4309b17" storage="false" username="aqzviqbrtfglcl" validate="false"/></data-sources>
 	
 	<resources>
     	<!--
