@@ -845,9 +845,7 @@ VALUES
   ('seo_title',61,NULL,NULL,NULL,NULL,NULL,0,1,0,'2016-10-22 02:02:35',1,'2016-10-22 02:02:35',1,NULL,NULL,0),
   ('site_logo',0,NULL,NULL,NULL,'','',0,1,1,NULL,NULL,NULL,NULL,NULL,NULL,0),
   ('site_logo',60,NULL,NULL,NULL,NULL,NULL,0,1,1,NULL,NULL,'2014-11-17 12:10:57',1,NULL,NULL,0),
-  ('site_logo',61,NULL,NULL,NULL,NULL,NULL,0,1,1,'2016-10-22 02:02:35',1,'2016-10-22 02:02:35',1,NULL,NULL,0),
-  ('site_settings',0,NULL,'{\"firstTimeSetupInstall\":\"true\",\"accessKeyId\":\"AKIAINTJFAWPNSX2ZUIQ\",\"awsSecretKey\":\"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\",\"defaultLocation\":\"us\",\"host\":\"s3.amazonaws.com\",\"defaultBucket\":\"herokulucee\",\"stripeKey\":\"\",\"sendGridUsername\":\"timbadolato\",\"sendGridPassword\":\"lakeside\",\"defaultEmail\":\"tim@dreamstonemedia.com\",\"fieldnames\":\"firstTimeSetupInstall,accessKeyId,awsSecretKey,defaultLocation,host,defaultBucket,stripeKey,sendGridUsername,sendGridPassword,defaultEmail\"}',NULL,NULL,NULL,0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,0),
-  ('site_settings',61,NULL,'{\"firstTimeSetupInstall\":\"true\",\"accessKeyId\":\"AKIAINTJFAWPNSX2ZUIQ\",\"awsSecretKey\":\"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\",\"defaultLocation\":\"us\",\"host\":\"s3.amazonaws.com\",\"defaultBucket\":\"herokulucee\",\"stripeKey\":\"\",\"sendGridUsername\":\"timbadolato\",\"sendGridPassword\":\"lakeside\",\"defaultEmail\":\"tim@dreamstonemedia.com\",\"fieldnames\":\"firstTimeSetupInstall,accessKeyId,awsSecretKey,defaultLocation,host,defaultBucket,stripeKey,sendGridUsername,sendGridPassword,defaultEmail\"}',NULL,NULL,NULL,0,0,0,'2016-10-22 02:02:36',1,'2016-10-22 02:02:36',1,NULL,NULL,0);
+  ('site_logo',61,NULL,NULL,NULL,NULL,NULL,0,1,1,'2016-10-22 02:02:35',1,'2016-10-22 02:02:35',1,NULL,NULL,0);
 
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
