@@ -1,0 +1,242 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>lucee.heroku</groupId>
+  <artifactId>lucee.heroku</artifactId>
+  <version>1.3.0</version>
+  <name>Lucee Heroku Application Template</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <lucee.version>5.1.0.31</lucee.version>
+    <mysqlconnector.version>6.0.4</mysqlconnector.version>
+    <tomcatrunner.version>8.0.33.0</tomcatrunner.version>
+    <versioneye.version>3.10.2</versioneye.version>
+    <mvnclean.version>3.0.0</mvnclean.version>
+    <mvndep.version>2.10</mvndep.version>
+    <tuckeyurl.version>4.0.4</tuckeyurl.version>
+    <apachefelix.version>4.2.1</apachefelix.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.lucee</groupId>
+      <artifactId>lucee</artifactId>
+      <version>${lucee.version}</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>oss-sonatype</id>
+      <name>oss-sonatype</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>central</id>
+      <url>http://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>cfmlprojects</id>
+      <url>http://cfmlprojects.org/artifacts</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>http://repo1.maven.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <plugins>      <!-- 
+      <plugin>
+        <groupId>com.versioneye</groupId>
+        <artifactId>versioneye-maven-plugin</artifactId>
+        <version>${versioneye.version}</version>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <apiKey>6c98055bd75fdb10f5e0</apiKey>
+          <projectId>57673e8c276f0f0052974a19</projectId>
+        </configuration>
+      </plugin> -->
+
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${mvnclean.version}</version>
+        <configuration>
+          <fileset>
+            <directory>webroot/WEB-INF/lucee-server</directory>
+            <includes>
+              <include>**/*</include>
+            </includes>
+            <excludes>
+              <exclude>*.xml</exclude>
+              <exclude>**/lucee-server.xml</exclude>
+            </excludes>
+            <followSymlinks>false</followSymlinks>
+          </fileset>
+          <filesets>
+            <fileset>
+              <directory>webroot/WEB-INF</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+              <excludes>
+                <exclude>*.xml</exclude>
+                <exclude>**/lucee-web.xml.cfm</exclude>
+              </excludes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <!-- <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.3.2</version>
+          <executions>
+              <execution>
+                  <id>github-wiki-clone</id>
+                  <phase>validate</phase>
+                  <goals>
+                    <goal>exec</goal>
+                  </goals>
+                  <configuration>
+                      <executable>git</executable>
+                      <arguments>
+                          <argument>clone</argument>
+                          <argument>https://github.com/timsayshey/wheelie.git</argument>
+                          <argument>webroot</argument>
+                      </arguments>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin> -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${mvndep.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+
+                <artifactItem>
+                  <groupId>com.github.jsimone</groupId>
+                  <artifactId>webapp-runner</artifactId>
+                  <version>${tomcatrunner.version}</version>
+                  <destFileName>webapp-runner.jar</destFileName>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.tuckey</groupId>
+                  <artifactId>urlrewritefilter</artifactId>
+                  <version>${tuckeyurl.version}</version>
+                  <destFileName>urlrewritefilter.jar</destFileName>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>webroot/WEB-INF/lib</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>mysql</groupId>
+                  <artifactId>mysql-connector-java</artifactId>
+                  <version>${mysqlconnector.version}</version>
+                  <destFileName>mysql-connector.jar</destFileName>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>webroot/WEB-INF/lib</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.lucee</groupId>
+                  <artifactId>lucee</artifactId>
+                  <version>${lucee.version}</version>
+                  <destFileName>lucee.jar</destFileName>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>webroot/WEB-INF/lib</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.framework</artifactId>
+                  <version>${apachefelix.version}</version>
+                  <destFileName>osgi.jar</destFileName>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>webroot/WEB-INF/lib</outputDirectory>
+                </artifactItem>
+
+              </artifactItems>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-lucee-deps</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>webroot/WEB-INF/lucee-server/bundles</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <configuration>
+              <target>
+                <echo file="Procfile" message="web: java $JAVA_OPTS -jar target/webapp-runner.jar --port $PORT webroot "/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
