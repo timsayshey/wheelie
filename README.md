@@ -8,7 +8,7 @@
 =======
 ## Heroku Installation
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie-heroku&template=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie-heroku)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie&template=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie)
 
 ## Compatibility
 
@@ -29,8 +29,8 @@ Lucee and MySQL/PostgreSQL
 To get started, run the following commands in GitBash (or your terminal of preference):
 
 ```bash
-$ git clone https://github.com/timsayshey/wheelie-heroku.git
-$ cd wheelie-heroku
+$ git clone https://github.com/timsayshey/wheelie.git
+$ cd wheelie
 $ mvn package
 $ foreman start
 ```
