@@ -74,7 +74,7 @@
 
   <build>
     <plugins>      
-      <plugin>
+      <!-- <plugin>
         <groupId>com.versioneye</groupId>
         <artifactId>versioneye-maven-plugin</artifactId>
         <version>${versioneye.version}</version>
@@ -90,7 +90,7 @@
           <apiKey>6c98055bd75fdb10f5e0</apiKey>
           <projectId>57673e8c276f0f0052974a19</projectId>
         </configuration>
-      </plugin>
+      </plugin> -->
 
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
