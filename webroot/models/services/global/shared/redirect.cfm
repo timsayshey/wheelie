@@ -3,25 +3,11 @@
 	<!--- Shared Redirects --->
 	<cffunction name="redirects" hint="Redirects for SEO and other purposes">   
 		<cfscript>
-			/* Force NO WWW 
-			if(listfirst(cgi.server_name,".") eq "www")
-			{
-				redirectFullUrl(
-					"http://" & 
-						ListDeleteAt(cgi.server_name,1,'.') & 
-							cgi.path_info & 
-								(len(cgi.query_string) ? "?" : "") & 
-									cgi.query_string
-				);
-			}
-			*/
-
 			/* DB Redirects */
-			var redirects = new Query(sql="SELECT * FROM redirects WHERE siteid='#request.site.id#'",datasource=application.wheels.dataSourceName).execute().getResult();
-			for (var redirect in redirects)
-			{
-				findThenRedirect(redirect.if_matches_this,redirect.then_redirect_to);
-			} 
+			if(!application.containsKey("qRedirects")) {
+				application.qRedirects = new Query(sql="SELECT * FROM redirects WHERE siteid='#request.site.id#'",datasource=application.wheels.dataSourceName).execute().getResult();
+			}
+			for (var redirect in application.qRedirects) findThenRedirect(redirect.if_matches_this,redirect.then_redirect_to);
 		</cfscript>
 	</cffunction> 
 	

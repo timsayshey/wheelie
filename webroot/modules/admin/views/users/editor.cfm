@@ -4,7 +4,7 @@
 	<script src="/views/layouts/admin/assets/js/category.js" type="text/javascript"></script>
 	
 	<cfset contentFor(formy			= true)>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #capitalize(usergroup.groupname)#')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> #capitalize(usergroup.groupname)#')>
 				
 	<!--- For category.js --->
 	#hiddenfieldtag(name="categoryController", id="categoryController", value="usertags")#	
@@ -39,48 +39,23 @@
 			Some changes are awaiting for approval by the admin before they show up publicly on the website.
 		</div>
 	</cfif>
-					
-	<!--- Email --->	
 	<div class="col-sm-6 ">	
 		#btextfield(
-			objectName		= 'user', 
-			property		= 'email', 
-			label			= 'Email',
-			placeholder		= "Ex: john@gmail.com"
+			objectName	= 'user', 
+			property	= 'firstname', 
+			label		= 'First name*',
+			placeholder	= "Ex: John")#
+	</div>
+	
+	<div class="col-sm-6">	
+		#btextfield(
+			objectName	= 'user', 
+			property	= 'lastname', 
+			label		= 'Last name*',
+			placeholder	= "Ex: Swanson"
 		)#
 	</div>
 
-	<div class="col-md-6">
-		#btextfield(
-			objectName	= 'user', 
-			property	= 'username', 
-			label		= 'Display Name'
-		)#<br>
-	</div>
-	
-	<cfif checkPermission("user_save_role_admin")>	
-		<cfset roles = ListToArray(application.rbs.roleslist)>			
-		<div class="col-sm-6">	
-			#bselect(
-				includeBlank	= true,
-				objectName		= 'user',
-				property		= 'role',
-				label			= 'Override Usergroup Role',
-				options			= roles
-			)#
-		</div>							
-	</cfif> 
-
-	<cfset approvalToggle = "">
-	<cfif checkPermission("user_save_others") OR user.showOnSite eq 0>	
-		<cfset approvalToggle = "zx_">
-		#hiddenFieldTag(name="user[approval_flag]", value="0")#
-	<cfelse>
-		#hiddenFieldTag(name="user[approval_flag]", value="1")#
-	</cfif>
-	
-	#hiddenFieldTag(name="fromEditor", value="1")#
-	
 	<!--- Password --->
 	<div class="col-sm-6 ">	
 		#bPasswordFieldTag(
@@ -99,27 +74,31 @@
 			colclass	= passrequired
 		)#
 	</div>
-	
-	#includePartial(partial="/_partials/formSeperator")#				
-				
-	<!--- Full name --->
+
+	<!--- Email --->	
 	<div class="col-sm-6 ">	
 		#btextfield(
-			objectName	= 'user', 
-			property	= '#approvalToggle#firstname', 
-			label		= 'First name*',
-			placeholder	= "Ex: John")#
-	</div>
-	
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName	= 'user', 
-			property	= '#approvalToggle#lastname', 
-			label		= 'Last name*',
-			placeholder	= "Ex: Swanson"
+			objectName		= 'user', 
+			property		= 'email', 
+			label			= 'Email',
+			placeholder		= "Ex: john@gmail.com"
 		)#
 	</div>
 
+	<!--- <div class="col-md-6">
+		#btextfield(
+			objectName	= 'user', 
+			property	= 'username', 
+			label		= 'Display Name'
+		)#<br>
+	</div> --->
+
+	#hiddenFieldTag(name="user[approval_flag]", value="0")#
+	
+	#hiddenFieldTag(name="fromEditor", value="1")#	
+
+	
+<!--- 
 	<div class="col-sm-6 ">								
 		#btextfield(
 			objectName	= 'user', 
@@ -129,10 +108,10 @@
 		)#
 	</div>
 	
-	<!--- <div class="col-sm-6">	
+	<div class="col-sm-6">	
 		#btextfield(
 			objectName	= 'user', 
-			property	= '#approvalToggle#designatory_letters', 
+			property	= 'designatory_letters', 
 			label		= 'Credentials',
 			placeholder	= "Ex: PhD, MSW, etc"
 		)#
@@ -141,7 +120,7 @@
 	<div class="col-sm-6 ">	
 		#btextfield(
 			objectName	= 'user', 
-			property	= '#approvalToggle#jobtitle', 
+			property	= 'jobtitle', 
 			label		= 'Job Title*',
 			placeholder	= "Ex: Teacher"
 		)#
@@ -268,7 +247,7 @@
 	
 	#btextarea(
 		objectName 		= 'user', 
-		property 		= '#approvalToggle#about',
+		property 		= 'about',
 		label 		 	= "Bio for Website*",
 		style			= "height:150px"
 	)#	 --->
@@ -373,11 +352,26 @@
 				</section>
 			</div> 	
 		</cfif>
+
+		<cfif checkPermission("user_save_role_admin")>	
+			<cfset roles = ListToArray(application.rbs.roleslist)>			
+			<div class="data-block">
+				<section>
+					#bselect(
+						includeBlank	= true,
+						objectName		= 'user',
+						property		= 'role',
+						label			= 'Override Usergroup Role',
+						options			= roles
+					)#
+				</section>
+			</div> 							
+		</cfif> 
 		
 		</div>
-		<div class="rightBottomBox  hidden-xs hidden-sm">
+		<!--- <div class="rightBottomBox  hidden-xs hidden-sm">
 			#includePartial(partial="/_partials/editorSubmitBox", controllerName="users", currentStatus=currentStatus, rightBottomClass="col-sm-3")#	
-		</div>
+		</div> --->
 	</cfsavecontent>
 	<cfset contentFor(rightColumn = rightColumn)>
 	<cfset contentFor(formWrapStart = startFormTag(route="admin~Action", module="admin", controller="users", action="save", enctype="multipart/form-data", id="fileupload"))>		

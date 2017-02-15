@@ -187,6 +187,30 @@
 	    <cfset var fieldData = getDataField(field)>
 	    <cfif len(trim(fieldData))><li>#label#: #fieldData#</li></cfif>
 	</cffunction>
+	<cffunction name="xssCleaner" access="private" returntype="string" output="Yes" hint="Possible Malicious html code from a given string">
+		<cfargument name="str"    type="string" required="yes" hint="String">
+		<cfargument name="action" type="string" required="no" default="cleanup" hint="If [cleanup], this will clean up the string and output new string, if [find], this will output a value or zero">
+		<cfset arguments.str = replaceNoCase(arguments.str, '&lt;', '<')>
+		<cfset arguments.str = replaceNoCase(arguments.str, '&gt;', '>')>
+		<!--- **************************************************************************** --->
+		<!--- Remove string between <script> <object><iframe><style><meta> and <link> tags --->
+		<!--- @param str     String to clean up. (Required)                                --->
+		<!--- @param action    Replace and Clean up or Find                                --->
+		<!--- @author         Saman W Jayasekara (sam @ cflove . org)                     --->
+		<!--- @version 1.1    May 22, 2010                                                 --->
+		<!--- **************************************************************************** --->
+		<cfswitch expression="#arguments.action#">
+		<cfcase value="cleanup">
+		<cfset local.str = ReReplaceNoCase(arguments.str,"<script.*?</*.script*.>|<applet.*?</*.applet*.>|<embed.*?</*.embed*.>|<ilayer.*?</*.ilayer*.>|<frame.*?</*.frame*.>|<object.*?</*.object*.>|<iframe.*?</*.iframe*.>|<style.*?</*.style*.>|<meta([^>]*[^/])>|<link([^>]*[^/])>|<script([^>]*[^/])>", "", "ALL")>
+		<cfset local.str = local.str.ReplaceAll("<\w+[^>]*\son\w+=.*[ /]*>|<script.*/*>|</*.script>|<[^>]*(javascript:)[^>]*>|<[^>]*(onClick:)[^>]*>|<[^>]*(onDblClick:)[^>]*>|<[^>]*(onMouseDown:)[^>]*>|<[^>]*(onMouseOut:)[^>]*>|<[^>]*(onMouseUp:)[^>]*>|<[^>]*(onMouseOver:)[^>]*>|<[^>]*(onBlur:)[^>]*>|<[^>]*(onFocus:)[^>]*>|<[^>]*(onSelect:)[^>]*>","") >
+		<cfset local.str = reReplaceNoCase(local.str, "</?(script|applet|embed|ilayer|frame|iframe|frameset|style|link)[^>]*>","","all")>
+		</cfcase>
+		<cfdefaultcase>
+		<cfset local.str = REFindNoCase("<script.*?</script*.>|<applet.*?</applet*.>|<embed.*?</embed*.>|<ilayer.*?</ilayer*.>|<frame.*?</frame*.>|<object.*?</object*.>|<iframe.*?</iframe*.>|<style.*?</style*.>|<meta([^>]*[^/])>|<link([^>]*[^/])>|<\w+[^>]*\son\w+=.*[ /]*>|<[^>]*(javascript:)[^>]*>|<[^>]*(onClick:)[^>]*>|<[^>]*(onDblClick:)[^>]*>|<[^>]*(onMouseDown:)[^>]*>|<[^>]*(onMouseOut:)[^>]*>|<[^>]*(onMouseUp:)[^>]*>|<[^>]*(onMouseOver:)[^>]*>|<[^>]*(onBlur:)[^>]*>|<[^>]*(onFocus:)[^>]*>|<[^>]*(onSelect:)[^>]*>",arguments.str)>
+		</cfdefaultcase>
+		</cfswitch>
+		<cfreturn local.str>
+	</cffunction>
 	
     <cfscript>
 	/**
@@ -296,6 +320,19 @@
 		}
 		return query;
 	}
+	function makeSubdomainUnique(subdomain) {
+		var mySubdomain = rereplacenocase(arguments.subdomain, '[^a-z0-9]', '', 'all');
+
+		var SQL = "SELECT subdomain FROM sites WHERE subdomain = :subdomain";
+		var q = new Query(sql=sql,datasource=application.wheels.dataSourceName);
+		q.addParam( name="subdomain", cfsqltype="cf_sql_varchar", value=mySubdomain );
+		var qSiteCheck = q.execute().getResult();
+
+		if(qSiteCheck.recordcount) {
+			return makeSubdomainUnique(mySubdomain & RandRange(1, 999, "SHA1PRNG"));
+		} else {
+			return mySubdomain;
+		}
+	}
 	</cfscript> 
-	
 </cfoutput>

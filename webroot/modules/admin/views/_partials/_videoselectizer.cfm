@@ -57,8 +57,8 @@
 									'</div>' +
 									'<div class="col-md-9 col-sm-9 col-xs-9">' +
 										'<span class="boxtitle">' + escape(item.name) + '</span>' +
-										(item.youtube > 0 ? '<span class="elusive icon-youtube color-danger" title="Hosted on Youtube"></span>' : '') +
-										(item.youtube == 0 ? '<span class="elusive icon-hdd color-primary" title="Hosted on #siteUrl#"></span>' : '') +
+										(item.youtube > 0 ? '<span class="fa fa-youtube color-danger" title="Hosted on Youtube"></span>' : '') +
+										(item.youtube == 0 ? '<span class="fa fa-hdd color-primary" title="Hosted on #siteUrl#"></span>' : '') +
 									'</div>' +
 									'<br class="clear">' +
 								'</div>'
@@ -72,8 +72,8 @@
 									'</div>' +
 									'<div class="col-md-9 col-sm-9 col-xs-9">' +
 										'<span class="boxtitle">' + escape(item.name) + '</span>' +
-										(item.youtube > 0 ? '<span class="elusive icon-youtube color-danger" title="Hosted on Youtube"></span>' : '') +
-										(item.youtube == 0 ? '<span class="elusive icon-hdd color-primary" title="Hosted on #siteUrl#"></span>' : '') +
+										(item.youtube > 0 ? '<span class="fa fa-youtube color-danger" title="Hosted on Youtube"></span>' : '') +
+										(item.youtube == 0 ? '<span class="fa fa-hdd color-primary" title="Hosted on #siteUrl#"></span>' : '') +
 									'</div>' +
 									'<br class="clear">' +
 								'</div>'

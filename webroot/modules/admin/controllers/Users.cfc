@@ -51,14 +51,18 @@
 		
 		function index()
 		{									
-			param name="params.currentGroup" default="0";
+
+			// if(!checkPermission("user_read_others")) location("/main/home");
+
+			param name="params.currentGroup" default="";
 			whereType = "";
 			sharedObjects();
-			
-			whereType = "usergroupid = '#params.currentGroup#' AND";
-			
-			if(!checkPermission("user_save_role_admin"))
-			{
+
+			if(params.containsKey('currentGroup') AND isNumeric(params.currentGroup)) {
+				whereType = "usergroupid = '#params.currentGroup#' AND";
+			}
+
+			if(!checkPermission("user_save_role_admin")) {
 				whereType = "#whereType# status = 'published' AND";
 			}
 			
@@ -130,7 +134,7 @@
 				if (!IsObject(user))
 				{
 					flashInsert(error="Not found");
-					redirectTo(route="admin~Index", module="admin", controller="users");
+					redirectTo(route="admin~Index", controller="users");
 				}			
 			}
 			
@@ -156,67 +160,17 @@
 		{			
 			if(request.site.registrationDisabled)
 			{
-				redirectTo(route="admin~Index", module="admin", controller="users"); abort;
+				redirectTo(route="admin~Index", controller="users"); abort;
 			}
 			
 			// Queries
 			user = model("User").new(colStruct("User"));
 		}
-		
+
 		function registerPost()
 		{				
-			requireEmailMatchDomain();
-			
-			request.newRegistration = true;
-			
-			// Sync Unapproved Fields
-			// params.user.zx_firstname = params.user.firstname;				
-			// params.user.zx_lastname = params.user.lastname;
-			// params.user.zx_about = params.user.about;
-			// params.user.zx_designatory_letters = params.user.designatory_letters;
-			// params.user.zx_jobtitle = params.user.jobtitle;
-			
-			params.user.password = passcrypt(params.user.password, "encrypt");
-
-			// Save user
-			user = model("User").new(params.user);
-			saveResult = user.save(); 
-			
-			// Insert or update user object with properties
-			if (saveResult)
-			{			
-				// Save Portrait
-				if(!isNull(form.portrait) AND len(form.portrait) AND FileExists(form.portrait))
-				{								
-					if(uploadUserImage(field="portrait",user=user,newUser=true))
-					{
-						user.portrait = "";
-					}
-				}
-				
-				// Default usergroup to staff ("1")
-				defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
-				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
-				// flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
-				
-				// userVerifyUrl = 'http://#request.site.domain#/#application.info.adminUrlPath#/users/verifyEmail?token=#passcrypt(password="#user.id#", type="encrypt")#';
-				// mailgun(
-				// 	mailTo	= user.email, 
-				// 	from	= application.wheels.adminFromEmail,
-				// 	subject	= "Verify your email address",
-				// 	html	= "Click the link below to verify your email address:<br>
-				// 			   <a href='#userVerifyUrl#'>#userVerifyUrl#</a>"
-				// );
-				flashInsert(success="Your account was created");
-				session.user.id = user.id;
-				redirectTo(route="admin~Action", module="admin", controller="users", action="login");									
-			} 
-			else 
-			{
-				errorMessagesName = "user";
-				flashInsert(error="There was an error.");
-				renderPage(route="admin~Action", module="admin", controller="users", action="register");		
-			}		
+			params.isRegistration = true;
+			save();
 		}
 		
 		function delete()
@@ -300,11 +254,9 @@
 					html	= "User: #params.user.firstname# #params.user.lastname#<br>
 								<br>
 								Click the link below to approve:<br>
-								http://#request.site.domain#/connect/users/approval"
+								https://#request.site.domain#/connect/users/approval"
 				);
 			}
-			
-			syncApprovedFields();
 			
 			// Get user object
 			if(!isNull(params.user.id)) 
@@ -390,6 +342,16 @@
 						}
 					}
 				}
+
+				// Save User Site
+				var userSite = model("Site").create(
+					subdomain = user.firstname,
+					createdby = user.id, 
+					updatedby = user.id, 
+					theme = 'ci-theme'
+				);
+
+				var userUpdated = model("user").findByKey(user.id).update(siteid=userSite.id);
 				
 				// Save custom metafeild data
 				if(!isNull(params.fielddata))
@@ -399,18 +361,72 @@
 						foreignid	= user.id
 					);
 				}
+			}
+
+			var isRegistration = params.containsKey("isRegistration") AND params.isRegistration;
+
+			if(saveResult AND isRegistration) {
+				if(!isNull(form.portrait) AND len(form.portrait) AND FileExists(form.portrait))
+				{								
+					if(uploadUserImage(field="portrait",user=user,newUser=true))
+					{
+						user.portrait = "";
+					}
+				}
 				
+				// Default usergroup to staff ("1")
+				var defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
+				model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
+
+				var userSite = model("Site").create(
+					subdomain = user.firstname,
+					createdby = user.id, 
+					updatedby = user.id, 
+					theme = 'ci-theme'
+				);
+
+				var userUpdated = model("user").findByKey(user.id);
+				userUpdated.update(siteid_override=userSite.id);
+
+				flashInsert(success="Your account was created");
+				session.user.id = user.id;
+
+				var sitename = capitalize(request.site.domainSingle & "." & request.site.urlExtension);
+				mailgun(
+					mailTo	= user.email, 
+					from	= "#request.site.domain# <noreply@#sitename#>",
+					subject	= "Registration Info",
+					html	= "Hi #params.user.firstname#,<br>
+						<br>
+						You have successfully registered at #sitename#.<br>
+						<br>
+						Below is your login information:<br>
+						Email: #user.email#<br>
+						Password: The password you chose during sign up.<br>
+						<br>
+						We hope you enjoy using #sitename#. Thanks!<br>
+						<br>
+						--The #sitename# Team<br>
+						http://#sitename#"
+				);
+				module template="/assets/customtags/referrer.cfm";
+				redirectTo(route="admin~Action", controller="users", action="login");	
+
+			} else if(!saveResult AND isRegistration) {
+				errorMessagesName = "user";
+				flashInsert(error="There was an error.");
+				if(!isAPIRequest()) renderPage(route="admin~Action", controller="users", action="register");
+			} else if(saveResult) {
 				flashInsert(success="User saved.");
-				redirectTo(route="admin~Id", module="admin", controller="users", action="edit", id=user.id);			
+				redirectTo(route="admin~Id", controller="users", action="edit", id=user.id);			
 						
-			} else {						
-				
+			} else {
 				errorMessagesName = "user";
 				param name="user.id" default="0";
 				sharedObjects(user.id);
 				
 				flashInsert(error="There was an error.");
-				renderPage(route="admin~Action", module="admin", controller="users", action="editor");		
+				renderPage(route="admin~Action", controller="users", action="editor");		
 			}	
 			
 		}
@@ -423,7 +439,7 @@
 		function logout()
 		{
 			StructDelete(session,"user");
-			redirectTo(route="admin~Action", module="admin", controller="users", action="login");
+			redirectTo(route="admin~Action", controller="users", action="login");
 		}
 		
 		function loginPost()
@@ -435,6 +451,9 @@
 			if(request.site.subdomain eq "www") {
 				siteIdEqualsCheck = "";
 			}
+
+			// TEMP - BYPASS SITEID CHECK FOR
+			siteIdEqualsCheck = "";
 			
 			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#'");
 			
@@ -447,22 +466,36 @@
 				if(user.globalized || user.siteid eq request.site.id) {
 					redirectTo(route="admin~Action", controller="main", action="home");
 				} else {
-					var userSite = model('site').findAll(where="id = '#user.siteid#'");
-					redirectFullUrl(
-						"http://" & userSite.subdomain & "." & 
-							listDeleteAt(cgi.server_name,1,".") & 
-								urlFor(route="admin~Action", controller="main", action="home") & 
-									(len(cgi.query_string) ? "?" : "") & cgi.query_string
-					);
+					redirectTo(route="admin~Action", controller="main", action="home");
+
+					// Disable redirect to site for now
+					// var userSite = model('site').findAll(where="id = '#user.siteid#'");
+					// redirectFullUrl(
+					// 	"http://" & userSite.subdomain & "." & 
+					// 		listDeleteAt(cgi.server_name,1,".") & 
+					// 			urlFor(route="admin~Action", controller="main", action="home") & 
+					// 				(len(cgi.query_string) ? "?" : "") & cgi.query_string
+					// );
 				}
 					
 			} else if(user.recordcount AND user.securityApproval eq 0) {	
 				flashInsert(error="We sent you an email to verify your account, check your spam or contact support.");	
 				renderPage(route="admin~Action", controller="users", action="login");	
 			} else {			
-				flashInsert(error="No account was found with that email and password combination.");	
-				renderPage(route="admin~Action", controller="users", action="login");		
+				flashInsert(error="No account was found with that email and password combination.");
+				if(!isAPIRequest()) renderPage(route="admin~Action", controller="users", action="login");		
+			} 
+		}
+
+		private function isAPIRequest() {
+			// We pass redir on success but have to use this if there is an error to set the view and return errors
+			if(params.containsKey("api")) {
+				if(isNull(user) OR !isObject(user)) user = model("user").new();
+				usesLayout("/layouts/layout.simple");
+				renderPage(route="public~api", controller="api", action="authenticate");
+				return true;
 			}
+			return false;
 		}
 		
 		function recovery()
@@ -489,7 +522,7 @@
 						Password: #passcrypt(user.password, "decrypt")#<br><br>
 						
 						Log in anytime at 
-						<a href='http://#request.site.domain#/#application.info.adminUrlPath#'>http://#request.site.domain#/#application.info.adminUrlPath#</a><br><br>
+						<a href='https://#request.site.domain#/#application.info.adminUrlPath#'>https://#request.site.domain#/#application.info.adminUrlPath#</a><br><br>
 						
 						Don't forget to update your profile and upload your portrait.<br><br>
 						
@@ -523,15 +556,15 @@
 					"Your password is:<br> 
 					#passcrypt(user.password, "decrypt")#<br><br>
 					Login at:<br> 
-					http://#request.site.domain#/#application.info.adminUrlPath#"
+					https://#request.site.domain#/#application.info.adminUrlPath#"
 				);
 				
 				flashInsert(success="Your account information has been emailed to you. (Check your spam if you don't see it)");		
-				redirectTo(route="admin~Action", module="admin", controller="users", action="login");	
+				redirectTo(route="admin~Action", controller="users", action="login");	
 			} else
 			{
 				flashInsert(error="No account for #params.email# found.");		
-				redirectTo(route="admin~Action", module="admin", controller="users", action="recovery");	
+				redirectTo(route="admin~Action", controller="users", action="recovery");	
 			}		
 		}
 		
@@ -580,34 +613,6 @@
 			redirectTo(
 				route="admin~peopleTypes", currentGroup=params.currentGroup 
 			);
-		}
-		
-		function syncApprovedFields()
-		{
-			if(!isNull(params.user.approval_flag) AND params.user.approval_flag neq 1)
-			{			
-				//abort;
-				if(!isNull(params.user.zx_firstname))
-				{
-					params.user.firstname = params.user.zx_firstname;
-				}
-				if(!isNull(params.user.zx_lastname))
-				{
-					params.user.lastname = params.user.zx_lastname;
-				}
-				if(!isNull(params.user.zx_jobtitle))
-				{
-					params.user.jobtitle = params.user.zx_jobtitle;
-				}
-				if(!isNull(params.user.zx_designatory_letters))
-				{
-					params.user.designatory_letters = params.user.zx_designatory_letters;
-				}
-				if(!isNull(params.user.zx_about))
-				{
-					params.user.about = params.user.zx_about;
-				}					
-			}
 		}
 		
 		function filterResults()
@@ -689,7 +694,7 @@
 					pagination.setAppendToLinks("&#rememberParams#");
 				}
 				
-				//renderPage(route="admin~Action", module="admin", controller="users", action="index");		
+				//renderPage(route="admin~Action", controller="users", action="index");		
 			}
 		}
 		

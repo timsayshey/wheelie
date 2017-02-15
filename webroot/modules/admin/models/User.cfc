@@ -5,21 +5,22 @@
 		{			
 			// Before after save
 			beforeSave("sanitize,checkAndSecurePassword,preventRoleHacking");
-			
+
 			// Validations		
 			validatesConfirmationOf(properties="email", message="The email addresses that you entered do not match");			
 			validatesPresenceOf("email");	
 					
 			//validatesPresenceOf(property="about", when="onCreate", message="Bio can't be empty");
 			//validatesPresenceOf(property="jobtitle", when="onCreate", message="Job title can't be empty");
-			// validatesPresenceOf(property="firstname", when="onCreate", message="First name can't be empty");
-			// validatesPresenceOf(property="lastname", when="onCreate", message="Last name can't be empty");
+			validatesPresenceOf(property="firstname", when="onCreate", message="First name can't be empty");
+			validatesPresenceOf(property="password", when="onCreate", message="Password can't be empty");
+			//validatesPresenceOf(property="lastname", when="onCreate", message="Last name can't be empty");
 			
-			validatesFormatOf(property="email", type="email"); 	
-			validatesUniquenessOf(property="email", scope="siteid"); 
-			validatesUniquenessOf(property="username", scope="siteid"); 
-			validatesLengthOf(property="username", within="4,65", message="Username length must be between 4 and 65 characters.");
-			validatesLengthOf(property="password", within="4,65", message="Password length must be between 4 and 65 characters.");
+			// validatesFormatOf(property="email", type="email"); 	
+			validatesUniquenessOf(property="email"); 
+			// validatesUniquenessOf(property="username", scope="siteid"); 
+			// validatesLengthOf(property="username", within="4,65", message="Username length must be between 4 and 65 characters.");
+			validatesLengthOf(property="password", minimum="6", maximum="150");
 			
 			// Relations
 			hasMany(name="Logs");
@@ -62,17 +63,11 @@
 	 	
 		// Clean strings
 		private function sanitize()
-		{
-			try {
-				this.firstname 	= htmlEditFormat(this.firstname);
-				this.lastname 	= htmlEditFormat(this.lastname);		
-				this.address1 	= htmlEditFormat(this.address1);		
-				this.address2	= htmlEditFormat(this.address2);		
-				this.state 		= htmlEditFormat(this.state);		
-				this.zip 		= htmlEditFormat(this.zip);
-				this.country 	= htmlEditFormat(this.country);
-				this.phone 		= htmlEditFormat(this.phone);
-			} catch(any e) {}
+		{	
+			var propsToSanitize = "firstname,lastname,address1,address2,state,zip,country,phone";
+			for(var item in listToArray(propsToSanitize)) {
+				if(!isNull(this[item])) this[item] = htmlEditFormat(this[item]);
+			}
 		}
 		
 		// Security
@@ -82,10 +77,19 @@
 			{ 
 				StructDelete(this,"password");
 			}
-			else if (StructKeyExists(this, "password") AND StructKeyExists(this, "passwordConfirmation")) 
+			else if (StructKeyExists(this, "password") && !isEncryted(this.password)) 
 			{ 
 				this.password = passcrypt(this.password, "encrypt");
-			} 			 
+			}
+		}
+
+		private function isEncryted(hash) {
+			try {
+				passcrypt(arguments.hash, "decrypt");				
+				return true;
+			} catch(any e) {
+				return false;
+			}
 		}
 		
 		private function preventRoleHacking()

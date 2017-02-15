@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Recovery')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Recovery')>
 	
 	#startFormTag(route="admin~Action", module="admin", controller="users", action="recoveryPost")#
 	

@@ -11,9 +11,6 @@
 	<cfparam name="adminHeadColor" default="54a5de">
 	<cfif findNoCase("admin",params.route) AND !(request.containsKey("bypassAdminBody") AND request.bypassAdminBody)>
 		<style type="text/css">
-			body {
-				background: none !important;
-			}
 			.hero {
 				background: ###adminHeadColor# !important;
 			}

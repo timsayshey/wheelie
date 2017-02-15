@@ -15,7 +15,7 @@
 		});
 	</script>
 	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #capitalize(metafieldInfo.singular)# Fields')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> #capitalize(metafieldInfo.singular)# Fields')>
 	
 	<cfif !isNull(metafields)>
 	
@@ -23,7 +23,7 @@
 		<cfset parentController = pluralize(Replace(params.modelname,"field",""))>
 		<cfif FileExists(expandPath("/modules/admin/views/#parentController#/index.cfm"))>
 			<cfset backbtn = linkTo(
-				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 				route		= "admin~index",
 				controller	= parentController,
 				class		= "btn btn-default" 
@@ -34,7 +34,7 @@
 					'<li class="headertab">
 						#backbtn#
 						#linkTo(
-							text		= "<span class=""elusive icon-user""></span> Add Field",
+							text		= "<span class=""fa fa-user""></span> Add Field",
 							route		= "admin~Field",
 							controller	= "metafields",
 							action		= "new",
@@ -43,7 +43,7 @@
 							class		= "btn btn-default"
 						)#	
 						#linkTo(
-							text		= "<span class=""elusive icon-list""></span> Import",
+							text		= "<span class=""fa fa-list""></span> Import",
 							route		= "admin~Field", 
 							controller	= "metafields", 
 							modelName	= "propertyfield", 
@@ -75,7 +75,7 @@
 				<cfloop query="metafields">
 					<tr rel="#metafields.id#">
 						<td class="text-center">
-							<span class="elusive icon-move"></span>
+							<span class="fa fa-move"></span>
 						</td>						
 						<td>
 							#type#
@@ -93,7 +93,7 @@
 								id			= id,
 								params		= buttonParams
 							)#' 
-							class="btn btn-default btn-sm"><span class="elusive icon-pencil"></span></a>
+							class="btn btn-default btn-sm"><span class="fa fa-pencil"></span></a>
 							<a href=
 							'#urlFor(
 								route		= "admin~FieldId",
@@ -103,7 +103,7 @@
 								id			= id,
 								params		= buttonParams
 							)#' 
-							class="btn btn-danger btn-sm confirmDelete"><span class="elusive icon-trash"></span></a>
+							class="btn btn-danger btn-sm confirmDelete"><span class="fa fa-trash"></span></a>
 						</td>
 					</tr>			
 				</cfloop>	

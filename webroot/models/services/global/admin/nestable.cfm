@@ -97,8 +97,8 @@
 			<div class="ns-row">
 				<div class="ns-title">#arguments.name#</div>
 				<div class="ns-actions">
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="editcategory" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletecategory" class="delete-menu confirmDelete" title="Delete"><span class="elusive icon-trash"></span></a>							
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="editcategory" class="edit-menu" title="Edit"><span class="fa fa-pencil"></span></a>
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletecategory" class="delete-menu confirmDelete" title="Delete"><span class="fa fa-trash"></span></a>							
 				</div>
 			</div>		
 			#getNestableChildren(
@@ -118,8 +118,8 @@
 			<div class="ns-row">
 				<div class="ns-title">#arguments.name#</div>
 				<div class="ns-actions">
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="editmenu" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletemenu" class="delete-menu confirmDelete" title="Delete"><span class="elusive icon-trash"></span></a>							
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="editmenu" class="edit-menu" title="Edit"><span class="fa fa-pencil"></span></a>
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletemenu" class="delete-menu confirmDelete" title="Delete"><span class="fa fa-trash"></span></a>							
 				</div>
 			</div>		
 			#getNestableChildren(
@@ -143,10 +143,10 @@
 			">
 				<div class="ns-title">#arguments.name#</div>
 				<div class="ns-actions">
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="markdonetodo" class="mark<cfif isDate(query.isdone)>not</cfif>done-todo" title="Done"><span class="elusive icon-ok"></span></a>
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="edittodo" class="edit-todo" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletetodo" class="delete-todo confirmDelete" title="Delete"><span class="elusive icon-remove"></span></a>	
-					<a href="javascript:void(0)" data-id="#arguments.id#" id="todomovedown" class="todo-movedown" title="Move Down"><span class="elusive icon-arrow-down"></span></a>
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="markdonetodo" class="mark<cfif isDate(query.isdone)>not</cfif>done-todo" title="Done"><span class="fa fa-ok"></span></a>
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="edittodo" class="edit-todo" title="Edit"><span class="fa fa-pencil"></span></a>
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="deletetodo" class="delete-todo confirmDelete" title="Delete"><span class="fa fa-remove"></span></a>	
+					<a href="javascript:void(0)" data-id="#arguments.id#" id="todomovedown" class="todo-movedown" title="Move Down"><span class="fa fa-arrow-down"></span></a>
 												
 				</div>
 				<span class="ns-extra">
@@ -189,8 +189,8 @@
 			<div class="ns-row">
 				<div class="ns-title">#arguments.name#</div>
 				<div class="ns-actions">
-					<a href="javascript:void(0)" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" class="delete-menu" title="Delete"><span class="elusive icon-trash"></span></a>
+					<a href="javascript:void(0)" class="edit-menu" title="Edit"><span class="fa fa-pencil"></span></a>
+					<a href="javascript:void(0)" class="delete-menu" title="Delete"><span class="fa fa-trash"></span></a>
 				</div>
 			</div>		
 			<div class="ns-form">

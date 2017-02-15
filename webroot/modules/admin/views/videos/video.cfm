@@ -15,11 +15,11 @@
 	}
 	</style>
 	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> #video.name#')>	
+	<cfset contentFor(headerTitle	= '<span class="fa fa-video"></span> #video.name#')>	
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">
 			#linkTo(
-				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 				href		= "#cgi.HTTP_REFERER#", 
 				class		= "btn btn-default"
 			)#

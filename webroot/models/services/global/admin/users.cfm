@@ -78,6 +78,9 @@
  
 <cffunction name="_returnUserRole" hint="Looks for user role in session, returns guest otherwise">
 	<cfscript>
+		if(structKeyExists(session, "user") && !isStruct(session.user)) {
+			structDelete(session, "user");
+		}
 		if(_permissionsSetup() AND structKeyExists(session, "user") AND structKeyExists(session.user, "role") AND len(session.user.role)){
 			return session.user.role;
 		} else {

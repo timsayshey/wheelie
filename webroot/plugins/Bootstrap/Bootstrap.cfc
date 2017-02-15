@@ -46,7 +46,7 @@
 			param name="arguments.help" type="string" default="";
 			
 			if(len(arguments.help)) {
-				helpIcon = '<span class="elusive icon-question-sign helper" title data-original-title="#arguments.help#"></span>';
+				helpIcon = '<span class="fa fa-question-sign helper" title data-original-title="#arguments.help#"></span>';
 			} else {
 				helpIcon = '';
 			}
@@ -56,7 +56,7 @@
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 					<div class="input-group">
 						<div class="form-control">
-							<i class="icon-file fileupload-exists"></i>
+							<i class="fa-file fileupload-exists"></i>
 							<span class="fileupload-preview"></span>
 						</div>
 						<span class="input-group-btn">
@@ -87,8 +87,8 @@
 					$(function() {
 						$(''.bcheckbox'').checkbox({
 							 buttonStyle: ''btn-danger'',
-							 checkedClass: ''icon-check'',
-							 uncheckedClass: ''icon-check-empty'',
+							 checkedClass: ''fa-check'',
+							 uncheckedClass: ''fa-check-empty'',
 							 displayAsButton: true
 						});
 					});
@@ -106,7 +106,7 @@
 			}
 			
 			if(len(arguments.help)) {
-				helpIcon = '<span class="elusive icon-question-sign helper" title data-original-title="#arguments.help#"></span>';
+				helpIcon = '<span class="fa fa-question-sign helper" title data-original-title="#arguments.help#"></span>';
 			} else {
 				helpIcon = '';
 			}
@@ -138,7 +138,7 @@
 			param name="arguments.help" type="string" default="";
 			
 			if(len(arguments.help)) {
-				helpIcon = '<span class="elusive icon-question-sign helper" title data-original-title="#arguments.help#"></span>';
+				helpIcon = '<span class="fa fa-question-sign helper" title data-original-title="#arguments.help#"></span>';
 			} else {
 				helpIcon = '';
 			}
@@ -247,7 +247,7 @@
 			param name="arguments.help" type="string" default="";
 			
 			if(len(arguments.help)) {
-				helpIcon = '<span class="elusive icon-question-sign helper" title data-original-title="#arguments.help#"></span>';
+				helpIcon = '<span class="fa fa-question-sign helper" title data-original-title="#arguments.help#"></span>';
 			} else {
 				helpIcon = '';
 			}
@@ -272,7 +272,7 @@
 			loc.hasErrors = Evaluate($objectName(argumentCollection=arguments)).hasErrors(arguments.property);
 			
 			if(len(arguments.help)) {
-				helpIcon = '<span class="elusive icon-question-sign helper" title data-original-title="#arguments.help#"></span>';
+				helpIcon = '<span class="fa fa-question-sign helper" title data-original-title="#arguments.help#"></span>';
 			} else {
 				helpIcon = '';
 			}
@@ -491,10 +491,11 @@
 			param name="arguments.fieldArgs.labelClass" type="string" default="";
 			param name="arguments.fieldArgs.label" type="string" default="";
 			param name="arguments.fieldArgs.class" type="string" default="form-control";
-			param name="arguments.fieldArgs.groupClass" type="string" default="";
+			param name="arguments.fieldArgs.inlineField" type="boolean" default=false;
 			param name="arguments.fieldArgs.prependToLabel" type="string" default='';
 			param name="arguments.fieldArgs.appendToLabel" type="string" default='';
 			param name="arguments.fieldArgs.colclass" type="string" default='';
+			param name="arguments.fieldArgs.labelPlacement" type="string" default='before';
 			param name="arguments.fieldArgs.append" type="string" default='<div class="separator"></div>';
 			
 			if(!isNull(arguments.fieldArgs.isSelectize))
@@ -503,22 +504,30 @@
 			}			
 
 			arguments.fieldArgs.class = ListAppend(arguments.fieldArgs.class, "#arguments.fieldArgs.colclass#", " ");
-			arguments.fieldArgs.labelPlacement = "before";
+
+			if(arguments.fieldArgs.labelPlacement eq "after") {
+				arguments.fieldArgs.class &= " checkbox-left";
+				arguments.fieldArgs.labelPlacement = "before";
+			}
+			
 			arguments.fieldArgs.labelClass = ListAppend(arguments.fieldArgs.labelClass, "", " ");			
 			
 			arguments.fieldArgs.errorElement = "";
 			arguments.fieldArgs.errorClass = "";
 				
-			// Add group class
-			if (Len(arguments.fieldArgs.groupClass)) {
-				arguments.fieldArgs.prependToLabel = Replace(arguments.fieldArgs.prependToLabel, "form-group", "form-group #h(arguments.fieldArgs.groupClass)#");
+			// inlineField
+			if (arguments.fieldArgs.inlineField) {
+				arguments.fieldArgs.prependToLabel = "<div class='form-horizontal form-group'>";
+				arguments.fieldArgs.prepend = "<div class='col-sm-10'>";
+				arguments.fieldArgs.append = '<div class="separator"></div></div></div>';
+				arguments.fieldArgs.labelClass = "control-label col-sm-2";
 			}
 
 			// Prepend/appended text
 			loc.hasPrependedText = StructKeyExists(arguments.fieldArgs, "prependedText") && Len(arguments.fieldArgs.prependedText);
 			loc.hashelp = StructKeyExists(arguments.fieldArgs, "help") && Len(arguments.fieldArgs.help);
 
-			if (loc.hasPrependedText || loc.hashelp) {
+			if ((loc.hasPrependedText || loc.hashelp) && !arguments.fieldArgs.inlineField) {
 				loc.prependClass = loc.hasPrependedText ? 'input-prepend' : '';
 				loc.appendClass = loc.hashelp ? 'input-append' : '';
 				arguments.fieldArgs.prepend = '<div class="#loc.prependClass# #loc.appendClass#">';
@@ -533,14 +542,11 @@
 														<span class="input-group-addon">#arguments.fieldArgs.prependedText#</span>';
 						arguments.fieldArgs.append = '</div></div><div class="separator"></div>';
 					}
-					
-					
 				}
+			}
 
-				if (loc.hashelp) {
-					
-					arguments.fieldArgs.label = arguments.fieldArgs.label & '<span class="elusive icon-question-sign helper" title data-original-title="#arguments.fieldArgs.help#"></span>';
-				}
+			if (loc.hashelp && !arguments.fieldArgs.inlineField) {
+				arguments.fieldArgs.label = arguments.fieldArgs.label & '<span class="fa fa-question-sign helper" title data-original-title="#arguments.fieldArgs.help#"></span>';
 			}
 
 			// Help block
@@ -553,7 +559,7 @@
 			StructDelete(arguments.fieldArgs, "prependedText");
 			StructDelete(arguments.fieldArgs, "help");
 			StructDelete(arguments.fieldArgs, "colclass");
-			StructDelete(arguments.fieldArgs, "groupClass");
+			StructDelete(arguments.fieldArgs, "inlineField");
 		</cfscript>
 		<cfreturn arguments.fieldArgs>
 	</cffunction>
@@ -588,10 +594,8 @@
 					'input-append',
 					'input-append has-error'
 				);
-
-				arguments.fieldArgs.append =
-					Replace(arguments.fieldArgs.append,'<div class="separator"></div>','','ALL') & 
-					' #errorMessageOn(argumentCollection=loc.errorMessageOnArgs)# <div class="separator"></div>';
+				arguments.fieldArgs.append = Replace(arguments.fieldArgs.append,'<div class="separator"></div>','','ALL');
+				arguments.fieldArgs.append = '#errorMessageOn(argumentCollection=loc.errorMessageOnArgs)# <div class="separator"></div>' & arguments.fieldArgs.append;
 			}
 			
 		</cfscript>

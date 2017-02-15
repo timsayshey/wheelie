@@ -1,10 +1,10 @@
 <cfoutput>	
 	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> #newsletter.subject# Sections')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> #newsletter.subject# Sections')>
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">
 			#linkTo(
-				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 				route		= "admin~Action", 
 				module		= "admin",
 				controller	= "newsletters", 
@@ -12,7 +12,7 @@
 				class		= "btn btn-default"
 			)#			
 			#linkTo(
-				text		= "<span class=""elusive icon-eye-open""></span> Preview",
+				text		= "<span class=""fa fa-eye-open""></span> Preview",
 				route		= "admin~Id", 
 				module		= "admin", 
 				controller	= "newsletters", 
@@ -21,7 +21,7 @@
 				class		= "btn btn-default"
 			)#
 			#linkTo(
-				text		= "<span class=""elusive icon-pencil""></span> Add Section",
+				text		= "<span class=""fa fa-pencil""></span> Add Section",
 				route		= "admin~Action",
 				module		= "admin",
 				controller	= "newsletterSections",
@@ -47,9 +47,9 @@
 			<tr>
 				<td>#sections.title#</td>
 				<td>					
-					<a href='#urlFor(route="admin~Id", module="admin", controller="newsletterSections", action="edit",id="#sections.id#",params="newsletterid=#newsletter.id#")#' class="tn btn-primary btn-xs"><span class="elusive icon-edit"></span> Edit</a> 
+					<a href='#urlFor(route="admin~Id", module="admin", controller="newsletterSections", action="edit",id="#sections.id#",params="newsletterid=#newsletter.id#")#' class="tn btn-primary btn-xs"><span class="fa fa-edit"></span> Edit</a> 
 					
-					<a href='#urlFor(route="admin~Id", module="admin", controller="newsletterSections", action="delete",id="#sections.id#",params="newsletterid=#newsletter.id#")#' class="btn btn-danger btn-xs confirmDelete"><span class="elusive icon-trash"></span> Delete</a>
+					<a href='#urlFor(route="admin~Id", module="admin", controller="newsletterSections", action="delete",id="#sections.id#",params="newsletterid=#newsletter.id#")#' class="btn btn-danger btn-xs confirmDelete"><span class="fa fa-trash"></span> Delete</a>
 				</td>
 			</tr>			
 			</cfloop>	

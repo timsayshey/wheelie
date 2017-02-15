@@ -1,9 +1,9 @@
 <cfoutput>	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Forms')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Forms')>
 	<cfset contentFor(headerButtons = 
 				'<li class="headertab">
 					#linkTo(
-						text		= "<span class=""elusive icon-user""></span> Add Form",
+						text		= "<span class=""fa fa-user""></span> Add Form",
 						route		= "admin~Action",
 						module		= "admin",
 						controller	= "forms",
@@ -53,7 +53,7 @@
 								controller	= "forms",
 								action		= "edit",
 								id			= id
-							)#' class="btn btn-default btn-sm"><span class="elusive icon-pencil"></span></a>
+							)#' class="btn btn-default btn-sm"><span class="fa fa-pencil"></span></a>
 							
 						<a href='#urlFor(
 								route		= "admin~Id",
@@ -69,7 +69,7 @@
 								modelName	= "formfield",
 								params		= "modelid=#id#"
 							)#' class="btn btn-default btn-sm">Fields</a>
-						<a href="/m/admin/forms/delete/#id#" class="btn btn-danger btn-sm confirmDelete"><span class="elusive icon-trash"></span></a>
+						<a href="/m/admin/forms/delete/#id#" class="btn btn-danger btn-sm confirmDelete"><span class="fa fa-trash"></span></a>
 					</td>
 				</tr>			
 			</cfloop>	

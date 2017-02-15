@@ -1,7 +1,7 @@
 <cfoutput>	
 
 	<cfset contentFor(formy			= true)>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-cog"></span> Settings')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-cog"></span> Settings')>
 	
 	<div id="options">
 		#includePartial(partial="/_partials/bulkOptionsForm",qOptions=qOptions,showPrependedText=true)#

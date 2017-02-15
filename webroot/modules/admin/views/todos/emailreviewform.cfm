@@ -1,5 +1,5 @@
 <cfoutput>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> To-dos Email Review')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> To-dos Email Review')>
 	
 	<h2>Preview Review Email</h2>
 	<form action='#urlFor(route="admin~Action", controller="todos", action="emailreview")#' method="post">

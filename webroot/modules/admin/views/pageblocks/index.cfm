@@ -4,11 +4,11 @@
 	<cfset javaScriptIncludeTag(sources="vendor/jwplayer/jwplayer.js", head=true)>
 	
 	<cfset contentFor(formy			= true)>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-file-new"></span> PageBlocks')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-file-new"></span> PageBlocks')>
 	<cfset contentFor(headerButtons = 
 				'<li class="headertab">
 					#linkTo(
-						text		= '<span class="elusive icon-file-new"></span> Add PageBlock',
+						text		= '<span class="fa fa-file-new"></span> Add PageBlock',
 						route		= "admin~Action",
 						module	= "admin",
 						controller	= "pageblocks",
@@ -40,8 +40,8 @@
 			</cfif>
 			
 			<div class="btn-group pull-right">
-				<a href='#urlFor(route="admin~Action", module="admin", controller="pageblocks", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="elusive icon-th-large"></span></a>
-				<a href='#urlFor(route="admin~Action", module="admin", controller="pageblocks", action="index")#?display=list' class="btn btn-default #listActive#"><span class="elusive icon-th-list"></span></a>
+				<a href='#urlFor(route="admin~Action", module="admin", controller="pageblocks", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="fa fa-th-large"></span></a>
+				<a href='#urlFor(route="admin~Action", module="admin", controller="pageblocks", action="index")#?display=list' class="btn btn-default #listActive#"><span class="fa fa-th-list"></span></a>
 			</div>
 			
 			<br class="clear" /><br />
@@ -58,11 +58,11 @@
 				<cfloop query="qPageBlocks" startrow="#pagination.getStartRow()#" endrow="#pagination.getendrow()#">		
 											
 					<cfsavecontent variable="tags">
-						<cfif qPageBlocks.id eq homeid><span class="elusive icon-home color-danger" title="Homepageblock"></span></cfif>						
+						<cfif qPageBlocks.id eq homeid><span class="fa fa-home color-danger" title="Homepageblock"></span></cfif>						
 						<cfif qPageBlocks.status eq "published">
-							<span class="elusive icon-eye-open color-info" title="Published"></span>
+							<span class="fa fa-eye-open color-info" title="Published"></span>
 						<cfelse>						
-							<span class="elusive icon-eye-close color-danger" title="#capitalize(qPageBlocks.status)#"></span>
+							<span class="fa fa-eye-close color-danger" title="#capitalize(qPageBlocks.status)#"></span>
 						</cfif>
 					</cfsavecontent> 
 					
@@ -141,12 +141,12 @@
 									</div>
 									<div class="col-md-1 col-sm-1">									
 										<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Apply filter" name="filtertype" value="apply">
-											<span class="elusive icon-ok"></span> Apply
+											<span class="fa fa-ok"></span> Apply
 										</button>
 									</div>
 									<div class="col-md-1 col-sm-1">		
 										<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Clear filter" name="filtertype" value="clear">
-											<span class="elusive icon-trash"></span> Clear
+											<span class="fa fa-trash"></span> Clear
 										</button>
 									</div>
 								</div>

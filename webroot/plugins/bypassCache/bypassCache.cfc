@@ -9,7 +9,7 @@
 		https://github.com/cfwheels/cfwheels/issues/439
 	 --->
 	
-	<cffunction name="$processAction" returntype="boolean" access="public" output="false">
+	<!--- <cffunction name="$processAction" returntype="boolean" access="public" output="false">
 		<cfscript>
 			var loc = {};
 	
@@ -76,7 +76,7 @@
 					// get content from the cache if it exists there and set it to the request scope, if not the $callActionAndAddToCache function will run, calling the controller action (which in turn sets the content to the request scope)
 					loc.category = "action";
 					loc.key = $hashedKey(variables.$class.name, variables.params);
-					loc.lockName = loc.category & loc.key;
+					loc.lockName = loc.category & loc.key & application.applicationName;
 					loc.conditionArgs = {key=loc.key, category=loc.category};
 					loc.executeArgs = {controller=params.controller, action=params.action, key=loc.key, time=loc.cache, category=loc.category};
 					variables.$instance.response = $doubleCheckedLock(name=loc.lockName, condition="$getFromCache", execute="$callActionAndAddToCache", conditionArgs=loc.conditionArgs, executeArgs=loc.executeArgs);
@@ -103,6 +103,6 @@
 			}
 		</cfscript>
 		<cfreturn true>
-	</cffunction>
+	</cffunction> --->
 
 </cfcomponent>

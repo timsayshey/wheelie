@@ -1,13 +1,13 @@
 <cftry>
 	<cfoutput>
 	
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #capitalize(user.firstName)# #capitalize(user.lastName)#')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> #capitalize(user.firstName)# #capitalize(user.lastName)#')>
 		<cfsavecontent variable="topBtns">
 			<li class="headertab">
 			
 				<cfif params.id eq session.user.id OR checkPermission("user_save_others")>
 					#linkTo(
-						text		= "<span class=""elusive icon-edit""></span> Edit",							
+						text		= "<span class=""fa fa-edit""></span> Edit",							
 						route		= "admin~Id",
 						module		= "admin",
 						controller	= "users",
@@ -18,7 +18,7 @@
 				</cfif>
 				
 				#linkTo(
-					text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+					text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 					route		= "admin~peopleTypes", 
 					currentGroup= user.usergroupid,
 					class		= "btn btn-default"  

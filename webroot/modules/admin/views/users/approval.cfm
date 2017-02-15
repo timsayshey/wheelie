@@ -5,7 +5,7 @@
 	</cfif>
 
 	<cftry>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Pending Staff Changes')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Pending Staff Changes')>
 	
 		<cfloop query="users">
 			<div class="well">
@@ -14,55 +14,55 @@
 			#startFormTag(route="admin~Action", module="admin", controller="users", action="save")#	
 				#hiddenFieldTag(name="user[approval_flag]", value="0")#
 				
-				<cfif users.zx_firstname neq users.firstname>
+				<cfif users.firstname neq users.firstname>
 				#btextfieldtag( 
 					label = "First Name", 
-					name  = "user[zx_firstname]",
+					name  = "user[firstname]",
 					value = users.firstname
 				)#
-				Currently: #users.zx_firstname#<br><br>
+				Currently: #users.firstname#<br><br>
 
 				</cfif>
 				
-				<cfif users.zx_lastname neq users.lastname>
+				<cfif users.lastname neq users.lastname>
 				#btextfieldtag(
 					label = "Last Name",
-					name  = "user[zx_lastname]",
+					name  = "user[lastname]",
 					value = users.lastname,
-					help  = 'Currently: #users.zx_lastname#'					
+					help  = 'Currently: #users.lastname#'					
 				)#
-				Currently: #users.zx_lastname#<br><br>
+				Currently: #users.lastname#<br><br>
 				</cfif>
 				
-				<cfif users.zx_designatory_letters neq users.designatory_letters>
+				<cfif users.designatory_letters neq users.designatory_letters>
 				#btextfieldtag(
 					label = "Designatory Letters",
-					name  = "user[zx_designatory_letters]",
+					name  = "user[designatory_letters]",
 					value = users.designatory_letters,
-					help  = 'Currently: #users.zx_designatory_letters#'					
+					help  = 'Currently: #users.designatory_letters#'					
 				)#
-				Currently: #users.zx_designatory_letters#<br><br>
+				Currently: #users.designatory_letters#<br><br>
 				</cfif>
 				
-				<cfif users.zx_jobtitle neq users.jobtitle>
+				<cfif users.jobtitle neq users.jobtitle>
 				#btextfieldtag(
 					label = "Job Title",
-					name  = "user[zx_jobtitle]",
+					name  = "user[jobtitle]",
 					value = users.jobtitle,
-					help  = 'Currently: #users.zx_jobtitle#'					
+					help  = 'Currently: #users.jobtitle#'					
 				)#
-				Currently: #users.zx_jobtitle#<br><br>
+				Currently: #users.jobtitle#<br><br>
 				</cfif>
 				
-				<cfif users.zx_about neq users.about>
+				<cfif users.about neq users.about>
 				#btextareatag( 
 					label = "About",
-					name  = "user[zx_about]",
+					name  = "user[about]",
 					content = users.about,		
 					class = "ckeditor",
-					help  = 'Currently: #users.zx_about#'
+					help  = 'Currently: #users.about#'
 				)#
-				Currently: #users.zx_about#<br><br>
+				Currently: #users.about#<br><br>
 				</cfif>
 				
 				<cfset photoPath = "/assets/userpics_pending/#users.id#.jpg">

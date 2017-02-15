@@ -22,7 +22,7 @@
 		menuitem = arrayAppend(adminNavMain,{
 			type	= 'link',
 			name	= 'Dashboard',
-			icon	= 'icon-dashboard',
+			icon	= 'fa-dashboard',
 			url		= urlFor(route="admin~Action", controller="main", action="home")
 		});
 		
@@ -30,7 +30,7 @@
 				{
 					type	   = 'parent',
 					name	   = 'Pages',
-					icon	   = 'icon-file-new',
+					icon	   = 'fa-edit',
 					permission = 'page_save',
 					url		   = urlFor(route="admin~Action", controller="Pages", action="index"),
 					children   = [
@@ -55,14 +55,14 @@
 				,{
 					type	   = 'link',
 					name	   = 'Blog',
-					icon	   = 'icon-pencil',
+					icon	   = 'fa-pencil',
 					permission = 'post_save',
 					url		   = urlFor(route="admin~Action", controller="posts", action="index")
 				}
 				,{
 					type	   = 'parent',
 					name	   = 'Videos',
-					icon	   = 'icon-youtube',
+					icon	   = 'fa-youtube-play',
 					permission = 'video_save',
 					url		   = urlFor(route="admin~Action", controller="videos", action="index"),
 					children   = [
@@ -86,7 +86,7 @@
 				,{
 					type	   = 'link',
 					name	   = 'Site Menu',
-					icon	   = 'icon-align-justify',
+					icon	   = 'fa-align-justify',
 					permission = 'menu_save',
 					url		   = urlFor(route="admin~Action", controller="menus", action="rearrange")
 				}
@@ -113,7 +113,7 @@
 			type	= 'parent',
 			name	= 'Users',
 			permission = 'page_save',
-			icon	= 'icon-user',
+			icon	= 'fa-user',
 			children= peopleLinks
 		});		
 		
@@ -121,7 +121,7 @@
 		menuitem = arrayAppend(adminNavMore,{
 			type	= 'parent',
 			name	= 'Advanced',
-			icon	= 'icon-cog',
+			icon	= 'fa-cog',
 			permission= 'form_save_others',
 			children= 
 			[				
@@ -137,7 +137,7 @@
 				},
 				{
 					type	   = 'link',
-					// icon	   = 'icon-comment',
+					// icon	   = 'fa-comment',
 					name	   = 'Forms',
 					url		   = urlFor(route="admin~Action", controller="forms", action="index"),
 					permission  = "form_save_others"		
@@ -145,14 +145,14 @@
 				,{
 					type	   = 'link',
 					name	   = 'Newsletters',
-					// icon	   = 'icon-envelope',
+					// icon	   = 'fa-envelope',
 					permission = 'newsletter_save',
 					url		   = urlFor(route="admin~Action", controller="newsletters", action="index")
 				},
 				{
 					type	= 'link',
 					// name	= 'To-Dos',
-					icon	= 'icon-list-alt',
+					icon	= 'fa-list-alt',
 					url		= urlFor(route="admin~Action", controller="todos", action="rearrange")
 				},
 				{
@@ -184,7 +184,7 @@
 		if(!isNull(currMenuItem.type) AND menuitempermission)
 		{
 			itemicon = '';
-			if(!isNull(currMenuItem.icon)) { itemicon = '<span class="elusive #currMenuItem.icon#"></span> '; }
+			if(!isNull(currMenuItem.icon)) { itemicon = '<span class="fa #currMenuItem.icon#"></span> '; }
 			
 			if(currMenuItem.type eq 'link' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url))
 			{
@@ -196,9 +196,9 @@
 				
 			} else if(currMenuItem.type eq 'parent' and !isNull(currMenuItem.name) and !isNull(currMenuItem.children)) {
 				
-				itemreturn = itemreturn & '<li class="admindropdown #parentClass#">
-				<a href="##" class="admindropdown-toggle" data-toggle="admindropdown">#itemicon##currMenuItem.name# <span class="elusive icon-caret-down"></span></a>
-				<ul class="admindropdown-menu">';
+				itemreturn = itemreturn & '<li class="dropdown #parentClass#">
+				<a href="##" class="dropdown-toggle dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name# <span class="fa fa-caret-down"></span></a>
+				<ul class="dropdown-menu dropdown-menu">';
 				
 				for(childitem in currMenuItem.children)
 				{
@@ -208,9 +208,9 @@
 				
 			} else if(currMenuItem.type eq 'subparent' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url) and !isNull(currMenuItem.children)) {					
 								
-				itemreturn = itemreturn & '<li class="admindropdown-submenu #parentClass#">';
-				itemreturn = itemreturn & '<a href="#currMenuItem.url#" class="admindropdown-toggle" data-toggle="admindropdown">#itemicon##currMenuItem.name#  <span class="elusive icon-caret-right"></span></a>
-				<ul class="admindropdown-menu">';
+				itemreturn = itemreturn & '<li class="dropdown-submenu #parentClass#">';
+				itemreturn = itemreturn & '<a href="#currMenuItem.url#" class="dropdown-toggle dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name#  <span class="fa fa-caret-right"></span></a>
+				<ul class="dropdown-menu dropdown-menu">';
 				
 				for(childitem in currMenuItem.children)
 				{

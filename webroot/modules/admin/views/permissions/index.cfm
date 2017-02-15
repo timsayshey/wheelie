@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Role Permissions')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Role Permissions')>
 	
 	<script src="/assets/vendor/checkboxToggle.js" type="text/javascript"></script>
 	

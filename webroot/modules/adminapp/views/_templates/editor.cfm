@@ -27,15 +27,15 @@
 	<cfset contentFor(formy = true)>
     
 	<cfif isNull(params.id)>
-		<cfset contentFor(headerTitle = '<span class="elusive icon-@lcaseSingular@"></span> Add @ucaseSingular@')>
+		<cfset contentFor(headerTitle = '<span class="fa fa-@lcaseSingular@"></span> Add @ucaseSingular@')>
 	<cfelse>
-		<cfset contentFor(headerTitle = '<span class="elusive icon-@lcaseSingular@"></span> Edit @ucaseSingular@')>
+		<cfset contentFor(headerTitle = '<span class="fa fa-@lcaseSingular@"></span> Edit @ucaseSingular@')>
 	</cfif>
     
     <cfset contentFor(headerButtons = 
 		'<li class="headertab">			
 			#linkTo(
-				text		= '<span class=''elusive icon-arrow-left''></span> Back to @ucasePlural@',
+				text		= '<span class=''fa fa-arrow-left''></span> Back to @ucasePlural@',
 				route		= "admin~Action", 
                 controller	= "@lcasePlural@", 
                 action		= "index",
@@ -178,7 +178,7 @@
 					
 						<div id="dZUpload" class="dropzone">
 							<div class="dz-default dz-message">
-								<span class="elusive icon-upload" style="font-size:60px"></span><br>
+								<span class="fa fa-upload" style="font-size:60px"></span><br>
 								Drop files here or click to upload.
 							</div>
 						</div>

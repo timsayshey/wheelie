@@ -62,7 +62,7 @@
 
 							<cfif checkPermission("user_save_others")>
 								#linkTo(
-									text		= '<span class="elusive icon-edit"></span> Edit',
+									text		= '<span class="fa fa-edit"></span> Edit',
 									class		= "btn btn-primary btn-xs",
 									route		= "admin~Id",
 									module		= "admin",
@@ -77,7 +77,7 @@
 								</cfif>
 																							
 								#linkTo(
-									text		= '<span class="elusive icon-trash"></span> Delete',
+									text		= '<span class="fa fa-trash"></span> Delete',
 									class		= "btn btn-danger btn-xs confirmDelete",
 									route		= "admin~Id",
 									module		= "admin",
@@ -91,22 +91,22 @@
 							#appendBtns#
 
 						<cfelse>	
-							<span class='elusive icon-move'></span>
+							<span class='fa fa-move'></span>
 						</cfif>
 					</div>					
 					
 					<cfif !isNull(params.currentGroup)> 
 						<div class="userdetails">
                             <cfif len(trim(qUsers.jobtitle))>
-							<span class="elusive icon-paper-clip-alt"></span> #qUsers.jobtitle#
+							<span class="fa fa-paper-clip-alt"></span> #qUsers.jobtitle#
                             <br>
 							</cfif>
 							<cfif len(trim(qUsers.email))>
-                            <span class="elusive icon-envelope-alt"></span> #qUsers.email#
+                            <span class="fa fa-envelope"></span> #qUsers.email#
                             <br>
 							</cfif>
 							<cfif len(trim(qUsers.phone))>
-                            <span class="elusive icon-phone-alt"></span> #qUsers.phone#
+                            <span class="fa fa-phone-alt"></span> #qUsers.phone#
 							</cfif>
 						</div>
 					</cfif>		
@@ -155,7 +155,7 @@
 				<cfif checkPermission("user_save_role_admin")>
 					<div class="col-sm-3 align-right">
 						#linkTo(
-							text		= '<span class="elusive icon-edit"></span> Edit',
+							text		= '<span class="fa fa-edit"></span> Edit',
 							class		= "btn btn-primary btn-s",
 							route		= "admin~Id",
 							module	= "admin",
@@ -165,7 +165,7 @@
 						)#				
 																								
 						#linkTo(
-							text		= '<span class="elusive icon-trash"></span> Delete',
+							text		= '<span class="fa fa-trash"></span> Delete',
 							class		= "btn btn-danger btn-s confirmDelete",
 							route		= "admin~Id",
 							module	= "admin",

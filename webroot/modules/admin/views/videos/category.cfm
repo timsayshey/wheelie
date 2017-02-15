@@ -1,5 +1,5 @@
 <cfset contentFor(formy			= true)>
-<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> Training')>
+<cfset contentFor(headerTitle	= '<span class="fa fa-video"></span> Training')>
 
 <cfoutput>
 	<cfif isNull(qVideos)>

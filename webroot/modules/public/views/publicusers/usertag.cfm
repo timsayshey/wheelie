@@ -30,19 +30,19 @@
                         <div class="col-sm-10"> 
                             <h2>
                                 <cfif users.fullLastname eq 1>
-                                    <cfset userLastname = users.zx_lastname>
-                                <cfelseif len(users.zx_lastname)>
-                                    <cfset userLastname = left(users.zx_lastname,1) & ".">
+                                    <cfset userLastname = users.lastname>
+                                <cfelseif len(users.lastname)>
+                                    <cfset userLastname = left(users.lastname,1) & ".">
                                 <cfelse>
                                     <cfset userLastname = "">
                                 </cfif>
-                                #users.zx_firstname# #userLastname#<cfif len(trim(users.zx_designatory_letters))>, #users.zx_designatory_letters#</cfif>
-                                <cfif len(trim(users.zx_jobtitle))>
-                                    <span>#users.zx_jobtitle#</span>
+                                #users.firstname# #userLastname#<cfif len(trim(users.designatory_letters))>, #users.designatory_letters#</cfif>
+                                <cfif len(trim(users.jobtitle))>
+                                    <span>#users.jobtitle#</span>
                                 </cfif>
                             </h2>
                             <div class="trunkToggle">
-                                 #users.zx_about# 
+                                 #users.about# 
                             </div>
                         </div>
                         <div class="col-sm-2">

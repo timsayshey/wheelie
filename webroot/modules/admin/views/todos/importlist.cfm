@@ -2,7 +2,7 @@
 	
 	<cfset isnew = true>
 	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-move"></span> Import List of Todos')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-move"></span> Import List of Todos')>
 	
 	#btextareatag(
 		name			= 'importlist',	
