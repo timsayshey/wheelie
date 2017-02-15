@@ -256,7 +256,7 @@
 
 	function forceNoWWW()
 	{		
-		if(listfirst(cgi.server_name,".") eq "www")
+		if(listfirst(cgi.server_name,".") == "www")
 		{
 			redirectFullUrl(
 				"http://" & 
@@ -271,7 +271,7 @@
 	function forceWWW()
 	{		
 		// Can't call pFront unless you're on WWW
-		if(listfirst(cgi.server_name,".") == 'churchinviter') {
+		if(listfirst(cgi.server_name,".") != 'www') {
 			redirectFullUrl(
 				"http://www." & 
 					cgi.server_name & 
