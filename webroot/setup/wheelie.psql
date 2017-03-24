@@ -1263,7 +1263,7 @@ WITH (OIDS=FALSE);
 --  Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO "users" VALUES ('1', '9999', '0', '1', 'sadfdsafssd', null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'F58319B6389F308D77D8D07DEBA42398', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', null, '0', null, null, '0', null, null, null, null, 'published', null, '60', null, null, '2016-10-13 21:25:43.043+00', '1', null, null, '1');
+INSERT INTO "users" VALUES ('1', '9999', '0', '1', 'sadfdsafssd', null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'F58319B6389F308D77D8D07DEBA42398', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', null, '0', null, null, '0', null, null, null, null, 'published', null, '60', null, null, '2016-10-13 21:25:43.043+00', '1', null, null, '1');
 COMMIT;
 
 -- ----------------------------

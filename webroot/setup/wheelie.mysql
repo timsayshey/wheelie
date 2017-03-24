@@ -1279,7 +1279,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '9999', '0', '1', null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'F58319B6389F308D77D8D07DEBA42398', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', null, '0', null, null, '0', null, null, null, null, 'draft', null, null, null, null, null, null, null, null, '1');
+INSERT INTO `users` VALUES ('1', '9999', '0', '1', null, null, 'Get', 'Wheelie', 'Wheelie', null, null, null, 'admin@getwheelie.com', null, 'F58319B6389F308D77D8D07DEBA42398', null, null, null, null, null, null, '0', '0', null, '0', null, 'superuser', null, '0', null, null, '0', null, null, null, null, 'draft', null, null, null, null, null, null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for users_categories
