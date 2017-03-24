@@ -8,7 +8,7 @@
 =======
 ## Heroku Installation
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie&template=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie%2Ftree%2Frelease&template=https%3A%2F%2Fgithub.com%2Ftimsayshey%2Fwheelie%2Ftree%2Frelease)
 
 ## Compatibility
 
