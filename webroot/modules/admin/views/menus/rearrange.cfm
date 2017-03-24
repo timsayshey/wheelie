@@ -9,10 +9,10 @@
 	#hiddenFieldTag(name="addMenuType", id="addMenuType", value="sortlist")#
 		
 	<cfset contentFor(formy			= true)>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-move"></span> Menu')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-move"></span> Menu')>
 	<cfset contentFor(headerButtons = 
 			'<li class="headertab">
-				<a href="javascript:void(0)" id="addnewmenu" class="btn btn-default"><span class="elusive icon-plus"></span> Add Menu Item</a>			
+				<a href="javascript:void(0)" id="addnewmenu" class="btn btn-default"><span class="fa fa-plus"></span> Add Menu Item</a>			
 			</li>')> 
 			
 	Drag the list to re-order, and click update button to save the position. To add an item, use the form to the right.<br /><br />
@@ -54,8 +54,8 @@
 			<div class="ns-row">
 				<div class="ns-title"><%=name%></div>
 				<div class="ns-actions">
-					<a href="javascript:void(0)" data-id="<%=id%>" id="editmenu" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="javascript:void(0)" data-id="<%=id%>" id="deletemenu" class="delete-menu confirmDelete" title="Delete"><span class="elusive icon-trash"></span></a>							
+					<a href="javascript:void(0)" data-id="<%=id%>" id="editmenu" class="edit-menu" title="Edit"><span class="fa fa-pencil"></span></a>
+					<a href="javascript:void(0)" data-id="<%=id%>" id="deletemenu" class="delete-menu confirmDelete" title="Delete"><span class="fa fa-trash"></span></a>							
 				</div>
 			</div>	
 		</li>

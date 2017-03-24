@@ -1,10 +1,10 @@
 <cfoutput>
 
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #qform.name# Submission')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> #qform.name# Submission')>
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">
 			#linkTo(
-				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 				route		= "admin~id",
 				controller	= "forms",
 				action		= "formsubmissions",

@@ -1,7 +1,7 @@
 <cfoutput>
 
 	<div class="blog-post">
-    <cfset currentPageUrl = "http://#request.site.domain##cgi.PATH_INFO#">
+    <cfset currentPageUrl = "https://#request.site.domain##cgi.PATH_INFO#">
     
     <cfset isNotFound = isStruct(post)>
     
@@ -70,14 +70,14 @@
 			</cfif>
 			
 			<cfif post.fullLastname eq 1>
-				<cfset userLastname = post.zx_lastname>
-			<cfelseif len(post.zx_lastname)>
-				<cfset userLastname = left(post.zx_lastname,1) & ".">
+				<cfset userLastname = post.lastname>
+			<cfelseif len(post.lastname)>
+				<cfset userLastname = left(post.lastname,1) & ".">
 			<cfelse>
 				<cfset userLastname = "">
 			</cfif>
 			
-			By <a href='##viewProfile'>#post.zx_firstname# #userLastname#</a> | Added #DateFormat(post.createdAt,"MMMM D")#
+			By <a href='##viewProfile'>#post.firstname# #userLastname#</a> | Added #DateFormat(post.createdAt,"MMMM D")#
 			#facebookLikeButton(style="width:100px; height:20px; display:inline-block; margin-left:10px;")#
 			
 			<cfif request.site.id neq 1>
@@ -92,7 +92,7 @@
 			<cfif isNull(showSocial)>
 				<br><br>
 			<cfelse>
-				<cfset endodedDomain = URLEncodedFormat('http://#request.site.domain#')>
+				<cfset endodedDomain = URLEncodedFormat('https://#request.site.domain#')>
 				<cfset encodedUrl = URLEncodedFormat(currentPageUrl)>
 				<div>
 				#facebookLikeButton()#
@@ -106,14 +106,14 @@
 				<div class="row">                	
 					<div class="col-xs-10">
 						<h3> 
-							#post.zx_firstname# #userLastname#<cfif len(trim(post.zx_designatory_letters))>, #post.zx_designatory_letters#</cfif>
-							<cfif len(trim(post.zx_jobtitle))>
-								<span>#post.zx_jobtitle#</span>
+							#post.firstname# #userLastname#<cfif len(trim(post.designatory_letters))>, #post.designatory_letters#</cfif>
+							<cfif len(trim(post.jobtitle))>
+								<span>#post.jobtitle#</span>
 							</cfif>
 						</h3>
 						<div class="trunkToggle">
 						<cfif post.showOnSite>
-							 #post.zx_about# 
+							 #post.about# 
 						</cfif>
 						</div>
 					</div>

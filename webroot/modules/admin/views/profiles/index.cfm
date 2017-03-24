@@ -1,7 +1,7 @@
 <cftry>
 <cfoutput>
 
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Team')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Team')>
 	
 	<cfloop query="users">
 		<cfset user = users>		

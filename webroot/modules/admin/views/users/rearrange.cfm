@@ -13,7 +13,7 @@
 			)#');
 		});
 	</script>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Users')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Users')>
 	<cfif !isNull(sortusers)>
 			
 		<style type="text/css">
@@ -36,10 +36,10 @@
 				<cfloop query="sortusers">
 					<tr rel="#sortusers.id#">
 						<td class="text-center">
-							<span class="elusive icon-move"></span>
+							<span class="fa fa-move"></span>
 						</td>	
 						<td>
-							#zx_firstname# #zx_lastname#
+							#firstname# #lastname#
 						</td>	
 					</tr>			
 				</cfloop>	

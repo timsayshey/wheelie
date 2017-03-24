@@ -1,9 +1,9 @@
 <cfoutput>	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Sites')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Sites')>
 	<cfset contentFor(headerButtons = 
 				'<li class="headertab">
 					#linkTo(
-						text		= "<span class=""elusive icon-user""></span> Add Site",
+						text		= "<span class=""fa fa-user""></span> Add Site",
 						route		= "admin~Action",
 						module		= "admin",
 						controller	= "sites",
@@ -40,8 +40,8 @@
 					<td>#theme#</td>
 					<td>#urlExtension#</td>
 					<td class="actions">						
-						<a href="/m/admin/sites/edit/#id#" class="btn btn-default btn-sm"><span class="elusive icon-pencil"></span></a>						
-						<a href="/m/admin/sites/delete/#id#" class="btn btn-danger btn-sm confirmDelete"><span class="elusive icon-trash"></span></a>
+						<a href="/m/admin/sites/edit/#id#" class="btn btn-default btn-sm"><span class="fa fa-pencil"></span></a>						
+						<a href="/m/admin/sites/delete/#id#" class="btn btn-danger btn-sm confirmDelete"><span class="fa fa-trash"></span></a>
 					</td>
 				</tr>			
 			</cfloop>	

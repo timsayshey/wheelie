@@ -7,12 +7,12 @@
 		initializeRearrange = includePartial(partial="/_partials/sortableScript", urlcontroller="videos", reEndRow=qVideos.recordcount);
 		
 		contentFor(formy = true);
-		contentFor(headerTitle	= '<span class="elusive icon-video"></span> Videos');		
+		contentFor(headerTitle	= '<span class="fa fa-video"></span> Videos');		
 		contentFor(headerButtons = 
 			"<li class='headertab'>
 				#initializeRearrange#
 				#linkTo(
-					text		= '<span class=''elusive icon-plus''></span> Add Video',
+					text		= '<span class=''fa fa-plus''></span> Add Video',
 					route		= 'admin~action',
 					controller	= 'videos',
 					action		= 'new', 
@@ -40,8 +40,8 @@
 			</cfif>
 			
 			<div class="btn-group pull-right">
-				<a href='#urlFor(route="moduleAction", module="admin", controller="videos", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="elusive icon-th-large"></span></a>
-				<a href='#urlFor(route="moduleAction", module="admin", controller="videos", action="index")#?display=list' class="btn btn-default #listActive#"><span class="elusive icon-th-list"></span></a>
+				<a href='#urlFor(route="moduleAction", module="admin", controller="videos", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="fa fa-th-large"></span></a>
+				<a href='#urlFor(route="moduleAction", module="admin", controller="videos", action="index")#?display=list' class="btn btn-default #listActive#"><span class="fa fa-th-list"></span></a>
 			</div>
 			
 			<br class="clear" /><br />
@@ -173,12 +173,12 @@
 										</div>
 										<div class="col-md-1 col-sm-1">									
 											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Apply filter" name="filtertype" value="apply">
-												<span class="elusive icon-ok"></span> Apply
+												<span class="fa fa-ok"></span> Apply
 											</button>
 										</div>
 										<div class="col-md-1 col-sm-1">		
 											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Clear filter" name="filtertype" value="clear">
-												<span class="elusive icon-trash"></span> Clear
+												<span class="fa fa-trash"></span> Clear
 											</button>
 										</div>
 									</div>

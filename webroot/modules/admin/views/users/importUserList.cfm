@@ -20,8 +20,8 @@ Bob	~	 Jim	~	bobjim@gmail.com
 					lastname = lname,
 					password = "changethis#cnt#",
 					passwordConfirmation = "changethis#cnt#",
-					zx_firstname = fname,			
-					zx_lastname = lname
+					firstname = fname,			
+					lastname = lname
 				};
 				
 				user = model("User").new(userinfo); 

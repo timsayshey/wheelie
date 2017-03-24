@@ -18,7 +18,11 @@
 	// set(cacheFileChecking=true);
 	// set(cacheImages=true);
 	// set(cacheModelInitialization=true);
-	// set(cacheControllerInitialization=true);
+
+	set(cacheControllerInitialization=true); // Must be true or you'll run into the key doesn't exist error from controller init $initControllerObject's $simpleLock
+	// MAJOR!!!! NEED TO MOVE LOGIC OUT OF INITS AND CALL FROM FILTERS
+	// http://joeykrabacher.blogspot.com/2015/11/cfwheels-and-controller-init-caching.html
+
 	// set(cacheRoutes=true);
 	// set(cacheActions=true);
 	// set(cachePages=true);

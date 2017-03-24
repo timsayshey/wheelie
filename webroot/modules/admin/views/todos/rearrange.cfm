@@ -7,12 +7,12 @@
 	#hiddenFieldTag(name="addTodoType", id="addTodoType", value="sortlist")#
 		
 	<cfset contentFor(formy			= true)>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-move"></span> Todo')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-move"></span> Todo')>
 	<cfset contentFor(headerButtons = 
 			'<li class="headertab">					
-				<a href="javascript:void(0)" class="btn btn-default view-expanded"><span class="elusive icon-eye-open"></span> Expanded View</a>
-				<a href="javascript:void(0)" class="btn btn-default view-simple"><span class="elusive icon-eye-close"></span> Simplified View</a>	
-				<a href="javascript:void(0)" id="addnewtodo" class="btn btn-default"><span class="elusive icon-plus"></span> Add Todo</a>	
+				<a href="javascript:void(0)" class="btn btn-default view-expanded"><span class="fa fa-eye-open"></span> Expanded View</a>
+				<a href="javascript:void(0)" class="btn btn-default view-simple"><span class="fa fa-eye-close"></span> Simplified View</a>	
+				<a href="javascript:void(0)" id="addnewtodo" class="btn btn-default"><span class="fa fa-plus"></span> Add Todo</a>	
 			</li>')> 
 			
 	<style type="text/css">

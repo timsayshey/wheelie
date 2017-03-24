@@ -1,6 +1,6 @@
 <cfoutput>
 	#renderadminMenu(adminNavMain)#
-	<li class="admindropdown">#renderadminMenu(adminNavMore)#</li>
+	<li class="dropdown">#renderadminMenu(adminNavMore)#</li>
 	
 	<cfif !isNull(session.user)>	
 		<cfset editAccount = urlFor(									
@@ -19,13 +19,13 @@
 					controller	= editBtn.controllerName,
 					action		= "edit",
 					id			= editBtn.currentId
-				)#'><span class="elusive icon-pencil"></span> Edit #capitalize(singularize(editBtn.controllerName))#</a>
+				)#'><span class="fa fa-pencil"></span> Edit #capitalize(singularize(editBtn.controllerName))#</a>
 			</li>
 		</cfif>
 
-		<li class="admindropdown admin-alignright admin-pad-right">
-		 	 <a href="#editAccount#" class="admindropdown-toggle" data-toggle="admindropdown"><span class="elusive icon-user"></span> Account <span class="elusive icon-caret-down"></span></a>
-			 <ul class="admindropdown-menu">	
+		<!--- <li class="dropdown admin-alignright admin-pad-right">
+		 	 <a href="#editAccount#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> Account <span class="fa fa-caret-down"></span></a>
+			 <ul class="dropdown-menu">	
 				
 				<li>
 				<a href='#editAccount#'><img style="padding-right:5px;max-width:30px;" src="#fileExists(expandThis('/assets/userpics/#session.user.id#.jpg')) ? assetUrlPrefix() & '/assets/userpics/#session.user.id#.jpg' : '/assets/img/user_thumbholder.jpg'#">
@@ -33,10 +33,10 @@
 				</li>
 				<li><a href='#urlFor(route="admin~Action", controller="users", action="logout")#'>Logout</a></li>
 			 </ul>
-		</li>
+		</li> --->
 		
 		<!---<li class="admin-alignright">
-			<a href="/"><span class="elusive icon-eye-open"></span> Visit Site</a>
+			<a href="/"><span class="fa fa-eye-open"></span> Visit Site</a>
 		</li>--->
 		
 	</cfif>

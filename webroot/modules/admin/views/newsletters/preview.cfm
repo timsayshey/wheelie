@@ -1,9 +1,9 @@
 <cfoutput>	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Preview')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Preview')>
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">
 			<a href="##" class="btn btn-default" onclick="javascript:window.history.back(-1);return false;">
-				<span class="elusive icon-arrow-left"></span> Go Back
+				<span class="fa fa-arrow-left"></span> Go Back
 			</a>	
 		</li>')>
 	

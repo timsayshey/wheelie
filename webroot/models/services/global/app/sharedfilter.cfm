@@ -6,7 +6,7 @@
 	// {
 	// 	type	   = 'parent',
 	// 	name	   = 'Items',
-	// 	icon	   = 'icon-pencil',
+	// 	icon	   = 'fa-pencil',
 	// 	permission = 'item_save',
 	// 	url		   = urlFor(route="admin~Action", controller="items", action="index"),
 	// 	children   = [
@@ -32,7 +32,7 @@
 	// {
 	// 	type	   = 'link',
 	// 	name	   = 'Customer Orders',
-	// 	icon	   = 'icon-list',
+	// 	icon	   = 'fa-list',
 	// 	permission = 'item_save',
 	// 	url		   = urlFor(route="admin~Action", controller="orders", action="customers")			
 	// });
@@ -41,7 +41,7 @@
 	// {
 	// 	type	   = 'link',
 	// 	name	   = 'My Orders',
-	// 	icon	   = 'icon-list',
+	// 	icon	   = 'fa-list',
 	// 	url		   = urlFor(route="admin~Action", controller="orders", action="index")			
 	// });	
 </cfscript>

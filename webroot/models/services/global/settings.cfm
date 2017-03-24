@@ -27,10 +27,10 @@
 	
 	application.wheels.defaultEmail			= getSiteSetting("defaultEmail");	
 	application.wheels.noReplyEmail			= getSiteSetting("noReplyEmail");	
-	application.wheels.adminFromEmail		= application.wheels.noReplyEmail;	
 	application.wheels.adminEmail			= application.wheels.defaultEmail;
 	application.wheels.errorEmailAddress	= application.wheels.defaultEmail;
-	
+	application.wheels.adminFromEmail		= application.wheels.noReplyEmail;	
+
 	application.wheels.sendEmailOnError		= getSiteSetting("wheelsSendEmailOnError",true);
 	application.wheels.urlRewriting			= getSiteSetting("wheelsUrlRewriting","on");
 	application.wheels.rewriteFile 			= getSiteSetting("wheelsRewriteFile","index.cfm");
@@ -41,19 +41,16 @@
 	function setRuntimeSettings() {
 		if(!application.containsKey("runtimeconfig") OR !isNull(url.reload)) {
 			application.runtimeconfig = {};	
-			try {
-				// Location to your properties file
-				var pFile = expandPath('config/system.properties');
-				// Init Props
-				var props = CreateObject("java","java.util.Properties").init();
-				// Load the file into the props
-				props.load( CreateObject("java","java.io.FileInputStream").init(pFile) );
-				props = Duplicate(props);
 
-				for(var key in structKeyList(props)) application.runtimeconfig[key] = props[key];
-			} catch(any e){
-				application.runtimeconfig = {"error":"system.properties file is missing."};
-			}
+			// Location to your properties file
+			var pFile = expandPath('config/system.properties');
+			// Init Props
+			var props = CreateObject("java","java.util.Properties").init();
+			// Load the file into the props
+			props.load( CreateObject("java","java.io.FileInputStream").init(pFile) );
+			props = Duplicate(props);
+
+			for(var key in listToArray(structKeyList(props))) application.runtimeconfig[key] = props[key];
 		}
 		return application.runtimeconfig;
 	}

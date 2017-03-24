@@ -133,16 +133,26 @@
 </cffunction>
  
 <cffunction name="siteQuery">
-	<cfargument name="subdomain" required="yes">
+	<cfargument name="subdomain" required="no">
 	<cfargument name="domain" required="yes">
-	<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
-		SELECT * FROM sites
-		WHERE 
-		(subdomain = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='#arguments.subdomain#'> OR 
-		urlid LIKE <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='%#arguments.domain#'>)
-		AND deletedAt IS NULL
-	</cfquery>
-	
+
+	<cfif arguments.containsKey("subdomain")>
+		<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
+			SELECT * FROM sites
+			WHERE 
+			(subdomain = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='#arguments.subdomain#'> OR 
+			urlid LIKE <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='%#arguments.domain#'>)
+			AND deletedAt IS NULL
+		</cfquery>
+	<cfelse>
+		<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
+			SELECT * FROM sites
+			WHERE 
+			(urlid LIKE <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='%#arguments.domain#'>)
+			AND deletedAt IS NULL
+		</cfquery>
+	</cfif>
+
 	<cfif !qSiteData.recordcount>
 		<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
 			SELECT * FROM sites
@@ -161,40 +171,56 @@
 	<cfscript>
 		var loc = {};
 
+		var subdomainMode = false;
+
 		// Set site info
 		if(isNull(request.site.id))
 		{
 			loc.domain = cgi.http_host;
-					
-			if(loc.domain contains 'localhost' OR loc.domain contains '127') {
-				loc.subdomain = loc.domain;
-				loc.domainNameSingle = loc.domain; // domain
-				loc.domainExt  = ""; // .com
-				loc.domainName = loc.domain; // domain	
 
+			if(subdomainMode) {
+				forceWWW();
+						
+				if(loc.domain contains 'localhost' OR loc.domain contains '127') {
+					loc.subdomain = loc.domain;
+					loc.domainNameSingle = loc.domain; // domain
+					loc.domainExt  = ""; // .com
+					loc.domainName = loc.domain; // domain	
+
+					request.site.domainNoSubdomain = loc.domain;
+				} else if(listlen(loc.domain,".") GT 2)
+				{
+					loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,".") - 2,".");
+					loc.domainNameSingle = ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
+					loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
+
+					loc.domain = loc.subdomain & "." & loc.domainNameSingle & "." & loc.domainExt;
+					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain	
+
+					var domainLen = listLen(loc.domain,".");
+					request.site.domainNoSubdomain = ListGetAt(loc.domain,domainLen-1,".") & "." & ListGetAt(loc.domain,domainLen,".");
+				} else {
+					loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,"."),".");
+					loc.domainNameSingle = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain
+					loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
+
+					loc.domain = loc.subdomain & "." & loc.domainExt;
+					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain	
+					request.site.domainNoSubdomain = loc.domain;
+				}
+				loc.siteResult = siteQuery(subdomain=loc.subdomain,domain=loc.domainNameSingle & "." & loc.domainExt);
+
+			} else if (!subdomainMode) {
+				forceNoWWW();
+
+				loc.subdomain = "www";
+				loc.domainName = loc.domain;
+				loc.domainNameSingle = listfirst(loc.domain,".");
+				loc.domainExt  = listlast(loc.domain,".");
 				request.site.domainNoSubdomain = loc.domain;
-			} else if(listlen(loc.domain,".") GT 2)
-			{
-				loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,".") - 2,".");
-				loc.domainNameSingle = ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
-				loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
 
-				loc.domain = loc.subdomain & "." & loc.domainNameSingle & "." & loc.domainExt;
-				loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain	
-
-				var domainLen = listLen(loc.domain,".");
-				request.site.domainNoSubdomain = ListGetAt(loc.domain,domainLen-1,".") & "." & ListGetAt(loc.domain,domainLen,".");
-			} else {
-				loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,"."),".");
-				loc.domainNameSingle = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain
-				loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
-
-				loc.domain = loc.subdomain & "." & loc.domainExt;
-				loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain	
-				request.site.domainNoSubdomain = loc.domain;
-			}	
-			
-			loc.siteResult = siteQuery(subdomain=loc.subdomain,domain=loc.domainNameSingle & "." & loc.domainExt);
+				loc.siteResult = siteQuery(domain=loc.domain);
+			}
 
 			if(loc.siteResult.recordcount)
 			{
@@ -228,37 +254,57 @@
 
 <cfscript>
 
-	// function forceWWW()
-	// {		
-	// 	// Can't call pFront unless you're on WWW
-	// 	if(listfirst(cgi.server_name,".") != 'www') {
-	// 		redirectFullUrl(
-	// 			"http://www." & 
-	// 				listDeleteAt(cgi.server_name,1,".") & 
-	// 					cgi.path_info & 
-	// 						(len(cgi.query_string) ? "?" : "") & 
-	// 							cgi.query_string
-	// 		);
-	// 	}
-	// }
+	function forceNoWWW()
+	{		
+		if(listfirst(cgi.server_name,".") == "www")
+		{
+			redirectFullUrl(
+				"http://" & 
+					ListDeleteAt(cgi.server_name,1,'.') & 
+						cgi.path_info & 
+							(len(cgi.query_string) ? "?" : "") & 
+								cgi.query_string
+			);
+		}
+	}
+
+	function forceWWW()
+	{		
+		// Can't call pFront unless you're on WWW
+		if(listfirst(cgi.server_name,".") != 'www') {
+			redirectFullUrl(
+				"http://www." & 
+					cgi.server_name & 
+						cgi.path_info & 
+							(len(cgi.query_string) ? "?" : "") & 
+								cgi.query_string
+			);
+		}
+	}
 
 	function setUserInfo()
 	{	
 		// Authenticate
 		if(StructKeyExists(session,"user"))
 		{
-			var user = model("UserGroupJoin").findAll(where="userid = '#session.user.id#'", include="User,UserGroup");
-			//var user = model("User").findAll(where="id = '#session.user.id#'");
-			session.user = {
+			var user = model("UserGroupJoin").findOne(where="userid = '#session.user.id#'", include="User,UserGroup", returnAs="struct");
+			if(isBoolean(user)) {
+				structDelete(session, "user");
+				throw("User needs a usergroup! Userid: #session.user.id#");
+			}
+			session.user = user;
+			structAppend(session.user, user.user);
+			var userdata = {
 				id 			= user.userid,
 				fullname 	= user.firstname & " " & user.lastname,
 				firstname 	= user.firstname,
 				lastname 	= user.lastname,
-				role		= user.usergrouprole,
+				role		= user.role,
 				email 		= user.email,
 				siteid		= user.siteid,
 				globalized	= user.globalized
 			};
+			structAppend(session.user, userdata);
 			
 			if(len(trim(user.role)))
 			{
@@ -413,7 +459,7 @@
 
 <cffunction name="mailgun">
 	<cfargument name="mailTo" default="">
-	<cfargument name="from" default="#application.wheels.adminEmail#">
+	<cfargument name="from" default="#application.wheels.noReplyEmail#">
 	<cfargument name="reply" default="">
 	<cfargument name="bcc" default="#application.wheels.adminEmail#">
 	<cfargument name="cc" default="">
@@ -423,7 +469,7 @@
 	<cfargument name="txt" default="">
 	<cfmail        
 		type="html"
-		from="#request.site.domainsingle# <#arguments.from#>" 
+		from="#arguments.from#" 
 		to="#arguments.mailTo#" 
 		bcc="#arguments.bcc#" 
 		cc="#arguments.cc#"        
@@ -432,6 +478,71 @@
 		#arguments.html#
 		
 	</cfmail>
+</cffunction>
+
+<cffunction name="isMobile">
+	<cfif reFindNoCase("(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino",CGI.HTTP_USER_AGENT) GT 0 OR reFindNoCase("1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-",Left(CGI.HTTP_USER_AGENT,4)) GT 0>
+		<cfreturn true>
+	<cfelse>
+		<cfreturn false>
+	</cfif>
+</cffunction>
+
+<cfscript>
+    function getSeason(){
+        var currentdatetime = DateFormat(now(), "MMDD");
+        var season = "";
+		
+        var springbegin = "0321";
+        var springend = "0620"; 
+		
+        var summerbegin = "0621";
+        var summerend = "0922";
+		
+        var fallbegin = "0923";
+        var fallend = "1110";
+		
+		var blackbegin = "1111";
+        var blackend = "1129";
+
+        var cyberbegin = "1130";
+        var cyberend = "1204";
+
+        var Christmasbegin = "1205";
+        var Christmasend = "1231";
+		
+        var winterbegin = "0101";
+        var winterend = "0320";		
+		
+        if ((currentdatetime gte springbegin) and (currentdatetime lte springend)){
+            season = "Spring";
+        } else if ((currentdatetime gte summerbegin) and (currentdatetime lte summerend)){
+            season = "Summer";
+        } else if ((currentdatetime gte fallbegin) and (currentdatetime lte fallend)){
+            season = "Fall";
+        } else if ((currentdatetime gte winterbegin) and (currentdatetime lte winterend)){
+            season = "Winter";
+        } else if ((currentdatetime gte blackbegin) and (currentdatetime lte blackend)){
+            season = "Black Friday";
+        } else if ((currentdatetime gte cyberbegin) and (currentdatetime lte cyberend)){
+            season = "Cyber Week";
+        } else if ((currentdatetime gte Christmasbegin) and (currentdatetime lte Christmasend)){
+            season = "Christmas";
+        } 
+        return season;
+    }
+</cfscript>
+
+<cffunction name="cleanString">
+	<cfargument name="inputString" default=""> 
+	<cfset inputString = Trim(Replace(inputString, Chr(10), "<br />", "ALL"))>   
+	<cfset inputString = Trim(Replace(inputString, Chr(13), "<br />", "ALL"))>   
+    <cfreturn REReplace(inputString,"(?!</?\b(p|bold|strike|sub|sup|span|font|a|br|hr|b|strong)\b[^>]*?>)</?[a-z]+?[^>]*?>","","ALL")>
+</cffunction>
+
+<cffunction name="removeHtml">
+	<cfargument name="inputString" default=""> 
+    <cfreturn REReplace(inputString, "<[\/]?[^>]*>","","ALL")>
 </cffunction>
 
 </cfoutput>

@@ -36,7 +36,7 @@
 										<table width="280" cellpadding="0" cellspacing="0" border="0" align="left" class="devicewidth">
 											<tbody>
 												<tr>
-													<td valign="middle" width="270" style="padding: 10px 0 10px 20px;" class="logo"><div class="imgpop"> <a href="##"><img src="http://#request.site.domain#/assets/css/front/logo.png" alt="logo" border="0" style="display:block; border:none; outline:none; text-decoration:none;" width="100" height="35" st-image="edit" class="logo"></a> </div></td>
+													<td valign="middle" width="270" style="padding: 10px 0 10px 20px;" class="logo"><div class="imgpop"> <a href="##"><img src="https://#request.site.domain#/assets/css/front/logo.png" alt="logo" border="0" style="display:block; border:none; outline:none; text-decoration:none;" width="100" height="35" st-image="edit" class="logo"></a> </div></td>
 												</tr>
 											</tbody>
 										</table>
@@ -132,7 +132,7 @@
 																			<cfset rowColor = "##efefef">
 																		</cfif>
 																		<tr>
-																			<td style="padding:.5em; background-color:#rowColor#;"><img src="http://#request.site.domain#/assets/img/checkmark_icon.png" width="20" height="20"></td>
+																			<td style="padding:.5em; background-color:#rowColor#;"><img src="https://#request.site.domain#/assets/img/checkmark_icon.png" width="20" height="20"></td>
 																			<td style="padding:.5em; background-color:#rowColor#;"><strong>#todos.name#</strong><br>
 #todos.description# 																				</td>
 																			<td style="padding:.5em; background-color:#rowColor#;">#DateFormat(todos.isDone,"MMMM D, YYYY")# </td>

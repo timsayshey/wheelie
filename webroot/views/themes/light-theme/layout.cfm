@@ -39,8 +39,8 @@
     <link href="#themeDir#assets/jquery.bxslider.css" media="all" rel="stylesheet" type="text/css">
     <link href="#themeDir#assets/menu.css" media="all" rel="stylesheet" type="text/css">
     
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>  
     <link href="/assets/css/shared.css" rel="stylesheet" type="text/css"/>
     <link href="#themeDir#style.css" rel="stylesheet" type="text/css">
     

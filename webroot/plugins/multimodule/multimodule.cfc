@@ -247,25 +247,34 @@
 			if (!ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) && !ListFindNoCase(application.wheels.nonExistingHelperFiles, arguments.name))
 			{
 				if (FileExists(ExpandPath(loc.template)))
+				{
 					loc.helperFileExists = true;
-				if (application.wheels.cacheFileChecking)
+				}
+				if (get("cacheFileChecking"))
 				{
 					if (loc.helperFileExists)
+					{
 						application.wheels.existingHelperFiles = ListAppend(application.wheels.existingHelperFiles, arguments.name);
+					}
 					else
+					{
 						application.wheels.nonExistingHelperFiles = ListAppend(application.wheels.nonExistingHelperFiles, arguments.name);
+					}
 				}
 			}
-			if (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists)
+			if (Len(arguments.name) && (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists))
+			{
 				$include(template=loc.template);
+			}
 
 			loc.executeArgs = {};
 			loc.executeArgs.name = arguments.name;
-			$simpleLock(name="controllerLock", type="readonly", execute="$setControllerClassData", executeArgs=loc.executeArgs);
-
+			loc.lockName = "controllerLock" & application.applicationName;
+			$simpleLock(name=loc.lockName, type="readonly", execute="$setControllerClassData", executeArgs=loc.executeArgs);
 			variables.params = arguments.params;
+			loc.rv = this;
 		</cfscript>
-		<cfreturn this>
+		<cfreturn loc.rv>
 	</cffunction>
 
 	<cffunction name="$abortInvalidRequest" returntype="void" access="public" output="false" mixin="global">

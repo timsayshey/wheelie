@@ -12,15 +12,15 @@
 	<cfset contentFor(formy			= true)>
 	
 	<cfif isNull(params.id)>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Add Form')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Add Form')>
 	<cfelse>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Edit Form')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Edit Form')>
 	</cfif>
 	
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">
 			#linkTo(
-				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 				route		= "public~Action", 
 				module		= "admin",
 				controller	= "forms", 

@@ -13,6 +13,7 @@ component output="false" extends="controllers.Controller"
 		
 		filters(through="preHandler");	
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,register,registerPost");
+
 	}
 	
 	private function customPublicAppFilters()
@@ -23,9 +24,9 @@ component output="false" extends="controllers.Controller"
 	private function loggedOutOnly()
 	{	
 		// Authenticate
-		if(!StructKeyExists(session,"user"))
+		if(!StructKeyExists(session,"user") && listfirst(cgi.server_name,".") != 'www' && request.site.subdomain != '')
 		{			
-			//redirectTo(route="moduleAction", module="admin", controller="users", action="login");
+			redirectTo(route="admin~action", controller="users", action="login");
 		}	
 	}
 	
@@ -55,6 +56,10 @@ component output="false" extends="controllers.Controller"
 		{
 			isAjaxRequest = 1;
 			usesLayout("/layouts/layout.blank");	
+		}
+
+		if(request.containsKey("usesLayout")) {
+			usesLayout(request.usesLayout);	
 		}
 	}
 		

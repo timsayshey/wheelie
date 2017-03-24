@@ -1,19 +1,19 @@
 <cfoutput>
 	<link href="/assets/vendor/css/font/icons.css" rel="stylesheet" type="text/css">
-<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Login')>
+<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Login')>
 	<div class="container">
 		<div class="row-regular">
 			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<span class="elusive icon-lock"></span> Login
+						<span class="fa fa-lock"></span> Login
 					</div>
 					
 					#startFormTag(route="admin~Action", module="admin", controller="users", action="loginPost")#
 						<div class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<span class="input-group-addon"><span class="elusive icon-user"></span></span>
+									<span class="input-group-addon"><span class="fa fa-user"></span></span>
 									<input class="form-control" type="text" placeholder="Enter your email" name="email" 
 										<cfif !isNull(params.email)>
 											value="#params.email#"
@@ -23,7 +23,7 @@
 							</div>
 							<div class="form-group">
 								<div class="input-group">
-									<span class="input-group-addon"><span class="elusive icon-key"></span></span>
+									<span class="input-group-addon"><span class="fa fa-key"></span></span>
 									<input class="form-control" type="password" placeholder="Password" name="pass">
 								</div>
 							</div>

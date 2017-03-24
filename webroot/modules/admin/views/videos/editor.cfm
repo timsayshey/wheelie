@@ -11,9 +11,9 @@
 	<cfset contentFor(formy			= true)>
 	
 	<cfif isNull(params.id)>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> Add Video')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-video"></span> Add Video')>
 	<cfelse>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-video"></span> Edit Video')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-video"></span> Edit Video')>
 	</cfif>
 	
 	<cfif !isNull(params.id)>
@@ -259,8 +259,8 @@
 			<div class="ns-row">
 				<div class="ns-title"><%=name%></div>
 				<div class="ns-actions">
-					<a href="##" class="edit-menu" title="Edit"><span class="elusive icon-pencil"></span></a>
-					<a href="##" class="delete-menu" title="Delete"><span class="elusive icon-trash"></span></a>							
+					<a href="##" class="edit-menu" title="Edit"><span class="fa fa-pencil"></span></a>
+					<a href="##" class="delete-menu" title="Delete"><span class="fa fa-trash"></span></a>							
 				</div>
 			</div>		
 			<div class="ns-form">

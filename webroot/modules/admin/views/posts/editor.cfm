@@ -6,9 +6,9 @@
 	<cfset contentFor(formy			= true)>
 	
 	<cfif isNull(params.id)>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Add Post')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Add Post')>
 	<cfelse>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Edit Post')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Edit Post')>
 	</cfif>
 	
 	<cfif !isNull(params.id)>

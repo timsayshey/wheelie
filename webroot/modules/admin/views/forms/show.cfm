@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> #qform.name#')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> #qform.name#')>
 	
 	<!--- Get Custom Fields --->
 	#generateForm(formid=params.id)#

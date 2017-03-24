@@ -12,7 +12,7 @@
 			titleName = "User";
 		}
 		
-		contentFor(headerTitle = '<span class="elusive icon-user"></span> #titleName#');
+		contentFor(headerTitle = '<span class="fa fa-user"></span> #titleName#');
 		
 		if(checkPermission("user_save_others"))
 		{
@@ -20,7 +20,7 @@
 				'<li class="headertab">
 					#initializeRearrange#
 					#linkTo(
-						text		= '<span class="elusive icon-plus"></span> Add #titleName#',
+						text		= '<span class="fa fa-plus"></span> Add #titleName#',
 						route		= "admin~Action",
 						module		= "admin",
 						controller	= "users",
@@ -61,8 +61,8 @@
 			
 			<!--- 
 			<div class="btn-group pull-right">				
-				<a href='#urlFor(route="admin~peopleTypes", currentGroup=params.currentGroup)#?display=grid' class="btn btn-default #gridActive#"><span class="elusive icon-th-large"></span></a>
-				<a href='#urlFor(route="admin~peopleTypes", currentGroup=params.currentGroup)#?display=list' class="btn btn-default #listActive#"><span class="elusive icon-th-list"></span></a>
+				<a href='#urlFor(route="admin~peopleTypes", currentGroup=params.currentGroup)#?display=grid' class="btn btn-default #gridActive#"><span class="fa fa-th-large"></span></a>
+				<a href='#urlFor(route="admin~peopleTypes", currentGroup=params.currentGroup)#?display=list' class="btn btn-default #listActive#"><span class="fa fa-th-list"></span></a>
 			</div>
 			 
 			<br class="clear" /><br /> 
@@ -79,14 +79,14 @@
 											
 					<cfsavecontent variable="tags">
 						<cfset roleIcons = {
-							admin    = "icon-star-alt",
-							editor   = "icon-unlock-alt",
-							author   = "icon-pencil-alt",
-							user     = "icon-lock-alt",
-							guest    = "icon-lock-alt"
+							admin    = "fa-star-alt",
+							editor   = "fa-unlock-alt",
+							author   = "fa-pencil-alt",
+							user     = "fa-lock-alt",
+							guest    = "fa-lock-alt"
 						}>
 						<cfif StructKeyExists(roleIcons,qUsers.role)>
-							<span class="elusive #roleIcons[qUsers.role]# color-danger" title="#capitalize(qUsers.role)#"></span>
+							<span class="fa #roleIcons[qUsers.role]# color-danger" title="#capitalize(qUsers.role)#"></span>
 						</cfif>
 					</cfsavecontent> 
 					
@@ -96,7 +96,7 @@
 						tags			= tags,
 						gridActive		= gridActive,
 						thumbPath		= fileExists(expandThis("/assets/userpics/#qUsers.id#.jpg")) ? assetUrlPrefix() & "/assets/userpics/#qUsers.id#.jpg" : '/assets/img/user_thumbholder.jpg',
-						title			= capitalize(qUsers.zx_firstName) & " " & capitalize(qUsers.zx_lastName),
+						title			= capitalize(qUsers.firstName) & " " & capitalize(qUsers.lastName),
 						description		= "",
 						controllerName	= "users",
 						href			= 'href="#urlFor(									
@@ -178,12 +178,12 @@
 										</div>
 										<div class="col-md-1 col-sm-1">									
 											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Apply filter" name="filtertype" value="apply">
-												<span class="elusive icon-ok"></span> Apply
+												<span class="fa fa-ok"></span> Apply
 											</button>
 										</div>
 										<div class="col-md-1 col-sm-1">		
 											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Clear filter" name="filtertype" value="clear">
-												<span class="elusive icon-trash"></span> Clear
+												<span class="fa fa-trash"></span> Clear
 											</button>
 										</div>
 									</div>

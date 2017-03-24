@@ -2,7 +2,7 @@
 	
 	<cfset isnew = true>
 	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-move"></span> Import List of Metafields')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-move"></span> Import List of Metafields')>
 	
 	#btextareatag(
 		name			= 'importlist',	

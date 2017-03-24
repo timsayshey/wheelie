@@ -5,19 +5,19 @@
 		initializeRearrange = includePartial(partial="/_partials/sortableScript", urlcontroller="@lcasePlural@", reEndRow=q@ucasePlural@.recordcount);
 		
 		contentFor(formy = true);
-		contentFor(headerTitle	= '<span class="elusive icon-@lcaseSingular@"></span> @ucasePlural@');		
+		contentFor(headerTitle	= '<span class="fa fa-@lcaseSingular@"></span> @ucasePlural@');		
 		contentFor(headerButtons = 
 			"<li class='headertab'>
 				#initializeRearrange#
 				#linkTo(
-					text		= '<span class=''elusive icon-plus''></span> Add @ucaseSingular@',
+					text		= '<span class=''fa fa-plus''></span> Add @ucaseSingular@',
 					route		= 'admin~action',
 					controller	= '@lcasePlural@',
 					action		= 'new', 
 					class		= 'btn btn-default'
 				)#
 				#linkTo(
-					text		= '<span class=''elusive icon-plus''></span> Edit Fields',
+					text		= '<span class=''fa fa-plus''></span> Edit Fields',
 					href		= '/m/admin/fields/index/@lcaseSingular@field?modelid=3',
 					class		= 'btn btn-default'
 				)#	
@@ -45,8 +45,8 @@
 			</cfif>
 			
 			<div class="btn-group pull-right">
-				<a href='#urlFor(route="moduleAction", module="admin", controller="@lcasePlural@", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="elusive icon-th-large"></span></a>
-				<a href='#urlFor(route="moduleAction", module="admin", controller="@lcasePlural@", action="index")#?display=list' class="btn btn-default #listActive#"><span class="elusive icon-th-list"></span></a>
+				<a href='#urlFor(route="moduleAction", module="admin", controller="@lcasePlural@", action="index")#?display=grid' class="btn btn-default #gridActive#"><span class="fa fa-th-large"></span></a>
+				<a href='#urlFor(route="moduleAction", module="admin", controller="@lcasePlural@", action="index")#?display=list' class="btn btn-default #listActive#"><span class="fa fa-th-list"></span></a>
 			</div>
 			
 			<br class="clear" /><br />
@@ -185,12 +185,12 @@
 										</div>
 										<div class="col-md-1 col-sm-1">									
 											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Apply filter" name="filtertype" value="apply">
-												<span class="elusive icon-ok"></span> Apply
+												<span class="fa fa-ok"></span> Apply
 											</button>
 										</div>
 										<div class="col-md-1 col-sm-1">		
 											<button class="btn btn-default btn-sm pull-right apply-btn" type="submit" title="Clear filter" name="filtertype" value="clear">
-												<span class="elusive icon-trash"></span> Clear
+												<span class="fa fa-trash"></span> Clear
 											</button>
 										</div>
 									</div>

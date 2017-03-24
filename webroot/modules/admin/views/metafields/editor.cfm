@@ -40,15 +40,15 @@
 	<cfset contentFor(formy			= true)>
 	
 	<cfif isNull(params.id)>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Add Field')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Add Field')>
 	<cfelse>
-		<cfset contentFor(headerTitle	= '<span class="elusive icon-pencil"></span> Edit Field')>
+		<cfset contentFor(headerTitle	= '<span class="fa fa-pencil"></span> Edit Field')>
 	</cfif>
 	 
 	<cfset contentFor(headerButtons = 
 		'<li class="headertab">
 			#linkTo(
-				text		= "<span class=""elusive icon-arrow-left""></span> Go Back",
+				text		= "<span class=""fa fa-arrow-left""></span> Go Back",
 				route		= "admin~Field",
 				controller	= "metafields",
 				action		= "index",

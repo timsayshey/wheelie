@@ -10,7 +10,7 @@
 		if(!isNull(params.rearrange) AND params.rearrange eq 1)
 		{
 			returnHtml = returnHtml & linkTo(
-				text		= '<span class=''elusive icon-arrow-left''></span> Go Back',
+				text		= '<span class=''fa fa-arrow-left''></span> Go Back',
 				href		= 'javascript:window.history.back();',
 				class		= 'btn btn-default'
 			);			
@@ -35,7 +35,7 @@
 			request.reEndRow = reEndRow;
 		} else {
 			returnHtml = returnHtml & linkTo(
-				text		= '<span class=''elusive icon-move''></span> Rearrange',
+				text		= '<span class=''fa fa-move''></span> Rearrange',
 				route		= 'admin~index',
 				controller	= '#urlcontroller#',
 				params		= 'rearrange=1',

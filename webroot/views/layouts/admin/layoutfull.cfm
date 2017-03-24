@@ -128,7 +128,7 @@
 		<!--- Main page footer 
 		<footer id="footer">
 			<div class="container">
-					<a href="##top" class="btn btn-primary pull-right" title="Back to top"><span class="elusive icon-arrow-up"></span></a>
+					<a href="##top" class="btn btn-primary pull-right" title="Back to top"><span class="fa fa-arrow-up"></span></a>
 
 
 				<!-- Footer info -->

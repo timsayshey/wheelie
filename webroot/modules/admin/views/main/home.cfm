@@ -1,6 +1,6 @@
 <cfoutput>
 	
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-dashboard"></span> Dashboard')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-dashboard"></span> Dashboard')>
 	<cfset pageTemplate = getAdminTemplate("home")>
 		
 	<cfif len(pageTemplate)>

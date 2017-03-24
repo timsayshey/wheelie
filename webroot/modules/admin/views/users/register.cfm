@@ -1,119 +1,85 @@
 <cfoutput>
 	
 	<cfset contentFor(formy			= true)>
-	<cfset contentFor(headerTitle	= '<span class="elusive icon-user"></span> Register')>
+	<cfset contentFor(headerTitle	= '<span class="fa fa-user"></span> Register')>
 	<cfset passwordLabel 			= "Password">
 	<cfset passrequired 			= "required">		
 		
 	#startFormTag(route="admin~Action", module="admin", controller="users", action="registerPost", enctype="multipart/form-data", id="fileupload")#		
 					
 	<!--- Full name --->
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName	= 'user', 
-			property	= 'Firstname', 
-			label		= 'First name',
-			placeholder	= "Ex: Chuck"
-		)#
-	</div>
+	#btextfield(
+		objectName	= 'user', 
+		property	= 'Firstname', 
+		label		= 'First name',
+		placeholder	= "Ex: Matt",
+		inlineField = true
+	)#
 	
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName	= 'user', 
-			property	= 'Lastname', 
-			label		= 'Last name',
-			placeholder	= "Ex: Swanson"
-		)#
-	</div>
-
-	<!--- 
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName	= 'user', 
-			property	= 'jobtitle', 
-			label		= 'Job Title*',
-			placeholder	= "Ex: Teacher"
-		)#
-	</div>	
 	
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName	= 'user', 
-			property	= 'designatory_letters', 
-			label		= 'Credentials*',
-			placeholder	= "Ex: PhD MDA BS"
-		)#
-	</div>	 --->
-	
-	<!--- Password 
-	,"#passrequired#" = "" --->
+	#btextfield(
+		objectName	= 'user', 
+		property	= 'Lastname', 
+		label		= 'Last name',
+		inlineField = true,
+		placeholder	= "Ex: Chandler"
+	)#
 
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName		= 'user', 
-			property		= 'username', 
-			label			= 'Username *',
-			placeholder		= "Ex: chuckswanson"
-		)#
-	</div>	
+	#btextfield(
+		objectName		= 'user', 
+		property		= 'email', 
+		label			= 'Email',
+		inlineField 	= true,
+		placeholder		= "Ex: matt.chandler@gmail.com",
+		help 			= "This will be your login id"
+	)#
 
-	<div class="col-sm-6">	
-		#bPasswordFieldTag(
-			name			 = "user[password]",
-			label			 = passwordLabel,
-			placeholder		 = "Password *"			
-		)#
-	</div>
+	#btextfieldtag(
+		label		= "Confirm Email", 
+		name		= "user[emailConfirmation]",
+		placeholder		= "Ex: matt.chandler@gmail.com",
+		inlineField 	= true
+	)#
 
-	<div class="col-sm-6">	
-		#btextfield(
-			objectName		= 'user', 
-			property		= 'email', 
-			label			= 'Email *',
-			placeholder		= "Ex: chuckswanson@gmail.com"
-		)#
-	</div>
-	
-	<div class="col-sm-6">	
-		#btextfieldtag(
-			label		= "Confirm Email *", 
-			name		= "user[emailConfirmation]"
-		)#
-	</div>	
+	#bPasswordFieldTag(
+		name			 = "user[password]",
+		label			 = passwordLabel,
+		inlineField 	 = true,
+		placeholder		 = "Ex: Your super secret pass code"	
+	)#
 
 	<br>
-	
-	<!--- Email --->
-	
-	
-	<div class="col-sm-6">	
-		<cfparam name="user.portrait" default="">
-		#bImageUploadTag(
-			name			= "portrait",
-			value			= user.portrait, 	
-			filepath		= user.portrait,
-			label			= 'Portrait'
-		)#
-	</div>	
-
-	<!--- 
-	<div class="col-sm-12">	
-		#btextarea(
-			objectName	= 'user', 
-			property	= 'about', 
-			label		= 'Bio',
-			placeholder	= "",
-			style		= "min-height:120px;"
-		)#
-	</div>--->	
-	
-		
 	<br class="clear">
-	
-	#bsubmittag(name="submit",value="Register", class="btn-lg btn-primary")#<br><br>
+	<div class="form-horizontal form-group">
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-10">
+			
+ 			#bcheckbox(
+				objectName	= 'user', 
+				property	= "theologicalaffirmation",
+				label		= "I affirm the <a href='/main/efca?simple' class='fancyframe'>ECFA Statement of Faith.</a>",
+				labelPlacement="after"
+			)#<br>
+			#bcheckbox(
+				objectName	= 'user', 
+				property	= "updates",
+				label		= "I want to receive news and updates via email.",
+				labelPlacement="after"
+			)#<br>
+			#bcheckbox(
+				objectName	= 'user', 
+				property	= "terms",
+				label		= "I agree to the <a href='/main/terms?simple' class='fancyframe'>Terms of Service.</a>",
+				labelPlacement="after"
+			)#<br><br>
+			#bsubmittag(name="submit",value="Register", class="btn-lg btn-primary",inlineField 	= true)#
+			<br class="clear">
+		</div>
+	</div>
+
+	<br><br>
 	<a class="lost-password" href='#urlFor(route="admin~Action", module="admin", controller="users", action="login")#'>Back to login</a>	
 	
 	#endFormTag()#	
-
-		
 </cfoutput>

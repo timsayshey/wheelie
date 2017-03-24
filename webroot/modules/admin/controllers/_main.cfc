@@ -57,16 +57,16 @@ component output="false" extends="controllers.Controller"
 			session.loginRedir = cgi.PATH_INFO;
 		}
 		
-		if(!isNull(params.redir) AND isNull(session.loginRedir))
+		if(!isNull(params.redir))
 		{
 			session.loginRedir = URLDecode(params.redir);
 		}
 		
 		if(!isNull(session.loginRedir) AND !isNull(session.user.id) AND !find("http",session.loginRedir))
 		{
-			// tempRedir = session.loginRedir;
-			// StructDelete(session,"loginRedir");
-			// location(tempRedir,false); abort;	
+			var tempRedir = session.loginRedir;
+			StructDelete(session,"loginRedir");
+			location(tempRedir,false); abort;	
 		}
 	}
 	
@@ -164,6 +164,10 @@ component output="false" extends="controllers.Controller"
 		{
 			isAjaxRequest = 1;
 			usesLayout("/layouts/layout.blank");	
+		}
+		
+		if(request.containsKey("usesLayout")) {
+			usesLayout(request.usesLayout);	
 		}
 	}
 }
