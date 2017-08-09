@@ -4,10 +4,10 @@
 	<cfargument name="formStruct">
 	<cfscript>
 		var formFields = StructKeyList(formStruct);
-		for (i=1; i lte listLen(formFields); i++) 
-		{ 
-			FieldName = ListGetAt(formFields, i);								
-			FieldValue = formStruct[FieldName];			
+		for (i=1; i lte listLen(formFields); i++)
+		{
+			FieldName = ListGetAt(formFields, i);
+			FieldValue = formStruct[FieldName];
 			var keywords = [
 				"free trial",
 				"visitors",
@@ -18,15 +18,15 @@
 				"vuitton"
 			];
 			for (j = 1; j LTE arrayLen(keywords); j++)
-			{			
+			{
 				if(find(lcase(keywords[j]),lcase(FieldValue)))
 				{
 					return true;
 				}
-			}			
+			}
 		}
 		return false;
-	</cfscript>	
+	</cfscript>
 </cffunction>
 
 <cffunction name="checkUrlExtension">
@@ -59,15 +59,15 @@
 		resumeFilepathWithoutExtension = "#ExpandPath(resumeDirectory)##resumeFilenameWithoutExtension#";
 		if(fileExists("#resumeFilepathWithoutExtension#.pdf")) {
 			return "#resumeDirectory##resumeFilenameWithoutExtension#.pdf";
-			
+
 		} else if(fileExists("#resumeFilepathWithoutExtension#.doc")) {
 			return "#resumeDirectory##resumeFilenameWithoutExtension#.doc";
-			
+
 		} else if(fileExists("#resumeFilepathWithoutExtension#.docx")) {
 			return "#resumeDirectory##resumeFilenameWithoutExtension#.docx";
-		}		
+		}
 		return "";
-	</cfscript>	
+	</cfscript>
 </cffunction>
 
 <cffunction name="isValidEmail">
@@ -80,8 +80,8 @@
 		else
 		{
 			return false;
-		}		
-	</cfscript>	
+		}
+	</cfscript>
 </cffunction>
 
 <cffunction name="countOccurences">
@@ -98,7 +98,7 @@
 			<cfset ArrayAppend(newArray,arrayValue)>
 		</cfif>
 	</cfloop>
-	
+
 	<cfreturn newArray />
 </cffunction>
 
@@ -108,16 +108,16 @@
 		<cfquery name="qry_set" dbtype="query">
 			SELECT *, '' as sorter FROM #arguments.inputquery#
 		</cfquery>
-		
+
 		<cfloop query="qry_set">
 			<cfset querySetCell(qry_set,"sorter",rand(),currentRow)>
 		</cfloop>
-		
+
 		<cfquery name="qry_set" dbtype="query">
 			select * from qry_set
 			order by sorter
 		</cfquery>
-		
+
 		<cfreturn qry_set>
 	</cfif>
 </cffunction>
@@ -131,7 +131,7 @@
 		return request.site.id;
 	</cfscript>
 </cffunction>
- 
+
 <cffunction name="siteQuery">
 	<cfargument name="subdomain" required="no">
 	<cfargument name="domain" required="yes">
@@ -139,15 +139,15 @@
 	<cfif arguments.containsKey("subdomain")>
 		<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
 			SELECT * FROM sites
-			WHERE 
-			(subdomain = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='#arguments.subdomain#'> OR 
+			WHERE
+			(subdomain = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='#arguments.subdomain#'> OR
 			urlid LIKE <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='%#arguments.domain#'>)
 			AND deletedAt IS NULL
 		</cfquery>
 	<cfelse>
 		<cfquery name="qSiteData" datasource="#application.wheels.dataSourceName#">
 			SELECT * FROM sites
-			WHERE 
+			WHERE
 			(urlid LIKE <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value='%#arguments.domain#'>)
 			AND deletedAt IS NULL
 		</cfquery>
@@ -158,7 +158,7 @@
 			SELECT * FROM sites
 			WHERE (
 				urlid = 'localhost' OR
-				subdomain = 'localhost' 
+				subdomain = 'localhost'
 			)
 			AND deletedAt IS NULL
 		</cfquery>
@@ -180,12 +180,12 @@
 
 			if(subdomainMode) {
 				forceWWW();
-						
+
 				if(loc.domain contains 'localhost' OR loc.domain contains '127') {
 					loc.subdomain = loc.domain;
 					loc.domainNameSingle = loc.domain; // domain
 					loc.domainExt  = ""; // .com
-					loc.domainName = loc.domain; // domain	
+					loc.domainName = loc.domain; // domain
 
 					request.site.domainNoSubdomain = loc.domain;
 				} else if(listlen(loc.domain,".") GT 2)
@@ -195,7 +195,7 @@
 					loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
 
 					loc.domain = loc.subdomain & "." & loc.domainNameSingle & "." & loc.domainExt;
-					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain	
+					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
 
 					var domainLen = listLen(loc.domain,".");
 					request.site.domainNoSubdomain = ListGetAt(loc.domain,domainLen-1,".") & "." & ListGetAt(loc.domain,domainLen,".");
@@ -205,7 +205,7 @@
 					loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
 
 					loc.domain = loc.subdomain & "." & loc.domainExt;
-					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain	
+					loc.domainName = loc.subdomain & "." & ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // domain
 					request.site.domainNoSubdomain = loc.domain;
 				}
 				loc.siteResult = siteQuery(subdomain=loc.subdomain,domain=loc.domainNameSingle & "." & loc.domainExt);
@@ -224,7 +224,7 @@
 
 			if(loc.siteResult.recordcount)
 			{
-				request.site = 
+				request.site =
 				{
 					id 				= loc.siteResult.id,
 					name 			= loc.siteResult.name,
@@ -234,17 +234,17 @@
 					ssl 			= loc.siteResult.sslenabled,
 					theme 			= loc.siteResult.theme,
 					urlExtension 	= loc.siteResult.urlExtension,
-					subdomain		= loc.siteResult.subdomain,					
-					
+					subdomain		= loc.siteResult.subdomain,
+
 					emailMatchDomainRequired = loc.siteResult.emailMatchDomainRequired,
 					emailMatchOtherDomains   = loc.siteResult.emailMatchOtherDomains,
 					registrationDisabled 	 = loc.siteResult.registrationDisabled,
 					enableAdminTheme	 	 = loc.siteResult.enableAdminTheme
 				};
-				
+
 				structAppend(request.site,loc,false);
 			}
-			else 
+			else
 			{
 				writeOutput("Sorry, this site is currently unavailable."); abort;
 			}
@@ -255,35 +255,35 @@
 <cfscript>
 
 	function forceNoWWW()
-	{		
+	{
 		if(listfirst(cgi.server_name,".") == "www")
 		{
 			redirectFullUrl(
-				"http://" & 
-					ListDeleteAt(cgi.server_name,1,'.') & 
-						cgi.path_info & 
-							(len(cgi.query_string) ? "?" : "") & 
+				"http://" &
+					ListDeleteAt(cgi.server_name,1,'.') &
+						cgi.path_info &
+							(len(cgi.query_string) ? "?" : "") &
 								cgi.query_string
 			);
 		}
 	}
 
 	function forceWWW()
-	{		
+	{
 		// Can't call pFront unless you're on WWW
 		if(listfirst(cgi.server_name,".") != 'www') {
 			redirectFullUrl(
-				"http://www." & 
-					cgi.server_name & 
-						cgi.path_info & 
-							(len(cgi.query_string) ? "?" : "") & 
+				"http://www." &
+					cgi.server_name &
+						cgi.path_info &
+							(len(cgi.query_string) ? "?" : "") &
 								cgi.query_string
 			);
 		}
 	}
 
 	function setUserInfo()
-	{	
+	{
 		// Authenticate
 		if(StructKeyExists(session,"user"))
 		{
@@ -304,16 +304,17 @@
 				siteid		= user.siteid,
 				globalized	= user.globalized
 			};
+
 			structAppend(session.user, userdata);
-			
+
 			if(len(trim(user.role)))
 			{
 				session.user.role = user.role;
 			}
-			
+
 			if(len(trim(session.user.id)) eq 0)
 			{
-				flashInsert(error="There was an issue with your account. Try again.");			
+				flashInsert(error="There was an issue with your account. Try again.");
 				StructDelete(session,"user");
 			}
 		}
@@ -324,31 +325,31 @@
 	<cfargument name="currentDepartment" default="">
 	<cfswitch expression="#arguments.currentDepartment#">
 		<cfcase value="Residential Coach,Night Staff,Residential Coach - Night Shift">
-			<cfreturn { 
+			<cfreturn {
 				emailTo = jobEmails.coaches.sendTo,
 				emailCC = jobEmails.coaches.sendCC
 			}>
 		</cfcase>
 		<cfcase value="Therapist">
-			<cfreturn { 
+			<cfreturn {
 				emailTo = jobEmails.therapist.sendTo,
 				emailCC = jobEmails.therapist.sendCC
 			}>
 		</cfcase>
 		<cfcase value="Clerical,Junior IT Technician,Human Resources Director">
-			<cfreturn { 
+			<cfreturn {
 				emailTo = jobEmails.hr.sendTo,
 				emailCC = jobEmails.hr.sendCC
 			}>
 		</cfcase>
 		<cfcase value="Director of Nursing,Registered Nurse">
-			<cfreturn { 
+			<cfreturn {
 				emailTo = jobEmails.nurse.sendTo,
 				emailCC = jobEmails.nurse.sendCC
 			}>
 		</cfcase>
 		<cfdefaultcase>
-			<cfreturn { 
+			<cfreturn {
 				emailTo = jobEmails.other.sendTo,
 				emailCC = jobEmails.other.sendCC
 			}>
@@ -365,7 +366,7 @@
 </cffunction>
 
 <cffunction name="getIpAddress">
-	<cfset ip = cgi.REMOTE_ADDR>	
+	<cfset ip = cgi.REMOTE_ADDR>
 	<cfif len(trim(cgi.HTTP_CF_CONNECTING_IP))>
 		<cfset ip = cgi.HTTP_CF_CONNECTING_IP>
 	<cfelseif GetHttpRequestData().headers.containsKey('X-Forwarded-For')>
@@ -377,12 +378,12 @@
 <cffunction name="menuitemLink">
 	<cfargument name="activeClass" default="active current">
 	<cfset isActive = "">
-	<cfif 
-		menuitem.id eq activeMenuId OR 
-		!isNull(activeParent) AND menuitem.id eq activeMenuId OR 
+	<cfif
+		menuitem.id eq activeMenuId OR
+		!isNull(activeParent) AND menuitem.id eq activeMenuId OR
 		!isNull(subParentId) AND menuitem.id eq subParentId>
 			<cfset isActive = arguments.activeClass>
-	</cfif>	
+	</cfif>
 	<cfif menuitem.itemType eq "page">
 		<cfif len(trim(request.site.urlExtension))>
 			<cfset menuitemurl = urlFor(route="public~secondaryPage", format=request.site.urlExtension, id=menuitem.urlid)>
@@ -390,22 +391,22 @@
 			<cfset menuitemurl = urlFor(route="public~secondaryPage", id=menuitem.urlid)>
 		</cfif>
 		<a href='#len(trim(menuitem.redirect)) GT 1 ? menuitem.redirect : menuitemurl#'
-			class="#isActive#">								
+			class="#isActive#">
 			#menuitem.name#
 		</a>
 	<cfelseif menuitem.itemType eq "custom">
-		<a href='#menuitem.customurl#' class="#isActive#">								
+		<a href='#menuitem.customurl#' class="#isActive#">
 			#menuitem.name#
 		</a>
-	</cfif>	
+	</cfif>
 </cffunction>
 
 <cffunction name="generateMenu">
 	<cfargument name="includeChildren" default="true">
 	<cfloop query="menuitems">
-		<cfset menuitem = menuitems>		
+		<cfset menuitem = menuitems>
 		<li>
-			#menuitemLink()#		
+			#menuitemLink()#
 			<cfif includeChildren>
 				<cfset children = model("Menu").findAll(where="parentid = '#menuitems.id#'", order="sortOrder ASC, name ASC", include="AllPost")>
 				<cfif children.recordcount>
@@ -415,14 +416,14 @@
 						<li>#menuitemLink()#</li>
 					</cfloop>
 					</ul>
-				</cfif>	
+				</cfif>
 			</cfif>
-		</li>			
-	</cfloop>		
+		</li>
+	</cfloop>
 </cffunction>
 
-<cffunction name="generateSubmenu">	
-	<ul>		
+<cffunction name="generateSubmenu">
+	<ul>
 		<cfset generatingSubmenu = true>
 		<cfif activeMenuItem.parentid eq 0>
 			<cfset menuitem = activeMenuItem>
@@ -430,19 +431,19 @@
 		<cfelseif len(activeParent.urlid)>
 			<cfset menuitem = activeParent>
 			<cfset currentclass = "">
-		</cfif>	
-		
+		</cfif>
+
 		<li>#menuitemLink(activeClass=currentclass)#</li>
-		
+
 		<cfloop query="subMenuItems">
 			<cfset menuitem = subMenuItems>
 			<li>#menuitemLink()#</li>
 		</cfloop>
-	</ul>	
+	</ul>
 </cffunction>
 
 <cffunction name="log404">
-	<cfscript> 
+	<cfscript>
 		try {
 			// DB
 			newErrorPath = "#cgi.path_info##len(cgi.query_string) ? "?" : ""##cgi.query_string#";
@@ -453,7 +454,7 @@
 				notFound = notFound.save();
 			}
 		} catch(e) {
-		}		
+		}
 	</cfscript>
 </cffunction>
 
@@ -465,18 +466,18 @@
 	<cfargument name="cc" default="">
 	<cfargument name="subject" default="">
 	<cfargument name="apiKey" default="xyz">
-	<cfargument name="html" default=""> 
+	<cfargument name="html" default="">
 	<cfargument name="txt" default="">
-	<cfmail        
+	<cfmail
 		type="html"
-		from="#arguments.from#" 
-		to="#arguments.mailTo#" 
-		bcc="#arguments.bcc#" 
-		cc="#arguments.cc#"        
-		subject="(#request.site.domain#) #arguments.subject#">   
-			 
+		from="#arguments.from#"
+		to="#arguments.mailTo#"
+		bcc="#arguments.bcc#"
+		cc="#arguments.cc#"
+		subject="(#request.site.domain#) #arguments.subject#">
+
 		#arguments.html#
-		
+
 	</cfmail>
 </cffunction>
 
@@ -492,16 +493,16 @@
     function getSeason(){
         var currentdatetime = DateFormat(now(), "MMDD");
         var season = "";
-		
+
         var springbegin = "0321";
-        var springend = "0620"; 
-		
+        var springend = "0620";
+
         var summerbegin = "0621";
         var summerend = "0922";
-		
+
         var fallbegin = "0923";
         var fallend = "1110";
-		
+
 		var blackbegin = "1111";
         var blackend = "1129";
 
@@ -510,10 +511,10 @@
 
         var Christmasbegin = "1205";
         var Christmasend = "1231";
-		
+
         var winterbegin = "0101";
-        var winterend = "0320";		
-		
+        var winterend = "0320";
+
         if ((currentdatetime gte springbegin) and (currentdatetime lte springend)){
             season = "Spring";
         } else if ((currentdatetime gte summerbegin) and (currentdatetime lte summerend)){
@@ -528,20 +529,20 @@
             season = "Cyber Week";
         } else if ((currentdatetime gte Christmasbegin) and (currentdatetime lte Christmasend)){
             season = "Christmas";
-        } 
+        }
         return season;
     }
 </cfscript>
 
 <cffunction name="cleanString">
-	<cfargument name="inputString" default=""> 
-	<cfset inputString = Trim(Replace(inputString, Chr(10), "<br />", "ALL"))>   
-	<cfset inputString = Trim(Replace(inputString, Chr(13), "<br />", "ALL"))>   
+	<cfargument name="inputString" default="">
+	<cfset inputString = Trim(Replace(inputString, Chr(10), "<br />", "ALL"))>
+	<cfset inputString = Trim(Replace(inputString, Chr(13), "<br />", "ALL"))>
     <cfreturn REReplace(inputString,"(?!</?\b(p|bold|strike|sub|sup|span|font|a|br|hr|b|strong)\b[^>]*?>)</?[a-z]+?[^>]*?>","","ALL")>
 </cffunction>
 
 <cffunction name="removeHtml">
-	<cfargument name="inputString" default=""> 
+	<cfargument name="inputString" default="">
     <cfreturn REReplace(inputString, "<[\/]?[^>]*>","","ALL")>
 </cffunction>
 

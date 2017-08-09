@@ -1,0 +1,43 @@
+version: '2.1'
+
+services:
+  #wheelie Server
+  wheelie_demo_cfml:
+    build: .
+    environment:
+      PORT: 8080
+      SSL_PORT: 8443
+      CFENGINE: lucee@5
+      CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
+      WHEELIE_ADMIN_USERNAME: admin
+      WHEELIE_ADMIN_PASSWORD: admin
+      WHEELIE_ADMINEMAIL: example@localhost.com
+      WHEELIE_APPRELOADKEY: appreload
+      WHEELIE_DATASOURCE: wheelie
+      WHEELIE_DATABASE: wheelie
+      WHEELIE_DBTYPE: mysql
+      WHEELIE_DBUSERNAME: root
+      WHEELIE_DBPASSWORD: NOT_SECURE_CHANGE
+      WHEELIE_DBHOST: wheelie_demo_mysql
+      WHEELIE_DBPORT: 3306
+      WHEELIE_SITEIDINURLS: "false"
+      WHEELIE_INDEXFILEINURLS: "false"
+      LUCEE_JAVA_OPTS: "-Xms512m -Xmx1024m"
+    volumes:
+        - ../../../:/app
+    ports:
+        - "8080:8080"
+
+  #MySQL
+  wheelie_demo_mysql:
+    image: mysql:latest
+    environment:
+        MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
+        MYSQL_DATABASE: wheelie
+    volumes:
+        - wheelie_demo_mysql_data:/var/lib/mysql
+    ports:
+        - "55555:3306"
+
+volumes:
+    wheelie_demo_mysql_data:

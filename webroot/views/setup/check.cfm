@@ -1,4 +1,4 @@
-<cfscript>	
+<cfscript>
 	if(!isNull(url.reload)) {
 		structDelete(application.wheels, "dbtype");
 		structDelete(application, "dbSetupCheck");
@@ -7,9 +7,12 @@
 
 	if(!application.wheels.containsKey("dbtype")) {
 		application.wheels.dbtype = getSqlAdapter(application.wheels.dataSourceName);
-	}	
+	}
 
 	if(!application.containsKey("dbSetupCheck")) setupDatabase();
+	string function keepSingleQuotes(str) output=false {
+			return preserveSingleQuotes(arguments.str);
+		}
 	function setupDatabase() {
 
 		cfdbinfo(name="dbtables",type="tables",datasource=application.wheels.dataSourceName);
@@ -21,17 +24,26 @@
 			}
 		}
 
-		if(!tableExists && form.containsKey("setupDatabase") && form.setupDatabase) {	
+		if(!tableExists && form.containsKey("setupDatabase") && form.setupDatabase) {
 			var sqlPath = "/setup/wheelie";
 			if(application.wheels.dbtype eq "PostgreSQL") {
 				sqlPath &= ".psql";
+				var q = new Query(sql=FileRead(expandPath(sqlPath)),datasource=application.wheels.dataSourceName);
+				var loadDB = q.execute();
 			} else if(application.wheels.dbtype eq "MySQL") {
-				writeOutput("You are using MySql. Please go run the MySql script on your database:<br>/setup/wheelie.mysql"); abort;
+				sqlPath &= ".mysql";
+				var aSql = ListToArray(FileRead(expandPath(sqlPath)), ';');
+
+				for (var x=1 ; x<=arrayLen(aSql) - 1 ; x++ ) {
+					if ( len( trim( aSql[x] ) ) ) {
+						cfquery(datasource=application.wheels.dataSourceName) {
+							writeOutput( keepSingleQuotes(aSql[x]) );
+						}
+					}
+				}
 			} else {
 				throw("#application.wheels.dbtype# is not supported by Wheelie. Feel free to add support and send pull request.");
 			}
-			var q = new Query(sql=FileRead(expandPath(sqlPath)),datasource=application.wheels.dataSourceName);
-			var loadDB = q.execute();
 		} else if(!tableExists) {
 			include template="/views/setup/dbconfirm.cfm"; abort;
 		} else {
@@ -48,7 +60,7 @@
 		if(!application.containsKey("appSettings") && qSettings.recordcount && isJson(qSettings.content)) {
 			application.appSettings = deserializeJson(qSettings.content);
 		} else if (!qSettings.recordcount && form.containsKey("firstTimeSetupInstall")) {
-			var SQL =  "INSERT INTO options 
+			var SQL =  "INSERT INTO options
 					(id,siteid,content)
 	             	VALUES
 	            	('site_settings',0,'#serializeJSON(FORM)#')";

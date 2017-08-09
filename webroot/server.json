@@ -4,14 +4,20 @@
     "web":{
         "http":{
             "host":"localhost",
-            "port":60000
+            "port":"8080"
         },
         "rewrites":{
             "enable":true,
             "config":"urlrewrite.xml"
-        }
+        },
+        "ssl":{
+            "port":"8443"
+        },
+        "host":"0.0.0.0"
     },
     "app":{
-        "cfengine":"lucee@5"
-    }
+        "cfengine":"lucee@5",
+        "serverHomeDirectory":"/root/serverHome"
+    },
+    "openbrowser":"false"
 }

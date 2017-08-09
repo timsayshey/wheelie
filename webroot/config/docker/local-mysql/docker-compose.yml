@@ -1,0 +1,43 @@
+version: '2.1'
+
+services:
+  #Mura Server
+  wheelie_cfml:
+    image: ortussolutions/commandbox:latest
+    environment:
+      PORT: 8080
+      SSL_PORT: 8443
+      CFENGINE: lucee@5
+      CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
+      WHEELIE_ADMIN_USERNAME: admin
+      WHEELIE_ADMIN_PASSWORD: admin
+      WHEELIE_ADMINEMAIL: example@localhost.com
+      WHEELIE_APPRELOADKEY: appreload
+      WHEELIE_DATASOURCE: wheelie
+      WHEELIE_DATABASE: wheeliedb
+      WHEELIE_DBTYPE: mysql
+      WHEELIE_DBUSERNAME: root
+      WHEELIE_DBPASSWORD: NOT_SECURE_CHANGE
+      WHEELIE_DBHOST: wheelie_mysql
+      WHEELIE_DBPORT: 3306
+      WHEELIE_SITEIDINURLS: "false"
+      WHEELIE_INDEXFILEINURLS: "true"
+      WHEELIE_TESTBOX: "true"
+    volumes:
+        - ../../../:/app
+    ports:
+        - "8080:8080"
+
+  #MySQL
+  wheelie_mysql:
+    image: mysql:latest
+    environment:
+        MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
+        MYSQL_DATABASE: wheeliedb
+    volumes:
+        - wheelie_mysql_data:/var/lib/mysql
+    ports:
+        - "55555:3306"
+
+volumes:
+    wheelie_mysql_data:
