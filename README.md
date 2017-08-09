@@ -19,21 +19,6 @@ cd wheelie
 docker-compose -f config/docker/local-mysql/docker-compose.yml up
 ```
 
-Then go to the Lucee admin and add the Mysql Datasource running in Docker:
-http://localhost:8080/lucee/admin/web.cfm?action=services.datasource
-
-```
-DB Type: Mysql
-Datasource name: wheelie
-Host/Server: wheelie_mysql
-Database: wheeliedb
-Username: root
-Password: NOT_SECURE_CHANGE
-```
-
-You will also need to add an SMTP server otherwise you're going to have a bad time:
-http://localhost:8080/lucee/admin/web.cfm?action=services.mail
-
 Then access the application via:
 http://localhost:8080
 
@@ -43,6 +28,8 @@ To login go to http://localhost:8080/manager
 Username: admin@getwheelie.com
 Password: wheelie
 ```
+
+Configure your app here: `config/docker/local-mysql/docker-compose.yml`
 
 External MYSQL Connection Info:
 

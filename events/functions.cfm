@@ -1,16 +1,7 @@
 <cfoutput>
 	<cfscript>
 		request.fieldslist = "";
-
 		include "/models/services/global/functions.cfm";
-
-		setSiteInfo();
-
-		settingsFilePath = "/views/themes/#request.site.theme#/settings.cfm";
-		if(fileExists(expandPath(settingsFilePath)))
-		{
-			include "#settingsFilePath#";
-		}
 	</cfscript>
 
 	<cffunction name="getFieldVal">

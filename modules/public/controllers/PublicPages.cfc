@@ -9,7 +9,7 @@ component extends="_main" output="false"
 
 	function setCache()
 	{
-		caches(actions="page,geolanding,index", time=300);
+		//caches(actions="page,geolanding,index", time=300);
 	}
 
 	function shared() {

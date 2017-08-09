@@ -4,6 +4,7 @@
 	<script src="/assets/vendor/jquery-migrate-1.2.1.min.js"></script>
 	<script src="/assets/vendor/js/libs/modernizr.js" type="text/javascript"></script>
 	<script src="/assets/vendor/js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<!--- <script src="/views/layouts/admin/assets/js/adminmenu.js" type="text/javascript"></script> --->
 
 	<link href="/assets/css/shared.css" rel="stylesheet" type="text/css"/>

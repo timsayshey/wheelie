@@ -2,19 +2,15 @@
 	include template="/models/services/global/app/systemvars.cfm";
 	application.runtimeconfig = setRuntimeSettings();
 
-	// Initialize system settings
-	sitecfg = application.runtimeconfig;
-
-	application.wheels.reloadPassword 	= getSiteSetting("wheelsReloadPassword","wheelie");
-	application.wheels.dataSourceName	= getSiteSetting("wheelsdataSourceName","wheelie");
+	application.wheels.reloadPassword 	= getSiteSetting("WHEELIE_APPRELOADPASS","wheelie");
+	application.wheels.dataSourceName	= getSiteSetting("WHEELIE_DATASOURCE","wheelie");
 
 	application.wheels.youtubeDevKey	= getSiteSetting("youtubeDevKey");
 	application.wheels.stripeKey		= getSiteSetting("stripeKey");
-	application.wheels.passwordSalt		= getSiteSetting("passwordSalt","OkIeKNKoIvbZMFPuMJ3EMQ==");
+	application.wheels.passwordSalt		= getSiteSetting("WHEELIE_PASSWORDSALT","OkIeKNKoIvbZMFPuMJ3EMQ==");
 	/* AES HEX Key // passcrypt(type="generateKey"); */
 
-	include template="/views/setup/check.cfm";
-
+	sitecfg = application.runtimeconfig;
 	if(sitecfg.containsKey("s3enabled") && sitecfg.s3enabled) {
 
 		application.s3 = {
@@ -28,13 +24,13 @@
 		};
 	}
 
-	application.wheels.defaultEmail			= getSiteSetting("defaultEmail");
-	application.wheels.noReplyEmail			= getSiteSetting("noReplyEmail");
-	application.wheels.adminEmail			= application.wheels.defaultEmail;
-	application.wheels.errorEmailAddress	= application.wheels.defaultEmail;
-	application.wheels.adminFromEmail		= application.wheels.noReplyEmail;
+	application.wheels.defaultEmail			= getSiteSetting("WHEELIE_DEFAULTEMAIL");
+	application.wheels.noReplyEmail			= getSiteSetting("WHEELIE_NOREPLYEMAIL");
+	application.wheels.adminEmail			= getSiteSetting("WHEELIE_ADMINEMAIL");
+	application.wheels.errorEmailAddress	= getSiteSetting("WHEELIE_ERROREMAILADDRESS");
+	application.wheels.adminFromEmail		= getSiteSetting("WHEELIE_ADMINFROMEMAIL");
 
-	application.wheels.sendEmailOnError		= getSiteSetting("wheelsSendEmailOnError",true);
-	application.wheels.urlRewriting			= getSiteSetting("wheelsUrlRewriting","on");
-	application.wheels.rewriteFile 			= getSiteSetting("wheelsRewriteFile","index.cfm");
+	application.wheels.sendEmailOnError		= getSiteSetting("WHEELIE_EMAILONERROR",true);
+	application.wheels.urlRewriting			= getSiteSetting("WHEELIE_URLREWRITING","on");
+	application.wheels.rewriteFile 			= getSiteSetting("WHEELIE_REWRITEFILE","index.cfm");
 </cfscript>

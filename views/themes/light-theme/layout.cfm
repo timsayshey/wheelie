@@ -46,6 +46,9 @@
 
     <script src="#themeDir#assets/jquery.bxslider.min.js" type="text/javascript"></script>
     <script src="#themeDir#assets/jquery.placeholder.js" type="text/javascript"></script>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
     <script>
     $(function() {
         $('input, textarea').placeholder();

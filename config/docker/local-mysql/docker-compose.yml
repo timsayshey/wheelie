@@ -9,35 +9,44 @@ services:
       SSL_PORT: 8443
       CFENGINE: lucee@5
       CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
-      WHEELIE_ADMIN_USERNAME: admin
-      WHEELIE_ADMIN_PASSWORD: admin
-      WHEELIE_ADMINEMAIL: example@localhost.com
-      WHEELIE_APPRELOADKEY: appreload
+      WHEELIE_APPRELOADPASS: woot
+      WHEELIE_DEFAULTEMAIL: default@getwheelie.com
+      WHEELIE_NOREPLYEMAIL: noreply@getwheelie.com
+      WHEELIE_ADMINEMAIL: admin@getwheelie.com
+      WHEELIE_ERROREMAILADDRESS: error@getwheelie.com
+      WHEELIE_ADMINFROMEMAIL: admin@getwheelie.com
+      WHEELIE_EMAILONERROR: "true"
+      WHEELIE_URLREWRITING: "on"
+      WHEELIE_REWRITEFILE: index.cfm
+      WHEELIE_PASSWORDSALT: OkIeKNKoIvbZMFPuMJ3EMQ==
+      WHEELIE_ADMINURLPATH: /manager
       WHEELIE_DATASOURCE: wheelie
       WHEELIE_DATABASE: wheeliedb
       WHEELIE_DBTYPE: mysql
       WHEELIE_DBUSERNAME: root
       WHEELIE_DBPASSWORD: NOT_SECURE_CHANGE
-      WHEELIE_DBHOST: wheelie_mysql
+      WHEELIE_DBHOST: wheelie_mysql_db
       WHEELIE_DBPORT: 3306
-      WHEELIE_SITEIDINURLS: "false"
-      WHEELIE_INDEXFILEINURLS: "true"
-      WHEELIE_TESTBOX: "true"
+      WHEELIE_SMTP_SERVER: smtp.sendgrid.net
+      WHEELIE_SMTP_USERNAME: yoursendgridusername
+      WHEELIE_SMTP_PASSWORD: sendgridpass
+      WHEELIE_SMTP_PORT: 587
+      WHEELIE_SMTP_USETLS: "true"
     volumes:
         - ../../../:/app
     ports:
         - "8080:8080"
 
   #MySQL
-  wheelie_mysql:
+  wheelie_mysql_db:
     image: mysql:latest
     environment:
         MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
         MYSQL_DATABASE: wheeliedb
     volumes:
-        - wheelie_mysql_data:/var/lib/mysql
+        - wheelie_mysql_db_data:/var/lib/mysql
     ports:
         - "55555:3306"
 
 volumes:
-    wheelie_mysql_data:
+    wheelie_mysql_db_data:

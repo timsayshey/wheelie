@@ -4,12 +4,14 @@
     "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 
 <urlrewrite>
-	<rule enabled="true">
-	    <note>If the request is for Lucee admin, don't process any further rules</note>
-	    <from>^/lucee/admin/server(.*)</from>
-	    <to>/index.cfm</to>
-	    <set type="status">404</set>
-	</rule>
+	<!--
+		<rule enabled="true">
+		    <note>If the request is for Lucee admin, don't process any further rules</note>
+		    <from>^/lucee/admin/server(.*)</from>
+		    <to>/index.cfm</to>
+		    <set type="status">404</set>
+		</rule>
+	-->
 	<rule enabled="true">
 		<name>CFWheels pretty URLs</name>
 		<condition type="request-uri" operator="notequal">^/(flex2gateway|jrunscripts|models/services/vendor|cfide|cfformgateway|cffileservlet|lucee|files|images|javascripts|miscellaneous|stylesheets|assets|views|robots.txt|favicon.ico|sitemap.xml|rewrite.cfm|index.cfm)</condition>

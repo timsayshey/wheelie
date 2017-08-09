@@ -12,32 +12,9 @@
 			!isNull(url.password) and
 			!isNull(application.wheels.reloadPassword) and
 			url.password eq application.wheels.reloadPassword
-		)
-		{
+		) {
 			isReload = true;
 		}
-
-		// if (!structKeyExists(application, 'markdown') or isReload) {
-
-		// 	// Directory containing all the necessary jar files.
-		// 	jarDir = expandPath("/models/services/vendor/cfmarkdown");
-
-		// 	// Array of necessary classes
-		// 	jClass = [
-	 //        "#jarDir#/parboiled-java-1.1.3.jar"
-	 //        ,"#jarDir#/asm-all-4.1.jar"
-	 //        ,"#jarDir#/parboiled-core-1.1.3.jar"
-	 //        ,"#jarDir#/pegdown-1.2.1.jar"
-	 //        ];
-		// 	javaloader = createObject('component','models.services.vendor.javaloader.JavaLoader').init(jClass, false);
-
-		// 	// Hex values for different extensions can be found in org.pegdown.Extensions.java (0x20 is for tables support)
-
-		// 	// Output the HTML conversion --->
-		// 	//<cfoutput>#variables.pegdown.markdownToHtml(markdownString)#</cfoutput>
-		// 	application.markdown = javaloader.create("org.pegdown.PegDownProcessor").init(javaCast("int", InputBaseN("0x20", 16)));;
-		// }
-		// markdown = application.markdown;
 
 		// Setup Underscore.cfc
 		if (!structKeyExists(application, '_') or isReload) {
@@ -56,51 +33,17 @@
 			application.validateit = CreateObject("component","models.services.vendor.validateit").init();
 		}
 
-		/* Setup VideoConverter
-		if (!structKeyExists(application, 'videoConverter') or isReload) {
-			videoFileMgr = CreateObject("component","models.services.vendor.videoconverter.FileMgr").init(info.fileuploads,info.uploadsPath);
-			application.videoConverter = CreateObject("component","models.services.vendor.videoconverter.VideoConverter").init(videoFileMgr);
-		}*/
-
 		// Setup filemanager
 		application.fileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.fileuploads,info.uploadsPath);
-
-		// Setup private filemanager
-		// if (!structKeyExists(application, 'privatefileMgr') or isReload) {
-		// 	application.privateFileMgr = CreateObject("component","models.services.vendor.filemgr").init(info.privateroot,info.privateRootPath);
-		// }
 
 		// Setup pagination
 		application.pagination = CreateObject("component","models.services.vendor.pagination").init();
 
-		//writeDump(application.pagination); abort;
-
 		// Make them accessible from local scope
 		include "/models/services/global/init/setservices.cfm";
 	</cfscript>
-
-	<!--- Set User Permissions --->
-	<cfif isNull(application.rbs.permissionsQuery) or isReload>
-		<cfscript>
-			q = new query( datasource="wheelie" );
-	        q.addParam( name="lastModifiedTime", cfsqltype="cf_sql_timestamp", value=now());
-	        application.rbs.permissionsQuery = q.execute( sql="SELECT * FROM permissions" ).getResult();
-		</cfscript>
-
-		<!--- Get role columns from permissions table - removed non role columns - convert array to remove list nulls - convert back to list --->
-		<cfset application.rbs.roleslist = ArrayToList(ListToArray(ReplaceList(lcase(application.rbs.permissionsQuery.columnList),lcase("CREATEDBY,UPDATEDBY,UPDATEDAT,CREATEDAT,DELETEDAT,DELETEDBY"),"")))>
-		<cfset application.rbs.roleslist = replaceNoCase(application.rbs.roleslist, "ID,", "")>
-		<cfloop list="#application.rbs.roleslist#" index="thisRole">
-			<cfloop query="application.rbs.permissionsQuery">
-				<cfscript>
-					application.rbs.permission["#id#"]["#thisRole#"]		= application.rbs.permissionsQuery["#thisRole#"];
-				</cfscript>
-			</cfloop>
-		</cfloop>
-	</cfif>
-
+	
 	<!--- Custom Overrides --->
 	<cfinclude template="/models/services/global/app/app.cfm">
 
 </cfoutput>
-

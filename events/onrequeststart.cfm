@@ -1,15 +1,20 @@
 <cfscript>
+	include template="/views/setup/check.cfm";
 	setSiteInfo();
 
 	include "/models/services/global/settings.cfm";
+
+	settingsFilePath = "/views/themes/#request.site.theme#/settings.cfm";
+	if(fileExists(expandPath(settingsFilePath))) {
+		include "#settingsFilePath#";
+	}
 
 	thisSiteUrl = "http://#request.site.domain#";
 
 	if(
 		isNull(session.referer) AND len(trim(cgi.http_referer)) AND
 		(len(cgi.http_referer) GTE thisSiteUrl AND Left(cgi.http_referer,len(thisSiteUrl)) NEQ thisSiteUrl OR len(cgi.http_referer) LT thisSiteUrl)
-	)
-	{
+	) {
 		session.referer = cgi.http_referer;
 	}
 
@@ -42,5 +47,3 @@
 <cfcookie name="cftoken" domain="#request.site.domain#" value="#session.cftoken#"> --->
 
 <cfset application.wheels.errorEmailAddress=application.wheels.adminFromEmail>
-
-
