@@ -1,9 +1,0 @@
-.tags
-.htaccess
-target
-Procfile
-WEB-INF/lucee
-!WEB-INF/lucee/lucee-web.xml.cfm
-WEB-INF/lib
-WEB-INF/lucee-server
-!WEB-INF/lucee-server/lucee-server.xml

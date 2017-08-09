@@ -1,4 +1,0 @@
-<cfoutput>
-
-	#asdf
-</cfoutput>

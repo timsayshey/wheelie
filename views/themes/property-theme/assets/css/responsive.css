@@ -1,0 +1,346 @@
+/* Responsive styles
+================================================== */
+
+/* Large Devices, Wide Screens */
+@media (min-width : 1200px) {
+	.dropdown i{
+		display: none;
+	}
+}
+
+
+/* Medium Devices, Desktops */
+@media (min-width : 992px) {
+	
+.navbar-custom .navbar-nav > li > a {
+	padding: 16px 15px;
+	letter-spacing: 0px;
+	font-size: 12px;
+}
+}
+
+/* Small Devices, Tablets */
+@media (min-width : 768px) and (max-width: 991px) {
+
+
+.navbar-custom .navbar-nav > li > a {
+	padding: 16px 7px;
+	letter-spacing: 0px;
+	font-size: 12px;
+}
+.navbar-brand i{
+	margin-right: 0px;
+	font-size: 16px;
+	line-height: 16px;
+}
+
+/*Flex slider==============*/
+.flex-caption {
+    top: 20%;
+}
+.flexslider .slides img{
+	height: 800px;
+}
+
+/*about ====================*/
+.about-box h4{
+	font-size: 14px;
+}
+
+/*Counter===============*/
+.counter-inner{
+	margin-bottom: 60px;
+}
+.counter-box{
+	margin-bottom: 50px;
+}
+
+
+/*subscribe======================*/
+#section-subscribe {
+    
+}
+.subscribe-inner{
+	text-align: center;
+}
+
+.subscribe-form{
+	margin-top: 40px;
+}
+.subscribe-form .btn-primary {
+    width: 100%;
+}
+#portfolio-tab a img{
+    width: 100%;
+    height: 180px;
+}
+
+.nav-tabs > li.col-md-4{
+    padding: 0px;
+}
+
+
+/*Pricing==========================*/
+.pricing-box{
+	margin-bottom: 20px;
+}
+
+/*Team==============================*/
+.team-box{
+	margin-bottom: 30px;
+}
+
+/*blog========================*/
+.blog-top-desc {
+    margin-bottom: 20px;
+}
+.blog-date{
+	width: 65px;
+	height: 65px;
+}
+.blog-top-desc h4 {
+    line-height: 25px;
+}
+.footer-socail {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.copy{
+	text-align: center;
+}
+
+
+}
+
+/* Small Devices Potrait */
+@media (max-width : 767px){
+
+	
+}
+
+/* Extra Small Devices, Phones */ 
+@media (min-width : 480px) and (max-width:767px){
+	
+.navbar-custom .navbar-nav > li > a {
+    padding: 8px 16px;
+ }
+
+ .about-wrap {
+    margin-top: 30px;
+}
+
+.service-inner .btn-primary.grey {
+    margin-top: 60px;
+}
+
+
+
+/* Main  Slider==============================*/
+#section-slider.flexslider{
+	height: auto;
+	height: 900px;
+}
+.flex-caption {
+	top: 10%;
+	width: 100%;
+}
+.flex-caption h4{
+	font-size: 20px;
+	line-height: 36px;
+}
+.flex-caption p{
+	font-size: 14px;
+	line-height: 26px;
+}
+.flexslider .slides img{
+	height: 800px;
+}
+
+/*Counter===============*/
+.counter-inner{
+	margin-bottom: 60px;
+	text-align: center;
+}
+.counter-box{
+	margin-bottom: 50px;
+}
+#portfolio-tab a img{
+    width: 100%;
+    height: 180px;
+}
+
+/*subscribe======================*/
+#section-subscribe {
+    padding: 60px 20px;
+}
+
+/*Pricing==========================*/
+.pricing-box{
+	margin-bottom: 20px;
+}
+
+/*Team==============================*/
+.team-box{
+	margin-bottom: 30px;
+}
+
+/*testimonial==================*/
+#testimonial-carousel .carousel-indicators {
+    top: 65%;
+}
+#testimonial-carousel .carousel-indicators li {
+    width: 40px;
+    height: 40px;
+}
+#testimonial-carousel .carousel-indicators {
+	margin-top: 125px;
+}
+
+.client-carousel {
+    margin-top: 100px;
+}
+
+/*Blog==============================================*/
+.blog-box{
+	margin-bottom: 30px;
+}
+/*Contact========================================*/
+.contact-info{
+	margin-bottom: 30px;
+}
+
+.footer-socail{
+	text-align: center;
+}
+.footer-socail li {
+	padding: 0px;
+}
+.footer-socail li a {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+
+.footer-socail li a i {
+    padding-top: 8px;
+    font-size: 12px;
+}
+.copy{
+	text-align: center;
+}
+		
+
+}
+
+/* Custom, iPhone Retina */ 
+@media (min-width : 320px) and (max-width: 478px)  {
+
+
+.navbar-custom .navbar-nav > li > a {
+    padding: 8px 16px;
+ }
+
+
+ .about-wrap {
+    margin-top: 30px;
+}
+
+.service-inner .btn-primary.grey {
+    padding: 10px 20px;
+    margin-top: 60px;
+}
+
+
+/* Main  Slider==============================*/
+#section-slider.flexslider{
+	height: auto;
+	height: 900px;
+}
+.flex-caption {
+	top: 10%;
+	width: 100%;
+}
+.flex-caption h4{
+	font-size: 20px;
+	line-height: 36px;
+}
+.flex-caption p{
+	font-size: 14px;
+	line-height: 26px;
+}
+.flexslider .slides img{
+	height: 800px;
+}
+
+/*Counter===============*/
+.counter-inner{
+	margin-bottom: 60px;
+	text-align: center;
+}
+.counter-box{
+	margin-bottom: 50px;
+}
+
+
+/*subscribe======================*/
+#section-subscribe {
+    padding: 60px 20px;
+}
+
+/*Pricing==========================*/
+.pricing-box{
+	margin-bottom: 20px;
+}
+
+/*Team==============================*/
+.team-box{
+	margin-bottom: 30px;
+}
+
+/*testimonial==================*/
+#testimonial-carousel .carousel-indicators {
+    top: 65%;
+}
+#testimonial-carousel .carousel-indicators li {
+    width: 40px;
+    height: 40px;
+}
+#testimonial-carousel .carousel-indicators {
+	margin-top: 125px;
+}
+
+
+
+/*Blog==============================================*/
+.blog-box{
+	margin-bottom: 30px;
+}
+/*Contact========================================*/
+.contact-info{
+	margin-bottom: 30px;
+}
+
+.footer-socail{
+	text-align: center;
+}
+.footer-socail li {
+	padding: 0px;
+}
+.footer-socail li a {
+    display: inline-block;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    color: #DDD;
+    border: 1px solid #444;
+}
+
+
+.footer-socail li a i {
+    padding-top: 8px;
+    font-size: 12px;
+}
+
+}
