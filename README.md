@@ -1,13 +1,12 @@
 # Wheelie CMS
 
-##### Built on CFWheels and Lucee - Inspired by Wordpress and Xindi**
+##### Built on CFWheels and Lucee 5 - Inspired by Wordpress and Xindi
 
 Wheelie is an open source content management system for CFML, created by [EiQ Interactive LLC](https://eiqinteractive.com). wheelie has been designed to be used by marketing departments, web designers and developers.
 
 ##### Demo: [https://wheeliecms.herokuapp.com](https://wheeliecms.herokuapp.com)
 ##### Note: If you get an "Application Error" message just hit refresh, that's a Heroku bug caused by sleep mode
 
-=======
 ## Getting started
 
 For those with Docker installed:
@@ -16,7 +15,7 @@ Start up a demo instance pre-populated with content:
 
 ```
 git clone https://github.com/timsayshey/wheelie.git
-cd wheelieCMS
+cd wheelie
 docker-compose -f config/docker/local-mysql/docker-compose.yml up
 ```
 
