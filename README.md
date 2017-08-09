@@ -11,7 +11,7 @@ Wheelie is an open source content management system for CFML, created by [EiQ In
 
 For those with Docker installed:
 
-Start up a demo instance pre-populated with content:
+Start up a local instance pre-populated with content:
 
 ```
 git clone https://github.com/timsayshey/wheelie.git
