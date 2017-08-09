@@ -2,7 +2,7 @@
 
 ##### Built on CFWheels and Lucee 5 - Inspired by Wordpress and Xindi
 
-Wheelie is an open source content management system for CFML, created by [EiQ Interactive LLC](https://eiqinteractive.com). wheelie has been designed to be used by marketing departments, web designers and developers.
+Wheelie is an open source content management system for CFML, created by [EiQ Interactive LLC](https://eiqinteractive.com). Wheelie was designed to be used by marketing departments, web designers and developers.
 
 ##### Demo: [https://wheeliecms.herokuapp.com](https://wheeliecms.herokuapp.com)
 ##### Note: If you get an "Application Error" message just hit refresh, that's a Heroku bug caused by sleep mode
