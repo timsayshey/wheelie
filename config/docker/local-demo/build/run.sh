@@ -139,7 +139,7 @@ box server start
 #Sleep for ACF servers
 sleep 10
 
-echo "Initializing Mura..."
+echo "Initializing Wheelie..."
 
 curl -s --location "http://localhost:8080" > /dev/null
 

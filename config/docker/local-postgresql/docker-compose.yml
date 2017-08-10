@@ -1,7 +1,6 @@
 version: '2.1'
 
 services:
-  #Mura Server
   wheelie_cfml:
     image: ortussolutions/commandbox:latest
     depends_on:
