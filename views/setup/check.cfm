@@ -80,6 +80,7 @@
 			if(findNoCase("datasource",e.message)) {
 				include template="/views/setup/datasource.cfm"; abort;
 			}
+			writeDump(e); abort;
 		}
 
 		if (FindNoCase("SQLServer", loc.info.driver_name) || FindNoCase("SQL Server", loc.info.driver_name))

@@ -3,7 +3,7 @@
     "force":true,
     "web":{
         "http":{
-            "host":"localhost",
+            "enable":true,
             "port":"8080"
         },
         "rewrites":{
@@ -11,6 +11,7 @@
             "config":"urlrewrite.xml"
         },
         "ssl":{
+            "enable":true,
             "port":"8443"
         },
         "host":"0.0.0.0"
@@ -19,5 +20,10 @@
         "cfengine":"lucee@5",
         "serverHomeDirectory":"/root/serverHome"
     },
-    "openbrowser":"false"
+    "openbrowser":"false",
+    "JVM":{
+        "args":"-Dcom.sun.net.ssl.enableECC=false",
+        "minHeapSize":"2048",
+        "heapSize":"2048"
+    }
 }

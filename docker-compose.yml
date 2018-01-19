@@ -2,11 +2,11 @@ version: '2.1'
 
 services:
   wheelie_cfml:
-    image: ortussolutions/commandbox:latest
+    image: ortussolutions/commandbox:lucee5
     environment:
       PORT: 8080
       SSL_PORT: 8443
-      CFENGINE: lucee@5
+      CFENGINE: lucee@5.2.4+37
       CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
       WHEELIE_APPRELOADPASS: wheelie
       WHEELIE_DEFAULTEMAIL: default@getwheelie.com
@@ -32,20 +32,36 @@ services:
       WHEELIE_SMTP_PORT: 587
       WHEELIE_SMTP_USETLS: "true"
     volumes:
-        - ../../../:/app
+      - .:/app
     ports:
-        - "8080:8080"
+      - "80:8080"
+      - "443:8443"
+    networks:
+      - dbnet
+    # depends_on:
+    #   mysql:
+    #       condition: service_healthy
 
-  #MySQL
   wheelie_mysql_db:
     image: mysql:latest
-    environment:
-        MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
-        MYSQL_DATABASE: wheeliedb
-    volumes:
-        - wheelie_mysql_db_data:/var/lib/mysql
     ports:
-        - "55555:3306"
+      - "55555:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'NOT_SECURE_CHANGE'
+      MYSQL_DATABASE: wheeliedb
+      MYSQL_USER: 'wheelie'
+      MYSQL_PASSWORD: 'NOT_SECURE_CHANGE'
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin -h 'localhost' -u root -pB@nneroftruth1989 ping --silent"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - ./build/docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./build/docker/mysql/data:/var/lib/mysql
+    networks:
+      - dbnet
 
-volumes:
-    wheelie_mysql_db_data:
+networks:
+  dbnet:
+    driver: bridge

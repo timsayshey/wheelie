@@ -3,3 +3,4 @@ WEB-INF/lucee
 WEB-INF/lib
 WEB-INF/lucee-server
 !WEB-INF/lucee-server/lucee-server.xml
+build/docker/mysql/data
