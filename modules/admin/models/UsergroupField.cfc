@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Set
 			table("metafields");
 			property(name="metafieldType", defaultValue="usergroupfield");
@@ -26,21 +25,17 @@
 		}
 
 		// Clean strings
-		private function sanitizeIdentifier()
-		{
-			if(!isNull(this.identifier) AND len(this.identifier))
-			{
+		private function sanitizeIdentifier() {
+			if(!isNull(this.identifier) AND len(this.identifier)) {
 				this.identifier 	= lcase(cleanUrlId(this.identifier));
 			}
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "metafieldType='usergroup'#wherePermission('Usergroupfield','AND')#";
 		}
 
-		function metafieldInfo()
-		{
+		function metafieldInfo() {
 			return {
 				singular		= "Usergroup",
 				plural			= "Usergroups",

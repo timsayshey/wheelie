@@ -60,11 +60,9 @@ function enableSaveAndUpdateOutput()
 	$.post(
 		$("form").attr("action"),
 		$("form").serialize(),
-		function(data, textStatus, jqXHR)
-		{
+		function(data, textStatus, jqXHR) {
 			//alert("Success.");
-		}).fail(function(jqXHR, textStatus, errorThrown)
-		{
+		}).fail(function(jqXHR, textStatus, errorThrown) {
 			alert("Sorry, an error prevented your changes from saving. Please try again.");
 		}
 	);

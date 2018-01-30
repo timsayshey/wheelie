@@ -8,8 +8,7 @@ component extends="_main" output="false"
 
 	private function loggedOutOnly()
 	{
-		if(StructKeyExists(session,"user"))
-		{
+		if(StructKeyExists(session,"user")) {
 			redirectTo(route="public~itemsAction", action="index");
 		}
 	}
@@ -42,8 +41,7 @@ component extends="_main" output="false"
 			var userResult = false;
 			var usergroupJoinResult = false;
 
-			if( !len(trim(params.user.company)) || !len(trim(params.user.about)) )
-			{
+			if( !len(trim(params.user.company)) || !len(trim(params.user.about)) ) {
 				!len(trim(params.user.company)) ? user.addErrorToBase(message="Company name is required.") : false;
 				!len(trim(params.user.about)) ? user.addErrorToBase(message="About company is required.") : false;
 			} else {
@@ -57,8 +55,7 @@ component extends="_main" output="false"
 			}
 
 			// Insert or update user object with properties
-			if (userResult && usergroupJoinResult)
-			{
+			if (userResult && usergroupJoinResult) {
 
 				flashInsert(success="We sent you an email with a link to verify your email address. Check your spam.");
 
@@ -88,9 +85,7 @@ component extends="_main" output="false"
 				session.user.id = user.id;
 				transaction action="commit";
 				redirectTo(route="public~itemsAction", action="index");
-			}
-			else
-			{
+			} else {
 				transaction action="rollback";
 				errorMessagesName = "user";
 				flashInsert(error="There was an error.");

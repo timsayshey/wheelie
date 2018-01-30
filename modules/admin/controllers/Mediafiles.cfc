@@ -16,8 +16,7 @@ component extends="_main" output="false"
 		var sortOrder = 0;
 		for(var id in params.orderValues) {
 			var mediafile = model(getMediafileType()).findOne(where="fileid = '#id#'");
-			if(isObject(mediafile))
-			{
+			if(isObject(mediafile)) {
 				mediafile.update(sortorder=sortOrder++,validate=false);
 			}
 		}
@@ -30,11 +29,9 @@ component extends="_main" output="false"
 	{
 		var data = {};
 
-		if(!isNull(form.file) AND len(form.file) AND FileExists(form.file))
-		{
+		if(!isNull(form.file) AND len(form.file) AND FileExists(form.file)) {
 			var imageid = CreateUUID();
-			if(uploadImage("file",imageid))
-			{
+			if(uploadImage("file",imageid)) {
 				data.fileid = imageid;
 				data.type = "image";
 				data.modelid = params.modelid;
@@ -56,8 +53,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 
-		if(!isNull(arguments.filename))
-		{
+		if(!isNull(arguments.filename)) {
 			if(arguments.containsKey("field")) {
 				var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
 				var theFile = result.serverdirectory & "/" & result.serverFile;
@@ -119,16 +115,12 @@ component extends="_main" output="false"
 		mediafileInfo = model(getMediafileType()).mediafileInfo();
 		mediafileType = getMediafileType();
 
-		if(!isNull(params.modelid))
-		{
+		if(!isNull(params.modelid)) {
 			buttonParams = "modelid=#params.modelid#";
 		}
-		else if (!isNull(params.id))
-		{
+		else if (!isNull(params.id)) {
 			buttonParams = "modelid=#params.id#";
-		}
-		else
-		{
+		} else {
 			buttonParams = "";
 		}
 	}
@@ -137,8 +129,7 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(!isNull(params.modelid))
-		{
+		if(!isNull(params.modelid)) {
 			mediafiles = model(getMediafileType()).findAll(where="modelid = #params.modelid# AND mediafileType = '#getMediafileType()#'", order="sortorder ASC");
 		}
 	}
@@ -147,14 +138,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			Value = orderValues[i];
 
 			mediafile = model(getMediafileType()).findOne(where="id = #Value.Id#");
 
-			if(isObject(mediafile))
-			{
+			if(isObject(mediafile)) {
 				mediafile.update(sortorder=Value.newIndex,validate=false);
 			}
 		}
@@ -165,8 +154,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		mediafiles = model(getMediafileType()).findByKey(params.id);
-		if(mediafiles[params.col] eq 1)
-		{
+		if(mediafiles[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -204,18 +192,15 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			mediafile = model(getMediafileType()).findAll(where="id = '#params.id#'#wherePermission("Mediafile","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(mediafile))
-			{
+			if(ArrayLen(mediafile)) {
 				mediafile = mediafile[1];
 			}
 
 			// meta not found?
-			if (!IsObject(mediafile))
-			{
+			if (!IsObject(mediafile)) {
 				flashInsert(error="Not found");
 				redirectTo(
 					route		= "admin~Mediafile",
@@ -235,8 +220,7 @@ component extends="_main" output="false"
 		sharedData();
 
 		// Get mediafile object
-		if(!isNull(params.mediafile.id))
-		{
+		if(!isNull(params.mediafile.id)) {
 			mediafile = model(getMediafileType()).findByKey(params.mediafile.id);
 			saveResult = mediafile.update(params.mediafile);
 		} else {
@@ -260,8 +244,7 @@ component extends="_main" output="false"
 		var mediafile = model(getMediafileType()).findOne(where="fileid = '#params.fileid#'");
 		var response = {};
 
-		if(IsObject(mediafile) && mediafile.delete())
-		{
+		if(IsObject(mediafile) && mediafile.delete()) {
 			response = {"success":true,"msg":"The media was deleted successfully."};
 		} else {
 			response = {"success":false,"msg":"The media could not be found."};

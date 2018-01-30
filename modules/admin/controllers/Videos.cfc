@@ -19,8 +19,7 @@ component extends="_main" output="false"
 
 	function video()
 	{
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			video = model("video").findAll(where="id = '#params.id#'");
 		}
 	}
@@ -29,14 +28,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			sortVal = orderValues[i];
 
 			sortItem = model("Video").findOne(where="id = #sortVal.fieldId#");
 
-			if(isObject(sortItem))
-			{
+			if(isObject(sortItem)) {
 				sortItem.update(sortorder=sortVal.newIndex,validate=false);
 			}
 		}
@@ -47,8 +44,7 @@ component extends="_main" output="false"
 	{
 		sharedObjects(0);
 
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			videoCategory = model("VideoCategory").findAll(where="urlid = '#params.id#'#wherePermission("VideoCategory","AND")#");
 		} else {
 			// Get default category
@@ -57,8 +53,7 @@ component extends="_main" output="false"
 
 		videoCategories = model("VideoCategory").findAll(where="parentid = '#videoCategory.id#'#wherePermission("VideoCategory","AND")#");
 
-		if(videoCategory.recordcount)
-		{
+		if(videoCategory.recordcount) {
 			distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
 			videoColumns = "#distinctVideoColumns#, description, status, category_id";
 
@@ -88,8 +83,7 @@ component extends="_main" output="false"
 			include = "videocategoryjoin(videocategory)"
 		);
 
-		if(!isNull(params.rearrange))
-		{
+		if(!isNull(params.rearrange)) {
 			// Removes duplicates
 			qVideos = queryOfQueries(
 				query	= "qVideos",
@@ -106,27 +100,23 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 
 		// If oauth comes back to homepage
-		if(!isNull(params.token))
-		{
+		if(!isNull(params.token)) {
 			video = model("Video").findAll(where="id = #params.id#");
 		}
 	}
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			video = model("Video").findAll(where="id = '#params.id#'#wherePermission("Video","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(video))
-			{
+			if(ArrayLen(video)) {
 				video = video[1];
 			}
 
 			// Video not found?
-			if (!IsObject(video))
-			{
+			if (!IsObject(video)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="videos");
 			}
@@ -154,8 +144,7 @@ component extends="_main" output="false"
 	{
 		video = model("Video").findByKey(params.id);
 
-		if(video.delete())
-		{
+		if(video.delete()) {
 			flashInsert(success="The video was deleted successfully.");
 		} else
 		{
@@ -175,14 +164,12 @@ component extends="_main" output="false"
 		param name="params.videocategories" default="";
 
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.video.status = handleSubmitType("video", params.submit);
 		}
 
 		// Get video object
-		if(!isNull(params.video.id))
-		{
+		if(!isNull(params.video.id)) {
 			video = model("Video").findByKey(params.video.id);
 			saveResult = video.update(params.video);
 
@@ -194,27 +181,22 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update video object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Insert new video category associations
-			for(id in ListToArray(params.videocategories))
-			{
+			for(id in ListToArray(params.videocategories)) {
 				model("videoCategoryJoin").create(videocategoryid = id, videoid = video.id);
 			}
 
 			// Delete videothumb
-			if(!isNull(params.videothumb_delete) AND !isNull(params.video.id))
-			{
+			if(!isNull(params.videothumb_delete) AND !isNull(params.video.id)) {
 				deleteThisFile("#info.uploadsPath#videos/thumbs/#params.video.id#.jpg");
 				deleteThisFile("#info.uploadsPath#videos/thumbs/#params.video.id#_full.jpg");
 				params.video.customThumb = 1;
 			}
 
 			// Save videothumb
-			if(!isNull(form.videothumb) AND len(form.videothumb) AND FileExists(form.videothumb))
-			{
-				if(uploadVideoImage("videothumb",video))
-				{
+			if(!isNull(form.videothumb) AND len(form.videothumb) AND FileExists(form.videothumb)) {
+				if(uploadVideoImage("videothumb",video)) {
 					params.video.portrait = "";
 					params.video.customThumb = 1;
 
@@ -225,8 +207,7 @@ component extends="_main" output="false"
 			video.update(customThumb=params.video.customThumb);
 
 			// Youtubeid cleanup and save thumb
-			if(!isNull(params.video.youtubeId) AND len(params.video.youtubeId) AND !isNull(video.id) AND params.video.customThumb neq 1)
-			{
+			if(!isNull(params.video.youtubeId) AND len(params.video.youtubeId) AND !isNull(video.id) AND params.video.customThumb neq 1) {
 				params.video.youtubeId = XMLFormat(trim(params.video.youtubeId));
 				model("Video").saveYoutubeThumb(
 					filename	= params.video.youtubeId,
@@ -250,8 +231,7 @@ component extends="_main" output="false"
 
 	function deleteSelection()
 	{
-		for(i=1; i LTE ListLen(params.deletelist); i++)
-		{
+		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Video").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
 
@@ -266,8 +246,7 @@ component extends="_main" output="false"
 
 	function setPerPage()
 	{
-		if(!isNull(params.id) AND IsNumeric(params.id))
-		{
+		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
 
@@ -280,58 +259,48 @@ component extends="_main" output="false"
 
 	function filterResults()
 	{
-		if(!isNull(params.filtertype) AND params.filtertype eq "clear")
-		{
+		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
-		}
-		else
-		{
+		} else {
 			// Get main query
 			qqVideos = qVideos;
 			rememberParams = "";
 
 			// Set display type
-			if(!isNull(params.display))
-			{
+			if(!isNull(params.display)) {
 				session.display = params.display;
 			}
 
 			// Set sort
-			if(!isNull(params.sort))
-			{
+			if(!isNull(params.sort)) {
 				session.videos.sortby = params.sort;
 			}
 
 			// Set order
-			if(!isNull(params.order))
-			{
+			if(!isNull(params.order)) {
 				session.videos.order = params.order;
 			}
 
 			// Set "hosted" filter
-			if(!isNull(params.hosted))
-			{
+			if(!isNull(params.hosted)) {
 				session.videos.hosted = params.hosted;
 			}
 
 			// Apply "search" filter
-			if(!isNull(params.search) AND len(params.search))
-			{
+			if(!isNull(params.search) AND len(params.search)) {
 				rememberParams = ListAppend(rememberParams,"search=#params.search#","&");
 
 				// Break apart search string into a keyword where clause
 				var whereKeywords = [];
 				var keywords = listToArray(trim(params.search)," ");
-				for(keyword in keywords)
-				{
+				for(keyword in keywords) {
 					ArrayAppend(whereKeywords, "name LIKE '%#keyword#%'");
 					ArrayAppend(whereKeywords, "description LIKE '%#keyword#%'");
 				}
 
 				// Include permission check if defined
 				whereKeywords = ArrayToList(whereKeywords, " OR ");
-				if(len(wherePermission("Video")))
-				{
+				if(len(wherePermission("Video"))) {
 					whereClause = wherePermission("Video") & " AND (" & whereKeywords & ")";
 				} else {
 					whereClause = whereKeywords;
@@ -346,33 +315,27 @@ component extends="_main" output="false"
 			}
 
 			// Apply "hosted" filter
-			if(!isNull(params.hosted) AND len(params.hosted))
-			{
+			if(!isNull(params.hosted) AND len(params.hosted)) {
 				rememberParams = ListAppend(rememberParams,"hosted=#params.hosted#","&");
 
-				if(params.hosted eq "local")
-				{
+				if(params.hosted eq "local") {
 					qqVideos = queryOfQueries("qqVideos","youtubeid IS NULL OR youtubeid = ''");
 				}
-				else if(params.hosted eq "youtube")
-				{
+				else if(params.hosted eq "youtube") {
 					qqVideos = queryOfQueries("qqVideos","youtubeid IS NOT NULL AND youtubeid != ''");
 				}
-				else if(params.hosted eq "both")
-				{
+				else if(params.hosted eq "both") {
 					qqVideos = queryOfQueries("qqVideos","youtubeid IS NOT NULL AND youtubeid != '' AND fileid IS NOT NULL and fileid != ''");
 				}
 			}
 
 			// Apply "category" filter
-			if(!isNull(params.filtercategories) AND len(params.filtercategories))
-			{
+			if(!isNull(params.filtercategories) AND len(params.filtercategories)) {
 				rememberParams = ListAppend(rememberParams,"filtercategories=#params.filtercategories#","&");
 				var filtercategories = listToArray(params.filtercategories);
 				var whereCategories = [];
 
-				for(categoryid in filtercategories)
-				{
+				for(categoryid in filtercategories) {
 					ArrayAppend(whereCategories, "category_id = #categoryid#");
 				}
 
@@ -393,8 +356,7 @@ component extends="_main" output="false"
 
 			qVideos = qqVideos;
 
-			if(len(rememberParams))
-			{
+			if(len(rememberParams)) {
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 
@@ -406,8 +368,7 @@ component extends="_main" output="false"
 		var loc = {};
 		loc.video = arguments.video;
 
-		if(!isNull(loc.video.id))
-		{
+		if(!isNull(loc.video.id)) {
 			var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
 			if(result.fileWasSaved) {
 				var theFile = result.serverdirectory & "/" & result.serverFile;

@@ -13,20 +13,15 @@
 		var loc = {};
 		$args(name="average", args=arguments);
 		arguments.type = "AVG";
-		if (StructKeyExists(arguments, "group"))
-		{
+		if (StructKeyExists(arguments, "group")) {
 			loc.rv = $calculate(argumentCollection=arguments);
-		}
-		else
-		{
-			if (ListFindNoCase("cf_sql_integer,cf_sql_bigint,cf_sql_smallint,cf_sql_tinyint", variables.wheels.class.properties[arguments.property].type))
-			{
+		} else {
+			if (ListFindNoCase("cf_sql_integer,cf_sql_bigint,cf_sql_smallint,cf_sql_tinyint", variables.wheels.class.properties[arguments.property].type)) {
 				// this is an integer column so we get all the values from the database and do the calculation in ColdFusion since we can't run a query to get the average value without type casting it
 				loc.values = findAll(select=arguments.property, where=arguments.where, include=arguments.include, parameterize=arguments.parameterize, includeSoftDeletes=arguments.includeSoftDeletes);
 				loc.values = ListToArray(Evaluate("ValueList(loc.values.#arguments.property#)"));
 				loc.rv = arguments.ifNull;
-				if (!ArrayIsEmpty(loc.values))
-				{
+				if (!ArrayIsEmpty(loc.values)) {
 					if (arguments.distinct)
 					{
 						loc.tempValues = {};
@@ -39,9 +34,7 @@
 					}
 					loc.rv = ArrayAvg(loc.values);
 				}
-			}
-			else
-			{
+			} else {
 				// if the column's type is a float or similar we can run an AVG type query since it will always return a value of the same type as the column
 				loc.rv = $calculate(argumentCollection=arguments);
 
@@ -64,17 +57,13 @@
 		$args(name="count", args=arguments);
 		arguments.type = "COUNT";
 		arguments.property = ListFirst(primaryKey());
-		if (Len(arguments.include))
-		{
+		if (Len(arguments.include)) {
 			arguments.distinct = true;
-		}
-		else
-		{
+		} else {
 			arguments.distinct = false;
 		}
 		loc.rv = $calculate(argumentCollection=arguments);
-		if (!StructKeyExists(arguments, "group") && !IsNumeric(loc.rv))
-		{
+		if (!StructKeyExists(arguments, "group") && !IsNumeric(loc.rv)) {
 			loc.rv = 0;
 		}
 	</cfscript>
@@ -152,23 +141,19 @@
 		arguments.select = "#arguments.type#(";
 
 		// add the DISTINCT keyword if necessary (generally used for `COUNT` operations when associated tables are joined in the query, means we'll only count the unique primary keys on the current model)
-		if (arguments.distinct)
-		{
+		if (arguments.distinct) {
 			arguments.select &= "DISTINCT ";
 		}
 
 		// create a list of columns for the `SELECT` clause either from regular properties on the model or calculated ones
 		loc.properties = "";
 		loc.iEnd = ListLen(arguments.property);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = Trim(ListGetAt(arguments.property, loc.i));
-			if (ListFindNoCase(variables.wheels.class.propertyList, loc.item))
-			{
+			if (ListFindNoCase(variables.wheels.class.propertyList, loc.item)) {
 				loc.properties = ListAppend(loc.properties, tableName() & "." & variables.wheels.class.properties[loc.item].column);
 			}
-			else if (ListFindNoCase(variables.wheels.class.calculatedPropertyList, loc.item))
-			{
+			else if (ListFindNoCase(variables.wheels.class.calculatedPropertyList, loc.item)) {
 				loc.properties = ListAppend(loc.properties, variables.wheels.class.calculatedProperties[loc.item].sql);
 			}
 		}
@@ -177,14 +162,12 @@
 		// alias the result with `AS`, this means that Wheels will not try and change the string (which is why we have to add the table name above since it won't be done automatically)
 		loc.alias = LCase(arguments.type);
 		loc.alias = Replace(Replace(Replace(loc.alias, "avg", "average"), "min", "minimum"), "max", "maximum");
-		if (arguments.type != "count")
-		{
+		if (arguments.type != "count") {
 			loc.alias = arguments.property & loc.alias;
 		}
 		arguments.select &= ") AS " & loc.alias;
 
-		if (StructKeyExists(arguments, "group"))
-		{
+		if (StructKeyExists(arguments, "group")) {
 			arguments.select = ListAppend(arguments.select, $createSQLFieldList(clause="select", list=arguments.group, include=arguments.include, includeSoftDeletes=arguments.includeSoftDeletes, returnAs="query"));
 		}
 
@@ -197,12 +180,10 @@
 		arguments.callbacks = false;
 
 		loc.rv = findAll(argumentCollection=arguments);
-		if (!StructKeyExists(arguments, "group"))
-		{
+		if (!StructKeyExists(arguments, "group")) {
 			// when not grouping by something we just return the value itself
 			loc.rv = loc.rv[loc.alias];
-			if (!Len(loc.rv) && Len(arguments.ifNull))
-			{
+			if (!Len(loc.rv) && Len(arguments.ifNull)) {
 				loc.rv = arguments.ifNull;
 			}
 		}

@@ -43,8 +43,7 @@ component extends="models.Model"
 	// Permission Checks
 	private function checkForCreatePermission()
 	{
-		if(isNull(this.createdby))
-		{
+		if(isNull(this.createdby)) {
 			this.createdby = 0;
 		}
 		checkForPermission(type="save", checkid=0 & "," & this.createdby); // Allow whoever created it or the owner to edit
@@ -72,12 +71,10 @@ component extends="models.Model"
 	// Security
 	private function checkAndSecurePassword()
 	{
-		if (StructKeyExists(this, "password") AND !len(this.password))
-		{
+		if (StructKeyExists(this, "password") AND !len(this.password)) {
 			StructDelete(this,"password");
 		}
-		else if (StructKeyExists(this, "password") && !isEncryted(this.password))
-		{
+		else if (StructKeyExists(this, "password") && !isEncryted(this.password)) {
 			this.password = passcrypt(this.password, "encrypt");
 		}
 	}
@@ -93,16 +90,12 @@ component extends="models.Model"
 
 	private function preventRoleHacking()
 	{
-		if(StructKeyExists(this, "role") AND checkPermission("user_save_role"))
-		{
-			if(!checkPermission("user_save_role_admin") AND ListFind("admin,editor",lcase(this.role)))
-			{
+		if(StructKeyExists(this, "role") AND checkPermission("user_save_role")) {
+			if(!checkPermission("user_save_role_admin") AND ListFind("admin,editor",lcase(this.role))) {
 				StructDelete(this,"role");
 			}
 
-		}
-		else
-		{
+		} else {
 			StructDelete(this,"role");
 		}
 	}
@@ -141,17 +134,14 @@ component extends="models.Model"
 		if (saveResult) {
 			// Approve Portrait
 			var pendingPortraitPath = expandThis("/assets/userpics_pending/#params.user.id#.jpg");
-			if(!isNull(params.handlePortrait) AND fileExists(pendingPortraitPath))
-			{
-				if(params.handlePortrait eq "live")
-				{
+			if(!isNull(params.handlePortrait) AND fileExists(pendingPortraitPath)) {
+				if(params.handlePortrait eq "live") {
 					FileMove(
 						pendingPortraitPath,
 						expandThis("/assets/userpics/#params.user.id#.jpg")
 					);
 				}
-				else if(params.handlePortrait eq "delete")
-				{
+				else if(params.handlePortrait eq "delete") {
 					FileDelete(pendingPortraitPath);
 				}
 			}
@@ -165,8 +155,7 @@ component extends="models.Model"
 
 			// Save Portrait
 			if(!isNull(form.portrait) AND len(form.portrait) AND FileExists(form.portrait)) {
-				if(uploadUserImage("portrait",user))
-				{
+				if(uploadUserImage("portrait",user)) {
 					params.user.portrait = "";
 				}
 			}
@@ -183,21 +172,18 @@ component extends="models.Model"
 
 			if(len(params.usertags)) {
 				// Insert new user category associations
-				for(id in ListToArray(params.usertags))
-				{
+				for(id in ListToArray(params.usertags)) {
 					model("userTagJoin").create(categoryid = id, userid = params.user.id);
 				}
 			}
 
 			if(checkPermission("user_save_others")) {
 				// Clear existing usergroups associations
-				if(!isNull(params.fromEditor))
-				{
+				if(!isNull(params.fromEditor)) {
 					model("UsergroupJoin").deleteAll(where="userid = #params.user.id#");
 				}
 
-				if(len(params.usergroups))
-				{
+				if(len(params.usergroups)) {
 					// Insert usergroups associations
 					for(id in ListToArray(params.usergroups))
 					{
@@ -219,8 +205,7 @@ component extends="models.Model"
 
 		if(saveResult AND isRegistration) {
 			if(!isNull(form.portrait) AND len(form.portrait) AND FileExists(form.portrait)) {
-				if(uploadUserImage(field="portrait",user=params.user,newUser=true))
-				{
+				if(uploadUserImage(field="portrait",user=params.user,newUser=true)) {
 					params.user.portrait = "";
 				}
 			}
@@ -277,15 +262,12 @@ component extends="models.Model"
 	function requireEmailMatchDomain(params) {
 		var loc = {};
 		var result = {};
-		if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired)
-		{
+		if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired) {
 			loc.domain = ListLast(trim(params.user.email),"@");
 
-			if(loc.domain NEQ request.site.domain AND !ListFindNoCase(request.site.emailMatchOtherDomains,loc.domain))
-			{
+			if(loc.domain NEQ request.site.domain AND !ListFindNoCase(request.site.emailMatchOtherDomains,loc.domain)) {
 				params.error="Sorry, you entered an invalid email address. We only accept #request.site.domain# email addresses.";
-				if(!isNull(params.id) AND params.action eq "save")
-				{
+				if(!isNull(params.id) AND params.action eq "save") {
 					params.redirectTo = {route="admin~id", action="edit", controller="users", id=params.id};
 				} else {
 					params.redirectTo = {route="admin~action", action="login", controller="users"};

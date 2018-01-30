@@ -9,8 +9,7 @@
 
 $(function() {
 	$(document).on("click", ".setFalse", function (e) {
-		if(this.checked)
-		{
+		if(this.checked) {
 			setFlase(this);
 		} else {
 			setTrue(this);
@@ -18,8 +17,7 @@ $(function() {
 	});
 
 	$(document).on("click", ".setTrue", function (e) {
-		if(this.checked)
-		{
+		if(this.checked) {
 			setTrue(this);
 		} else {
 			setFlase(this);

@@ -4,14 +4,11 @@
 	<cfargument name="startYear" type="numeric" required="true">
 	<cfargument name="endYear" type="numeric" required="true">
 	<cfscript>
-		if (Structkeyexists(arguments, "value") && Val(arguments.value))
-		{
-			if (arguments.value < arguments.startYear && arguments.endYear > arguments.startYear)
-			{
+		if (Structkeyexists(arguments, "value") && Val(arguments.value)) {
+			if (arguments.value < arguments.startYear && arguments.endYear > arguments.startYear) {
 				arguments.startYear = arguments.value;
 			}
-			else if (arguments.value < arguments.endYear && arguments.endYear < arguments.startYear)
-			{
+			else if (arguments.value < arguments.endYear && arguments.endYear < arguments.startYear) {
 				arguments.endYear = arguments.value;
 			}
 		}
@@ -34,12 +31,10 @@
 		arguments.$loopTo = 12;
 		arguments.$type = "month";
 		arguments.$step = 1;
-		if (arguments.monthDisplay == "names")
-		{
+		if (arguments.monthDisplay == "names") {
 			arguments.$optionNames = arguments.monthNames;
 		}
-		else if (arguments.monthDisplay == "abbreviations")
-		{
+		else if (arguments.monthDisplay == "abbreviations") {
 			arguments.$optionNames = arguments.monthAbbreviations;
 		}
 		StructDelete(arguments, "monthDisplay");
@@ -65,8 +60,7 @@
 		arguments.$loopTo = 23;
 		arguments.$type = "hour";
 		arguments.$step = 1;
-		if (arguments.twelveHour)
-		{
+		if (arguments.twelveHour) {
 			arguments.$loopFrom = 1;
 			arguments.$loopTo = 12;
 		}
@@ -114,11 +108,9 @@
 		// in order to support 12-hour format, we have to enforce some rules
 		// if arguments.twelveHour is true, then order MUST contain ampm
 		// if the order contains ampm, then arguments.twelveHour MUST be true
-		if (ListFindNoCase(arguments.order, "hour") && arguments.twelveHour && !ListFindNoCase(arguments.order, "ampm"))
-		{
+		if (ListFindNoCase(arguments.order, "hour") && arguments.twelveHour && !ListFindNoCase(arguments.order, "ampm")) {
 			arguments.twelveHour = true;
-			if (!ListFindNoCase(arguments.order, "ampm"))
-			{
+			if (!ListFindNoCase(arguments.order, "ampm")) {
 				arguments.order = ListAppend(arguments.order, "ampm");
 			}
 		}
@@ -127,21 +119,17 @@
 		loc.rv = "";
 		loc.firstDone = false;
 		loc.iEnd = ListLen(arguments.order);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.order, loc.i);
 			loc.marker = "($" & loc.item & ")";
-			if(!loc.combine)
-			{
+			if(!loc.combine) {
 				loc.name = $tagName(arguments.objectName, "#arguments.property#-#loc.item#");
 				loc.marker = "";
 			}
 			arguments.name = loc.name & loc.marker;
 			arguments.value = loc.value;
-			if (Isdate(loc.value))
-			{
-				if (arguments.twelveHour && ListFind("hour,ampm", loc.item))
-				{
+			if (Isdate(loc.value)) {
+				if (arguments.twelveHour && ListFind("hour,ampm", loc.item)) {
 					if (loc.item IS "hour")
 					{
 						arguments.value = TimeFormat(loc.value, 'h');
@@ -150,15 +138,12 @@
 					{
 						arguments.value = TimeFormat(loc.value, 'tt');
 					}
-				}
-				else
-				{
+				} else {
 					arguments.value = Evaluate("#loc.item#(loc.value)");
 				}
 			}
 
-			if (loc.firstDone)
-			{
+			if (loc.firstDone) {
 				loc.rv &= arguments.separator;
 			}
 			loc.rv &= Evaluate("$#loc.item#SelectTag(argumentCollection=arguments)");
@@ -193,68 +178,51 @@
 		loc.optionContent = "";
 
 		// only set the default value if the value is blank and includeBlank is false
-		if (!Len(arguments.value) && (IsBoolean(arguments.includeBlank) && !arguments.includeBlank))
-		{
-			if (arguments.twelveHour && arguments.$type IS "hour")
-			{
+		if (!Len(arguments.value) && (IsBoolean(arguments.includeBlank) && !arguments.includeBlank)) {
+			if (arguments.twelveHour && arguments.$type IS "hour") {
 				arguments.value = TimeFormat(arguments.$now, 'h');
-			}
-			else
-			{
+			} else {
 				arguments.value = Evaluate("#arguments.$type#(arguments.$now)");
 			}
 		}
 
-		if (StructKeyExists(arguments, "order") && ListLen(arguments.order) > 1)
-		{
-			if (ListLen(arguments.includeBlank) > 1)
-			{
+		if (StructKeyExists(arguments, "order") && ListLen(arguments.order) > 1) {
+			if (ListLen(arguments.includeBlank) > 1) {
 				arguments.includeBlank = ListGetAt(arguments.includeBlank, ListFindNoCase(arguments.order, arguments.$type));
 			}
-			if (ListLen(arguments.label) > 1)
-			{
+			if (ListLen(arguments.label) > 1) {
 				arguments.label = ListGetAt(arguments.label, ListFindNoCase(arguments.order, arguments.$type));
 			}
-			if (StructKeyExists(arguments, "labelClass") && ListLen(arguments.labelClass) > 1)
-			{
+			if (StructKeyExists(arguments, "labelClass") && ListLen(arguments.labelClass) > 1) {
 				arguments.labelClass = ListGetAt(arguments.labelClass, ListFindNoCase(arguments.order, arguments.$type));
 			}
 		}
-		if (!StructKeyExists(arguments, "id"))
-		{
+		if (!StructKeyExists(arguments, "id")) {
 			arguments.id = arguments.$id & "-" & arguments.$type;
 		}
 		loc.before = $formBeforeElement(argumentCollection=arguments);
 		loc.after = $formAfterElement(argumentCollection=arguments);
 		loc.content = "";
-		if (!IsBoolean(arguments.includeBlank) || arguments.includeBlank)
-		{
+		if (!IsBoolean(arguments.includeBlank) || arguments.includeBlank) {
 			loc.args = {};
 			loc.args.value = "";
-			if (!Len(arguments.value))
-			{
+			if (!Len(arguments.value)) {
 				loc.args.selected = "selected";
 			}
-			if (!IsBoolean(arguments.includeBlank))
-			{
+			if (!IsBoolean(arguments.includeBlank)) {
 				loc.optionContent = arguments.includeBlank;
 			}
 			loc.content &= $element(name="option", content=loc.optionContent, attributes=loc.args);
 		}
-		if (arguments.$loopFrom < arguments.$loopTo)
-		{
-			for (loc.i=arguments.$loopFrom; loc.i <= arguments.$loopTo; loc.i=loc.i+arguments.$step)
-			{
+		if (arguments.$loopFrom < arguments.$loopTo) {
+			for (loc.i=arguments.$loopFrom; loc.i <= arguments.$loopTo; loc.i=loc.i+arguments.$step) {
 				loc.args = Duplicate(arguments);
 				loc.args.counter = loc.i;
 				loc.args.optionContent = loc.optionContent;
 				loc.content &= $yearMonthHourMinuteSecondSelectTagContent(argumentCollection=loc.args);
 			}
-		}
-		else
-		{
-			for (loc.i=arguments.$loopFrom; loc.i >= arguments.$loopTo; loc.i=loc.i-arguments.$step)
-			{
+		} else {
+			for (loc.i=arguments.$loopFrom; loc.i >= arguments.$loopTo; loc.i=loc.i-arguments.$step) {
 				loc.args = Duplicate(arguments);
 				loc.args.counter = loc.i;
 				loc.args.optionContent = loc.optionContent;
@@ -271,20 +239,15 @@
 		var loc = {};
 		loc.args = {};
 		loc.args.value = arguments.counter;
-		if (arguments.value == arguments.counter)
-		{
+		if (arguments.value == arguments.counter) {
 			loc.args.selected = "selected";
 		}
-		if (Len(arguments.$optionNames))
-		{
+		if (Len(arguments.$optionNames)) {
 			arguments.optionContent = ListGetAt(arguments.$optionNames, arguments.counter);
-		}
-		else
-		{
+		} else {
 			arguments.optionContent = arguments.counter;
 		}
-		if (arguments.$type == "minute" || arguments.$type == "second")
-		{
+		if (arguments.$type == "minute" || arguments.$type == "second") {
 			arguments.optionContent = NumberFormat(arguments.optionContent, "09");
 		}
 		loc.rv = $element(name="option", content=arguments.optionContent, attributes=loc.args);
@@ -301,23 +264,19 @@
 		var loc = {};
 		loc.options = "AM,PM";
 		loc.optionContent = "";
-		if (!Len(arguments.value))
-		{
+		if (!Len(arguments.value)) {
 			arguments.value = TimeFormat(arguments.$now, "tt");
 		}
-		if (!StructKeyExists(arguments, "id"))
-		{
+		if (!StructKeyExists(arguments, "id")) {
 			arguments.id = arguments.$id & "-ampm";
 		}
 		loc.content = "";
 		loc.iEnd = ListLen(loc.options);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.option = ListGetAt(loc.options, loc.i);
 			loc.args = {};
 			loc.args.value = loc.option;
-			if (arguments.value == loc.option)
-			{
+			if (arguments.value == loc.option) {
 				loc.args.selected = "selected";
 			}
 			loc.content &= $element(name="option", content=loc.option, attributes=loc.args);

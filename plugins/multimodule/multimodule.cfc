@@ -38,10 +38,8 @@
 		<cfset var loc = StructNew()>
 		<cfparam name="request.module" default="">
 		<cfscript>
-			if(!len(request.module))
-			{
-				if(!structKeyExists(variables,"params") && isDefined("core.$paramParser"))
-				{
+			if(!len(request.module)) {
+				if(!structKeyExists(variables,"params") && isDefined("core.$paramParser")) {
 					loc.params = core.$paramParser();
 
 				} else if (structKeyExists(variables,"params")) {
@@ -56,14 +54,12 @@
 					request.module = loc.params.module;
 				}
 				// Else check route name for module (before ~)
-				else if(StructKeyExists(loc.params,"route") && find("~",loc.params.route))
-				{
+				else if(StructKeyExists(loc.params,"route") && find("~",loc.params.route)) {
 					request.module = ListFirst(loc.params.route,"~");
 				}
 			}
 
-			if(DirectoryExists(ExpandPath(LCase("modules\" & request.module))))
-			{
+			if(DirectoryExists(ExpandPath(LCase("modules\" & request.module)))) {
 				return "modules\" & request.module;
 			} else {
 				return "";
@@ -244,26 +240,20 @@
 
 			// include controller specific helper files if they exist, cache the file check for performance reasons
 			loc.helperFileExists = false;
-			if (!ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) && !ListFindNoCase(application.wheels.nonExistingHelperFiles, arguments.name))
-			{
-				if (FileExists(ExpandPath(loc.template)))
-				{
+			if (!ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) && !ListFindNoCase(application.wheels.nonExistingHelperFiles, arguments.name)) {
+				if (FileExists(ExpandPath(loc.template))) {
 					loc.helperFileExists = true;
 				}
-				if (get("cacheFileChecking"))
-				{
+				if (get("cacheFileChecking")) {
 					if (loc.helperFileExists)
 					{
 						application.wheels.existingHelperFiles = ListAppend(application.wheels.existingHelperFiles, arguments.name);
-					}
-					else
-					{
+					} else {
 						application.wheels.nonExistingHelperFiles = ListAppend(application.wheels.nonExistingHelperFiles, arguments.name);
 					}
 				}
 			}
-			if (Len(arguments.name) && (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists))
-			{
+			if (Len(arguments.name) && (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists)) {
 				$include(template=loc.template);
 			}
 
@@ -287,8 +277,7 @@
 		<cfreturn>
 		</cfif>
 		<cfscript>
-			if (ListLen(callingPath, "/") GT ListLen(applicationPath, "/") || GetFileFromPath(callingPath) == "root.cfm")
-			{
+			if (ListLen(callingPath, "/") GT ListLen(applicationPath, "/") || GetFileFromPath(callingPath) == "root.cfm") {
 				$header(statusCode="404", statusText="Not Found");
 				$includeAndOutput(template="#application.wheels.eventPath#/onmissingtemplate.cfm");
 				$abort();
@@ -330,37 +319,31 @@
 			if (Left(arguments.action, 1) == "$" || ListFindNoCase(application.wheels.protectedControllerMethods, arguments.action))
 				$throw(type="Wheels.ActionNotAllowed", message="You are not allowed to execute the `#arguments.action#` method as an action.", extendedInfo="Make sure your action does not have the same name as any of the built-in Wheels functions.");
 
-			if (StructKeyExists(this, arguments.action) && IsCustomFunction(this[arguments.action]))
-			{
+			if (StructKeyExists(this, arguments.action) && IsCustomFunction(this[arguments.action])) {
 				$invoke(method=arguments.action);
 			}
-			else if (StructKeyExists(this, "onMissingMethod"))
-			{
+			else if (StructKeyExists(this, "onMissingMethod")) {
 				loc.invokeArgs = {};
 				loc.invokeArgs.missingMethodName = arguments.action;
 				loc.invokeArgs.missingMethodArguments = {};
 				$invoke(method="onMissingMethod", invokeArgs=loc.invokeArgs);
 			}
 
-			if (!$performedRenderOrRedirect())
-			{
+			if (!$performedRenderOrRedirect()) {
 				try
 				{
 					// Added to prevent error
 					request.wheels.deprecation = [];
 					renderPage(); // Change to renderView for 1.2
 				}
-				catch(Any e)
-				{
+				catch(Any e) {
 					if (
 						FileExists(ExpandPath("#application.wheels.viewPath#/#LCase(variables.$class.name)#/#LCase(arguments.action)#.cfm")) or
 						FileExists(ExpandPath($findInModules("#application.wheels.viewPath#/#LCase(variables.$class.name)#/#LCase(arguments.action)#.cfm")))
 						)
 					{
 						$throw(object=e);
-					}
-					else
-					{
+					} else {
 						if (application.wheels.showErrorInformation)
 						{
 							$throw(type="Wheels.ViewNotFound", message="Could not find the view page for the `#arguments.action#` action in the `#variables.$class.name#` controller.", extendedInfo="Create a file named `#LCase(arguments.action)#.cfm` in the `views/#LCase(variables.$class.name)#` directory (create the directory as well if it doesn't already exist).");
@@ -383,15 +366,13 @@
 		<cfargument name="$layout" type="any" required="true">
 		<cfscript>
 			var loc = {};
-			if ((IsBoolean(arguments.$layout) && arguments.$layout) || (!IsBoolean(arguments.$layout) && Len(arguments.$layout)))
-			{
+			if ((IsBoolean(arguments.$layout) && arguments.$layout) || (!IsBoolean(arguments.$layout) && Len(arguments.$layout))) {
 				// store the content in a variable in the request scope so it can be accessed
 				// by the includeContent function that the developer uses in layout files
 				// this is done so we avoid passing data to/from it since it would complicate things for the developer
 				contentFor(body=arguments.$content, overwrite=true);
 				loc.include = application.wheels.viewPath;
-				if (IsBoolean(arguments.$layout))
-				{
+				if (IsBoolean(arguments.$layout)) {
 					loc.layoutFileExists = false;
 					if (!ListFindNoCase(application.wheels.existingLayoutFiles, variables.params.controller) && !ListFindNoCase(application.wheels.nonExistingLayoutFiles, variables.params.controller))
 					{
@@ -408,22 +389,16 @@
 					if (ListFindNoCase(application.wheels.existingLayoutFiles, variables.params.controller) || loc.layoutFileExists)
 					{
 						loc.include = $findInModules("#application.wheels.viewPath#/#LCase(variables.params.controller)#/layout.cfm");
-					}
-					else
-					{
+					} else {
 						loc.include = loc.include & "/" & "layout.cfm";
 					}
 					loc.returnValue = $includeAndReturnOutput($template=loc.include);
-				}
-				else
-				{
+				} else {
 					arguments.$name = arguments.$layout;
 					arguments.$template = $generateIncludeTemplatePath(argumentCollection=arguments);
 					loc.returnValue = $includeFile(argumentCollection=arguments);
 				}
-			}
-			else
-			{
+			} else {
 				loc.returnValue = arguments.$content;
 			}
 			return loc.returnValue;

@@ -1,18 +1,15 @@
 <cfscript>
 	component extends="_main"
 	{
-		function init()
-		{
+		function init() {
 			super.init();
 		}
 
-		function index()
-		{
+		function index() {
 			qOptions = model("Option").findAll(where="id NOT LIKE 'home%'#wherePermission("Option","AND")#", order="id asc");
 		}
 
-		function save()
-		{
+		function save() {
 			model("Option").saveOptions(params.options);
 
 			flashInsert(success="Saved successfully.");

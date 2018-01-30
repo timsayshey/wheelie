@@ -73,10 +73,8 @@
 	<cfargument name="unless" type="string" required="false" default="">
 	<cfscript>
 		$args(name="validatesFormatOf", args=arguments);
-		if (application.wheels.showErrorInformation)
-		{
-			if (Len(arguments.type) && !ListFindNoCase("creditcard,date,email,eurodate,guid,social_security_number,ssn,telephone,time,URL,USdate,UUID,variableName,zipcode,boolean", arguments.type))
-			{
+		if (application.wheels.showErrorInformation) {
+			if (Len(arguments.type) && !ListFindNoCase("creditcard,date,email,eurodate,guid,social_security_number,ssn,telephone,time,URL,USdate,UUID,variableName,zipcode,boolean", arguments.type)) {
 				$throw(type="Wheels.IncorrectArguments", message="The `#arguments.type#` type is not supported.", extendedInfo="Use one of the supported types: `creditcard`, `date`, `email`, `eurodate`, `guid`, `social_security_number`, `ssn`, `telephone`, `time`, `URL`, `USdate`, `UUID`, `variableName`, `zipcode`, `boolean`");
 			}
 		}
@@ -112,8 +110,7 @@
 	<cfargument name="unless" type="string" required="false" default="">
 	<cfscript>
 		$args(name="validatesLengthOf", args=arguments);
-		if (Len(arguments.within))
-		{
+		if (Len(arguments.within)) {
 			arguments.within = $listClean(list=arguments.within, returnAs="array");
 		}
 		$registerValidation(methods="$validatesLengthOf", argumentCollection=arguments);
@@ -177,19 +174,13 @@
 		var loc = {};
 		loc.rv = false;
 		clearErrors();
-		if ($callback("beforeValidation", arguments.callbacks))
-		{
-			if (isNew())
-			{
-				if ($callback("beforeValidationOnCreate", arguments.callbacks) && $validate("onSave,onCreate") && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnCreate", arguments.callbacks))
-				{
+		if ($callback("beforeValidation", arguments.callbacks)) {
+			if (isNew()) {
+				if ($callback("beforeValidationOnCreate", arguments.callbacks) && $validate("onSave,onCreate") && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnCreate", arguments.callbacks)) {
 					loc.rv = true;
 				}
-			}
-			else
-			{
-				if ($callback("beforeValidationOnUpdate", arguments.callbacks) && $validate("onSave,onUpdate") && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnUpdate", arguments.callbacks))
-				{
+			} else {
+				if ($callback("beforeValidationOnUpdate", arguments.callbacks) && $validate("onSave,onUpdate") && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnUpdate", arguments.callbacks)) {
 					loc.rv = true;
 				}
 			}
@@ -211,12 +202,9 @@
 		$combineArguments(args=arguments, combine="methods,method", required=true);
 		$combineArguments(args=arguments, combine="properties,property", required=false);
 
-		if (application.wheels.showErrorInformation)
-		{
-			if (StructKeyExists(arguments, "properties"))
-			{
-				if (!Len(arguments.properties))
-				{
+		if (application.wheels.showErrorInformation) {
+			if (StructKeyExists(arguments, "properties")) {
+				if (!Len(arguments.properties)) {
 					$throw(type="Wheels.IncorrectArguments", message="The `property` or `properties` argument is required but was not passed in.", extendedInfo="Please pass in the names of the properties you want to validate. Use either the `property` argument (for a single property) or the `properties` argument (for a list of properties) to do this.");
 				}
 			}
@@ -224,22 +212,18 @@
 
 		// loop through all methods and properties and add info for each to the `class` struct
 		loc.iEnd = ListLen(arguments.methods);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			// only loop once by default (will be used on the lower level validation helpers that do not take arguments: validate, validateOnCreate and validateOnUpdate)
 			loc.jEnd = 1;
-			if (StructKeyExists(arguments, "properties"))
-			{
+			if (StructKeyExists(arguments, "properties")) {
 				loc.jEnd = ListLen(arguments.properties);
 			}
 
-			for (loc.j=1; loc.j <= loc.jEnd; loc.j++)
-			{
+			for (loc.j=1; loc.j <= loc.jEnd; loc.j++) {
 				loc.validation = {};
 				loc.validation.method = Trim(ListGetAt(arguments.methods, loc.i));
 				loc.validation.args = Duplicate(arguments);
-				if (StructKeyExists(arguments, "properties"))
-				{
+				if (StructKeyExists(arguments, "properties")) {
 					loc.validation.args.property = Trim(ListGetAt(loc.validation.args.properties, loc.j));
 				}
 				StructDelete(loc.validation.args, "when");
@@ -259,8 +243,7 @@
 		loc.rv = arguments.message;
 
 		// evaluate the error message if it contains pound signs
-		if (Find(Chr(35), loc.rv))
-		{
+		if (Find(Chr(35), loc.rv)) {
 			// use a try / catch here since it will fail if a pound sign is used that's not in an expression
 			try
 			{
@@ -270,14 +253,11 @@
 		}
 
 		// loop through each argument and replace bracketed occurrence with argument value
-		for (loc.key in arguments)
-		{
+		for (loc.key in arguments) {
 			loc.key = LCase(loc.key);
 			loc.value = arguments[loc.key];
-			if (StructKeyExists(loc, "value") && IsSimpleValue(loc.value) && Len(loc.value))
-			{
-				if (loc.key == "property")
-				{
+			if (StructKeyExists(loc, "value") && IsSimpleValue(loc.value) && Len(loc.value)) {
+				if (loc.key == "property") {
 					loc.value = this.$label(loc.value);
 				}
 				loc.rv = Replace(loc.rv, "[[#loc.key#]]", "{{#Chr(7)#}}", "all");
@@ -296,24 +276,20 @@
 		var loc = {};
 
 		// don't run any validations when we want to skip
-		if (!arguments.execute)
-		{
+		if (!arguments.execute) {
 			return true;
 		}
 
 		// loop over the passed in types
 		loc.iEnd = ListLen(arguments.type);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.type, loc.i);
 
 			// loop through all validations for passed in type (onSave, onCreate etc) that has been set on this model object
 			loc.jEnd = ArrayLen(variables.wheels.class.validations[loc.item]);
-			for (loc.j=1; loc.j <= loc.jEnd; loc.j++)
-			{
+			for (loc.j=1; loc.j <= loc.jEnd; loc.j++) {
 				loc.thisValidation = variables.wheels.class.validations[loc.item][loc.j];
-				if ($evaluateCondition(argumentCollection=loc.thisValidation.args))
-				{
+				if ($evaluateCondition(argumentCollection=loc.thisValidation.args)) {
 					if (loc.thisValidation.method == "$validatesPresenceOf")
 					{
 						// if the property does not exist or if it's blank we add an error on the object (for all other validation types we call corresponding methods below instead)
@@ -321,9 +297,7 @@
 						{
 							addError(property=loc.thisValidation.args.property, message=$validationErrorMessage(loc.thisValidation.args.property, loc.thisValidation.args.message));
 						}
-					}
-					else
-					{
+					} else {
 						// if the validation set does not allow blank values we can set an error right away, otherwise we call a method to run the actual check
 						if (StructKeyExists(loc.thisValidation.args, "property") && StructKeyExists(loc.thisValidation.args, "allowBlank") && !loc.thisValidation.args.allowBlank && (!StructKeyExists(this, loc.thisValidation.args.property) || (!Len(this[loc.thisValidation.args.property]) && loc.thisValidation.method != "$validatesUniquenessOf")))
 						{
@@ -352,18 +326,15 @@
 		// since cf8 can't handle cfscript operators (==, != etc) inside an Evaluate() call we replace them with eq, neq etc in a try / catch
 		loc.evaluate = "condition,unless";
 		loc.iEnd = ListLen(loc.evaluate);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(loc.evaluate, loc.i);
-			if (StructKeyExists(arguments, loc.item) && Len(arguments[loc.item]))
-			{
+			if (StructKeyExists(arguments, loc.item) && Len(arguments[loc.item])) {
 				loc.key = loc.item & "Evaluated";
 				try
 				{
 					loc[loc.key] = Evaluate(arguments[loc.item]);
 				}
-				catch (any e)
-				{
+				catch (any e) {
 					arguments[loc.item] = Replace(ReplaceList(arguments[loc.item], "==,!=,<,<=,>,>=", " eq , neq , lt , lte , gt , gte "), "  ", " ", "all");
 					loc[loc.key] = Evaluate(arguments[loc.item]);
 				}
@@ -372,8 +343,7 @@
 
 		// proceed with validation when "condition" has been supplied and it evaluates to "true" or when "unless" has been supplied and it evaluates to "false"
 		// if both "condition" and "unless" have been supplied though, they both need to be evaluated correctly ("true"/false" that is) for validation to proceed
-		if ((!StructKeyExists(arguments, "condition") || !Len(arguments.condition) || loc.conditionEvaluated) && (!StructKeyExists(arguments, "unless") || !Len(arguments.unless) || !loc.unlessEvaluated))
-		{
+		if ((!StructKeyExists(arguments, "condition") || !Len(arguments.condition) || loc.conditionEvaluated) && (!StructKeyExists(arguments, "unless") || !Len(arguments.unless) || !loc.unlessEvaluated)) {
 			loc.rv = true;
 		}
 	</cfscript>
@@ -384,8 +354,7 @@
 	<cfscript>
 		var loc = {};
 		loc.virtualConfirmProperty = arguments.property & "Confirmation";
-		if (StructKeyExists(this, loc.virtualConfirmProperty) && this[arguments.property] != this[loc.virtualConfirmProperty])
-		{
+		if (StructKeyExists(this, loc.virtualConfirmProperty) && this[arguments.property] != this[loc.virtualConfirmProperty]) {
 			addError(property=loc.virtualConfirmProperty, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -393,8 +362,7 @@
 
 <cffunction name="$validatesExclusionOf" returntype="void" access="public" output="false" hint="Adds an error if the object property fail to pass the validation setup in the @validatesExclusionOf method.">
 	<cfscript>
-		if (ListFindNoCase(arguments.list, this[arguments.property]))
-		{
+		if (ListFindNoCase(arguments.list, this[arguments.property])) {
 			addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -402,8 +370,7 @@
 
 <cffunction name="$validatesFormatOf" returntype="void" access="public" output="false" hint="Adds an error if the object property fail to pass the validation setup in the @validatesFormatOf method.">
 	<cfscript>
-		if ((Len(arguments.regEx) && !REFindNoCase(arguments.regEx, this[arguments.property])) || (Len(arguments.type) && !IsValid(arguments.type, this[arguments.property])))
-		{
+		if ((Len(arguments.regEx) && !REFindNoCase(arguments.regEx, this[arguments.property])) || (Len(arguments.type) && !IsValid(arguments.type, this[arguments.property]))) {
 			addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -411,8 +378,7 @@
 
 <cffunction name="$validatesInclusionOf" returntype="void" access="public" output="false" hint="Adds an error if the object property fail to pass the validation setup in the @validatesInclusionOf method.">
 	<cfscript>
-		if (!ListFindNoCase(arguments.list, this[arguments.property]))
-		{
+		if (!ListFindNoCase(arguments.list, this[arguments.property])) {
 			addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -424,8 +390,7 @@
 	<cfargument name="properties" type="struct" required="false" default="#this.properties()#">
 	<cfscript>
 		// if the property does not exist or if it's blank we add an error on the object
-		if (!StructKeyExists(arguments.properties, arguments.property) || (IsSimpleValue(arguments.properties[arguments.property]) && !Len(Trim(arguments.properties[arguments.property]))) || (IsStruct(arguments.properties[arguments.property]) && !StructCount(arguments.properties[arguments.property])))
-		{
+		if (!StructKeyExists(arguments.properties, arguments.property) || (IsSimpleValue(arguments.properties[arguments.property]) && !Len(Trim(arguments.properties[arguments.property]))) || (IsStruct(arguments.properties[arguments.property]) && !StructCount(arguments.properties[arguments.property]))) {
 			addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -444,14 +409,12 @@
 		loc.lenValue = Len(arguments.properties[arguments.property]);
 
 		// for within, just create minimum / maximum values
-		if (IsArray(arguments.within) && ArrayLen(arguments.within) == 2)
-		{
+		if (IsArray(arguments.within) && ArrayLen(arguments.within) == 2) {
 			arguments.minimum = arguments.within[1];
 			arguments.maximum = arguments.within[2];
 		}
 
-		if ((arguments.maximum && loc.lenValue > arguments.maximum) || (arguments.minimum && loc.lenValue < arguments.minimum) || (arguments.exactly && loc.lenValue != arguments.exactly))
-		{
+		if ((arguments.maximum && loc.lenValue > arguments.maximum) || (arguments.minimum && loc.lenValue < arguments.minimum) || (arguments.exactly && loc.lenValue != arguments.exactly)) {
 			addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -459,8 +422,7 @@
 
 <cffunction name="$validatesNumericalityOf" returntype="void" access="public" output="false" hint="Adds an error if the object property fail to pass the validation setup in the @validatesNumericalityOf method.">
 	<cfscript>
-		if (!IsNumeric(this[arguments.property]) || (arguments.onlyInteger && Round(this[arguments.property]) != this[arguments.property]) || (IsNumeric(arguments.greaterThan) && this[arguments.property] <= arguments.greaterThan) || (IsNumeric(arguments.greaterThanOrEqualTo) && this[arguments.property] < arguments.greaterThanOrEqualTo) || (IsNumeric(arguments.equalTo) && this[arguments.property] != arguments.equalTo) || (IsNumeric(arguments.lessThan) && this[arguments.property] >= arguments.lessThan) || (IsNumeric(arguments.lessThanOrEqualTo) && this[arguments.property] > arguments.lessThanOrEqualTo) || (IsBoolean(arguments.odd) && arguments.odd && !BitAnd(this[arguments.property], 1)) || (IsBoolean(arguments.even) && arguments.even && BitAnd(this[arguments.property], 1)))
-		{
+		if (!IsNumeric(this[arguments.property]) || (arguments.onlyInteger && Round(this[arguments.property]) != this[arguments.property]) || (IsNumeric(arguments.greaterThan) && this[arguments.property] <= arguments.greaterThan) || (IsNumeric(arguments.greaterThanOrEqualTo) && this[arguments.property] < arguments.greaterThanOrEqualTo) || (IsNumeric(arguments.equalTo) && this[arguments.property] != arguments.equalTo) || (IsNumeric(arguments.lessThan) && this[arguments.property] >= arguments.lessThan) || (IsNumeric(arguments.lessThanOrEqualTo) && this[arguments.property] > arguments.lessThanOrEqualTo) || (IsBoolean(arguments.odd) && arguments.odd && !BitAnd(this[arguments.property], 1)) || (IsBoolean(arguments.even) && arguments.even && BitAnd(this[arguments.property], 1))) {
 			addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -474,16 +436,14 @@
 	<cfargument name="includeSoftDeletes" type="boolean" required="false" default="true">
 	<cfscript>
 		var loc = {};
-		if (!IsBoolean(variables.wheels.class.tableName) || variables.wheels.class.tableName)
-		{
+		if (!IsBoolean(variables.wheels.class.tableName) || variables.wheels.class.tableName) {
 			loc.where = [];
 
 			// create the WHERE clause to be used in the query that checks if an identical value already exists
 			// wrap value in single quotes unless it's numeric
 			// example: "userName='Joe'"
 			loc.part = arguments.property & "=" & variables.wheels.class.adapter.$quoteValue(str=this[arguments.property], type=validationTypeForProperty(arguments.property));
-			if (Right(loc.part, 3) == "=''" && ListFindNoCase("integer,float,boolean", validationTypeForProperty(arguments.property)))
-			{
+			if (Right(loc.part, 3) == "=''" && ListFindNoCase("integer,float,boolean", validationTypeForProperty(arguments.property))) {
 				// when numeric property but blank we need to translate to IS NULL
 				loc.part = SpanExcluding(loc.part, "=") & " IS NULL";
 			}
@@ -493,12 +453,10 @@
 			// example: "userName='Joe'" becomes "userName='Joe' AND account=1" if scope is "account" for example
 			arguments.scope = $listClean(arguments.scope);
 			loc.iEnd = ListLen(arguments.scope);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				loc.item = ListGetAt(arguments.scope, loc.i);
 				loc.part = loc.item & "=" & variables.wheels.class.adapter.$quoteValue(str=this[loc.item], type=validationTypeForProperty(loc.item));
-				if (Right(loc.part, 3) == "=''" && ListFindNoCase("integer,float,boolean", validationTypeForProperty(loc.item)))
-				{
+				if (Right(loc.part, 3) == "=''" && ListFindNoCase("integer,float,boolean", validationTypeForProperty(loc.item))) {
 					// when numeric property but blank we need to translate to IS NULL
 					loc.part = SpanExcluding(loc.part, "=") & " IS NULL";
 				}
@@ -509,8 +467,7 @@
 			loc.existingObject = findOne(select=primaryKey(), where=ArrayToList(loc.where, " AND "), reload=true, includeSoftDeletes=arguments.includeSoftDeletes, callbacks=false);
 
 			// we add an error if an object was found in the database and the current object is either not saved yet or not the same as the one in the database
-			if (IsObject(loc.existingObject) && (isNew() || loc.existingObject.key() != key($persisted=true)))
-			{
+			if (IsObject(loc.existingObject) && (isNew() || loc.existingObject.key() != key($persisted=true))) {
 				addError(property=arguments.property, message=$validationErrorMessage(argumentCollection=arguments));
 			}
 		}
@@ -525,14 +482,11 @@
 
 		// checks to see if a validation has been created for a property
 		loc.rv = false;
-		for (loc.key in variables.wheels.class.validations)
-		{
-			if (StructKeyExists(variables.wheels.class.validations, loc.key))
-			{
+		for (loc.key in variables.wheels.class.validations) {
+			if (StructKeyExists(variables.wheels.class.validations, loc.key)) {
 				loc.eventArray = variables.wheels.class.validations[loc.key];
 				loc.iEnd = ArrayLen(loc.eventArray);
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					if (StructKeyExists(loc.eventArray[loc.i].args, "property") && loc.eventArray[loc.i].args.property == arguments.property && loc.eventArray[loc.i].method == "$#arguments.validation#")
 					{
 						loc.rv = true;

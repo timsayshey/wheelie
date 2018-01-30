@@ -1,8 +1,7 @@
 <cfscript>
 	component extends="models.Model"
 	{
-		function init()
-		{
+		function init() {
 			// Set
 			table("newsletters");
 

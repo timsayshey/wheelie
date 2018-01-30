@@ -8,8 +8,7 @@ component extends="_main" output="false"
 
 	function index()
 	{
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			formfields = model("formField").findAll(where="formid = #params.id#", order="sortorder ASC");
 		}
 	}
@@ -18,14 +17,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			fieldValue = orderValues[i];
 
 			formField = model("formField").findOne(where="id = #fieldValue.fieldId#");
 
-			if(isObject(formField))
-			{
+			if(isObject(formField)) {
 				formField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
@@ -36,8 +33,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		formfields = model("formField").findByKey(params.id);
-		if(formfields[params.col] eq 1)
-		{
+		if(formfields[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -65,18 +61,15 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			formfield = model("formField").findAll(where="id = '#params.id#'#wherePermission("form","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(formfield))
-			{
+			if(ArrayLen(formfield)) {
 				formfield = formfield[1];
 			}
 
 			// form not found?
-			if (!IsObject(formfield))
-			{
+			if (!IsObject(formfield)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~id", module="admin", controller="formFields", action="index", id=params.formid);
 			}
@@ -88,8 +81,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Get form object
-		if(!isNull(params.formfield.id))
-		{
+		if(!isNull(params.formfield.id)) {
 			formfield = model("formField").findByKey(params.formfield.id);
 			saveResult = formfield.update(params.formfield);
 		} else {
@@ -99,8 +91,7 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update form object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			flashInsert(success='Field saved.');
 			redirectTo(route="admin~Id", module="admin", controller="formfields", action="edit", id=formfield.id, params="formid=#formfield.formid#");
 		} else {
@@ -117,8 +108,7 @@ component extends="_main" output="false"
 	{
 		forms = model("formField").findByKey(params.id);
 
-		if(forms.delete())
-		{
+		if(forms.delete()) {
 			flashInsert(success="The field was deleted successfully.");
 		} else
 		{

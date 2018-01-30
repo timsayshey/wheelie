@@ -2,26 +2,22 @@
 
 	<!--- Script functions --->
 	<cfscript>
-		function isDateWithin(startDate,endDate,checkDate)
-		{
+		function isDateWithin(startDate,endDate,checkDate) {
 			if (
 				IsDate(arguments.checkDate) AND
 				(dateDiff("d", arguments.startDate, arguments.checkDate) >= 0) AND
 				(dateDiff("d", arguments.checkDate, arguments.endDate) >= 0)
-			)
-			{
+			) {
 				return true;
 			}
 			return false;
 		}
 
-		function colStruct(modelName)
-		{
+		function colStruct(modelName) {
 			return listToStruct(arrayToList(model(modelName).columns()));
 		}
 
-		function listToStruct(list)
-		{
+		function listToStruct(list) {
 			var myStruct = StructNew();
 			var i = 0;
 			var delimiter = ",";
@@ -30,8 +26,7 @@
 
 			tempList = listToArray(list, delimiter);
 
-			for (i=1; i LTE ArrayLen(tempList); i=i+1)
-			{
+			for (i=1; i LTE ArrayLen(tempList); i=i+1) {
 				   if (not structkeyexists(myStruct, trim(ListFirst(tempList[i], "="))))
 				   {
 						   StructInsert(myStruct, trim(ListFirst(tempList[i], "=")), "");
@@ -130,8 +125,7 @@
 
 		<cfscript>
 			convertedOutput = byteInput;
-			if(isNumeric(convertedOutput))
-			{
+			if(isNumeric(convertedOutput)) {
 				convertedOutput = convertedOutput / 1024 / 1024;
 				convertedOutput = NumberFormat( convertedOutput, "0.00" );
 			}

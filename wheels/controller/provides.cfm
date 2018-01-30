@@ -8,11 +8,9 @@
 		arguments.formats = $listClean(arguments.formats);
 		loc.possibleFormats = StructKeyList(get("formats"));
 		loc.iEnd = ListLen(arguments.formats);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.formats, loc.i);
-			if (get("showErrorInformation") && !ListFindNoCase(loc.possibleFormats, loc.item))
-			{
+			if (get("showErrorInformation") && !ListFindNoCase(loc.possibleFormats, loc.item)) {
 				$throw(type="Wheels.InvalidFormat", message="An invalid format of `#loc.item#` has been specified. The possible values are #loc.possibleFormats#.");
 			}
 		}
@@ -31,11 +29,9 @@
 		arguments.formats = $listClean(arguments.formats);
 		loc.possibleFormats = StructKeyList(get("formats"));
 		loc.iEnd = ListLen(arguments.formats);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.formats, loc.i);
-			if (get("showErrorInformation") && !ListFindNoCase(loc.possibleFormats, loc.item))
-			{
+			if (get("showErrorInformation") && !ListFindNoCase(loc.possibleFormats, loc.item)) {
 				$throw(type="Wheels.InvalidFormat", message="An invalid format of `#loc.item#` has been specified. The possible values are #loc.possibleFormats#.");
 			}
 		}
@@ -59,35 +55,28 @@
 		loc.acceptableFormats = $acceptableFormats(action=arguments.action);
 
 		// default to html if the content type found is not acceptable
-		if (!ListFindNoCase(loc.acceptableFormats, loc.contentType))
-		{
+		if (!ListFindNoCase(loc.acceptableFormats, loc.contentType)) {
 			loc.contentType = "html";
 		}
 
 		// call render page if we are just rendering html
-		if (loc.contentType == "html")
-		{
+		if (loc.contentType == "html") {
 			StructDelete(arguments, "data");
 			loc.rv = renderPage(argumentCollection=arguments);
-		}
-		else
-		{
+		} else {
 			loc.templateName = $generateRenderWithTemplatePath(argumentCollection=arguments, contentType=loc.contentType);
 			loc.templatePathExists = $formatTemplatePathExists($name=loc.templateName);
-			if (loc.templatePathExists)
-			{
+			if (loc.templatePathExists) {
 				loc.content = renderPage(argumentCollection=arguments, template=loc.templateName, returnAs="string", layout=false, hideDebugInformation=true);
 			}
 
 			// throw an error if we rendered a pdf template and we got here, the cfdocument call should have stopped processing
-			if (loc.contentType == "pdf" && get("showErrorInformation") && loc.templatePathExists)
-			{
+			if (loc.contentType == "pdf" && get("showErrorInformation") && loc.templatePathExists) {
 				$throw(type="Wheels.PdfRenderingError", message="When rendering the a PDF file, don't specify the filename attribute. This will stream the PDF straight to the browser.");
 			}
 
 			// throw an error if we do not have a template to render the content type that we do not have defaults for
-			if (!ListFindNoCase("json,xml", loc.contentType) && !StructKeyExists(loc, "content") && get("showErrorInformation"))
-			{
+			if (!ListFindNoCase("json,xml", loc.contentType) && !StructKeyExists(loc, "content") && get("showErrorInformation")) {
 				$throw(type="Wheels.RenderingError", message="To render the #loc.contentType# content type, create the template `#loc.templateName#.cfm` for the #arguments.controller# controller.");
 			}
 
@@ -97,10 +86,8 @@
 			$header(name="content-type", value=loc.value, charset="utf-8");
 
 			// if we do not have the loc.content variable and we are not rendering html then try to create it
-			if (!StructKeyExists(loc, "content"))
-			{
-				switch (loc.contentType)
-				{
+			if (!StructKeyExists(loc, "content")) {
+				switch (loc.contentType) {
 					case "json":
 						loc.namedArgs = {};
 						if (StructCount(arguments) > 8)
@@ -143,12 +130,9 @@
 			}
 
 			// if the developer passed in returnAs="string" then return the generated content to them
-			if (arguments.returnAs == "string")
-			{
+			if (arguments.returnAs == "string") {
 				loc.rv = loc.content;
-			}
-			else
-			{
+			} else {
 				renderText(loc.content);
 			}
 		}
@@ -165,8 +149,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = variables.$class.formats.default;
-		if (StructKeyExists(variables.$class.formats, arguments.action))
-		{
+		if (StructKeyExists(variables.$class.formats, arguments.action)) {
 			loc.rv = variables.$class.formats[arguments.action];
 		}
 	</cfscript>
@@ -181,16 +164,12 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = "";
-		if (!Len(arguments.template))
-		{
+		if (!Len(arguments.template)) {
 			loc.rv = "/" & arguments.controller & "/" & arguments.action;
-		}
-		else
-		{
+		} else {
 			loc.rv = arguments.template;
 		}
-		if (Len(arguments.contentType))
-		{
+		if (Len(arguments.contentType)) {
 			loc.rv &= "." & arguments.contentType;
 		}
 	</cfscript>
@@ -203,26 +182,19 @@
 		var loc = {};
 		loc.templatePath = $generateIncludeTemplatePath($type="page", $name=arguments.$name, $template=arguments.$name);
 		loc.rv = false;
-		if (!ListFindNoCase(variables.$class.formats.existingTemplates, arguments.$name) && !ListFindNoCase(variables.$class.formats.nonExistingTemplates, arguments.$name))
-		{
-			if (FileExists(ExpandPath(loc.templatePath)))
-			{
+		if (!ListFindNoCase(variables.$class.formats.existingTemplates, arguments.$name) && !ListFindNoCase(variables.$class.formats.nonExistingTemplates, arguments.$name)) {
+			if (FileExists(ExpandPath(loc.templatePath))) {
 				loc.rv = true;
 			}
-			if (get("cacheFileChecking"))
-			{
-				if (loc.rv)
-				{
+			if (get("cacheFileChecking")) {
+				if (loc.rv) {
 					variables.$class.formats.existingTemplates = ListAppend(variables.$class.formats.existingTemplates, arguments.$name);
-				}
-				else
-				{
+				} else {
 					variables.$class.formats.nonExistingTemplates = ListAppend(variables.$class.formats.nonExistingTemplates, arguments.$name);
 				}
 			}
 		}
-		if (!loc.rv && ListFindNoCase(variables.$class.formats.existingTemplates, arguments.$name))
-		{
+		if (!loc.rv && ListFindNoCase(variables.$class.formats.existingTemplates, arguments.$name)) {
 			loc.rv = true;
 		}
 	</cfscript>
@@ -235,17 +207,12 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = "html";
-		if (StructKeyExists(arguments.params, "format"))
-		{
+		if (StructKeyExists(arguments.params, "format")) {
 			loc.rv = arguments.params.format;
-		}
-		else
-		{
+		} else {
 			loc.formats = get("formats");
-			for (loc.item in loc.formats)
-			{
-				if (FindNoCase(loc.formats[loc.item], arguments.httpAccept))
-				{
+			for (loc.item in loc.formats) {
+				if (FindNoCase(loc.formats[loc.item], arguments.httpAccept)) {
 					loc.rv = loc.item;
 					break;
 				}

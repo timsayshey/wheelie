@@ -23,11 +23,9 @@
 		loc.layoutType = "template";
 		if (isAjax() && StructKeyExists(variables.$class.layout, "ajax") && Len(variables.$class.layout.ajax))
 			loc.layoutType = "ajax";
-		if (!StructIsEmpty(variables.$class.layout))
-		{
+		if (!StructIsEmpty(variables.$class.layout)) {
 			loc.returnValue = variables.$class.layout.useDefault;
-			if ((StructKeyExists(this, variables.$class.layout[loc.layoutType]) && IsCustomFunction(this[variables.$class.layout[loc.layoutType]])) || IsCustomFunction(variables.$class.layout[loc.layoutType]))
-			{
+			if ((StructKeyExists(this, variables.$class.layout[loc.layoutType]) && IsCustomFunction(this[variables.$class.layout[loc.layoutType]])) || IsCustomFunction(variables.$class.layout[loc.layoutType])) {
 				// if the developer doesn't return anything from the method or if they return a blank string it should use the default layout still
 				loc.invokeArgs = {};
 				loc.invokeArgs.action = arguments.$action;
@@ -35,11 +33,9 @@
 				if (StructKeyExists(loc, "temp"))
 					loc.returnValue = loc.temp;
 			}
-			else if ((!StructKeyExists(variables.$class.layout, "except") || !ListFindNoCase(variables.$class.layout.except, arguments.$action)) && (!StructKeyExists(variables.$class.layout, "only") || ListFindNoCase(variables.$class.layout.only, arguments.$action)))
-			{
+			else if ((!StructKeyExists(variables.$class.layout, "except") || !ListFindNoCase(variables.$class.layout.except, arguments.$action)) && (!StructKeyExists(variables.$class.layout, "only") || ListFindNoCase(variables.$class.layout.only, arguments.$action))) {
 				// Here's the magic - if it points to a custom theme, make sure it's the request theme
-				if(find("/themes/",variables.$class.layout[loc.layoutType]))
-				{
+				if(find("/themes/",variables.$class.layout[loc.layoutType])) {
 					loc.returnValue = "/themes/#request.site.theme#/layout";
 				} else {
 					loc.returnValue = variables.$class.layout[loc.layoutType];

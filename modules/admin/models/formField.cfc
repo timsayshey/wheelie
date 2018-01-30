@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Set
 			table("metafields");
 			property(name="metafieldType", defaultValue="formfield");
@@ -20,13 +19,11 @@
 			//property(name="formid", column="formid")
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "metafieldType='formfield'#wherePermission('formfield','AND')#";
 		}
 
-		function metafieldInfo()
-		{
+		function metafieldInfo() {
 			return {
 				singular		= "form",
 				plural			= "forms",
@@ -36,4 +33,3 @@
 		}
 	</cfscript>
 </cfcomponent>
-

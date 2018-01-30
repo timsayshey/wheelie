@@ -19,8 +19,7 @@ component extends="Wheels"
 
 	function setSiteId()
 	{
-		if(!isNull(request.site.id) AND isNumeric(request.site.id) AND isNull(this.siteid_override))
-		{
+		if(!isNull(request.site.id) AND isNumeric(request.site.id) AND isNull(this.siteid_override)) {
 			this.siteid = request.site.id;
 		} else if (!isNull(this.siteid_override) AND isNumeric(this.siteid_override)) {
 			this.siteid = this.siteid_override;
@@ -30,10 +29,8 @@ component extends="Wheels"
 	// Set this.setWhere in Model to default where statement
 	function findAll()
 	{
-		if(!isNull(this.setWhere) AND isCustomFunction(this.setWhere))
-		{
-			if(!StructKeyExists(arguments, "where") OR !Len(arguments.where))
-			{
+		if(!isNull(this.setWhere) AND isCustomFunction(this.setWhere)) {
+			if(!StructKeyExists(arguments, "where") OR !Len(arguments.where)) {
 				//arguments.where = wherePermission(getModelName());
 				arguments.where = this.setWhere();
 			}
@@ -44,13 +41,11 @@ component extends="Wheels"
 	// Clean strings
 	private function sanitizeNameAndURLId()
 	{
-		if(!isNull(this.urlid) AND !isNull(this.name))
-		{
+		if(!isNull(this.urlid) AND !isNull(this.name)) {
 			this.urlid 	= lcase(cleanUrlId(this.urlid));
 			this.name 	= removehtml(this.name);
 
-			if(!len(this.urlid))
-			{
+			if(!len(this.urlid)) {
 				this.urlid 	= lcase(cleanUrlId(this.name));
 			}
 		}
@@ -74,28 +69,22 @@ component extends="Wheels"
 		var permissionType = arguments.type;
 		variables.checkid = arguments.checkid;
 
-		if(checkPermission("#getModelName()#_#permissionType#_others"))
-		{
+		if(checkPermission("#getModelName()#_#permissionType#_others")) {
 			// Good to go
 		}
-		else if (checkPermission("#getModelName()#_#permissionType#"))
-		{
-			if(!isNull(request.newRegistration) AND isNull(session.user.id) OR structKeyExists(url,"token") AND findNoCase("users/verifyEmail",cgi.path_info))
-			{
+		else if (checkPermission("#getModelName()#_#permissionType#")) {
+			if(!isNull(request.newRegistration) AND isNull(session.user.id) OR structKeyExists(url,"token") AND findNoCase("users/verifyEmail",cgi.path_info)) {
 				// Override for registration
 				// Override for email verification
 			} else {
-				if(structKeyExists(session,"user") && !ListFindNoCase(checkid, session.user.id) AND checkid neq 0)
-				{
+				if(structKeyExists(session,"user") && !ListFindNoCase(checkid, session.user.id) AND checkid neq 0) {
 					session.flash.error="You only have access to #permissionType# your own #getModelName()#s";
 
 					goLocation(cgi.http_referer,false); abort;
 				}
 			}
 
-		}
-		else
-		{
+		} else {
 			session.flash.error="You don't have permission to #permissionType# #getModelName()#s";
 			goLocation(cgi.http_referer,false); abort;
 		}
@@ -132,8 +121,7 @@ component extends="Wheels"
 		var loc = {};
 		param name="this.id" default="";
 
-		if (StructKeyExists(request, "logit") AND IsStruct(request.logit))
-		{
+		if (StructKeyExists(request, "logit") AND IsStruct(request.logit)) {
 			loc.thisModelName = getModelName();
 
 			loc.logit = request.logit;

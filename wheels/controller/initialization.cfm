@@ -21,8 +21,7 @@
 		variables.$class.path = arguments.path;
 
 		// if our name has pathing in it, remove it and add it to the end of of the $class.path variable
-		if (Find("/", arguments.name))
-		{
+		if (Find("/", arguments.name)) {
 			variables.$class.name = ListLast(arguments.name, "/");
 			variables.$class.path = ListAppend(arguments.path, ListDeleteAt(arguments.name, ListLen(arguments.name, "/"), "/"), "/");
 		}
@@ -40,8 +39,7 @@
 		variables.$class.formats.nonExistingTemplates = "";
 
 		$setFlashStorage(get("flashStorage"));
-		if (StructKeyExists(variables, "init"))
-		{
+		if (StructKeyExists(variables, "init")) {
 			init();
 		}
 		loc.rv = this;
@@ -68,26 +66,19 @@
 		// include controller specific helper files if they exist, cache the file check for performance reasons
 		loc.template = get("viewPath") & "/" & LCase(arguments.name) & "/helpers.cfm";
 		loc.helperFileExists = false;
-		if (!ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) && !ListFindNoCase(application.wheels.nonExistingHelperFiles, arguments.name))
-		{
-			if (FileExists(ExpandPath(loc.template)))
-			{
+		if (!ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) && !ListFindNoCase(application.wheels.nonExistingHelperFiles, arguments.name)) {
+			if (FileExists(ExpandPath(loc.template))) {
 				loc.helperFileExists = true;
 			}
-			if (get("cacheFileChecking"))
-			{
-				if (loc.helperFileExists)
-				{
+			if (get("cacheFileChecking")) {
+				if (loc.helperFileExists) {
 					application.wheels.existingHelperFiles = ListAppend(application.wheels.existingHelperFiles, arguments.name);
-				}
-				else
-				{
+				} else {
 					application.wheels.nonExistingHelperFiles = ListAppend(application.wheels.nonExistingHelperFiles, arguments.name);
 				}
 			}
 		}
-		if (Len(arguments.name) && (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists))
-		{
+		if (Len(arguments.name) && (ListFindNoCase(application.wheels.existingHelperFiles, arguments.name) || loc.helperFileExists)) {
 			$include(template=loc.template);
 		}
 

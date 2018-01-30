@@ -20,8 +20,7 @@
 		<cfargument name="type" type="string" required="true">
 		<cfscript>
 			var loc = {};
-			switch (arguments.type)
-			{
+			switch (arguments.type) {
 				case "bigint": case "int8": case "bigserial": case "serial8":
 					loc.rv = "cf_sql_bigint";
 					break;

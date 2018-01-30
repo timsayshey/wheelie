@@ -712,9 +712,7 @@ component {
 		}
 		else if (_.isString(arguments.obj)) {
 			return listToArray(arguments.obj, ',', true);
-		}
-		else
-		{
+		} else {
 			return [arguments.obj];
 		}
 	}

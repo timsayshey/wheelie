@@ -12,31 +12,26 @@
 		var loc = {};
 		$args(name="renderPage", args=arguments);
 		$dollarify(arguments, "controller,action,template,layout,cache,returnAs,hideDebugInformation");
-		if (get("showDebugInformation"))
-		{
+		if (get("showDebugInformation")) {
 			$debugPoint("view");
 		}
 
 		// if no layout specific arguments were passed in use the this instance's layout
-		if (!Len(arguments.$layout))
-		{
+		if (!Len(arguments.$layout)) {
 			arguments.$layout = $useLayout(arguments.$action);
 		}
 
 		// never show debugging out in ajax requests
-		if (isAjax())
-		{
+		if (isAjax()) {
 			arguments.$hideDebugInformation = true;
 		}
 
 		// if renderPage was called with a layout set a flag to indicate that it's ok to show debug info at the end of the request
-		if (!arguments.$hideDebugInformation)
-		{
+		if (!arguments.$hideDebugInformation) {
 			request.wheels.showDebugInformation = true;
 		}
 
-		if (get("cachePages") && (IsNumeric(arguments.$cache) || (IsBoolean(arguments.$cache) && arguments.$cache)))
-		{
+		if (get("cachePages") && (IsNumeric(arguments.$cache) || (IsBoolean(arguments.$cache) && arguments.$cache))) {
 			loc.category = "action";
 			loc.key = $hashedKey(arguments, variables.params);
 			loc.lockName = loc.category & loc.key & application.applicationName;
@@ -47,21 +42,15 @@
 			loc.executeArgs.category = loc.category;
 			loc.executeArgs.key = loc.key;
 			loc.page = $doubleCheckedLock(name=loc.lockName, condition="$getFromCache", execute="$renderPageAndAddToCache", conditionArgs=loc.conditionArgs, executeArgs=loc.executeArgs);
-		}
-		else
-		{
+		} else {
 			loc.page = $renderPage(argumentCollection=arguments);
 		}
-		if (arguments.$returnAs == "string")
-		{
+		if (arguments.$returnAs == "string") {
 			loc.rv = loc.page;
-		}
-		else
-		{
+		} else {
 			variables.$instance.response = loc.page;
 		}
-		if (get("showDebugInformation"))
-		{
+		if (get("showDebugInformation")) {
 			$debugPoint("view");
 		}
 	</cfscript>
@@ -93,12 +82,9 @@
 		var loc = {};
 		$args(name="renderPartial", args=arguments);
 		loc.partial = $includeOrRenderPartial(argumentCollection=$dollarify(arguments, "partial,cache,layout,returnAs,dataFunction"));
-		if (arguments.$returnAs == "string")
-		{
+		if (arguments.$returnAs == "string") {
 			loc.rv = loc.partial;
-		}
-		else
-		{
+		} else {
 			variables.$instance.response = loc.partial;
 		}
 	</cfscript>
@@ -110,12 +96,9 @@
 <cffunction name="response" returntype="string" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if ($performedRender())
-		{
+		if ($performedRender()) {
 			loc.rv = Trim(variables.$instance.response);
-		}
-		else
-		{
+		} else {
 			loc.rv = "";
 		}
 	</cfscript>
@@ -135,8 +118,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = $renderPage(argumentCollection=arguments);
-		if (!IsNumeric(arguments.$cache))
-		{
+		if (!IsNumeric(arguments.$cache)) {
 			arguments.$cache = get("defaultCacheTime");
 		}
 		$addToCache(key=arguments.key, value=loc.rv, time=arguments.$cache, category=arguments.category);
@@ -147,8 +129,7 @@
 <cffunction name="$renderPage" returntype="string" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if (!Len(arguments.$template))
-		{
+		if (!Len(arguments.$template)) {
 			arguments.$template = "/" & arguments.$controller & "/" & arguments.$action;
 		}
 		arguments.$type = "page";
@@ -164,8 +145,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = $renderPartial(argumentCollection=arguments);
-		if (!IsNumeric(arguments.$cache))
-		{
+		if (!IsNumeric(arguments.$cache)) {
 			arguments.$cache = get("defaultCacheTime");
 		}
 		$addToCache(key=arguments.key, value=loc.rv, time=arguments.$cache, category=arguments.category);
@@ -177,22 +157,17 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = {};
-		if (StructKeyExists(arguments, "$dataFunction") && arguments.$dataFunction != false)
-		{
-			if (IsBoolean(arguments.$dataFunction))
-			{
+		if (StructKeyExists(arguments, "$dataFunction") && arguments.$dataFunction != false) {
+			if (IsBoolean(arguments.$dataFunction)) {
 				loc.dataFunction = SpanExcluding(ListLast(arguments.$name, "/"), ".");
-				if (StructKeyExists(variables, loc.dataFunction))
-				{
+				if (StructKeyExists(variables, loc.dataFunction)) {
 					loc.metaData = GetMetaData(variables[loc.dataFunction]);
 					if (IsStruct(loc.metaData) && StructKeyExists(loc.metaData, "returnType") && loc.metaData.returnType == "struct" && StructKeyExists(loc.metaData, "access") && loc.metaData.access == "private")
 					{
 						loc.rv = $invoke(method=loc.dataFunction, invokeArgs=arguments);
 					}
 				}
-			}
-			else
-			{
+			} else {
 				loc.rv = $invoke(method=arguments.$dataFunction, invokeArgs=arguments);
 			}
 		}
@@ -204,27 +179,22 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = "";
-		if (IsQuery(arguments.$partial) && arguments.$partial.recordCount)
-		{
+		if (IsQuery(arguments.$partial) && arguments.$partial.recordCount) {
 			arguments.$name = request.wheels[$hashedKey(arguments.$partial)];
 			arguments.query = arguments.$partial;
 		}
-		else if (IsObject(arguments.$partial))
-		{
+		else if (IsObject(arguments.$partial)) {
 			arguments.$name = arguments.$partial.$classData().modelName;
 			arguments.object = arguments.$partial;
 		}
-		else if (IsArray(arguments.$partial) && ArrayLen(arguments.$partial))
-		{
+		else if (IsArray(arguments.$partial) && ArrayLen(arguments.$partial)) {
 			arguments.$name = arguments.$partial[1].$classData().modelName;
 			arguments.objects = arguments.$partial;
 		}
-		else if (IsSimpleValue(arguments.$partial))
-		{
+		else if (IsSimpleValue(arguments.$partial)) {
 			arguments.$name = arguments.$partial;
 		}
-		if (StructKeyExists(arguments, "$name"))
-		{
+		if (StructKeyExists(arguments, "$name")) {
 			arguments.$type = "partial";
 			arguments.$template = $generateIncludeTemplatePath(argumentCollection=arguments);
 			StructAppend(arguments, $argumentsForPartial(argumentCollection=arguments), false);
@@ -238,8 +208,7 @@
 <cffunction name="$includeOrRenderPartial" returntype="string" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if (get("cachePartials") && (isNumeric(arguments.$cache) || (IsBoolean(arguments.$cache) && arguments.$cache)))
-		{
+		if (get("cachePartials") && (isNumeric(arguments.$cache) || (IsBoolean(arguments.$cache) && arguments.$cache))) {
 			loc.category = "partial";
 			loc.key = $hashedKey(arguments);
 			loc.lockName = loc.category & loc.key & application.applicationName;
@@ -250,9 +219,7 @@
 			loc.executeArgs.category = loc.category;
 			loc.executeArgs.key = loc.key;
 			loc.rv = $doubleCheckedLock(name=loc.lockName, condition="$getFromCache", execute="$renderPartialAndAddToCache", conditionArgs=loc.conditionArgs, executeArgs=loc.executeArgs);
-		}
-		else
-		{
+		} else {
 			loc.rv = $renderPartial(argumentCollection=arguments);
 		}
 	</cfscript>
@@ -272,24 +239,19 @@
 		// extracts the file part of the path and replace ending ".cfm"
 		loc.fileName = ReplaceNoCase(Reverse(ListFirst(Reverse(arguments.$name), "/")), ".cfm", "", "all") & ".cfm";
 
-		if (arguments.$type == "partial" && arguments.$prependWithUnderscore)
-		{
+		if (arguments.$type == "partial" && arguments.$prependWithUnderscore) {
 			// replace leading "_" when the file is a partial
 			loc.fileName = Replace("_" & loc.fileName, "__", "_", "one");
 		}
 		loc.folderName = Reverse(ListRest(Reverse(arguments.$name), "/"));
-		if (Left(arguments.$name, 1) == "/")
-		{
+		if (Left(arguments.$name, 1) == "/") {
 			// include a file in a sub folder to views
 			loc.rv &= loc.folderName & "/" & loc.fileName;
 		}
-		else if (Find("/", arguments.$name))
-		{
+		else if (Find("/", arguments.$name)) {
 			// include a file in a sub folder of the current controller
 			loc.rv &= "/" & arguments.$controllerName & "/" & loc.folderName & "/" & loc.fileName;
-		}
-		else
-		{
+		} else {
 			// include a file in the current controller's view folder
 			loc.rv &= "/" & arguments.$controllerName & "/" & loc.fileName;
 		}
@@ -304,16 +266,13 @@
 	<cfargument name="$type" type="string" required="true">
 	<cfscript>
 		var loc = {};
-		if (arguments.$type == "partial")
-		{
-			if (StructKeyExists(arguments, "query") && IsQuery(arguments.query))
-			{
+		if (arguments.$type == "partial") {
+			if (StructKeyExists(arguments, "query") && IsQuery(arguments.query)) {
 				loc.query = arguments.query;
 				StructDelete(arguments, "query");
 				loc.rv = "";
 				loc.iEnd = loc.query.recordCount;
-				if (Len(arguments.$group))
-				{
+				if (Len(arguments.$group)) {
 					// we want to group based on a column so loop through the rows until we find, this will break if the query is not ordered by the grouped column
 					loc.tempSpacer = "}|{";
 					loc.groupValue = "";
@@ -369,9 +328,7 @@
 						loc.rv = Left(loc.rv, Len(loc.rv) - 3);
 					}
 					loc.rv = Replace(loc.rv, loc.tempSpacer, arguments.$spacer, "all");
-				}
-				else
-				{
+				} else {
 					for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
 					{
 						arguments.current = loc.i;
@@ -397,23 +354,20 @@
 					}
 				}
 			}
-			else if (StructKeyExists(arguments, "object") && IsObject(arguments.object))
-			{
+			else if (StructKeyExists(arguments, "object") && IsObject(arguments.object)) {
 				loc.modelName = arguments.object.$classData().modelName;
 				arguments[loc.modelName] = arguments.object;
 				StructDelete(arguments, "object");
 				StructAppend(arguments, arguments[loc.modelName].properties(), false);
 			}
-			else if (StructKeyExists(arguments, "objects") && IsArray(arguments.objects))
-			{
+			else if (StructKeyExists(arguments, "objects") && IsArray(arguments.objects)) {
 				loc.array = arguments.objects;
 				StructDelete(arguments, "objects");
 				loc.originalArguments = Duplicate(arguments);
 				loc.modelName = loc.array[1].$classData().modelName;
 				loc.rv = "";
 				loc.iEnd = ArrayLen(loc.array);
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					StructClear(arguments);
 					StructAppend(arguments, loc.originalArguments);
 					arguments.current = loc.i;
@@ -429,8 +383,7 @@
 				}
 			}
 		}
-		if (!StructKeyExists(loc, "rv"))
-		{
+		if (!StructKeyExists(loc, "rv")) {
 			loc.rv = $includeAndReturnOutput(argumentCollection=arguments);
 		}
 	</cfscript>
@@ -440,12 +393,9 @@
 <cffunction name="$performedRenderOrRedirect" returntype="boolean" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if ($performedRender() || $performedRedirect())
-		{
+		if ($performedRender() || $performedRedirect()) {
 			loc.rv = true;
-		}
-		else
-		{
+		} else {
 			loc.rv = false;
 		}
 	</cfscript>
@@ -487,12 +437,9 @@
 <cffunction name="$getRedirect" returntype="struct" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if ($performedRedirect())
-		{
+		if ($performedRedirect()) {
 			loc.rv = variables.$instance.redirect;
-		}
-		else
-		{
+		} else {
 			loc.rv = {};
 		}
 	</cfscript>

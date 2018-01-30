@@ -33,10 +33,8 @@ function deleteCategory(deleteid,el)
 	$.ajax({
 		type: "GET",
 		url: "/m/admin/categories/delete/" + categoryInfo.model + "/" + deleteid + "?ajax",
-		success: function(data)
-		{
-			if($.parseJSON(data).Success == true)
-			{
+		success: function(data) {
+			if($.parseJSON(data).Success == true) {
 				var preserveChildren = $(el).parent().parent().parent().find("ul").html();
 				$(el).parent().parent().parent().parent().append(preserveChildren);
 				$(el).parent().parent().parent().remove();
@@ -93,9 +91,7 @@ function categoryForm(editid)
 	{
 		GetUrl = "/m/admin/categories/new/" + categoryInfo.model + "/" + "?ajax&type=" + categoryInfo.addType;
 		CrudType = "new";
-	}
-	else
-	{
+	} else {
 		GetUrl = "/m/admin/categories/edit/" + categoryInfo.model + "/" + editid + "/?ajax&type=" + categoryInfo.addType;
 		CrudType = "update";
 	}
@@ -105,16 +101,14 @@ function categoryForm(editid)
 	$.ajax({
 		type: "GET",
 		url: GetUrl,
-		success: function(data)
-		{
+		success: function(data) {
 			$("#addcategory #content #form").html(data);
 			$(".helper").tooltip('fixTitle');
 
 			modalCategoryLoader("hide");
 
 			$(document).off("click", "#addcategorybtn");
-			$(document).on("click", "#addcategorybtn", function(e)
-			{
+			$(document).on("click", "#addcategorybtn", function(e) {
 				var formData = $("#addcategory #form").serializeAnything();
 				modalCategoryLoader("show");
 

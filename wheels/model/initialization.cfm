@@ -13,8 +13,7 @@
 		variables.wheels.class.path = arguments.path;
 
 		// if our name has pathing in it, remove it and add it to the end of of the $class.path variable
-		if (Find("/", arguments.name))
-		{
+		if (Find("/", arguments.name)) {
 			variables.wheels.class.modelName = ListLast(arguments.name, "/");
 			variables.wheels.class.path = ListAppend(arguments.path, ListDeleteAt(arguments.name, ListLen(arguments.name, "/"), "/"), "/");
 		}
@@ -35,14 +34,12 @@
 		table(LCase(pluralize(variables.wheels.class.modelName)));
 		loc.callbacks = "afterNew,afterFind,afterInitialization,beforeDelete,afterDelete,beforeSave,afterSave,beforeCreate,afterCreate,beforeUpdate,afterUpdate,beforeValidation,afterValidation,beforeValidationOnCreate,afterValidationOnCreate,beforeValidationOnUpdate,afterValidationOnUpdate";
 		loc.iEnd = ListLen(loc.callbacks);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			variables.wheels.class.callbacks[ListGetAt(loc.callbacks, loc.i)] = ArrayNew(1);
 		}
 		loc.validations = "onSave,onCreate,onUpdate";
 		loc.iEnd = ListLen(loc.validations);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			variables.wheels.class.validations[ListGetAt(loc.validations, loc.i)] = ArrayNew(1);
 		}
 
@@ -51,20 +48,17 @@
 		variables.wheels.class.calculatedPropertyList = "";
 
 		// run developer's init method if it exists
-		if (StructKeyExists(variables, "init"))
-		{
+		if (StructKeyExists(variables, "init")) {
 			init();
 		}
-		else if (get("modelRequireInit"))
-		{
+		else if (get("modelRequireInit")) {
 			$throw(type="Wheels.ModelInitMissing", message="An init function is required for Model: #variables.wheels.class.modelName#", extendedInfo="Create an init function in /models/#variables.wheels.class.modelName#");
 		}
 
 		// make sure that the tablename has the respected prefix
 		table(getTableNamePrefix() & tableName());
 
-		if (!IsBoolean(variables.wheels.class.tableName) || variables.wheels.class.tableName)
-		{
+		if (!IsBoolean(variables.wheels.class.tableName) || variables.wheels.class.tableName) {
 			// load the database adapter
 			variables.wheels.class.adapter = $createObjectFromRoot(path="#application.wheels.wheelsComponentPath#", fileName="Connection", method="init", datasource="#variables.wheels.class.connection.datasource#", username="#variables.wheels.class.connection.username#", password="#variables.wheels.class.connection.password#");
 
@@ -73,11 +67,9 @@
 
 			loc.processedColumns = "";
 			loc.iEnd = loc.columns.recordCount;
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				// set up properties and column mapping
-				if (!ListFind(loc.processedColumns, loc.columns["column_name"][loc.i]))
-				{
+				if (!ListFind(loc.processedColumns, loc.columns["column_name"][loc.i])) {
 					// default the column to map to a property with the same name
 					loc.property = loc.columns["column_name"][loc.i];
 					for (loc.key in variables.wheels.class.mapping)
@@ -168,17 +160,14 @@
 				}
 			}
 			// raise error when no primary key has been defined for the table
-			if (!Len(primaryKeys()))
-			{
+			if (!Len(primaryKeys())) {
 				$throw(type="Wheels.NoPrimaryKey", message="No primary key exists on the `#tableName()#` table.", extendedInfo="Set an appropriate primary key on the `#tableName()#` table.");
 			}
 		}
 
 		// add calculated properties
-		for (loc.key in variables.wheels.class.mapping)
-		{
-			if (StructKeyExists(variables.wheels.class.mapping[loc.key], "type") && variables.wheels.class.mapping[loc.key].type != "column")
-			{
+		for (loc.key in variables.wheels.class.mapping) {
+			if (StructKeyExists(variables.wheels.class.mapping[loc.key], "type") && variables.wheels.class.mapping[loc.key].type != "column") {
 				variables.wheels.class.calculatedPropertyList = ListAppend(variables.wheels.class.calculatedPropertyList, loc.key);
 				variables.wheels.class.calculatedProperties[loc.key] = {};
 				variables.wheels.class.calculatedProperties[loc.key][variables.wheels.class.mapping[loc.key].type] = variables.wheels.class.mapping[loc.key].value;
@@ -186,31 +175,22 @@
 		}
 
 		// set up soft deletion and time stamping if the necessary columns in the table exist
-		if (Len(application.wheels.softDeleteProperty) && StructKeyExists(variables.wheels.class.properties, application.wheels.softDeleteProperty))
-		{
+		if (Len(application.wheels.softDeleteProperty) && StructKeyExists(variables.wheels.class.properties, application.wheels.softDeleteProperty)) {
 			variables.wheels.class.softDeletion = true;
 			variables.wheels.class.softDeleteColumn = variables.wheels.class.properties[application.wheels.softDeleteProperty].column;
-		}
-		else
-		{
+		} else {
 			variables.wheels.class.softDeletion = false;
 		}
-		if (Len(application.wheels.timeStampOnCreateProperty) && StructKeyExists(variables.wheels.class.properties, application.wheels.timeStampOnCreateProperty))
-		{
+		if (Len(application.wheels.timeStampOnCreateProperty) && StructKeyExists(variables.wheels.class.properties, application.wheels.timeStampOnCreateProperty)) {
 			variables.wheels.class.timeStampingOnCreate = true;
 			variables.wheels.class.timeStampOnCreateProperty = application.wheels.timeStampOnCreateProperty;
-		}
-		else
-		{
+		} else {
 			variables.wheels.class.timeStampingOnCreate = false;
 		}
-		if (Len(application.wheels.timeStampOnUpdateProperty) && StructKeyExists(variables.wheels.class.properties, application.wheels.timeStampOnUpdateProperty))
-		{
+		if (Len(application.wheels.timeStampOnUpdateProperty) && StructKeyExists(variables.wheels.class.properties, application.wheels.timeStampOnUpdateProperty)) {
 			variables.wheels.class.timeStampingOnUpdate = true;
 			variables.wheels.class.timeStampOnUpdateProperty = application.wheels.timeStampOnUpdateProperty;
-		}
-		else
-		{
+		} else {
 			variables.wheels.class.timeStampingOnUpdate = false;
 		}
 	</cfscript>
@@ -235,24 +215,20 @@
 		variables.wheels.tickCountId = request.wheels.tickCountId;
 
 		// copy class variables from the object in the application scope
-		if (!StructKeyExists(variables.wheels, "class"))
-		{
+		if (!StructKeyExists(variables.wheels, "class")) {
 			loc.lockName = "classLock" & application.applicationName;
 			variables.wheels.class = $simpleLock(name=loc.lockName, type="readOnly", object=application.wheels.models[arguments.name], execute="$classData");
 		}
 
 		// setup object properties in the this scope
-		if (IsQuery(arguments.properties) && arguments.properties.recordCount != 0)
-		{
+		if (IsQuery(arguments.properties) && arguments.properties.recordCount != 0) {
 			arguments.properties = $queryRowToStruct(argumentCollection=arguments);
 		}
 
-		if (IsStruct(arguments.properties) && !StructIsEmpty(arguments.properties))
-		{
+		if (IsStruct(arguments.properties) && !StructIsEmpty(arguments.properties)) {
 			$setProperties(properties=arguments.properties, setOnModel=true, $useFilterLists=arguments.useFilterLists);
 		}
-		if (arguments.persisted)
-		{
+		if (arguments.persisted) {
 			$updatePersistedProperties();
 		}
 		variables.wheels.instance.persistedOnInitialization = arguments.persisted;

@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			super.init();
 
 			// Properties
@@ -23,13 +22,11 @@
 			beforeSave("sanitizeNameAndURLId");
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "categoryType='property'#wherePermission('Category','AND')#";
 		}
 
-		function categoryInfo()
-		{
+		function categoryInfo() {
 			return {
 				singular		= "Property Category",
 				plural			= "Property Categories",
@@ -39,4 +36,3 @@
 		}
 	</cfscript>
 </cfcomponent>
-

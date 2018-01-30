@@ -30,19 +30,16 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			pageblock = model("PageBlock").findAll(where="id = '#params.id#'#wherePermission("PageBlock","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(pageblock))
-			{
+			if(ArrayLen(pageblock)) {
 				pageblock = pageblock[1];
 			}
 
 			// PageBlock not found?
-			if (!IsObject(pageblock))
-			{
+			if (!IsObject(pageblock)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="pageblocks");
 			}
@@ -69,8 +66,7 @@ component extends="_main" output="false"
 	{
 		pageblock = model("PageBlock").findByKey(params.id);
 
-		if(pageblock.delete())
-		{
+		if(pageblock.delete()) {
 			flashInsert(success="The pageblock was deleted successfully.");
 		} else
 		{
@@ -87,28 +83,24 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.pageblock.status = handleSubmitType("pageblock", params.submit);
 		}
 
 		// Save homepageblock settings
-		if(StructKeyExists(params,"options") AND StructKeyExists(params,"isHome"))
-		{
+		if(StructKeyExists(params,"options") AND StructKeyExists(params,"isHome")) {
 			model("Option").saveOptions(params.options);
 		}
 
 		// Auto generate meta tags
-		if(StructKeyExists(params.pageblock,"metagenerated") AND params.pageblock.metagenerated eq 1)
-		{
+		if(StructKeyExists(params.pageblock,"metagenerated") AND params.pageblock.metagenerated eq 1) {
 			params.pageblock.metatitle 		= generatePageBlockTitle(params.pageblock.name);
 			params.pageblock.metadescription = generateMetaDescription(params.pageblock.content);
 			params.pageblock.metakeywords 	= generateMetaKeywords(params.pageblock.content);
 		}
 
 		// Get pageblock object
-		if(!isNull(params.pageblock.id))
-		{
+		if(!isNull(params.pageblock.id)) {
 			pageblock = model("PageBlock").findByKey(params.pageblock.id);
 			saveResult = pageblock.update(params.pageblock);
 		} else {
@@ -117,10 +109,8 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update pageblock object with properties
-		if (saveResult)
-		{
-			if(StructKeyExists(params,"isHome"))
-			{
+		if (saveResult) {
+			if(StructKeyExists(params,"isHome")) {
 				option = model("Option").findOne(where="id = 'home_id'#wherePermission("option","AND")#");
 				option.update(content=pageblock.id,validate=false);
 			}
@@ -141,8 +131,7 @@ component extends="_main" output="false"
 
 	function deleteSelection()
 	{
-		for(i=1; i LTE ListLen(params.deletelist); i++)
-		{
+		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("PageBlock").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
 
@@ -157,8 +146,7 @@ component extends="_main" output="false"
 
 	function setPerPage()
 	{
-		if(!isNull(params.id) AND IsNumeric(params.id))
-		{
+		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
 
@@ -171,55 +159,45 @@ component extends="_main" output="false"
 
 	function filterResults()
 	{
-		if(!isNull(params.filtertype) AND params.filtertype eq "clear")
-		{
+		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
-		}
-		else
-		{
+		} else {
 			rememberParams = "";
 
 			// Set display type
-			if(!isNull(params.display))
-			{
+			if(!isNull(params.display)) {
 				session.display = params.display;
 			}
 
 			// Set search query
-			if(!isNull(params.search))
-			{
+			if(!isNull(params.search)) {
 				params.search = params.search;
 			}
 
 			// Set sort by
-			if(!isNull(params.sort))
-			{
+			if(!isNull(params.sort)) {
 				session.pageblocks.sortby = params.sort;
 			}
 
 			// Set order
-			if(!isNull(params.order))
-			{
+			if(!isNull(params.order)) {
 				session.pageblocks.order = params.order;
 			}
 
 			// Apply "search" filter
-			if(!isNull(params.search) AND len(params.search))
-			{
+			if(!isNull(params.search) AND len(params.search)) {
 				rememberParams = ListAppend(rememberParams,"search=#params.search#","&");
 
 				// Break apart search string into a keyword where clause
 				var whereKeywords = [];
 				var keywords = listToArray(trim(params.search)," ");
-				for(keyword in keywords)
-				{
+				for(keyword in keywords) {
 					ArrayAppend(whereKeywords, "name LIKE '%#keyword#%'");
 				}
 
 				// Include permission check if defined
 				whereKeywords = ArrayToList(whereKeywords, " OR ");
-				if(len(wherePermission("PageBlock")))
-				{
+				if(len(wherePermission("PageBlock"))) {
 					whereClause = wherePermission("PageBlock") & " AND (" & whereKeywords & ")";
 				} else {
 					whereClause = whereKeywords;
@@ -237,8 +215,7 @@ component extends="_main" output="false"
 				order	= session.pageblocks.sortby & " " & session.pageblocks.order
 			);
 
-			if(len(rememberParams))
-			{
+			if(len(rememberParams)) {
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 

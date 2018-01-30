@@ -20,8 +20,7 @@
 		<cfargument name="type" type="string" required="true">
 		<cfscript>
 			var loc = {};
-			switch (arguments.type)
-			{
+			switch (arguments.type) {
 				case "bigint": case "int8":
 					loc.rv = "cf_sql_bigint";
 					break;
@@ -121,11 +120,9 @@
 			// since cfdbinfo incorrectly returns information_schema tables we need to create a new query result that excludes these tables
 			loc.rv = QueryNew(loc.columns.columnList);
 			loc.iEnd = loc.columns.recordCount;
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				// yes, it should actually be "table_schem" below, not a typo
-				if (loc.columns["table_schem"][loc.i] != "information_schema")
-				{
+				if (loc.columns["table_schem"][loc.i] != "information_schema") {
 					QueryAddRow(loc.rv);
 					loc.jEnd = ListLen(loc.columns.columnList);
 					for (loc.j=1; loc.j <= loc.jEnd; loc.j++)

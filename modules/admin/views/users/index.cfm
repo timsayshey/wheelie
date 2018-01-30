@@ -5,8 +5,7 @@
 		initializeRearrange = includePartial(partial="/_partials/sortableScript", urlcontroller="users", reEndRow=qUsers.recordcount);
 
 		contentFor(formy = true);
-		if(len(capitalize(usergroup.groupname)))
-		{
+		if(len(capitalize(usergroup.groupname))) {
 			titleName = capitalize(usergroup.groupname);
 		} else {
 			titleName = "User";
@@ -14,8 +13,7 @@
 
 		contentFor(headerTitle = '<span class="fa fa-user"></span> #titleName#');
 
-		if(checkPermission("user_save_others"))
-		{
+		if(checkPermission("user_save_others")) {
 			contentFor(headerButtons =
 				'<li class="headertab">
 					#initializeRearrange#
@@ -202,4 +200,3 @@
 	</cfif>
 
 </cfoutput>
-

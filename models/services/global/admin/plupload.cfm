@@ -12,8 +12,7 @@
 		var result		= {};
 
 		// if chunked append chunk number to filename for reassembly
-		if (structKeyExists(arguments, 'CHUNKS'))
-		{
+		if (structKeyExists(arguments, 'CHUNKS')) {
 			uploadFile = uploadFile & '.' & arguments.CHUNK;
 			response.id = arguments.CHUNK;
 		}
@@ -29,31 +28,26 @@
 		response['saved']	= result.fileWasSaved;
 
 		// reassemble chunked file
-		if (structKeyExists(arguments, 'CHUNKS') && arguments.CHUNK + 1 eq arguments.CHUNKS)
-		{
+		if (structKeyExists(arguments, 'CHUNKS') && arguments.CHUNK + 1 eq arguments.CHUNKS) {
 			try
 			{
 				var uploadFile = uploadDir & arguments.NAME; // file name for reassembled file - if using a temp directory then this should be the final output path/file
-				if (fileExists(uploadFile))
-				{
+				if (fileExists(uploadFile)) {
 					fileDelete(uploadFile); // delete otherwise append will add chunks to an existing file
 				}
 
 				var tempFile = fileOpen(uploadFile,'append');
-				for (var i = 0; i < arguments.CHUNKS; i++)
-				{
+				for (var i = 0; i < arguments.CHUNKS; i++) {
 					var chunk = fileReadBinary('#uploadDir#/#arguments.NAME#.#i#');
 					fileDelete('#uploadDir#/#arguments.NAME#.#i#');
 					fileWrite(tempFile, chunk);
 				}
 				fileClose(tempFile);
 			}
-			catch(any err)
-			{
+			catch(any err) {
 				// clean up chunks for incomplete upload
 				var d = directoryList(uploadDir,false,'name');
-				if (arrayLen(d) != 0)
-				{
+				if (arrayLen(d) != 0) {
 					for (var i = 1; i <= arrayLen(d); i++)
 					{
 						if (listFirst(d[i]) eq arguments.NAME && val(listLast(d[i])) != 0)

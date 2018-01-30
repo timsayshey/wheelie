@@ -15,14 +15,11 @@
 	<cfargument name="eventName" type="any" required="true">
 	<cfscript>
 		var loc = {};
-		if (StructKeyExists(application, "wheels") && StructKeyExists(application.wheels, "initialized"))
-		{
-			if (application.wheels.sendEmailOnError && Len(application.wheels.errorEmailAddress))
-			{
+		if (StructKeyExists(application, "wheels") && StructKeyExists(application.wheels, "initialized")) {
+			if (application.wheels.sendEmailOnError && Len(application.wheels.errorEmailAddress)) {
 				loc.mailArgs = {};
 				$args(name="sendEmail", args=loc.mailArgs);
-				if (StructKeyExists(application.wheels, "errorEmailServer") && Len(application.wheels.errorEmailServer))
-				{
+				if (StructKeyExists(application.wheels, "errorEmailServer") && Len(application.wheels.errorEmailServer)) {
 					loc.mailArgs.server = application.wheels.errorEmailServer;
 				}
 				loc.mailArgs.from = application.wheels.adminFromEmail;
@@ -38,35 +35,25 @@
 				{}
 				catch (any e) {}
 			}
-			if (application.wheels.showErrorInformation)
-			{
-				if (StructKeyExists(arguments.exception, "rootCause") && Left(arguments.exception.rootCause.type, 6) == "Wheels")
-				{
+			if (application.wheels.showErrorInformation) {
+				if (StructKeyExists(arguments.exception, "rootCause") && Left(arguments.exception.rootCause.type, 6) == "Wheels") {
 					loc.wheelsError = arguments.exception.rootCause;
 				}
-				else if (StructKeyExists(arguments.exception, "cause") && StructKeyExists(arguments.exception.cause, "rootCause") && Left(arguments.exception.cause.rootCause.type, 6) == "Wheels")
-				{
+				else if (StructKeyExists(arguments.exception, "cause") && StructKeyExists(arguments.exception.cause, "rootCause") && Left(arguments.exception.cause.rootCause.type, 6) == "Wheels") {
 					loc.wheelsError = arguments.exception.cause.rootCause;
 				}
-				if (StructKeyExists(loc, "wheelsError"))
-				{
+				if (StructKeyExists(loc, "wheelsError")) {
 					loc.rv = $includeAndReturnOutput($template="wheels/styles/header.cfm");
 					loc.rv &= $includeAndReturnOutput($template="wheels/events/onerror/wheelserror.cfm", wheelsError=loc.wheelsError);
 					loc.rv &= $includeAndReturnOutput($template="wheels/styles/footer.cfm");
-				}
-				else
-				{
+				} else {
 					$throw(object=arguments.exception);
 				}
-			}
-			else
-			{
+			} else {
 				$header(statusCode=500, statusText="Internal Server Error");
 				loc.rv = $includeAndReturnOutput($template="#application.wheels.eventPath#/onerror.cfm", exception=arguments.exception, eventName=arguments.eventName);
 			}
-		}
-		else
-		{
+		} else {
 			$throw(object=arguments.exception);
 		}
 	</cfscript>

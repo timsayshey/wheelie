@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Properties
 			this.setWhere = setWhere;
 
@@ -17,8 +16,7 @@
 			super.init();
 			beforeSave("sanitizeNameAndURLId");
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return wherePermission('Video');
 		}
 	</cfscript>
@@ -49,19 +47,16 @@
 			thumbOldPath = expandPath("/assets/uploads/videos/thumbs/#thumbOld#");
 
 			// Rename thumbnail
-			if(thumbNew NEQ thumbOld AND fileExists(thumbOldPath))
-			{
+			if(thumbNew NEQ thumbOld AND fileExists(thumbOldPath)) {
 				fileCopy(thumbOldPath,thumbNewPath);
 			}
 
 			// Once video has been converted remove original file if name is different
-			if(newVideoPath NEQ inputVideoPath AND fileexists(inputVideoPath))
-			{
+			if(newVideoPath NEQ inputVideoPath AND fileexists(inputVideoPath)) {
 				fileDelete(inputVideoPath);
 			}
 
-			if(isObject(videoModel))
-			{
+			if(isObject(videoModel)) {
 
 				// Set filesize
 				videoFileInfo = GetFileInfo(newVideoPath);
@@ -80,11 +75,9 @@
 		<cfargument name="youtubeResults">
 		<cfscript>
 			maxCount = 6;
-			for(i=1; i LTE maxCount; i++)
-			{
+			for(i=1; i LTE maxCount; i++) {
 				thumbUrl = youtubeResults.entry["media:group"]["thumb-#i#"].xmlAttributes.url;
-				if(find("hqdefault.jpg",thumbUrl))
-				{
+				if(find("hqdefault.jpg",thumbUrl)) {
 					// Save thumb
 					logEntry("Thumb result", tryToSaveYoutubeThumb(params,thumbUrl));
 					break;
@@ -145,4 +138,3 @@
 	</cffunction>
 
 </cfcomponent>
-

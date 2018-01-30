@@ -23,8 +23,7 @@ $(function() {
 			type: "POST",
 			url: window.mediaSettings.update_endpoint,
 			data: {'mediafile[id]':$("#caption").attr("data-id"),'mediafile[name]':$("#caption").val()},
-			success: function(data)
-			{
+			success: function(data) {
 				if(data.success == true) {
 					$('a[data-id="'+$("#caption").attr("data-id")+'"]').attr("data-original-title",$("#caption").val());
 					$('#captionModal').modal('hide');
@@ -44,8 +43,7 @@ function loadPhotos() {
 	$.ajax({
 		type: "GET",
 		url: window.mediaSettings.photos_endpoint,
-		success: function(data,a)
-		{
+		success: function(data,a) {
 			$("#photos").html(data);
 			initMediaSorting();
 			$("[title]").tooltip();
@@ -79,11 +77,9 @@ function initMediaSorting() {
 				url : window.mediaSettings.sorting_endpoint,
 				type: "POST",
 				data : {orderValues:$('.sortable').sortable("toArray")},
-				success: function(data, textStatus, jqXHR)
-				{
+				success: function(data, textStatus, jqXHR) {
 				},
-				error: function (jqXHR, textStatus, errorThrown)
-				{
+				error: function (jqXHR, textStatus, errorThrown) {
 				}
 			});
 		}
@@ -100,8 +96,7 @@ function deleteMediafile(fileid,el)
 		type: "POST",
 		url: window.mediaSettings.delete_endpoint,
 		data: {'fileid':fileid},
-		success: function(data)
-		{
+		success: function(data) {
 			if(data.success == true) {
 				$(window.deletemedia.el).closest("li").fadeOut(300, function() { $(this).remove(); })
 			} else {

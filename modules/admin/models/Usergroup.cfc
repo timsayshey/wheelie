@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Set
 			table("usergroups");
 
@@ -19,10 +18,8 @@
 			hasMany(name="UsergroupFields", foreignKey="usergroupid", joinType="outer");
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "#wherePermission('Usergroup')#";
 		}
 	</cfscript>
 </cfcomponent>
-

@@ -101,10 +101,8 @@ function todoMarkDone(todoid,el)
 	$.ajax({
 		type: "GET",
 		url: "/m/admin/todos/markdone/" + todoInfo.model + "/" + todoid + "?ajax",
-		success: function(data)
-		{
-			if($.parseJSON(data).RESPONSE == "success")
-			{
+		success: function(data) {
+			if($.parseJSON(data).RESPONSE == "success") {
 				$(el).removeClass("markdone-todo");
 				$(el).addClass("marknotdone-todo");
 				$nsRow.addClass("opacity50");
@@ -128,10 +126,8 @@ function todoMarkNotDone(todoid,el)
 	$.ajax({
 		type: "GET",
 		url: "/m/admin/todos/marknotdone/" + todoInfo.model + "/" + todoid + "?ajax",
-		success: function(data)
-		{
-			if($.parseJSON(data).RESPONSE == "success")
-			{
+		success: function(data) {
+			if($.parseJSON(data).RESPONSE == "success") {
 				$(el).addClass("markdone-todo");
 				$(el).removeClass("marknotdone-todo");
 				$nsRow.removeClass("opacity50");
@@ -149,10 +145,8 @@ function deleteTodo(deleteid,el)
 	$.ajax({
 		type: "GET",
 		url: "/m/admin/todos/delete/" + todoInfo.model + "/" + deleteid + "?ajax",
-		success: function(data)
-		{
-			if($.parseJSON(data).Success == true)
-			{
+		success: function(data) {
+			if($.parseJSON(data).Success == true) {
 				deleteTodoDom(el,deleteid);
 				enableSaveAndUpdateOutput();
 
@@ -218,9 +212,7 @@ function todoForm(editid)
 	{
 		GetUrl = "/m/admin/todos/new/" + todoInfo.model + "/" + "?ajax&type=" + todoInfo.addType;
 		CrudType = "new";
-	}
-	else
-	{
+	} else {
 		GetUrl = "/m/admin/todos/edit/" + todoInfo.model + "/" + editid + "/?ajax&type=" + todoInfo.addType;
 		CrudType = "update";
 	}
@@ -230,8 +222,7 @@ function todoForm(editid)
 	$.ajax({
 		type: "GET",
 		url: GetUrl,
-		success: function(data)
-		{
+		success: function(data) {
 			$("#addtodo #content #form").html(data);
 			$(".helper").tooltip('fixTitle');
 
@@ -241,8 +232,7 @@ function todoForm(editid)
 			$(".type-" + $("#typeChooser").val()).show();
 
 			$(document).off("click", "#addtodobtn");
-			$(document).on("click", "#addtodobtn", function(e)
-			{
+			$(document).on("click", "#addtodobtn", function(e) {
 				var formData = $("#addtodo #form").serializeAnything();
 				modalTodoLoader("show");
 

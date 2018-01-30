@@ -14,8 +14,7 @@
 		{
 			data.compiler = getPageContext().getClass().getClassLoader().loadClass(defaultCompiler).newInstance();
 		}
-		catch(any exc)
-		{
+		catch(any exc) {
 			println("Error loading compiler:");
 			println(exc.toString());
 		}
@@ -23,8 +22,7 @@
 		/*
 		If not by THIS point do we have a compiler, then throw an exception
 		 */
-		if(NOT StructKeyExists(data, "compiler"))
-		{
+		if(NOT StructKeyExists(data, "compiler")) {
 			throwException("javaCompiler.NoCompilerAvailableException",
 				"No Java Compiler is available",
 				"There is no Java Compiler available. Make sure tools.jar is in your classpath and you are running Java 1.6+");
@@ -64,8 +62,7 @@
 		</cfloop>
 
 		<cfscript>
-			if(structKeyExists(arguments, "classLoader"))
-			{
+			if(structKeyExists(arguments, "classLoader")) {
 				options = addClassLoaderFiles(options, arguments.classLoader, arguments.directoryArray);
 			}
 
@@ -77,8 +74,7 @@
 		//does the compilation
 		compilePass = getCompiler().getTask(osw, fileManager, JavaCast("null", ""), options, JavaCast("null", ""), fileObjects).call();
 
-		if(NOT compilePass)
-		{
+		if(NOT compilePass) {
 			throwException("javacompiler.SourceCompilationException", "There was an error compiling your source code", osw.toString());
 		}
     </cfscript>

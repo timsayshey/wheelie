@@ -1,29 +1,24 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Properties
 			this.setWhere = setWhere;
 
 			// Other
 			super.init();
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return wherePermission('Option');
 		}
 
-		function saveOptions(options,siteid="false")
-		{
-			if(!isNumeric(arguments.siteid))
-			{
+		function saveOptions(options,siteid="false") {
+			if(!isNumeric(arguments.siteid)) {
 				arguments.siteid = request.site.id;
 			}
 			options = arguments.options;
 			//writeDump(options); abort;
 
-			if(isStruct(options))
-			{
+			if(isStruct(options)) {
 				try {
 					optionIds = StructKeyList(options);
 
@@ -86,4 +81,3 @@
 		}
 	</cfscript>
 </cfcomponent>
-

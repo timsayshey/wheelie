@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Set
 			table("metadata");
 
@@ -19,20 +18,16 @@
 			property(name="fieldid", column="metafieldid");
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "#wherePermission('FieldData')#";
 		}
 
-		function saveFielddata(fields,foreignid)
-		{
+		function saveFielddata(fields,foreignid) {
 			var response = "";
-			if(isStruct(fields))
-			{
+			if(isStruct(fields)) {
 				var fieldIds = StructKeyList(fields);
 
-				for(var i=1; i LTE ListLen(fieldIds); i = i + 1)
-				{
+				for(var i=1; i LTE ListLen(fieldIds); i = i + 1) {
 					var fieldId = ListGetAt(fieldIds,i);
 					var thisField = fields[fieldId];
 
@@ -48,9 +43,7 @@
 					if(isObject(FieldData))
 					{
 						response = ListAppend(response,FieldData.update(fielddataParams));
-					}
-					else
-					{
+					} else {
 						FieldData = model("FieldData").new(fielddataParams);
 						response = ListAppend(response,FieldData.save());
 					}
@@ -119,4 +112,3 @@
 		<cfreturn fieldQuery>
 	</cffunction>
 </cfcomponent>
-

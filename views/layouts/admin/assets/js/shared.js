@@ -18,14 +18,10 @@ $(function() {
 		var optionSelected = $("option:selected", this);
 		var valueSelected = this.value;
 
-		if(typeof $("#perPagePath").val() !== 'undefined')
-		{
-			if($("#perPagePath").val().indexOf("?"))
-			{
+		if(typeof $("#perPagePath").val() !== 'undefined') {
+			if($("#perPagePath").val().indexOf("?")) {
 				urlParamSep = "&";
-			}
-			else
-			{
+			} else {
 				urlParamSep = "?";
 			}
 			location = $("#perPagePath").val() + urlParamSep + "id=" + this.value;

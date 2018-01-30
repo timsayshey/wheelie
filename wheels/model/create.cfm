@@ -63,8 +63,7 @@
 		loc.rv = $createObjectFromRoot(path=variables.wheels.class.path, fileName=loc.fileName, method="$initModelObject", name=variables.wheels.class.modelName, properties=arguments.properties, persisted=arguments.persisted, row=arguments.row, base=arguments.base, useFilterLists=(!arguments.persisted));
 
 		// if the object should be persisted, call afterFind else call afterNew
-		if ((arguments.persisted && loc.rv.$callback("afterFind", arguments.callbacks)) || (!arguments.persisted && loc.rv.$callback("afterNew", arguments.callbacks)))
-		{
+		if ((arguments.persisted && loc.rv.$callback("afterFind", arguments.callbacks)) || (!arguments.persisted && loc.rv.$callback("afterNew", arguments.callbacks))) {
 			loc.rv.$callback("afterInitialization", arguments.callbacks);
 		}
 	</cfscript>
@@ -83,12 +82,9 @@
 		// make sure all of our associations are set properly before saving
 		$setAssociations();
 
-		if ($callback("beforeValidation", arguments.callbacks))
-		{
-			if (isNew())
-			{
-				if ($callback("beforeValidationOnCreate", arguments.callbacks) && $validate("onSave,onCreate", arguments.validate) && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnCreate", arguments.callbacks) && $callback("beforeSave", arguments.callbacks) && $callback("beforeCreate", arguments.callbacks))
-				{
+		if ($callback("beforeValidation", arguments.callbacks)) {
+			if (isNew()) {
+				if ($callback("beforeValidationOnCreate", arguments.callbacks) && $validate("onSave,onCreate", arguments.validate) && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnCreate", arguments.callbacks) && $callback("beforeSave", arguments.callbacks) && $callback("beforeCreate", arguments.callbacks)) {
 					loc.rollback = false;
 					if (!Len(key()))
 					{
@@ -104,31 +100,22 @@
 					{
 						$resetToNew();
 					}
-				}
-				else
-				{
+				} else {
 					$validateAssociations(callbacks=arguments.callbacks);
 				}
-			}
-			else
-			{
-				if ($callback("beforeValidationOnUpdate", arguments.callbacks) && $validate("onSave,onUpdate", arguments.validate) && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnUpdate", arguments.callbacks) && $callback("beforeSave", arguments.callbacks) && $callback("beforeUpdate", arguments.callbacks))
-				{
+			} else {
+				if ($callback("beforeValidationOnUpdate", arguments.callbacks) && $validate("onSave,onUpdate", arguments.validate) && $callback("afterValidation", arguments.callbacks) && $callback("afterValidationOnUpdate", arguments.callbacks) && $callback("beforeSave", arguments.callbacks) && $callback("beforeUpdate", arguments.callbacks)) {
 					$update(parameterize=arguments.parameterize, reload=arguments.reload);
 					if ($saveAssociations(argumentCollection=arguments) && $callback("afterUpdate", arguments.callbacks) && $callback("afterSave", arguments.callbacks))
 					{
 						$updatePersistedProperties();
 						loc.rv = true;
 					}
-				}
-				else
-				{
+				} else {
 					$validateAssociations(callbacks=arguments.callbacks);
 				}
 			}
-		}
-		else
-		{
+		} else {
 			$validateAssociations(callbacks=arguments.callbacks);
 		}
 	</cfscript>
@@ -140,22 +127,18 @@
 	<cfargument name="reload" type="boolean" required="true">
 	<cfscript>
 		var loc = {};
-		if (variables.wheels.class.timeStampingOnCreate)
-		{
+		if (variables.wheels.class.timeStampingOnCreate) {
 			$timestampProperty(property=variables.wheels.class.timeStampOnCreateProperty);
 		}
-		if (application.wheels.setUpdatedAtOnCreate && variables.wheels.class.timeStampingOnUpdate)
-		{
+		if (application.wheels.setUpdatedAtOnCreate && variables.wheels.class.timeStampingOnUpdate) {
 			$timestampProperty(property=variables.wheels.class.timeStampOnUpdateProperty);
 		}
 
 		// start by adding column names and values for the properties that exist on the object to two arrays
 		loc.sql = [];
 		loc.sql2 = [];
-		for (loc.key in variables.wheels.class.properties)
-		{
-			if (StructKeyExists(this, loc.key))
-			{
+		for (loc.key in variables.wheels.class.properties) {
+			if (StructKeyExists(this, loc.key)) {
 				ArrayAppend(loc.sql, variables.wheels.class.properties[loc.key].column);
 				ArrayAppend(loc.sql, ",");
 				ArrayAppend(loc.sql2, $buildQueryParamValues(loc.key));
@@ -163,8 +146,7 @@
 			}
 		}
 
-		if (ArrayLen(loc.sql))
-		{
+		if (ArrayLen(loc.sql)) {
 			// create wrapping sql code and merge the second array that holds the values with the first one
 			ArrayPrepend(loc.sql, "INSERT INTO #tableName()# (");
 			ArrayPrepend(loc.sql2, " VALUES (");
@@ -173,22 +155,18 @@
 			ArrayAppend(loc.sql, ")");
 			ArrayAppend(loc.sql2, ")");
 			loc.iEnd = ArrayLen(loc.sql);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				ArrayAppend(loc.sql, loc.sql2[loc.i]);
 			}
 
 			// map the primary keys down to the sql columns
 			loc.primaryKeys = ListToArray(primaryKeys());
 			loc.iEnd = ArrayLen(loc.primaryKeys);
-			for(loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for(loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				loc.primaryKeys[loc.i] = variables.wheels.class.properties[loc.primaryKeys[loc.i]].column;
 			}
 			loc.primaryKeys = ArrayToList(loc.primaryKeys);
-		}
-		else
-		{
+		} else {
 			// no properties were set on the object so we insert a record with only default values to the database
 			loc.primaryKeys = primaryKey(0);
 			ArrayAppend(loc.sql, "INSERT INTO #tableName()#" & variables.wheels.class.adapter.$defaultValues($primaryKey=loc.primaryKeys));
@@ -197,13 +175,11 @@
 		// run the insert sql statement and set the primary key value on the object (if one was returned from the database)
 		loc.ins = variables.wheels.class.adapter.$query(sql=loc.sql, parameterize=arguments.parameterize, $primaryKey=loc.primaryKeys);
 		loc.generatedKey = variables.wheels.class.adapter.$generatedKey();
-		if (StructKeyExists(loc.ins.result, loc.generatedKey))
-		{
+		if (StructKeyExists(loc.ins.result, loc.generatedKey)) {
 			this[primaryKeys(1)] = loc.ins.result[loc.generatedKey];
 		}
 
-		if (arguments.reload)
-		{
+		if (arguments.reload) {
 			this.reload();
 		}
 	</cfscript>

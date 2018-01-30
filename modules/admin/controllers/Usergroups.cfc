@@ -15,8 +15,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		usergroups = model("usergroup").findByKey(params.id);
-		if(usergroups[params.col] eq 1)
-		{
+		if(usergroups[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -44,18 +43,15 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			usergroup = model("Usergroup").findAll(where="id = '#params.id#'#wherePermission("Usergroup","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(usergroup))
-			{
+			if(ArrayLen(usergroup)) {
 				usergroup = usergroup[1];
 			}
 
 			// Usergroup not found?
-			if (!IsObject(usergroup))
-			{
+			if (!IsObject(usergroup)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="usergroups");
 			}
@@ -67,8 +63,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Get usergroup object
-		if(!isNull(params.usergroup.id))
-		{
+		if(!isNull(params.usergroup.id)) {
 			usergroup = model("Usergroup").findByKey(params.usergroup.id);
 			saveResult = usergroup.update(params.usergroup);
 		} else {
@@ -78,11 +73,9 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update usergroup object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Reset DefaultPublic
-			if(!isNull(usergroup.defaultgroup) AND usergroup.defaultgroup eq 1)
-			{
+			if(!isNull(usergroup.defaultgroup) AND usergroup.defaultgroup eq 1) {
 				model("Usergroup").updateAll(defaultgroup=0, where="defaultgroup = 1 AND id != '#usergroup.id#' AND globalized = 0#wherePermission("Usergroup","AND")#");
 			}
 
@@ -102,8 +95,7 @@ component extends="_main" output="false"
 	{
 		usergroups = model("usergroup").findByKey(params.id);
 
-		if(usergroups.delete())
-		{
+		if(usergroups.delete()) {
 			flashInsert(success="The Usergroup was deleted successfully.");
 		} else
 		{

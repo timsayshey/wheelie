@@ -162,12 +162,10 @@
 	<cffunction name="videoFinished" access="remote" output="false">
 
 		<cfscript>
-			if(isNull(params.id))
-			{
+			if(isNull(params.id)) {
 				video = model("File").new({ filename = 'temp', filepath = 'temp' });
 
-				if (video.save())
-				{
+				if (video.save()) {
 					uploadFromFileManager = true;
 					params.id =  video.id;
 				}
@@ -182,11 +180,9 @@
 			var uploadedfilepath = info.filevideos & params.filename;
 			var renamedfilepath  = info.filevideos & newfilename;
 
-			if (fileExists(uploadedfilepath))
-			{
+			if (fileExists(uploadedfilepath)) {
 				// If name needs cleanup then rename the video and delete the old
-				if(trim(newfilename) NEQ trim(params.filename))
-				{
+				if(trim(newfilename) NEQ trim(params.filename)) {
 					fileCopy(uploadedfilepath,renamedfilepath);
 					fileDelete(uploadedfilepath);
 				}
@@ -194,8 +190,7 @@
 				videoModel = model("File").findByKey(params.id);
 				videoModel.update(filename = newfilename, filepath = info.videosPath, filetype = "video");
 
-				if(params.uploadTo eq "yt")
-				{
+				if(params.uploadTo eq "yt") {
 					// Do youtube stuff
 					noIssues = true;
 				} else

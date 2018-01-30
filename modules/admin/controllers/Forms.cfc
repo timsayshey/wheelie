@@ -41,8 +41,7 @@ component extends="_main" output="false"
 
 			// Spam Checks
 			params.formsubmission.isSpam = spamChecker(params.fielddata);
-			if(params.formsubmission.isSpam)
-			{
+			if(params.formsubmission.isSpam) {
 				// Spam From Bad Country?
 				try {
 					http method="GET" url="http://ip-api.com/json/#getIpAddress()#" result="jsonResult";
@@ -59,21 +58,17 @@ component extends="_main" output="false"
 			qform = model("Form").findByKey(params.qform.id);
 
 			// If not bad country spam, continue
-			if(isNull(isSpamFromBadCountry))
-			{
-				if(!isNull(params.qform.optin))
-				{
+			if(isNull(isSpamFromBadCountry)) {
+				if(!isNull(params.qform.optin)) {
 					params.formsubmission.optin = params.qform.optin;
 				}
 
 				// Set Meta Data
-				if(!isNull(session.referer))
-				{
+				if(!isNull(session.referer)) {
 					params.formsubmission.referrer = session.referer;
 				}
 
-				if(!isNull(session.entryPage))
-				{
+				if(!isNull(session.entryPage)) {
 					params.formsubmission.entryPage = session.entryPage;
 				}
 
@@ -84,8 +79,7 @@ component extends="_main" output="false"
 				params.formsubmission.formid = qform.id;
 
 				// Insert into database
-				if(!isNull(params.formsubmission.id))
-				{
+				if(!isNull(params.formsubmission.id)) {
 					formsubmission = model("formsubmission").findByKey(params.formsubmission.id);
 					saveResult = formsubmission.update(params.formsubmission);
 				} else {
@@ -94,8 +88,7 @@ component extends="_main" output="false"
 				}
 
 				//writeDump(formsubmission.ALLERRORS()); abort;
-				if (saveResult)
-				{
+				if (saveResult) {
 					// Save custom metafeild data
 					if(!isNull(params.fielddata))
 					{
@@ -119,9 +112,7 @@ component extends="_main" output="false"
 						emailToList = application.wheels.adminEmail;
 						emailCCList = "";
 						emailSubject = "[SPAM] " & emailSubject;
-					}
-					else
-					{
+					} else {
 						emailToList = model("FormUserJoin").findAll(where="formid = #qform.id# AND type = 'to'",include="User,Form");
 						emailToList = ValueList(emailToList.email);
 
@@ -154,8 +145,7 @@ component extends="_main" output="false"
 			saveresult = false;
 		}
 
-		if(isNull(params.adminLayout) AND !isNull(params.formid))
-		{
+		if(isNull(params.adminLayout) AND !isNull(params.formid)) {
 			params.saveResult = saveResult;
 			request.bypassAdminBody = true;
 			qform = isNull(qform) ? model("Form").findByKey(params.formid) : qform;
@@ -171,8 +161,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		forms = model("form").findByKey(params.id);
-		if(forms[params.col] eq 1)
-		{
+		if(forms[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -206,19 +195,16 @@ component extends="_main" output="false"
 
 		metafields = model("formfield").findAll(where="modelid = #params.id# AND metafieldType = 'formfield'", order="sortorder ASC");
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			qform = model("form").findAll(where="id = '#params.id#'", maxRows=1, returnAs="Object");
 
-			if(ArrayLen(qform))
-			{
+			if(ArrayLen(qform)) {
 				qform = qform[1];
 			}
 
 			// form not found?
-			if (!IsObject(qform))
-			{
+			if (!IsObject(qform)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="forms");
 			}
@@ -230,8 +216,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Get form object
-		if(!isNull(params.qform.id))
-		{
+		if(!isNull(params.qform.id)) {
 			qform = model("form").findByKey(params.qform.id);
 			saveResult = qform.update(params.qform);
 		} else {
@@ -241,28 +226,23 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update form object with properties
-		if (saveResult)
-		{
-			if(!isNull(params.formusers))
-			{
+		if (saveResult) {
+			if(!isNull(params.formusers)) {
 				// Clear existing user category associations
 				model("FormUserJoin").deleteAll(where="formid = #qform.id# AND type = 'to'");
 
 				// Insert new user category associations
-				for(id in ListToArray(params.formusers))
-				{
+				for(id in ListToArray(params.formusers)) {
 					model("FormUserJoin").create(userid = id, formid = qform.id, type = 'to');
 				}
 			}
 
-			if(!isNull(params.ccformusers))
-			{
+			if(!isNull(params.ccformusers)) {
 				// Clear existing user category associations
 				model("FormUserJoin").deleteAll(where="formid = #qform.id# AND type = 'cc'");
 
 				// Insert new user category associations
-				for(id in ListToArray(params.ccformusers))
-				{
+				for(id in ListToArray(params.ccformusers)) {
 					model("FormUserJoin").create(userid = id, formid = qform.id, type = 'cc');
 				}
 			}
@@ -283,8 +263,7 @@ component extends="_main" output="false"
 	{
 		forms = model("form").findByKey(params.id);
 
-		if(forms.delete())
-		{
+		if(forms.delete()) {
 			flashInsert(success="The form was deleted successfully.");
 		} else
 		{

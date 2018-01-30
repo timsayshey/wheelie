@@ -8,12 +8,9 @@
 
 	<cffunction name="getUserIdLocation">
 		<cfscript>
-			if(!isNull(session.user.id))
-			{
+			if(!isNull(session.user.id)) {
 				return session.user.id;
-			}
-			else
-			{
+			} else {
 				return "";
 			}
 		</cfscript>

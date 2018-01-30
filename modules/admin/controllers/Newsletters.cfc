@@ -35,19 +35,16 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			newsletter = model("Newsletter").findAll(where="id = '#params.id#'#wherePermission("Newsletter","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(newsletter))
-			{
+			if(ArrayLen(newsletter)) {
 				newsletter = newsletter[1];
 			}
 
 			// Newsletter not found?
-			if (!IsObject(newsletter))
-			{
+			if (!IsObject(newsletter)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="newsletters");
 			}
@@ -74,8 +71,7 @@ component extends="_main" output="false"
 	{
 		newsletter = model("Newsletter").findByKey(params.id);
 
-		if(newsletter.delete())
-		{
+		if(newsletter.delete()) {
 			flashInsert(success="The newsletter was deleted successfully.");
 		} else
 		{
@@ -92,22 +88,19 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.newsletter.status = handleSubmitType("newsletter", params.submit);
 		}
 
 		// Auto generate meta tags
-		if(StructKeyExists(params.newsletter,"metagenerated") AND params.newsletter.metagenerated eq 1)
-		{
+		if(StructKeyExists(params.newsletter,"metagenerated") AND params.newsletter.metagenerated eq 1) {
 			params.newsletter.metatitle 		= generatePageTitle(params.newsletter.name);
 			params.newsletter.metadescription = generateMetaDescription(params.newsletter.content);
 			params.newsletter.metakeywords 	= generateMetaKeywords(params.newsletter.content);
 		}
 
 		// Get newsletter object
-		if(!isNull(params.newsletter.id))
-		{
+		if(!isNull(params.newsletter.id)) {
 			newsletter = model("Newsletter").findByKey(params.newsletter.id);
 			saveResult = newsletter.update(params.newsletter);
 		} else {
@@ -117,16 +110,12 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update newsletter object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			flashInsert(success='Newsletter saved.');
 
-			if(isNull(isNewNewsletter))
-			{
+			if(isNull(isNewNewsletter)) {
 				redirectTo(route="admin~Id", module="admin", controller="newsletters", action="edit", id=newsletter.id);
-			}
-			else
-			{
+			} else {
 				redirectTo(route="admin~Id", module="admin", controller="newsletterSections", action="index", id=newsletter.id);
 			}
 		} else {

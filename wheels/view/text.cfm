@@ -7,20 +7,15 @@
 	<cfscript>
 		var loc = {};
 		$args(name="autoLink", args=arguments);
-		if (arguments.link != "emailAddresses")
-		{
-			if(arguments.relative)
-			{
+		if (arguments.link != "emailAddresses") {
+			if(arguments.relative) {
 				arguments.regex = "(?:(?:<a\s[^>]+)?(?:https?://|www\.|\/)[^\s\b]+)";
-			}
-			else
-			{
+			} else {
 				arguments.regex = "(?:(?:<a\s[^>]+)?(?:https?://|www\.)[^\s\b]+)";
 			}
 			arguments.text = $autoLinkLoop(argumentCollection=arguments);
 		}
-		if (arguments.link != "URLs")
-		{
+		if (arguments.link != "URLs") {
 			arguments.regex = "(?:(?:<a\s[^>]+)?(?:[^@\s]+)@(?:(?:[-a-z0-9]+\.)+[a-z]{2,}))";
 			arguments.protocol = "mailto:";
 			arguments.text = $autoLinkLoop(argumentCollection=arguments);
@@ -40,30 +35,22 @@
 	loc.pos = FindNoCase(arguments.phrase, arguments.text, 1);
 	if (loc.pos != 0)
 	{
-		if ((loc.pos-arguments.radius) <= 1)
-		{
+		if ((loc.pos-arguments.radius) <= 1) {
 			loc.startPos = 1;
 			loc.truncateStart = "";
-		}
-		else
-		{
+		} else {
 			loc.startPos = loc.pos - arguments.radius;
 			loc.truncateStart = arguments.excerptString;
 		}
-		if ((loc.pos+Len(arguments.phrase)+arguments.radius) > Len(arguments.text))
-		{
+		if ((loc.pos+Len(arguments.phrase)+arguments.radius) > Len(arguments.text)) {
 			loc.endPos = Len(arguments.text);
 			loc.truncateEnd = "";
-		}
-		else
-		{
+		} else {
 			loc.endPos = loc.pos + arguments.radius;
 			loc.truncateEnd = arguments.excerptString;
 		}
 		loc.rv = loc.truncateStart & Mid(arguments.text, loc.startPos, ((loc.endPos+Len(arguments.phrase))-(loc.startPos))) & loc.truncateEnd;
-	}
-	else
-	{
+	} else {
 		loc.rv = "";
 	}
 	</cfscript>
@@ -79,30 +66,23 @@
 	<cfscript>
 		var loc = {};
 		$args(name="highlight", args=arguments);
-		if (!Len(arguments.text) || !Len(arguments.phrases))
-		{
+		if (!Len(arguments.text) || !Len(arguments.phrases)) {
 			loc.rv = arguments.text;
-		}
-		else
-		{
+		} else {
 			loc.origText = arguments.text;
 			loc.iEnd = ListLen(arguments.phrases, arguments.delimiter);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				loc.newText = "";
 				loc.phrase = Trim(ListGetAt(arguments.phrases, loc.i, arguments.delimiter));
 				loc.pos = 1;
-				while (FindNoCase(loc.phrase, loc.origText, loc.pos))
-				{
+				while (FindNoCase(loc.phrase, loc.origText, loc.pos)) {
 					loc.foundAt = FindNoCase(loc.phrase, loc.origText, loc.pos);
 					loc.prevText = Mid(loc.origText, loc.pos, loc.foundAt-loc.pos);
 					loc.newText &= loc.prevText;
 					if (Find("<", loc.origText, loc.foundAt) < Find(">", loc.origText, loc.foundAt) || !Find(">", loc.origText, loc.foundAt))
 					{
 						loc.newText &= "<" & arguments.tag & " class=""" & arguments.class & """>" & Mid(loc.origText, loc.foundAt, Len(loc.phrase)) & "</" & arguments.tag & ">";
-					}
-					else
-					{
+					} else {
 						loc.newText &= Mid(loc.origText, loc.foundAt, Len(loc.phrase));
 					}
 					loc.pos = loc.foundAt + Len(loc.phrase);
@@ -132,8 +112,7 @@
 		loc.rv = Replace(loc.rv, "</p><p>", "</p>#Chr(10)##Chr(10)#<p>", "all");
 		loc.rv = Replace(loc.rv, "<br />", "<br />#Chr(10)#", "all");
 
-		if (arguments.wrap)
-		{
+		if (arguments.wrap) {
 			loc.rv = "<p>" & loc.rv & "</p>";
 		}
 	</cfscript>
@@ -146,8 +125,7 @@
 		var loc = {};
 		loc.rv = "";
 		loc.iEnd = ListLen(arguments.word, " ");
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.rv = ListAppend(loc.rv, capitalize(ListGetAt(arguments.word, loc.i, " ")), " ");
 		}
 	</cfscript>
@@ -161,12 +139,9 @@
 	<cfscript>
 		var loc = {};
 		$args(name="truncate", args=arguments);
-		if (Len(arguments.text) > arguments.length)
-		{
+		if (Len(arguments.text) > arguments.length) {
 			loc.rv = Left(arguments.text, arguments.length-Len(arguments.truncateString)) & arguments.truncateString;
-		}
-		else
-		{
+		} else {
 			loc.rv = arguments.text;
 		}
 	</cfscript>
@@ -183,16 +158,12 @@
 		loc.rv = "";
 		loc.wordArray = ListToArray(arguments.text, " ", false);
 		loc.wordLen = ArrayLen(loc.wordArray);
-		if (loc.wordLen > arguments.length)
-		{
-			for (loc.i=1; loc.i <= arguments.length; loc.i++)
-			{
+		if (loc.wordLen > arguments.length) {
+			for (loc.i=1; loc.i <= arguments.length; loc.i++) {
 				loc.rv = ListAppend(loc.rv, loc.wordArray[loc.i], " ");
 			}
 			loc.rv &= arguments.truncateString;
-		}
-		else
-		{
+		} else {
 			loc.rv = arguments.text;
 		}
 	</cfscript>
@@ -214,15 +185,13 @@
 	{
 		loc.startPosition = loc.match.pos[1] + loc.match.len[1];
 		loc.str = Mid(arguments.text, loc.match.pos[1], loc.match.len[1]);
-		if (Left(loc.str, 2) != "<a")
-		{
+		if (Left(loc.str, 2) != "<a") {
 			arguments.text = RemoveChars(arguments.text, loc.match.pos[1], loc.match.len[1]);
 			loc.punctuation = ArrayToList(ReMatchNoCase(loc.punctuationRegEx, loc.str));
 			loc.str = REReplaceNoCase(loc.str, loc.punctuationRegEx, "", "all");
 
 			// make sure that links beginning with "www." have a protocol
-			if (Left(loc.str, 4) == "www." && !Len(arguments.protocol))
-			{
+			if (Left(loc.str, 4) == "www." && !Len(arguments.protocol)) {
 				arguments.protocol = "http://";
 			}
 

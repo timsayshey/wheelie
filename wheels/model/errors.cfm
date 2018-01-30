@@ -27,17 +27,12 @@
 	<cfargument name="name" type="string" required="false" default="">
 	<cfscript>
 		var loc = {};
-		if (!Len(arguments.property) && !Len(arguments.name))
-		{
+		if (!Len(arguments.property) && !Len(arguments.name)) {
 			ArrayClear(variables.wheels.errors);
-		}
-		else
-		{
+		} else {
 			loc.iEnd = ArrayLen(variables.wheels.errors);
-			for (loc.i=loc.iEnd; loc.i >= 1; loc.i--)
-			{
-				if (variables.wheels.errors[loc.i].property == arguments.property && (variables.wheels.errors[loc.i].name == arguments.name))
-				{
+			for (loc.i=loc.iEnd; loc.i >= 1; loc.i--) {
+				if (variables.wheels.errors[loc.i].property == arguments.property && (variables.wheels.errors[loc.i].name == arguments.name)) {
 					ArrayDeleteAt(variables.wheels.errors, loc.i);
 				}
 			}
@@ -50,12 +45,9 @@
 	<cfargument name="name" type="string" required="false" default="">
 	<cfscript>
 		var loc = {};
-		if (!Len(arguments.property) && !Len(arguments.name))
-		{
+		if (!Len(arguments.property) && !Len(arguments.name)) {
 			loc.rv = ArrayLen(variables.wheels.errors);
-		}
-		else
-		{
+		} else {
 			loc.rv = ArrayLen(errorsOn(argumentCollection=arguments));
 		}
 	</cfscript>
@@ -69,10 +61,8 @@
 		var loc = {};
 		loc.rv = [];
 		loc.iEnd = ArrayLen(variables.wheels.errors);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
-			if (variables.wheels.errors[loc.i].property == arguments.property && (variables.wheels.errors[loc.i].name == arguments.name))
-			{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+			if (variables.wheels.errors[loc.i].property == arguments.property && (variables.wheels.errors[loc.i].name == arguments.name)) {
 				ArrayAppend(loc.rv, variables.wheels.errors[loc.i]);
 			}
 		}
@@ -96,8 +86,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = false;
-		if (errorCount(argumentCollection=arguments) > 0)
-		{
+		if (errorCount(argumentCollection=arguments) > 0) {
 			loc.rv = true;
 		}
 	</cfscript>

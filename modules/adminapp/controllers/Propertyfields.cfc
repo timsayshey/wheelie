@@ -8,8 +8,7 @@ component extends="_main" output="false"
 
 	function index()
 	{
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			propertyfields = model("PropertyField").findAll(where="propertyid = #params.id#", order="sortorder ASC");
 		}
 	}
@@ -18,14 +17,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			fieldValue = orderValues[i];
 
 			PropertyField = model("PropertyField").findOne(where="id = #fieldValue.fieldId#");
 
-			if(isObject(PropertyField))
-			{
+			if(isObject(PropertyField)) {
 				PropertyField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
@@ -36,8 +33,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		propertyfields = model("PropertyField").findByKey(params.id);
-		if(propertyfields[params.col] eq 1)
-		{
+		if(propertyfields[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -65,18 +61,15 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			propertyfield = model("PropertyField").findAll(where="id = '#params.id#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(propertyfield))
-			{
+			if(ArrayLen(propertyfield)) {
 				propertyfield = propertyfield[1];
 			}
 
 			// Property not found?
-			if (!IsObject(propertyfield))
-			{
+			if (!IsObject(propertyfield)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~id", module="admin", controller="PropertyFields", action="index", id=params.propertyid);
 			}
@@ -88,8 +81,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Get property object
-		if(!isNull(params.propertyfield.id))
-		{
+		if(!isNull(params.propertyfield.id)) {
 			propertyfield = model("PropertyField").findByKey(params.propertyfield.id);
 			saveResult = propertyfield.update(params.propertyfield);
 		} else {
@@ -99,8 +91,7 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update property object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			flashInsert(success='Field saved.');
 			redirectTo(route="admin~Id", module="admin", controller="propertyfields", action="edit", id=propertyfield.id, params="propertyid=#propertyfield.propertyid#");
 		} else {
@@ -117,8 +108,7 @@ component extends="_main" output="false"
 	{
 		propertys = model("PropertyField").findByKey(params.id);
 
-		if(propertys.delete())
-		{
+		if(propertys.delete()) {
 			flashInsert(success="The field was deleted successfully.");
 		} else
 		{

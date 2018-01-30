@@ -94,22 +94,18 @@
 		var loc = {};
 
 		// create this type in the array if it doesn't already exist
-		if (!StructKeyExists(variables.wheels.class.callbacks,arguments.type))
-		{
+		if (!StructKeyExists(variables.wheels.class.callbacks,arguments.type)) {
 			variables.wheels.class.callbacks[arguments.type] = ArrayNew(1);
 		}
 
 		loc.existingCallbacks = ArrayToList(variables.wheels.class.callbacks[arguments.type]);
-		if (StructKeyExists(arguments, "method"))
-		{
+		if (StructKeyExists(arguments, "method")) {
 			arguments.methods = arguments.method;
 		}
 		arguments.methods = $listClean(arguments.methods);
 		loc.iEnd = ListLen(arguments.methods);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
-			if (!ListFindNoCase(loc.existingCallbacks, ListGetAt(arguments.methods, loc.i)))
-			{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+			if (!ListFindNoCase(loc.existingCallbacks, ListGetAt(arguments.methods, loc.i))) {
 				ArrayAppend(variables.wheels.class.callbacks[arguments.type], ListGetAt(arguments.methods, loc.i));
 			}
 		}
@@ -123,15 +119,13 @@
 		arguments.type = $listClean(list="#arguments.type#", returnAs="array");
 
 		// no type(s) was passed in. get all the callback types registered
-		if (ArrayIsEmpty(arguments.type))
-		{
+		if (ArrayIsEmpty(arguments.type)) {
 			arguments.type = ListToArray(StructKeyList(variables.wheels.class.callbacks));
 		}
 
 		// loop through each callback type and clear it
 		loc.iEnd = ArrayLen(arguments.type);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			variables.wheels.class.callbacks[arguments.type[loc.i]] = [];
 		}
 	</cfscript>
@@ -140,19 +134,13 @@
 <cffunction name="$callbacks" returntype="any" access="public" output="false">
 	<cfargument name="type" type="string" required="false" default="">
 	<cfscript>
-		if (Len(arguments.type))
-		{
-			if (StructKeyExists(variables.wheels.class.callbacks, arguments.type))
-			{
+		if (Len(arguments.type)) {
+			if (StructKeyExists(variables.wheels.class.callbacks, arguments.type)) {
 				loc.rv = variables.wheels.class.callbacks[arguments.type];
-			}
-			else
-			{
+			} else {
 				loc.rv = ArrayNew(1);
 			}
-		}
-		else
-		{
+		} else {
 			loc.rv = variables.wheels.class.callbacks;
 		}
 	</cfscript>
@@ -165,23 +153,18 @@
 	<cfargument name="collection" type="any" required="false" default="">
 	<cfscript>
 		var loc = {};
-		if (arguments.execute)
-		{
+		if (arguments.execute) {
 			// get all callbacks for the type and loop through them all until the end or one of them returns false
 			loc.callbacks = $callbacks(arguments.type);
 			loc.iEnd = ArrayLen(loc.callbacks);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				loc.method = loc.callbacks[loc.i];
-				if (arguments.type == "afterFind")
-				{
+				if (arguments.type == "afterFind") {
 					// since this is an afterFind callback we need to handle it differently
 					if (IsQuery(arguments.collection))
 					{
 						loc.rv = $queryCallback(method=loc.method, collection=arguments.collection);
-					}
-					else
-					{
+					} else {
 						loc.invokeArgs = properties();
 						loc.rv = $invoke(method=loc.method, invokeArgs=loc.invokeArgs);
 						if (StructKeyExists(loc, "rv") && IsStruct(loc.rv))
@@ -190,24 +173,20 @@
 							StructDelete(loc, "rv");
 						}
 					}
-				}
-				else
-				{
+				} else {
 					// this is a regular callback so just call the method
 					loc.rv = $invoke(method=loc.method);
 				}
 
 				// break the loop if the callback returned false
-				if (StructKeyExists(loc, "rv") && IsBoolean(loc.rv) && !loc.rv)
-				{
+				if (StructKeyExists(loc, "rv") && IsBoolean(loc.rv) && !loc.rv) {
 					break;
 				}
 			}
 		}
 
 		// return true by default (happens when no callbacks are set or none of the callbacks returned a result)
-		if (!StructKeyExists(loc, "rv"))
-		{
+		if (!StructKeyExists(loc, "rv")) {
 			loc.rv = true;
 		}
 	</cfscript>
@@ -226,21 +205,18 @@
 
 		// loop over all query rows and execute the callback method for each
 		loc.iEnd = arguments.collection.recordCount;
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			// get the values in the current query row so that we can pass them in as arguments to the callback method
 			loc.invokeArgs = {};
 			loc.jEnd = ListLen(arguments.collection.columnList);
-			for (loc.j=1; loc.j <= loc.jEnd; loc.j++)
-			{
+			for (loc.j=1; loc.j <= loc.jEnd; loc.j++) {
 				loc.item = ListGetAt(arguments.collection.columnList, loc.j);
 				try
 				{
 					// coldfusion has a problem with empty strings in queries for bit types
 					loc.invokeArgs[loc.item] = arguments.collection[loc.item][loc.i];
 				}
-				catch (Any e)
-				{
+				catch (Any e) {
 					loc.invokeArgs[loc.item] = "";
 				}
 			}
@@ -248,10 +224,8 @@
 			// execute the callback method
 			loc.result = $invoke(method=arguments.method, invokeArgs=loc.invokeArgs);
 
-			if (StructKeyExists(loc, "result"))
-			{
-				if (IsStruct(loc.result))
-				{
+			if (StructKeyExists(loc, "result")) {
+				if (IsStruct(loc.result)) {
 					// the arguments struct was returned so we need to add the changed values to the query row
 					for (loc.key in loc.result)
 					{
@@ -263,8 +237,7 @@
 						arguments.collection[loc.key][loc.i] = loc.result[loc.key];
 					}
 				}
-				else if (IsBoolean(loc.result) && !loc.result)
-				{
+				else if (IsBoolean(loc.result) && !loc.result) {
 					// break the loop and return false if the callback returned false
 					loc.rv = false;
 					break;
@@ -274,8 +247,7 @@
 
 		// update the request with a hash of the query if it changed so that we can find it with pagination
 		loc.querykey = $hashedKey(arguments.collection);
-		if (!StructKeyExists(request.wheels, loc.querykey))
-		{
+		if (!StructKeyExists(request.wheels, loc.querykey)) {
 			request.wheels[loc.querykey] = variables.wheels.class.modelName;
 		}
 	</cfscript>

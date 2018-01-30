@@ -4,8 +4,7 @@ $(function() {
 	$.ajax({
 		type: "GET",
 		url: "/property/panoJson/" + window.propertyid + "?editorUrls="+window.mediafileid,
-		success: function(config)
-		{
+		success: function(config) {
 			pannellum.viewer('panorama',config);
 		}
 	});
@@ -25,8 +24,7 @@ $(function() {
 			type: "POST",
 			url: window.update_link_endpoint,
 			data: { "parentid": window.mediafileid, "uuid": $(this).attr("data-uuid"), "caption": $(this).parent().find("input.caption").val() },
-			success: function(data)
-			{
+			success: function(data) {
 				loadLinks();
 				//location.reload();
 			}
@@ -38,8 +36,7 @@ $(function() {
 			type: "POST",
 			url: window.add_link_endpoint,
 			data: {"yaw":window.yaw,"parentid":window.mediafileid,"childid":$(this).attr("id"),"childfileid":$(this).attr("data-childfileid"),"type": $(this).attr("data-type")},
-			success: function(data)
-			{
+			success: function(data) {
 				$('#LinkModal').modal('hide');
 				loadLinks();
 				location.reload();
@@ -53,8 +50,7 @@ $(function() {
 			type: "POST",
 			url: window.remove_link_endpoint,
 			data: {"parentid":window.mediafileid,"uuid":$(this).attr("data-uuid")},
-			success: function(data)
-			{
+			success: function(data) {
 				loadLinks();
 				location.reload();
 			}
@@ -69,8 +65,7 @@ function loadLinks() {
 	$.ajax({
 		type: "GET",
 		url: window.get_link_endpoint,
-		success: function(data,a)
-		{
+		success: function(data,a) {
 			$("#links").html(data);
 		}
 	});

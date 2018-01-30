@@ -1,19 +1,16 @@
 <cfscript>
 	component extends="_main"
 	{
-		function init()
-		{
+		function init() {
 			super.init();
 		}
 
-		function index()
-		{
+		function index() {
 			users = model("User").findAll(where="status = 'published'",order="firstname asc");
 
 		}
 
-		function profile()
-		{
+		function profile() {
 			user = model("UserGroupJoin").findAll(where="userid = '#params.id#'", include="User,UserGroup");
 			try {
 				dataFields = model("FieldData").getAllFieldsAndUserData(

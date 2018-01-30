@@ -9,36 +9,29 @@
 		$initializeRequestScope();
 
 		// set or reset all settings but make sure to pass along the reload password between forced reloads with "reload=x"
-		if (StructKeyExists(application, "wheels") && StructKeyExists(application.wheels, "reloadPassword"))
-		{
+		if (StructKeyExists(application, "wheels") && StructKeyExists(application.wheels, "reloadPassword")) {
 			loc.oldReloadPassword = application.wheels.reloadPassword;
 		}
 		application.$wheels = {};
-		if (StructKeyExists(loc, "oldReloadPassword"))
-		{
+		if (StructKeyExists(loc, "oldReloadPassword")) {
 			application.$wheels.reloadPassword = loc.oldReloadPassword;
 		}
 
 		// check and store server engine name, throw error if using a version that we don't support
 		// NB Lucee first as there seems to be some sort of alias in Lucee -> Railo which means server.railo exists
-		if (StructKeyExists(server, "lucee"))
-		{
+		if (StructKeyExists(server, "lucee")) {
 			application.$wheels.serverName = "Lucee";
 			application.$wheels.serverVersion = server.lucee.version;
 		}
-		else if (StructKeyExists(server, "railo"))
-		{
+		else if (StructKeyExists(server, "railo")) {
 			application.$wheels.serverName = "Railo";
 			application.$wheels.serverVersion = server.railo.version;
-		}
-		else
-		{
+		} else {
 			application.$wheels.serverName = "Adobe ColdFusion";
 			application.$wheels.serverVersion = server.coldfusion.productVersion;
 		}
 		loc.upgradeTo = $checkMinimumVersion(engine=application.$wheels.serverName, version=application.$wheels.serverVersion);
-		if (Len(loc.upgradeTo))
-		{
+		if (Len(loc.upgradeTo)) {
 			$throw(type="Wheels.EngineNotSupported", message="#application.$wheels.serverName# #application.$wheels.serverVersion# is not supported by CFWheels.", extendedInfo="Please upgrade to version #loc.upgradeTo# or higher.");
 		}
 
@@ -80,37 +73,27 @@
 		application.$wheels.wheelsComponentPath = ListAppend(application.$wheels.rootcomponentPath, "wheels", ".");
 
 		// set environment either from the url or the developer's environment.cfm file
-		if (StructKeyExists(URL, "reload") && !IsBoolean(URL.reload) && Len(url.reload) && StructKeyExists(application.$wheels, "reloadPassword") && (!Len(application.$wheels.reloadPassword) || (StructKeyExists(URL, "password") && URL.password == application.$wheels.reloadPassword)))
-		{
+		if (StructKeyExists(URL, "reload") && !IsBoolean(URL.reload) && Len(url.reload) && StructKeyExists(application.$wheels, "reloadPassword") && (!Len(application.$wheels.reloadPassword) || (StructKeyExists(URL, "password") && URL.password == application.$wheels.reloadPassword))) {
 			application.$wheels.environment = URL.reload;
-		}
-		else
-		{
+		} else {
 			$include(template="config/environment.cfm");
 		}
 
 		// rewrite settings based on web server rewrite capabilites
 		application.$wheels.rewriteFile = "rewrite.cfm";
-		if (Right(request.cgi.script_name, 12) == "/" & application.$wheels.rewriteFile)
-		{
+		if (Right(request.cgi.script_name, 12) == "/" & application.$wheels.rewriteFile) {
 			application.$wheels.URLRewriting = "On";
 		}
-		else if (Len(request.cgi.path_info))
-		{
+		else if (Len(request.cgi.path_info)) {
 			application.$wheels.URLRewriting = "Partial";
-		}
-		else
-		{
+		} else {
 			application.$wheels.URLRewriting = "Off";
 		}
 
 		// set datasource name to same as the folder the app resides in unless the developer has set it with the global setting already
-		if (StructKeyExists(this, "dataSource"))
-		{
+		if (StructKeyExists(this, "dataSource")) {
 			application.$wheels.dataSourceName = this.dataSource;
-		}
-		else
-		{
+		} else {
 			application.$wheels.dataSourceName = LCase(ListLast(GetDirectoryFromPath(GetBaseTemplatePath()), Right(GetDirectoryFromPath(GetBaseTemplatePath()), 1)));
 		}
 		application.$wheels.dataSourceUserName = "";
@@ -129,8 +112,7 @@
 		application.$wheels.cachePartials = false;
 		application.$wheels.cacheQueries = false;
 		application.$wheels.cachePlugins = true;
-		if (application.$wheels.environment != "design")
-		{
+		if (application.$wheels.environment != "design") {
 			application.$wheels.cacheDatabaseSchema = true;
 			application.$wheels.cacheFileChecking = true;
 			application.$wheels.cacheImages = true;
@@ -138,8 +120,7 @@
 			application.$wheels.cacheControllerInitialization = true;
 			application.$wheels.cacheRoutes = true;
 		}
-		if (application.$wheels.environment != "design" && application.$wheels.environment != "development")
-		{
+		if (application.$wheels.environment != "design" && application.$wheels.environment != "development") {
 			application.$wheels.cacheActions = true;
 			application.$wheels.cachePages = true;
 			application.$wheels.cachePartials = true;
@@ -152,21 +133,16 @@
 		application.$wheels.sendEmailOnError = false;
 		application.$wheels.errorEmailSubject = "Error";
 		application.$wheels.excludeFromErrorEmail = "";
-		if (Find(".", request.cgi.server_name))
-		{
+		if (Find(".", request.cgi.server_name)) {
 			application.$wheels.errorEmailAddress = "webmaster@" & Reverse(ListGetAt(Reverse(request.cgi.server_name), 2,".")) & "." & Reverse(ListGetAt(Reverse(request.cgi.server_name), 1, "."));
-		}
-		else
-		{
+		} else {
 			application.$wheels.errorEmailAddress = "";
 		}
-		if (application.$wheels.environment == "production")
-		{
+		if (application.$wheels.environment == "production") {
 			application.$wheels.showErrorInformation = false;
 			application.$wheels.sendEmailOnError = true;
 		}
-		if (application.$wheels.environment != "design" && application.$wheels.environment != "development")
-		{
+		if (application.$wheels.environment != "design" && application.$wheels.environment != "development") {
 			application.$wheels.showDebugInformation = false;
 		}
 
@@ -175,8 +151,7 @@
 		// ex. {http="asset0.domain1.com,asset2.domain1.com,asset3.domain1.com", https="secure.domain1.com"}
 		application.$wheels.assetQueryString = false;
 		application.$wheels.assetPaths = false;
-		if (application.$wheels.environment != "design" && application.$wheels.environment != "development")
-		{
+		if (application.$wheels.environment != "design" && application.$wheels.environment != "development") {
 			application.$wheels.assetQueryString = true;
 		}
 
@@ -213,13 +188,10 @@
 		application.$wheels.booleanAttributes = "allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,default,defaultchecked,defaultmuted,defaultselected,defer,disabled,draggable,enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,required,reversed,scoped,seamless,selected,sortable,spellcheck,translate,truespeed,typemustmatch,visible";
 
 		// if session management is enabled in the application we default to storing flash data in the session scope, if not we use a cookie
-		if (StructKeyExists(this, "sessionManagement") && this.sessionManagement)
-		{
+		if (StructKeyExists(this, "sessionManagement") && this.sessionManagement) {
 			application.$wheels.sessionManagement = true;
 			application.$wheels.flashStorage = "session";
-		}
-		else
-		{
+		} else {
 			application.$wheels.sessionManagement = false;
 			application.$wheels.flashStorage = "cookie";
 		}
@@ -353,12 +325,10 @@
 		$include(template="config/#application.$wheels.environment#/settings.cfm");
 
 		// clear query (cfquery) and page (cfcache) caches
-		if (application.$wheels.clearQueryCacheOnReload || !StructKeyExists(application.$wheels, "cachekey"))
-		{
+		if (application.$wheels.clearQueryCacheOnReload || !StructKeyExists(application.$wheels, "cachekey")) {
 			application.$wheels.cachekey = Hash(CreateUUID());
 		}
-		if (application.$wheels.clearServerCacheOnReload)
-		{
+		if (application.$wheels.clearServerCacheOnReload) {
 			$cache(action="flush");
 		}
 
@@ -367,11 +337,9 @@
 		loc.protectedControllerMethods = StructKeyList($createObjectFromRoot(path=application.$wheels.controllerPath, fileName="Wheels", method="$initControllerClass"));
 		application.$wheels.protectedControllerMethods = "";
 		loc.iEnd = ListLen(loc.protectedControllerMethods);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.method = ListGetAt(loc.protectedControllerMethods, loc.i);
-			if (Left(loc.method, 1) != "$" && !ListFindNoCase(loc.allowedGlobalMethods, loc.method))
-			{
+			if (Left(loc.method, 1) != "$" && !ListFindNoCase(loc.allowedGlobalMethods, loc.method)) {
 				application.$wheels.protectedControllerMethods = ListAppend(application.$wheels.protectedControllerMethods, loc.method);
 			}
 		}
@@ -380,8 +348,7 @@
 		$loadPlugins();
 
 		// allow developers to inject plugins into the application variables scope
-		if (!StructIsEmpty(application.$wheels.mixins))
-		{
+		if (!StructIsEmpty(application.$wheels.mixins)) {
 			$include(template="wheels/plugins/injection.cfm");
 		}
 

@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Properties
 			this.setWhere = setWhere;
 
@@ -13,10 +12,8 @@
 			// Other
 			super.init();
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return wherePermission('order');
 		}
 	</cfscript>
 </cfcomponent>
-

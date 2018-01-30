@@ -22,23 +22,18 @@
 	<cfargument name="returnIncluded" type="string" required="true">
 	<cfscript>
 		var loc = {};
-		if (IsStruct(arguments.structs))
-		{
+		if (IsStruct(arguments.structs)) {
 			loc.rv = [arguments.structs];
 		}
-		else if (IsArray(arguments.structs))
-		{
+		else if (IsArray(arguments.structs)) {
 			loc.rv = arguments.structs;
 		}
 		loc.iEnd = ArrayLen(loc.rv);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
-			if (Len(arguments.include) && arguments.returnIncluded)
-			{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+			if (Len(arguments.include) && arguments.returnIncluded) {
 				// create each object from the assocations before creating our root object
 				loc.jEnd = ListLen(arguments.include);
-				for (loc.j=1; loc.j <= loc.jEnd; loc.j++)
-				{
+				for (loc.j=1; loc.j <= loc.jEnd; loc.j++) {
 					loc.include = ListGetAt(arguments.include, loc.j);
 					loc.model = model(variables.wheels.class.associations[loc.include].modelName);
 					if (variables.wheels.class.associations[loc.include].type == "hasMany")
@@ -48,9 +43,7 @@
 						{
 							loc.rv[loc.i][loc.include][loc.k] = loc.model.$createInstance(properties=loc.rv[loc.i][loc.include][loc.k], persisted=true, base=false, callbacks=arguments.callbacks);
 						}
-					}
-					else
-					{
+					} else {
 						// we have a hasOne or belongsTo assocation, so just add the object to the root object
 						loc.rv[loc.i][loc.include] = loc.model.$createInstance(properties=loc.rv[loc.i][loc.include], persisted=true, base=false, callbacks=arguments.callbacks);
 					}
@@ -74,15 +67,12 @@
 
 		// loop through all of our records and create an object for each row in the query
 		loc.iEnd = arguments.query.recordCount;
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			// create a new struct
 			loc.struct = $queryRowToStruct(properties=arguments.query, row=loc.i);
 			loc.structHash = $hashedKey(loc.struct);
-			if (!ListFind(loc.doneStructs, loc.structHash, Chr(7)))
-			{
-				if (Len(arguments.include) && arguments.returnIncluded)
-				{
+			if (!ListFind(loc.doneStructs, loc.structHash, Chr(7))) {
+				if (Len(arguments.include) && arguments.returnIncluded) {
 					// loop through our assocations to build nested objects attached to the main object
 					loc.jEnd = ListLen(arguments.include);
 					for (loc.j=1; loc.j <= loc.jEnd; loc.j++)
@@ -146,23 +136,19 @@
 		loc.rv = {};
 		loc.allProperties = ListAppend(variables.wheels.class.propertyList, variables.wheels.class.calculatedPropertyList);
 		loc.iEnd = ListLen(loc.allProperties);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			// wrap in try/catych because coldfusion has a problem with empty strings in queries for bit types
 			try
 			{
 				loc.item = ListGetAt(loc.allProperties, loc.i);
-				if (!arguments.base && ListFindNoCase(arguments.properties.columnList, arguments.name & loc.item))
-				{
+				if (!arguments.base && ListFindNoCase(arguments.properties.columnList, arguments.name & loc.item)) {
 					loc.rv[loc.item] = arguments.properties[arguments.name & loc.item][arguments.row];
 				}
-				else if (ListFindNoCase(arguments.properties.columnList, loc.item))
-				{
+				else if (ListFindNoCase(arguments.properties.columnList, loc.item)) {
 					loc.rv[loc.item] = arguments.properties[loc.item][arguments.row];
 				}
 			}
-			catch (any e)
-			{
+			catch (any e) {
 				loc.rv[loc.item] = "";
 			}
 		}
@@ -176,11 +162,9 @@
 		var loc = {};
 		loc.rv = "";
 		loc.iEnd = ListLen(primaryKeys());
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.property = primaryKeys(loc.i);
-			if (StructKeyExists(arguments.struct, loc.property))
-			{
+			if (StructKeyExists(arguments.struct, loc.property)) {
 				loc.rv = ListAppend(loc.rv, arguments.struct[loc.property]);
 			}
 		}

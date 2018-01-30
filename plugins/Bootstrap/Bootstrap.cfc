@@ -96,8 +96,7 @@
 				<input type="checkbox" class="bcheckbox" name="#arguments.name#_delete" data-label="Delete"/>
 			';
 			browseBtnText = "Change";
-			if(!len(arguments.filepath) OR !FileExists(ExpandThis(arguments.filepath)))
-			{
+			if(!len(arguments.filepath) OR !FileExists(ExpandThis(arguments.filepath))) {
 				arguments.filepath = "/assets/img/upload-thumb-50x50.png";
 				imageRemovalCheckbox = "";
 				browseBtnText = "Select image";
@@ -315,8 +314,7 @@
 			loc.returnValue = "";
 			loc.included = includedInObject(argumentCollection=arguments);
 
-			if (!loc.included)
-			{
+			if (!loc.included) {
 				loc.included = "";
 				loc.checked = false;
 			}
@@ -498,8 +496,7 @@
 			param name="arguments.fieldArgs.labelPlacement" type="string" default='before';
 			param name="arguments.fieldArgs.append" type="string" default='<div class="separator"></div>';
 
-			if(!isNull(arguments.fieldArgs.isSelectize))
-			{
+			if(!isNull(arguments.fieldArgs.isSelectize)) {
 				arguments.fieldArgs.colclass = '';
 			}
 

@@ -83,28 +83,21 @@
 			writeDump(e); abort;
 		}
 
-		if (FindNoCase("SQLServer", loc.info.driver_name) || FindNoCase("SQL Server", loc.info.driver_name))
-		{
+		if (FindNoCase("SQLServer", loc.info.driver_name) || FindNoCase("SQL Server", loc.info.driver_name)) {
 			loc.adapterName = "SQLServer";
 		}
-		else if (FindNoCase("MySQL", loc.info.driver_name))
-		{
+		else if (FindNoCase("MySQL", loc.info.driver_name)) {
 			loc.adapterName = "MySQL";
 		}
-		else if (FindNoCase("Oracle", loc.info.driver_name))
-		{
+		else if (FindNoCase("Oracle", loc.info.driver_name)) {
 			loc.adapterName = "Oracle";
 		}
-		else if (FindNoCase("PostgreSQL", loc.info.driver_name))
-		{
+		else if (FindNoCase("PostgreSQL", loc.info.driver_name)) {
 			loc.adapterName = "PostgreSQL";
 		}
-		else if (FindNoCase("H2", loc.info.driver_name))
-		{
+		else if (FindNoCase("H2", loc.info.driver_name)) {
 			loc.adapterName = "H2";
-		}
-		else
-		{
+		} else {
 			throw(type="Wheels.DatabaseNotSupported", message="#loc.info.database_productname# is not supported by CFWheels.", extendedInfo="Use SQL Server, MySQL, Oracle, PostgreSQL or H2.");
 		}
 		return loc.adapterName;

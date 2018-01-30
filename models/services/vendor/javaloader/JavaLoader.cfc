@@ -31,8 +31,7 @@ Purpose:    Utlitity class for loading Java Classes
 	<cfscript>
 		initUseJavaProxyCFC();
 
-		if(arguments.loadColdFusionClassPath)
-		{
+		if(arguments.loadColdFusionClassPath) {
 			//arguments.parentClassLoader = createObject("java", "java.lang.Thread").currentThread().getContextClassLoader();
 			//can't use above, as doesn't work in some... things
 
@@ -49,8 +48,7 @@ Purpose:    Utlitity class for loading Java Classes
 
 		loadClasses();
 
-		if(structKeyExists(arguments, "sourceDirectories") AND ArrayLen(arguments.sourceDirectories))
-		{
+		if(structKeyExists(arguments, "sourceDirectories") AND ArrayLen(arguments.sourceDirectories)) {
 			setJavaCompiler(createObject("component", "JavaCompiler").init(arguments.compileDirectory));
 			setSourceDirectories(arguments.sourceDirectories);
 			setCompileDirectory(arguments.compileDirectory);
@@ -62,8 +60,7 @@ Purpose:    Utlitity class for loading Java Classes
 			setSourceLastModified(calculateSourceLastModified());
 
 			//do the method switching for non-trusted source
-			if(NOT arguments.trustedSource)
-			{
+			if(NOT arguments.trustedSource) {
 				variables.createWithoutCheck = variables.create;
 
 				StructDelete(this, "create");
@@ -85,8 +82,7 @@ Purpose:    Utlitity class for loading Java Classes
 			//do this in one line just for speed.
 			return createJavaProxy(getURLClassLoader().loadClass(arguments.className));
 		}
-		catch(java.lang.ClassNotFoundException exc)
-		{
+		catch(java.lang.ClassNotFoundException exc) {
 			throwException("javaloader.ClassNotFoundException", "The requested class could not be found.", "The requested class '#arguments.className#' could not be found in the loaded jars/directories.");
 		}
 	</cfscript>
@@ -121,54 +117,43 @@ Purpose:    Utlitity class for loading Java Classes
 		var currentClassloader = Thread.currentThread().getContextClassLoader();
 		var classLoader = "";
 
-		if (structCount(arguments) == 4)
-		{
+		if (structCount(arguments) == 4) {
 			// the last 2 arguments are the function arguments and class loader
 			classLoader = arguments[4];
 			local.funcArgs = arguments[3];
 		}
-		else if (structCount(arguments) == 3)
-		{
+		else if (structCount(arguments) == 3) {
 			// 2nd argument could be classloader or function arguments
-			if (isInstanceOf(arguments[2],"java.lang.ClassLoader"))
-			{
+			if (isInstanceOf(arguments[2],"java.lang.ClassLoader")) {
 				classLoader = arguments[2];
 			}
-			else if (isStruct(arguments[2]))
-			{
+			else if (isStruct(arguments[2])) {
 				local.funcArgs = arguments[2];
 			}
 
 			// 3rd argument could be classloader or function arguments
-			if (isInstanceOf(arguments[3],"java.lang.ClassLoader"))
-			{
+			if (isInstanceOf(arguments[3],"java.lang.ClassLoader")) {
 				classLoader = arguments[3];
 			}
-			else if (isStruct(arguments[3]))
-			{
+			else if (isStruct(arguments[3])) {
 				local.funcArgs = arguments[3];
 			}
 		}
-		else if (structCount(arguments) == 2)
-		{
+		else if (structCount(arguments) == 2) {
 			// the 2nd argument could be a class loader or function arguments
-			if (isInstanceOf(arguments[2],"java.lang.ClassLoader"))
-			{
+			if (isInstanceOf(arguments[2],"java.lang.ClassLoader")) {
 				classLoader = arguments[2];
 			}
-			else if (isStruct(arguments[2]))
-			{
+			else if (isStruct(arguments[2])) {
 				local.funcArgs = arguments[2];
 			}
 		}
 
-		if (!structKeyExists(local,"funcArgs"))
-		{
+		if (!structKeyExists(local,"funcArgs")) {
 			local.funcArgs = {};
 		}
 
-		if (isSimpleValue(classLoader))
-		{
+		if (isSimpleValue(classLoader)) {
 			classLoader = getURLClassLoader();
 		}
 	</cfscript>
@@ -203,8 +188,7 @@ Purpose:    Utlitity class for loading Java Classes
 		//need to do this twice, as cf8 has no finally.
 		Thread.currentThread().setContextClassLoader(currentClassloader);
 
-		if(structKeyExists(local, "return"))
-		{
+		if(structKeyExists(local, "return")) {
 			return local.return;
 		}
 	</cfscript>
@@ -226,8 +210,7 @@ Purpose:    Utlitity class for loading Java Classes
 		/*
 			If the source has changed in any way, recompile and load
 		*/
-		if(dateCompare(dateLastModified, getSourceLastModified()) eq 1)
-		{
+		if(dateCompare(dateLastModified, getSourceLastModified()) eq 1) {
 			loadClasses();
 			compileSource();
 		}
@@ -251,20 +234,15 @@ Purpose:    Utlitity class for loading Java Classes
 
 		networkClassLoaderProxy = createJavaProxy(networkClassLoaderClass);
 
-		if(isObject(getParentClassLoader()))
-		{
+		if(isObject(getParentClassLoader())) {
 			classLoader = networkClassLoaderProxy.init(getParentClassLoader());
-		}
-		else
-		{
+		} else {
 			classLoader = networkClassLoaderProxy.init();
 		}
 
-		while(iterator.hasNext())
-		{
+		while(iterator.hasNext()) {
 			file = createObject("java", "java.io.File").init(iterator.next());
-			if(NOT file.exists())
-			{
+			if(NOT file.exists()) {
 				throwException("javaloader.PathNotFoundException", "The path you have specified could not be found", file.getAbsolutePath() & " does not exist");
 			}
 
@@ -311,8 +289,7 @@ Purpose:    Utlitity class for loading Java Classes
 			//first we copy the source to our tmp dir
 			directories = getSourceDirectories();
 			len = arraylen(directories);
-			for(; counter lte len; counter = counter + 1)
-			{
+			for(; counter lte len; counter = counter + 1) {
 				dir = directories[counter];
 				$directoryCopy(dir, path);
 			}
@@ -377,20 +354,16 @@ Purpose:    Utlitity class for loading Java Classes
 					name="qLastModified">
 		<cfscript>
 			//it's possible there are no source files.
-			if(qLastModified.recordCount)
-			{
+			if(qLastModified.recordCount) {
 				//get the latest date modified
-				if(dateCompare(lastModified, qlastModified.dateLastModified) eq -1)
-				{
+				if(dateCompare(lastModified, qlastModified.dateLastModified) eq -1) {
 					/*
 						This is here, because cfdirectory only ever gives you minute accurate modified
 						date, which is not good enough.
 					*/
 					lastModified = createObject("java", "java.util.Date").init(createObject("java", "java.io.File").init(qLastModified.directory & "/" & qLastModified.name).lastModified());
 				}
-			}
-			else
-			{
+			} else {
 				lastModified = Now();
 			}
         </cfscript>
@@ -419,8 +392,7 @@ Purpose:    Utlitity class for loading Java Classes
     	<cfscript>
     		if(NOT StructKeyExists(server, key))
     		{
-				while(iterator.hasNext())
-				{
+				while(iterator.hasNext()) {
 					Array.set(urls, counter, createObject("java", "java.io.File").init(iterator.next()).toURL());
 					counter = counter + 1;
 				}
@@ -455,8 +427,7 @@ Purpose:    Utlitity class for loading Java Classes
 		{
 			createObject("java", "coldfusion.runtime.java.JavaProxy");
 		}
-		catch(Object exc)
-		{
+		catch(Object exc) {
 			//do method replacement, as it will be much faster long term
 			variables.createJavaProxy = variables.createJavaProxyCFC;
 		}
@@ -478,8 +449,7 @@ Purpose:    Utlitity class for loading Java Classes
 		<cfscript>
 			libName = ListGetAt(qJars.name, 1, "-");
 			//let's not use the lib's that have the same name, but a lower datestamp
-			if(NOT ListFind(jarList, libName))
-			{
+			if(NOT ListFind(jarList, libName)) {
 				ArrayAppend(aJars, path & "/" & qJars.name);
 				jarList = ListAppend(jarList, libName);
 			}

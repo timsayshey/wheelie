@@ -45,26 +45,22 @@
 		loc.params = {};
 		if (StructKeyExists(variables, "params"))
 			StructAppend(loc.params, variables.params, true);
-		if (application.wheels.showErrorInformation)
-		{
+		if (application.wheels.showErrorInformation) {
 			if (arguments.onlyPath && (Len(arguments.host) || Len(arguments.protocol)))
 				$throw(type="Wheels.IncorrectArguments", message="Can't use the `host` or `protocol` arguments when `onlyPath` is `true`.", extendedInfo="Set `onlyPath` to `false` so that `linkTo` will create absolute URLs and thus allowing you to set the `host` and `protocol` on the link.");
 		}
 
 		// get primary key values if an object was passed in
-		if (IsObject(arguments.key))
-		{
+		if (IsObject(arguments.key)) {
 			arguments.key = arguments.key.key();
 		}
 
 		// build the link
 		loc.returnValue = application.wheels.webPath & ListLast(request.cgi.script_name, "/");
-		if (Len(arguments.route))
-		{
+		if (Len(arguments.route)) {
 			// link for a named route
 			loc.route = $findRoute(argumentCollection=arguments);
-			if (arguments.$URLRewriting == "Off")
-			{
+			if (arguments.$URLRewriting == "Off") {
 				loc.returnValue = loc.returnValue & "?controller=";
 				if (Len(arguments.controller))
 					loc.returnValue = loc.returnValue & hyphenize(arguments.controller);
@@ -79,18 +75,14 @@
 				if (StructKeyExists(loc.route, "formatVariable") && StructKeyExists(arguments, loc.route.formatVariable))
 					loc.returnValue = loc.returnValue & "&#loc.route.formatVariable#=#arguments[loc.route.formatVariable]#";
 				loc.iEnd = ListLen(loc.route.variables);
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					loc.property = ListGetAt(loc.route.variables, loc.i);
 					if (loc.property != "controller" && loc.property != "action")
 						loc.returnValue = loc.returnValue & "&" & loc.property & "=" & $URLEncode(arguments[loc.property]);
 				}
-			}
-			else
-			{
+			} else {
 				loc.iEnd = ListLen(loc.route.pattern, "/");
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					loc.property = ListGetAt(loc.route.pattern, loc.i, "/");
 					if (loc.property Contains "[")
 					{
@@ -108,9 +100,7 @@
 							loc.param = obfuscateParam("#loc.param#");
 						}
 						loc.returnValue = loc.returnValue & "/" & loc.param; // get param from arguments
-					}
-					else
-					{
+					} else {
 						loc.returnValue = loc.returnValue & "/" & loc.property; // add hard coded param from route
 					}
 				}
@@ -131,11 +121,9 @@
 			loc.returnValue = loc.returnValue & "?controller=" & hyphenize(arguments.controller);
 			if (Len(arguments.action))
 				loc.returnValue = loc.returnValue & "&action=" & hyphenize(arguments.action);
-			if (Len(arguments.key))
-			{
+			if (Len(arguments.key)) {
 				loc.param = $URLEncode(arguments.key);
-				if (application.wheels.obfuscateUrls)
-				{
+				if (application.wheels.obfuscateUrls) {
 					// wrap in double quotes because in lucee we have to pass it in as a string otherwise leading zeros are stripped
 					loc.param = obfuscateParam("#loc.param#");
 				}
@@ -143,14 +131,12 @@
 			}
 		}
 
-		if (arguments.$URLRewriting != "Off")
-		{
+		if (arguments.$URLRewriting != "Off") {
 			loc.returnValue = Replace(loc.returnValue, "?controller=", "/");
 			loc.returnValue = Replace(loc.returnValue, "&action=", "/");
 			loc.returnValue = Replace(loc.returnValue, "&key=", "/");
 		}
-		if (arguments.$URLRewriting == "On")
-		{
+		if (arguments.$URLRewriting == "On") {
 			loc.returnValue = Replace(loc.returnValue, application.wheels.rewriteFile, "");
 			loc.returnValue = Replace(loc.returnValue, "//", "/");
 		}
@@ -160,8 +146,7 @@
 		if (Len(arguments.anchor))
 			loc.returnValue = loc.returnValue & "##" & arguments.anchor;
 
-		if (!arguments.onlyPath)
-		{
+		if (!arguments.onlyPath) {
 			if (arguments.port != 0)
 				loc.returnValue = ":" & arguments.port & loc.returnValue; // use the port that was passed in by the developer
 			else if (request.cgi.server_port != 80 && request.cgi.server_port != 443)
@@ -170,16 +155,12 @@
 				loc.returnValue = arguments.host & loc.returnValue;
 			else
 				loc.returnValue = request.cgi.server_name & loc.returnValue;
-			if (Len(arguments.protocol))
-			{
+			if (Len(arguments.protocol)) {
 				loc.returnValue = arguments.protocol & "://" & loc.returnValue;
 			}
-			else if (request.cgi.server_port_secure)
-			{
+			else if (request.cgi.server_port_secure) {
 				loc.returnValue = "https://" & loc.returnValue;
-			}
-			else
-			{
+			} else {
 				loc.returnValue = "http://" & loc.returnValue;
 			}
 		}

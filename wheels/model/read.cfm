@@ -28,79 +28,59 @@
 		arguments.where = $cleanInList(arguments.where);
 
 		// we only allow direct associations to be loaded when returning objects
-		if (application.wheels.showErrorInformation && Len(arguments.returnAs) && arguments.returnAs != "query" && Find("(", arguments.include) && arguments.returnIncluded)
-		{
+		if (application.wheels.showErrorInformation && Len(arguments.returnAs) && arguments.returnAs != "query" && Find("(", arguments.include) && arguments.returnIncluded) {
 			$throw(type="Wheels", message="Incorrect Arguments", extendedInfo="You may only include direct associations to this object when returning an array of objects.");
 		}
 
 		// count records and get primary keys for pagination
-		if (arguments.page)
-		{
-			if (application.wheels.showErrorInformation && arguments.perPage <= 0)
-			{
+		if (arguments.page) {
+			if (application.wheels.showErrorInformation && arguments.perPage <= 0) {
 				$throw(type="Wheels", message="Incorrect Argument", extendedInfo="The `perPage` argument should be a positive numeric value.");
 			}
-			if (Len(arguments.order))
-			{
+			if (Len(arguments.order)) {
 				// insert primary keys to order clause unless they are already there, this guarantees that the ordering is unique which is required to make pagination work properly
 				loc.compareList = $listClean(ReplaceNoCase(ReplaceNoCase(arguments.order, " ASC", "", "all"), " DESC", "", "all"));
 				loc.iEnd = ListLen(primaryKeys());
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					loc.item = primaryKeys(loc.i);
 					if (!ListFindNoCase(loc.compareList, loc.item) && !ListFindNoCase(loc.compareList, tableName() & "." & loc.item))
 					{
 						arguments.order = ListAppend(arguments.order, loc.item);
 					}
 				}
-			}
-			else
-			{
+			} else {
 				// we can't paginate without any order so we default to ascending ordering by the primary key column(s)
 				arguments.order = primaryKey();
 			}
-			if (Len(arguments.include))
-			{
+			if (Len(arguments.include)) {
 				loc.distinct = true;
-			}
-			else
-			{
+			} else {
 				loc.distinct = false;
 			}
-			if (arguments.count > 0)
-			{
+			if (arguments.count > 0) {
 				loc.totalRecords = arguments.count;
-			}
-			else
-			{
+			} else {
 				loc.totalRecords = this.count(where=arguments.where, include=arguments.include, reload=arguments.reload, cache=arguments.cache, distinct=loc.distinct, parameterize=arguments.parameterize, includeSoftDeletes=arguments.includeSoftDeletes);
 			}
 			loc.currentPage = arguments.page;
-			if (loc.totalRecords == 0)
-			{
+			if (loc.totalRecords == 0) {
 				loc.totalPages = 0;
 				loc.rv = "";
-			}
-			else
-			{
+			} else {
 				loc.totalPages = Ceiling(loc.totalRecords/arguments.perPage);
 				loc.limit = arguments.perPage;
 				loc.offset = (arguments.perPage * arguments.page) - arguments.perPage;
 
 				// if the full range of records is not requested we correct the limit to get the exact amount instead
 				// for example if totalRecords is 57, limit is 10 and offset 50 (i.e. requesting records 51-60) we change the limit to 7
-				if ((loc.limit + loc.offset) > loc.totalRecords)
-				{
+				if ((loc.limit + loc.offset) > loc.totalRecords) {
 					loc.limit = loc.totalRecords - loc.offset;
 				}
 
-				if (loc.limit < 1)
-				{
+				if (loc.limit < 1) {
 					// if limit is 0 or less it means that a page that has no records was asked for so we return an empty query
 					loc.rv = "";
-				}
-				else
-				{
+				} else {
 					loc.values = findAll($limit=loc.limit, $offset=loc.offset, select=primaryKeys(), where=arguments.where, order=arguments.order, include=arguments.include, reload=arguments.reload, cache=arguments.cache, distinct=loc.distinct, parameterize=arguments.parameterize, includeSoftDeletes=arguments.includeSoftDeletes, callbacks=false);
 					if (loc.values.RecordCount)
 					{
@@ -135,23 +115,17 @@
 			setPagination(loc.totalRecords, loc.currentPage, arguments.perPage, arguments.handle);
 		}
 
-		if (StructKeyExists(loc, "rv") && !Len(loc.rv))
-		{
-			if (arguments.returnAs == "query")
-			{
+		if (StructKeyExists(loc, "rv") && !Len(loc.rv)) {
+			if (arguments.returnAs == "query") {
 				loc.rv = QueryNew("");
 			}
-			else if (singularize(arguments.returnAs) == arguments.returnAs)
-			{
+			else if (singularize(arguments.returnAs) == arguments.returnAs) {
 				loc.rv = false;
-			}
-			else
-			{
+			} else {
 				loc.rv = ArrayNew(1);
 			}
 		}
-		else if (!StructKeyExists(loc, "rv"))
-		{
+		else if (!StructKeyExists(loc, "rv")) {
 			// make the where clause generic for use in caching
 			loc.originalWhere = arguments.where;
 			arguments.where = REReplace(arguments.where, variables.wheels.class.RESQLWhere, "\1?\8" , "all");
@@ -159,20 +133,17 @@
 			// get info from cache when available, otherwise create the generic select, from, where and order by clause
 			loc.queryShellKey = $hashedKey(variables.wheels.class.modelName, arguments);
 			loc.sql = $getFromCache(loc.queryShellKey, "sql");
-			if (!IsArray(loc.sql))
-			{
+			if (!IsArray(loc.sql)) {
 				loc.sql = [];
 				ArrayAppend(loc.sql, $selectClause(select=arguments.select, include=arguments.include, includeSoftDeletes=arguments.includeSoftDeletes, returnAs=arguments.returnAs));
 				ArrayAppend(loc.sql, $fromClause(include=arguments.include, includeSoftDeletes=arguments.includeSoftDeletes));
 				loc.sql = $addWhereClause(sql=loc.sql, where=loc.originalWhere, include=arguments.include, includeSoftDeletes=arguments.includeSoftDeletes);
 				loc.groupBy = $groupByClause(select=arguments.select, group=arguments.group, include=arguments.include, distinct=arguments.distinct, returnAs=arguments.returnAs);
-				if (Len(loc.groupBy))
-				{
+				if (Len(loc.groupBy)) {
 					ArrayAppend(loc.sql, loc.groupBy);
 				}
 				loc.orderBy = $orderByClause(order=arguments.order, include=arguments.include);
-				if (Len(loc.orderBy))
-				{
+				if (Len(loc.orderBy)) {
 					ArrayAppend(loc.sql, loc.orderBy);
 				}
 				$addToCache(key=loc.queryShellKey, value=loc.sql, category="sql");
@@ -183,12 +154,9 @@
 
 			// return existing query result if it has been run already in current request, otherwise pass off the sql array to the query
 			loc.queryKey = $hashedKey(variables.wheels.class.modelName, arguments, loc.originalWhere);
-			if (application.wheels.cacheQueriesDuringRequest && !arguments.reload && StructKeyExists(request.wheels, loc.queryKey))
-			{
+			if (application.wheels.cacheQueriesDuringRequest && !arguments.reload && StructKeyExists(request.wheels, loc.queryKey)) {
 				loc.findAll = request.wheels[loc.queryKey];
-			}
-			else
-			{
+			} else {
 				loc.finderArgs = {};
 				loc.finderArgs.sql = loc.sql;
 				loc.finderArgs.maxRows = arguments.maxRows;
@@ -196,8 +164,7 @@
 				loc.finderArgs.limit = arguments.$limit;
 				loc.finderArgs.offset = arguments.$offset;
 				loc.finderArgs.$primaryKey = primaryKeys();
-				if (application.wheels.cacheQueries && (IsNumeric(arguments.cache) || (IsBoolean(arguments.cache) && arguments.cache)))
-				{
+				if (application.wheels.cacheQueries && (IsNumeric(arguments.cache) || (IsBoolean(arguments.cache) && arguments.cache))) {
 					loc.finderArgs.cachedWithin = $timeSpanForCache(arguments.cache);
 				}
 				loc.findAll = variables.wheels.class.adapter.$query(argumentCollection=loc.finderArgs);
@@ -205,8 +172,7 @@
 			}
 			request.wheels[$hashedKey(loc.findAll.query)] = variables.wheels.class.modelName; // place an identifer in request scope so we can reference this query when passed in to view functions
 
-			switch (arguments.returnAs)
-			{
+			switch (arguments.returnAs) {
 				case "query":
 					loc.rv = loc.findAll.query;
 
@@ -247,8 +213,7 @@
 		var loc = {};
 		$args(name="findByKey", args=arguments);
 		arguments.include = $listClean(arguments.include);
-		if (Len(arguments.key))
-		{
+		if (Len(arguments.key)) {
 			$keyLengthCheck(arguments.key);
 		}
 
@@ -274,28 +239,21 @@
 		var loc = {};
 		$args(name="findOne", args=arguments);
 		arguments.include = $listClean(arguments.include);
-		if (!Len(arguments.include) || (StructKeyExists(variables.wheels.class.associations, arguments.include) && variables.wheels.class.associations[arguments.include].type != "hasMany"))
-		{
+		if (!Len(arguments.include) || (StructKeyExists(variables.wheels.class.associations, arguments.include) && variables.wheels.class.associations[arguments.include].type != "hasMany")) {
 			// no joins will be done or the join will be done to a single record so we can safely get just one record from the database
 			// note that the check above can be improved to go through the entire include string and check if all associations are "single" (i.e. hasOne or belongsTo)
 			arguments.maxRows = 1;
-		}
-		else
-		{
+		} else {
 			// since we're joining with associated tables (and not to just one record) we could potentially get duplicate records for one object and we work around this by using the pagination code which has this functionality built in
 			arguments.page = 1;
 			arguments.perPage = 1;
 			arguments.count = 1;
 		}
 		loc.rv = findAll(argumentCollection=arguments);
-		if (IsArray(loc.rv))
-		{
-			if (ArrayLen(loc.rv))
-			{
+		if (IsArray(loc.rv)) {
+			if (ArrayLen(loc.rv)) {
 				loc.rv = loc.rv[1];
-			}
-			else
-			{
+			} else {
 				loc.rv = false;
 			}
 		}
@@ -311,8 +269,7 @@
 		$args(args=arguments, name="findFirst", combine="property/properties");
 		arguments.order = "";
 		loc.iEnd = ListLen(arguments.property);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.property, loc.i);
 			arguments.order = ListAppend(arguments.order, loc.item & " " & arguments.$sort);
 		}
@@ -345,12 +302,9 @@
 		arguments.select = primaryKey();
 		arguments.callbacks = false;
 		loc.query = findAll(argumentCollection=arguments);
-		if (loc.quoted)
-		{
+		if (loc.quoted) {
 			loc.functionName = "QuotedValueList";
-		}
-		else
-		{
+		} else {
 			loc.functionName = "ValueList";
 		}
 		loc.rv = Evaluate("#loc.functionName#(loc.query.#arguments.select#, '#loc.delimiter#')");
@@ -366,16 +320,14 @@
 		loc.query = findByKey(key=key(), reload=true, returnAs="query");
 		loc.properties = propertyNames();
 		loc.iEnd = ListLen(loc.properties);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			try
 			{
 				// coldfusion has a problem with blank boolean values in the query
 				loc.property = ListGetAt(loc.properties, loc.i);
 				this[loc.property] = loc.query[loc.property][1];
 			}
-			catch (any e)
-			{
+			catch (any e) {
 				this[loc.property] = "";
 			}
 		}

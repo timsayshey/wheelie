@@ -45,8 +45,7 @@
 
 		// optional: use JavaLoader for loading external java files
 		variables.bUseJavaLoader = isObject(arguments.javaLoader) AND len(arguments.jarPath);
-		if(variables.bUseJavaLoader)
-		{
+		if(variables.bUseJavaLoader) {
 			variables.jarFileArray = arrayNew(1);
 			arrayAppend(variables.jarFileArray, arguments.jarPath & "/combine.jar");
 			arrayAppend(variables.jarFileArray, arguments.jarPath & "/yuicompressor-2.4.6.jar");
@@ -57,41 +56,30 @@
 		variables.jStringReader = createObject("java","java.io.StringReader");
 
 		// If using jsMin, we need to load the required Java objects
-		if(variables.bJsMin)
-		{
-			if(variables.bUseJavaLoader)
-			{
+		if(variables.bJsMin) {
+			if(variables.bUseJavaLoader) {
 				variables.jJSMin = arguments.javaLoader.create("com.magnoliabox.jsmin.JSMin");
-			}
-			else
-			{
+			} else {
 				variables.jJSMin = createObject("java","com.magnoliabox.jsmin.JSMin");
 			}
 
 		}
 		// If using the YUI CSS Compressor, we need to load the required Java objects
-		if(variables.bYuiCss)
-		{
+		if(variables.bYuiCss) {
 			variables.jStringWriter = createObject("java","java.io.StringWriter");
-			if (variables.bUseJavaLoader)
-			{
+			if (variables.bUseJavaLoader) {
 				variables.jYuiCssCompressor = arguments.javaLoader.create("com.yahoo.platform.yui.compressor.CssCompressor");
-			}
-			else
-			{
+			} else {
 				variables.jYuiCssCompressor = createObject("java","com.yahoo.platform.yui.compressor.CssCompressor");
 			}
 		}
 
 		// determine which method to use for getting the file last modified dates
-		if(arguments.getFileModifiedMethod eq 'com')
-		{
+		if(arguments.getFileModifiedMethod eq 'com') {
 			variables.fso = CreateObject("COM", "Scripting.FileSystemObject");
 			// calls to getFileDateLastModified() are handled by getFileDateLastModified_com()
 			variables.getFileDateLastModified = variables.getFileDateLastModified_com;
-		}
-		else
-		{
+		} else {
 			variables.jFile = CreateObject("java", "java.io.File");
 			// calls to getFileDateLastModified() are handled by getFileDateLastModified_java()
 			variables.getFileDateLastModified = variables.getFileDateLastModified_java;
@@ -129,12 +117,9 @@
 		var filePaths = convertToAbsolutePaths(files, delimiter);
 
 		// determine what file type we are dealing with
-		if( structkeyExists(arguments, 'type') )
-		{
+		if( structkeyExists(arguments, 'type') ) {
 			sType = arguments.type;
-		}
-		else
-		{
+		} else {
 			sType = listLast( listFirst(filePaths, sDelimiter) , '.');
 		}
 		</cfscript>
@@ -223,12 +208,10 @@
 
 			<cfscript>
 			// 'Minify' the javascript with jsmin
-			if(variables.bJsMin and sType eq 'js')
-			{
+			if(variables.bJsMin and sType eq 'js') {
 				sOutput = compressJsWithJSMin(sOutput);
 			}
-			else if(variables.bYuiCss and sType eq 'css')
-			{
+			else if(variables.bYuiCss and sType eq 'css') {
 				sOutput = compressCssWithYUI(sOutput);
 			}
 

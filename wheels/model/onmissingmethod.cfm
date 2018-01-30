@@ -5,83 +5,62 @@
 	<cfargument name="missingMethodArguments" type="struct" required="true">
 	<cfscript>
 		var loc = {};
-		if (Right(arguments.missingMethodName, 10) == "hasChanged" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "hasChanged", "")))
-		{
+		if (Right(arguments.missingMethodName, 10) == "hasChanged" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "hasChanged", ""))) {
 			loc.rv = hasChanged(property=ReplaceNoCase(arguments.missingMethodName, "hasChanged", ""));
 		}
-		else if (Right(arguments.missingMethodName, 11) == "changedFrom" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "changedFrom", "")))
-		{
+		else if (Right(arguments.missingMethodName, 11) == "changedFrom" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "changedFrom", ""))) {
 			loc.rv = changedFrom(property=ReplaceNoCase(arguments.missingMethodName, "changedFrom", ""));
 		}
-		else if (Right(arguments.missingMethodName, 9) == "IsPresent" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "IsPresent", "")))
-		{
+		else if (Right(arguments.missingMethodName, 9) == "IsPresent" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "IsPresent", ""))) {
 			loc.rv = propertyIsPresent(property=ReplaceNoCase(arguments.missingMethodName, "IsPresent", ""));
 		}
-		else if (Left(arguments.missingMethodName, 9) == "columnFor" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "columnFor", "")))
-		{
+		else if (Left(arguments.missingMethodName, 9) == "columnFor" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "columnFor", ""))) {
 			loc.rv = columnForProperty(property=ReplaceNoCase(arguments.missingMethodName, "columnFor", ""));
 		}
-		else if (Left(arguments.missingMethodName, 6) == "toggle" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "toggle", "")))
-		{
+		else if (Left(arguments.missingMethodName, 6) == "toggle" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "toggle", ""))) {
 			loc.rv = toggle(property=ReplaceNoCase(arguments.missingMethodName, "toggle", ""), argumentCollection=arguments.missingMethodArguments);
 		}
-		else if (Left(arguments.missingMethodName, 3) == "has" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "has", "")))
-		{
+		else if (Left(arguments.missingMethodName, 3) == "has" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "has", ""))) {
 			loc.rv = hasProperty(property=ReplaceNoCase(arguments.missingMethodName, "has", ""));
 		}
-		else if (Left(arguments.missingMethodName, 6) == "update" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "update", "")))
-		{
-			if (!StructKeyExists(arguments.missingMethodArguments, "value"))
-			{
+		else if (Left(arguments.missingMethodName, 6) == "update" && StructKeyExists(variables.wheels.class.properties, ReplaceNoCase(arguments.missingMethodName, "update", ""))) {
+			if (!StructKeyExists(arguments.missingMethodArguments, "value")) {
 				$throw(type="Wheels.IncorrectArguments", message="The `value` argument is required but was not passed in.", extendedInfo="Pass in a value to the dynamic updateProperty in the `value` argument.");
 			}
 			loc.rv = updateProperty(property=ReplaceNoCase(arguments.missingMethodName, "update", ""), value=arguments.missingMethodArguments.value);
 		}
-		else if (Left(arguments.missingMethodName, 9) == "findOneBy" || Left(arguments.missingMethodName, 9) == "findAllBy")
-		{
-			if (StructKeyExists(server, "railo") || StructKeyExists(server, "lucee"))
-			{
+		else if (Left(arguments.missingMethodName, 9) == "findOneBy" || Left(arguments.missingMethodName, 9) == "findAllBy") {
+			if (StructKeyExists(server, "railo") || StructKeyExists(server, "lucee")) {
 				// since Railo passes in the method name in all upper case we have to do this here
 				loc.finderProperties = ListToArray(LCase(ReplaceNoCase(ReplaceNoCase(ReplaceNoCase(arguments.missingMethodName, "And", "|", "all"), "findAllBy", "", "all"), "findOneBy", "", "all")), "|");
-			}
-			else
-			{
+			} else {
 				loc.finderProperties = ListToArray(ReplaceNoCase(ReplaceNoCase(Replace(arguments.missingMethodName, "And", "|", "all"), "findAllBy", "", "all"), "findOneBy", "", "all"), "|");
 			}
 
 			// sometimes values will have commas in them, allow the developer to change the delimiter
 			loc.delimiter = ",";
-			if (StructKeyExists(arguments.missingMethodArguments, "delimiter"))
-			{
+			if (StructKeyExists(arguments.missingMethodArguments, "delimiter")) {
 				loc.delimiter = arguments.missingMethodArguments["delimiter"];
 			}
 
 			// split the values into an array for easier processing
 			loc.values = "";
-			if (StructKeyExists(arguments.missingMethodArguments, "value"))
-			{
+			if (StructKeyExists(arguments.missingMethodArguments, "value")) {
 				loc.values = arguments.missingMethodArguments.value;
 			}
-			else if (StructKeyExists(arguments.missingMethodArguments, "values"))
-			{
+			else if (StructKeyExists(arguments.missingMethodArguments, "values")) {
 				loc.values = arguments.missingMethodArguments.values;
-			}
-			else
-			{
+			} else {
 				loc.values = arguments.missingMethodArguments[1];
 			}
 
-			if (!IsArray(loc.values))
-			{
-				if (ArrayLen(loc.finderProperties) == 1)
-				{
+			if (!IsArray(loc.values)) {
+				if (ArrayLen(loc.finderProperties) == 1) {
 					// don't know why but this screws up in CF8
 					loc.temp = [];
 					ArrayAppend(loc.temp, loc.values);
 					loc.values = loc.temp;
-				}
-				else
-				{
+				} else {
 					loc.values = $listClean(list=loc.values, delim=loc.delimiter, returnAs="array");
 				}
 			}
@@ -91,8 +70,7 @@
 
 			// loop through all the properties they want to query and assign values
 			loc.iEnd = ArrayLen(loc.finderProperties);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				ArrayAppend(loc.addToWhere, "#loc.finderProperties[loc.i]# #$dynamicFinderOperator(loc.finderProperties[loc.i])# #variables.wheels.class.adapter.$quoteValue(str=loc.values[loc.i], type=validationTypeForProperty(loc.finderProperties[loc.i]))#");
 			}
 
@@ -109,16 +87,12 @@
 			// call finder method
 			loc.rv = IIf(Left(arguments.missingMethodName, 9) == "findOneBy", "findOne(argumentCollection=arguments.missingMethodArguments)", "findAll(argumentCollection=arguments.missingMethodArguments)");
 		}
-		else if (Left(arguments.missingMethodName, 14) == "findOrCreateBy")
-		{
+		else if (Left(arguments.missingMethodName, 14) == "findOrCreateBy") {
 			loc.rv = $findOrCreateBy(argumentCollection=arguments);
-		}
-		else
-		{
+		} else {
 			loc.rv = $associationMethod(argumentCollection=arguments);
 		}
-		if (!StructKeyExists(loc, "rv"))
-		{
+		if (!StructKeyExists(loc, "rv")) {
 			$throw(type="Wheels.MethodNotFound", message="The method `#arguments.missingMethodName#` was not found in the `#variables.wheels.class.modelName#` model.", extendedInfo="Check your spelling or add the method to the model's CFC file.");
 		}
 	</cfscript>
@@ -133,8 +107,7 @@
 
 		// default save to true but set to passed in value if it exists and then delete from arguments
 		loc.save = true;
-		if (StructKeyExists(arguments.missingMethodArguments, "save"))
-		{
+		if (StructKeyExists(arguments.missingMethodArguments, "save")) {
 			loc.save = arguments.missingMethodArguments.save;
 			StructDelete(arguments.missingMethodArguments, "save");
 		}
@@ -143,8 +116,7 @@
 		loc.property = ReplaceNoCase(arguments.missingMethodName, "findOrCreateBy", "");
 
 		// get the value from the parameter that matches the property name or the first one if named arguments were not used
-		if (StructKeyExists(arguments.missingMethodArguments, "1"))
-		{
+		if (StructKeyExists(arguments.missingMethodArguments, "1")) {
 			arguments.missingMethodArguments[loc.property] = arguments.missingMethodArguments[1];
 			StructDelete(arguments.missingMethodArguments, "1");
 		}
@@ -161,19 +133,13 @@
 		loc.object = findOne(argumentCollection=arguments);
 		StructDelete(arguments, "where");
 
-		if (IsObject(loc.object))
-		{
+		if (IsObject(loc.object)) {
 			loc.rv = loc.object;
-		}
-		else
-		{
+		} else {
 			arguments[loc.property] = loc.value;
-			if (loc.save)
-			{
+			if (loc.save) {
 				loc.rv = create(argumentCollection=arguments);
-			}
-			else
-			{
+			} else {
 				loc.rv = new(argumentCollection=arguments);
 			}
 		}
@@ -185,12 +151,9 @@
 	<cfargument name="property" type="string" required="true">
 	<cfscript>
 		var loc = {};
-		if (StructKeyExists(variables.wheels.class.properties, arguments.property) && variables.wheels.class.properties[arguments.property].dataType == "text")
-		{
+		if (StructKeyExists(variables.wheels.class.properties, arguments.property) && variables.wheels.class.properties[arguments.property].dataType == "text") {
 			loc.rv = "LIKE";
-		}
-		else
-		{
+		} else {
 			loc.rv =  "=";
 		}
 	</cfscript>
@@ -200,11 +163,9 @@
 <cffunction name="$associationMethod" returntype="any" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		for (loc.key in variables.wheels.class.associations)
-		{
+		for (loc.key in variables.wheels.class.associations) {
 			loc.method = "";
-			if (StructKeyExists(variables.wheels.class.associations[loc.key], "shortcut") && arguments.missingMethodName == variables.wheels.class.associations[loc.key].shortcut)
-			{
+			if (StructKeyExists(variables.wheels.class.associations[loc.key], "shortcut") && arguments.missingMethodName == variables.wheels.class.associations[loc.key].shortcut) {
 				loc.method = "findAll";
 				loc.joinAssociation = $expandedAssociations(include=loc.key);
 				loc.joinAssociation = loc.joinAssociation[1];
@@ -213,29 +174,24 @@
 				loc.info = loc.info[1];
 				loc.componentReference = model(loc.info.modelName);
 				loc.include = ListLast(variables.wheels.class.associations[loc.key].through);
-				if (StructKeyExists(arguments.missingMethodArguments, "include"))
-				{
+				if (StructKeyExists(arguments.missingMethodArguments, "include")) {
 					loc.include = "#loc.include#(#arguments.missingMethodArguments.include#)";
 				}
 				arguments.missingMethodArguments.include = loc.include;
 				loc.where = $keyWhereString(properties=loc.joinAssociation.foreignKey, keys=loc.componentReference.primaryKeys());
-				if (StructKeyExists(arguments.missingMethodArguments, "where"))
-				{
+				if (StructKeyExists(arguments.missingMethodArguments, "where")) {
 					loc.where = "(#loc.where#) AND (#arguments.missingMethodArguments.where#)";
 				}
 				arguments.missingMethodArguments.where = loc.where;
-				if (!StructKeyExists(arguments.missingMethodArguments, "returnIncluded"))
-				{
+				if (!StructKeyExists(arguments.missingMethodArguments, "returnIncluded")) {
 					arguments.missingMethodArguments.returnIncluded = false;
 				}
 			}
-			else if (ListFindNoCase(variables.wheels.class.associations[loc.key].methods, arguments.missingMethodName))
-			{
+			else if (ListFindNoCase(variables.wheels.class.associations[loc.key].methods, arguments.missingMethodName)) {
 				loc.info = $expandedAssociations(include=loc.key);
 				loc.info = loc.info[1];
 				loc.componentReference = model(loc.info.modelName);
-				if (loc.info.type == "hasOne")
-				{
+				if (loc.info.type == "hasOne") {
 					loc.where = $keyWhereString(properties=loc.info.foreignKey, keys=primaryKeys());
 					if (StructKeyExists(arguments.missingMethodArguments, "where") && Len(arguments.missingMethodArguments.where))
 					{
@@ -314,8 +270,7 @@
 						$setForeignKeyValues(missingMethodArguments=arguments.missingMethodArguments, keys=loc.info.foreignKey);
 					}
 				}
-				else if (loc.info.type == "hasMany")
-				{
+				else if (loc.info.type == "hasMany") {
 					loc.where = $keyWhereString(properties=loc.info.foreignKey, keys=primaryKeys());
 					if (StructKeyExists(arguments.missingMethodArguments, "where") && Len(arguments.missingMethodArguments.where))
 					{
@@ -484,8 +439,7 @@
 						arguments.missingMethodArguments.where = loc.where;
 					}
 				}
-				else if (loc.info.type == "belongsTo")
-				{
+				else if (loc.info.type == "belongsTo") {
 					loc.where = $keyWhereString(keys=loc.info.foreignKey, properties=loc.componentReference.primaryKeys());
 					if (StructKeyExists(arguments.missingMethodArguments, "where") && Len(arguments.missingMethodArguments.where))
 					{
@@ -507,8 +461,7 @@
 					}
 				}
 			}
-			if (Len(loc.method))
-			{
+			if (Len(loc.method)) {
 				loc.rv = $invoke(componentReference=loc.componentReference, method=loc.method, invokeArgs=arguments.missingMethodArguments);
 			}
 		}
@@ -524,8 +477,7 @@
 		var loc = {};
 		loc.rv = "";
 		loc.iEnd = ListLen(arguments.name);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.name, loc.i);
 			loc.rv = ListAppend(loc.rv, this[loc.item]);
 		}
@@ -540,15 +492,11 @@
 	<cfscript>
 		var loc = {};
 		loc.iEnd = ListLen(arguments.keys);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.keys, loc.i);
-			if (arguments.setToNull)
-			{
+			if (arguments.setToNull) {
 				arguments.missingMethodArguments[loc.item] = "";
-			}
-			else
-			{
+			} else {
 				arguments.missingMethodArguments[loc.item] = this[primaryKeys(loc.i)];
 			}
 		}

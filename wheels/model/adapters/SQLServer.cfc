@@ -20,8 +20,7 @@
 		<cfargument name="type" type="string" required="true">
 		<cfscript>
 			var loc = {};
-			switch (arguments.type)
-			{
+			switch (arguments.type) {
 				case "bigint":
 					loc.rv = "cf_sql_bigint";
 					break;
@@ -89,24 +88,19 @@
 		<cfargument name="$primaryKey" type="string" required="false" default="">
 		<cfscript>
 			var loc = {};
-			if (StructKeyExists(arguments, "maxrows") && arguments.maxrows > 0)
-			{
-				if (arguments.maxrows > 0)
-				{
+			if (StructKeyExists(arguments, "maxrows") && arguments.maxrows > 0) {
+				if (arguments.maxrows > 0) {
 					arguments.sql [1] = ReplaceNoCase(arguments.sql[1], "SELECT ", "SELECT TOP #arguments.maxrows# ", "one");
 				}
 				StructDelete(arguments, "maxrows");
 			}
-			if (arguments.limit + arguments.offset > 0)
-			{
+			if (arguments.limit + arguments.offset > 0) {
 				loc.containsGroup = false;
 				loc.afterWhere = "";
-				if (IsSimpleValue(arguments.sql[ArrayLen(arguments.sql) - 1]) && FindNoCase("GROUP BY", arguments.sql[ArrayLen(arguments.sql) - 1]))
-				{
+				if (IsSimpleValue(arguments.sql[ArrayLen(arguments.sql) - 1]) && FindNoCase("GROUP BY", arguments.sql[ArrayLen(arguments.sql) - 1])) {
 					loc.containsGroup = true;
 				}
-				if (Find(",", arguments.sql[ArrayLen(arguments.sql)]))
-				{
+				if (Find(",", arguments.sql[ArrayLen(arguments.sql)])) {
 					// fix for pagination issue when ordering multiple columns with same name
 					loc.order = arguments.sql[ArrayLen(arguments.sql)];
 					loc.newOrder = "";
@@ -131,8 +125,7 @@
 				// select clause always comes first in the array, the order by clause last, remove the leading keywords leaving only the columns and set to the ones used in the inner most sub query
 				loc.thirdSelect = ReplaceNoCase(ReplaceNoCase(arguments.sql[1], "SELECT DISTINCT ", ""), "SELECT ", "");
 				loc.thirdOrder = ReplaceNoCase(arguments.sql[ArrayLen(arguments.sql)], "ORDER BY ", "");
-				if (loc.containsGroup)
-				{
+				if (loc.containsGroup) {
 					loc.thirdGroup = ReplaceNoCase(arguments.sql[ArrayLen(arguments.sql) - 1], "GROUP BY ", "");
 				}
 
@@ -141,8 +134,7 @@
 
 				// we need to add columns from the inner order clause to the select clauses in the inner two queries
 				loc.iEnd = ListLen(loc.thirdOrder);
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					loc.item = REReplace(REReplace(ListGetAt(loc.thirdOrder, loc.i), " ASC\b", ""), " DESC\b", "");
 					if (!ListFindNoCase(loc.thirdSelect, loc.item))
 					{
@@ -174,28 +166,23 @@
 
 				// build new sql string and replace the old one with it
 				loc.beforeWhere = "SELECT " & loc.firstSelect & " FROM (SELECT TOP " & arguments.limit & " " & loc.secondSelect & " FROM (SELECT ";
-				if (Find(" ", ListRest(arguments.sql[2], " ")))
-				{
+				if (Find(" ", ListRest(arguments.sql[2], " "))) {
 					loc.beforeWhere &= "DISTINCT ";
 				}
 				loc.beforeWhere &= "TOP " & arguments.limit + arguments.offset & " " & loc.thirdSelect & " " & arguments.sql[2];
-				if (loc.containsGroup)
-				{
+				if (loc.containsGroup) {
 					loc.afterWhere = "GROUP BY " & loc.thirdGroup & " ";
 				}
 				loc.afterWhere = "ORDER BY " & loc.thirdOrder & ") AS tmp1 ORDER BY " & loc.secondOrder & ") AS tmp2 ORDER BY " & loc.firstOrder;
 				ArrayDeleteAt(arguments.sql, 1);
 				ArrayDeleteAt(arguments.sql, 1);
 				ArrayDeleteAt(arguments.sql, ArrayLen(arguments.sql));
-				if (loc.containsGroup)
-				{
+				if (loc.containsGroup) {
 					ArrayDeleteAt(arguments.sql, ArrayLen(arguments.sql));
 				}
 				ArrayPrepend(arguments.sql, loc.beforeWhere);
 				ArrayAppend(arguments.sql, loc.afterWhere);
-			}
-			else
-			{
+			} else {
 				arguments.sql = $removeColumnAliasesInOrderClause(arguments.sql);
 			}
 

@@ -23,8 +23,7 @@ component extends="_main" output="false"
 
 	function property()
 	{
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			property = model("property").findAll(where="id = '#params.id#'");
 		}
 	}
@@ -43,14 +42,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			sortVal = orderValues[i];
 
 			sortProperty = model("Property").findOne(where="id = #sortVal.fieldId#");
 
-			if(isObject(sortProperty))
-			{
+			if(isObject(sortProperty)) {
 				sortProperty.update(sortorder=sortVal.newIndex);
 			}
 		}
@@ -61,8 +58,7 @@ component extends="_main" output="false"
 	{
 		sharedObjects(0);
 
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			propertyCategory = model("PropertyCategory").findAll(where="urlid = '#params.id#'#wherePermission("PropertyCategory","AND")#");
 		} else {
 			// Get default category
@@ -71,8 +67,7 @@ component extends="_main" output="false"
 
 		propertyCategories = model("PropertyCategory").findAll(where="parentid = '#propertyCategory.id#'#wherePermission("PropertyCategory","AND")#");
 
-		if(propertyCategory.recordcount)
-		{
+		if(propertyCategory.recordcount) {
 			distinctPropertyColumns = "id, sortorder, name, description, status, createdat, updatedat";
 			propertyColumns = "#distinctPropertyColumns#, description, status, category_id";
 
@@ -101,8 +96,7 @@ component extends="_main" output="false"
 			select	= propertyColumns
 		);
 
-		if(isNull(params.rearrange))
-		{
+		if(isNull(params.rearrange)) {
 			filterResults();
 		}
 
@@ -113,29 +107,25 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 
 		// If oauth comes back to homepage
-		if(!isNull(params.token))
-		{
+		if(!isNull(params.token)) {
 			property = model("Property").findAll(where="id = #params.id#");
 		}
 	}
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			property = model("Property").findAll(where="id = '#params.id#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(property))
-			{
+			if(ArrayLen(property)) {
 				property = property[1];
 			}
 
 			photos = model("PropertyMediafile").findAll(where="modelid = '#params.id#' AND mediafileType = 'property'",order="sortorder ASC");
 
 			// Property not found?
-			if (!IsObject(property))
-			{
+			if (!IsObject(property)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="properties");
 			}
@@ -153,11 +143,9 @@ component extends="_main" output="false"
 
 	function panoedit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			property = model("Property").findAll(where="id = '#params.id#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(property))
-			{
+			if(ArrayLen(property)) {
 				property = property[1];
 			}
 			panoramas = model("PanoramaMediafile").findAll(where="modelid = '#property.id#' AND mediafileType = 'panorama'",order="sortorder ASC");
@@ -166,11 +154,9 @@ component extends="_main" output="false"
 
 	function panoeditor()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			property = model("Property").findAll(where="id = '#params.propertyid#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(property))
-			{
+			if(ArrayLen(property)) {
 				property = property[1];
 			}
 			panorama = model("PanoramaMediafile").findAll(where="id = '#params.id#' AND mediafileType = 'panorama'",order="sortorder ASC");
@@ -286,8 +272,7 @@ component extends="_main" output="false"
 	{
 		property = model("Property").findByKey(params.id);
 
-		if(property.delete())
-		{
+		if(property.delete()) {
 			flashInsert(success="The property was deleted successfully.");
 		} else
 		{
@@ -319,13 +304,11 @@ component extends="_main" output="false"
 		param name="params.propertycategories" default="";
 
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.property.status = handleSubmitType("property", params.submit);
 		}
 
-		if(!isNull(params.property.ownerid) AND isNumeric(params.property.ownerid))
-		{
+		if(!isNull(params.property.ownerid) AND isNumeric(params.property.ownerid)) {
 			params.property.createdby = params.property.ownerid;
 		} else {
 			params.property.ownerid = session.user.id;
@@ -336,8 +319,7 @@ component extends="_main" output="false"
 		}
 
 		// Get property object
-		if(!isNull(params.property.id))
-		{
+		if(!isNull(params.property.id)) {
 			property = model("Property").findByKey(params.property.id);
 			saveResult = property.update(params.property);
 
@@ -354,8 +336,7 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update property object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 
 			// Insert new property category associations
 			for(id in ListToArray(params.propertycategories)) {
@@ -385,8 +366,7 @@ component extends="_main" output="false"
 
 	function deleteSelection()
 	{
-		for(var i=1; i LTE ListLen(params.deletelist); i++)
-		{
+		for(var i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Property").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
 
@@ -401,8 +381,7 @@ component extends="_main" output="false"
 
 	function setPerPage()
 	{
-		if(!isNull(params.id) AND IsNumeric(params.id))
-		{
+		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
 
@@ -415,58 +394,48 @@ component extends="_main" output="false"
 
 	function filterResults()
 	{
-		if(!isNull(params.filtertype) AND params.filtertype eq "clear")
-		{
+		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
-		}
-		else
-		{
+		} else {
 			// Get main query
 			qqProperties = qProperties;
 			rememberParams = "";
 
 			// Set display type
-			if(!isNull(params.display))
-			{
+			if(!isNull(params.display)) {
 				session.display = params.display;
 			}
 
 			// Set sort
-			if(!isNull(params.sort))
-			{
+			if(!isNull(params.sort)) {
 				session.properties.sortby = params.sort;
 			}
 
 			// Set order
-			if(!isNull(params.order))
-			{
+			if(!isNull(params.order)) {
 				session.properties.order = params.order;
 			}
 
 			// Set "hosted" filter
-			if(!isNull(params.hosted))
-			{
+			if(!isNull(params.hosted)) {
 				session.properties.hosted = params.hosted;
 			}
 
 			// Apply "search" filter
-			if(!isNull(params.search) AND len(params.search))
-			{
+			if(!isNull(params.search) AND len(params.search)) {
 				rememberParams = ListAppend(rememberParams,"search=#params.search#","&");
 
 				// Break apart search string into a keyword where clause
 				var whereKeywords = [];
 				var keywords = listToArray(trim(params.search)," ");
-				for(keyword in keywords)
-				{
+				for(keyword in keywords) {
 					ArrayAppend(whereKeywords, "name LIKE '%#keyword#%'");
 					ArrayAppend(whereKeywords, "description LIKE '%#keyword#%'");
 				}
 
 				// Include permission check if defined
 				whereKeywords = ArrayToList(whereKeywords, " OR ");
-				if(len(wherePermission("Property")))
-				{
+				if(len(wherePermission("Property"))) {
 					whereClause = wherePermission("Property") & " AND (" & whereKeywords & ")";
 				} else {
 					whereClause = whereKeywords;
@@ -481,14 +450,12 @@ component extends="_main" output="false"
 			}
 
 			// Apply "category" filter
-			if(!isNull(params.filtercategories) AND len(params.filtercategories))
-			{
+			if(!isNull(params.filtercategories) AND len(params.filtercategories)) {
 				rememberParams = ListAppend(rememberParams,"filtercategories=#params.filtercategories#","&");
 				var filtercategories = listToArray(params.filtercategories);
 				var whereCategories = [];
 
-				for(categoryid in filtercategories)
-				{
+				for(categoryid in filtercategories) {
 					ArrayAppend(whereCategories, "category_id = #categoryid#");
 				}
 
@@ -509,8 +476,7 @@ component extends="_main" output="false"
 
 			qProperties = qqProperties;
 
-			if(len(rememberParams))
-			{
+			if(len(rememberParams)) {
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 

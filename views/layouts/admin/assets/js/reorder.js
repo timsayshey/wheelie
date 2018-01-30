@@ -35,12 +35,10 @@ function initSortable(URLpath,selectWrap,selectElement)
 				url : URLpath,
 				type: "POST",
 				data : {orderValues:JSON.stringify(newSortArray)},
-				success: function(data, textStatus, jqXHR)
-				{
+				success: function(data, textStatus, jqXHR) {
 					console.log("Order updated.");
 				},
-				error: function (jqXHR, textStatus, errorThrown)
-				{
+				error: function (jqXHR, textStatus, errorThrown) {
 					console.log("Order update failed.");
 				}
 			});

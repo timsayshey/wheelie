@@ -19,8 +19,7 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			newsletterSection = model("NewsletterSection").findAll(
@@ -29,14 +28,12 @@ component extends="_main" output="false"
 				returnAs="Object"
 			);
 
-			if(ArrayLen(newsletterSection))
-			{
+			if(ArrayLen(newsletterSection)) {
 				newsletterSection = newsletterSection[1];
 			}
 
 			// NewsletterSection not found?
-			if (!IsObject(newsletterSection))
-			{
+			if (!IsObject(newsletterSection)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="newsletterSections");
 			}
@@ -63,8 +60,7 @@ component extends="_main" output="false"
 	{
 		newsletterSection = model("NewsletterSection").findByKey(params.id);
 
-		if(newsletterSection.delete())
-		{
+		if(newsletterSection.delete()) {
 			flashInsert(success="The section was deleted successfully.");
 		} else
 		{
@@ -82,14 +78,12 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.newsletterSection.status = handleSubmitType("newsletterSection", params.submit);
 		}
 
 		// Get newsletterSection object
-		if(!isNull(params.newsletterSection.id))
-		{
+		if(!isNull(params.newsletterSection.id)) {
 			newsletterSection = model("NewsletterSection").findByKey(params.newsletterSection.id);
 			saveResult = newsletterSection.update(params.newsletterSection);
 		} else {
@@ -99,15 +93,11 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update newsletterSection object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			flashInsert(success='Newsletter section saved.');
-			if(isNull(isNewSection))
-			{
+			if(isNull(isNewSection)) {
 				redirectTo(route="admin~Id", module="admin", controller="newsletterSections", action="edit", id=newsletterSection.id, params="newsletterid=#params.newsletterSection.newsletterid#");
-			}
-			else
-			{
+			} else {
 				redirectTo(route="admin~Id", module="admin", controller="newsletterSections", action="index", id=params.newsletterSection.newsletterid);
 			}
 

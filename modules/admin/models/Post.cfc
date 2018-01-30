@@ -1,8 +1,7 @@
 <cfscript>
 	component extends="models.Model"
 	{
-		function init()
-		{
+		function init() {
 			// Properties
 			property(name="postType", defaultValue="post");
 			this.setWhere = setWhere;
@@ -23,14 +22,11 @@
 			beforeSave("sanitizeNameAndURLId");
 			beforeSave("sanitizeContentForMysql");
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return "postType='post'#wherePermission('Post','AND')#";
 		}
-		function sanitizeContentForMysql()
-		{
-			if(!isNull(this.content))
-			{
+		function sanitizeContentForMysql() {
+			if(!isNull(this.content)) {
 				this.content = CharsetDecode(this.content, "windows-1252");
 				this.content = CharsetEncode(this.content, "utf-8");
 

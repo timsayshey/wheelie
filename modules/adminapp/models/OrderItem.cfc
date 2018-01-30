@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Properties
 			this.setWhere = setWhere;
 
@@ -15,18 +14,14 @@
 			// Other
 			super.init();
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return wherePermission('order');
 		}
-		function sanitizePrice()
-		{
-			if(!isNull(this.price))
-			{
+		function sanitizePrice() {
+			if(!isNull(this.price)) {
 				this.price = cleanNumber(this.price);
 				this.price = NumberFormat(this.price,"0.00");
 			}
 		}
 	</cfscript>
 </cfcomponent>
-

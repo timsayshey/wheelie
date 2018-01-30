@@ -72,8 +72,7 @@ $(function() {
 			up.refresh(); // Reposition Flash/Silverlight
 		});
 
-		uploader[i].bind('FileUploaded', function(up, file, info)
-		{
+		uploader[i].bind('FileUploaded', function(up, file, info) {
 			$('#' + file.id + " b").html("100%");
 
 			videoid = $("#videoid").val();
@@ -104,9 +103,7 @@ $(function() {
 							redirUrl = $("#baseOauthUrl").val() + "%3Fext=" + data.EXT + "%26id=" + data.VIDEOID; // ? = %3F
 							location = redirUrl;
 						}
-					}
-					else
-					{
+					} else {
 						if($("#uploadType").val() == "gallery")
 						{
 							$('#uploadVideo').modal('hide');
@@ -147,8 +144,7 @@ function oAuthPopup(videoid)
 		oauth.name  = gup(oauthpopup.location.href, 'name');
 		oauth.email = gup(oauthpopup.location.href, 'email');
 
-		if(typeof oauth.token !== 'undefined' && oauth.token.length > 1)
-		{
+		if(typeof oauth.token !== 'undefined' && oauth.token.length > 1) {
 			oauthpopup.close();
 
 			$('#uploadVideo').modal('hide');
@@ -159,8 +155,7 @@ function oAuthPopup(videoid)
 			// Save token and open account confirmation modal
 			clearInterval(tokenChecker);
 		}
-		else if (typeof oauthpopup.location.href == 'undefined')
-		{
+		else if (typeof oauthpopup.location.href == 'undefined') {
 			$.jGrowl("Your Google Login Failed", {
 				header: 'Oops, there was an issue',
 				sticky: true,
@@ -202,8 +197,7 @@ function toYoutube(videoid,oauthToken)
 		data: { id : videoid, token : oauthToken, isAjax : 1 },
 		success: function(data) {
 
-			if($("#uploadType").val() == "gallery")
-			{
+			if($("#uploadType").val() == "gallery") {
 				// Add and select new video
 				window.$videoSelector.addOption({
 						id : videoid,
@@ -232,8 +226,7 @@ function redirectAfterGoogleLogout() {
 	{
 		if($("#oauthWindowType").val() == "popup") {
 			$('#youtubeconfirm').modal('hide');
-			if(typeof GLOBAL.videoid !== 'undefined')
-			{
+			if(typeof GLOBAL.videoid !== 'undefined') {
 				oAuthPopup(GLOBAL.videoid);
 			}
 		} else {

@@ -47,10 +47,8 @@ function deleteMenu(deleteid,el)
 	$.ajax({
 		type: "GET",
 		url: "/m/admin/menus/delete/" + menuInfo.model + "/" + deleteid + "?ajax",
-		success: function(data)
-		{
-			if($.parseJSON(data).Success == true)
-			{
+		success: function(data) {
+			if($.parseJSON(data).Success == true) {
 				var preserveChildren = $(el).parent().parent().parent().find("ul").html();
 				$(el).parent().parent().parent().parent().append(preserveChildren);
 				$(el).parent().parent().parent().remove();
@@ -107,9 +105,7 @@ function menuForm(editid)
 	{
 		GetUrl = "/m/admin/menus/new/" + menuInfo.model + "/" + "?ajax&type=" + menuInfo.addType;
 		CrudType = "new";
-	}
-	else
-	{
+	} else {
 		GetUrl = "/m/admin/menus/edit/" + menuInfo.model + "/" + editid + "/?ajax&type=" + menuInfo.addType;
 		CrudType = "update";
 	}
@@ -119,8 +115,7 @@ function menuForm(editid)
 	$.ajax({
 		type: "GET",
 		url: GetUrl,
-		success: function(data)
-		{
+		success: function(data) {
 			$("#addmenu #content #form").html(data);
 			$(".helper").tooltip('fixTitle');
 
@@ -130,8 +125,7 @@ function menuForm(editid)
 			$(".type-" + $("#typeChooser").val()).show();
 
 			$(document).off("click", "#addmenubtn");
-			$(document).on("click", "#addmenubtn", function(e)
-			{
+			$(document).on("click", "#addmenubtn", function(e) {
 				var formData = $("#addmenu #form").serializeAnything();
 				modalMenuLoader("show");
 

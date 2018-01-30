@@ -1,8 +1,7 @@
 <cfscript>
 	if (!isNull(page.quoteImg))
 	{
-		if (len(page.redirect))
-		{
+		if (len(page.redirect)) {
 			location addtoken="no" url="#page.redirect#";
 		}
 
@@ -22,9 +21,7 @@
 		header statuscode="301" statustext="Moved Permanently";
 		header name="Location" value="/assets/site/#params.id#.#params.format#";
 		abort;
-	}
-	else
-	{
+	} else {
 		header statusCode="404" statusText="Not Found";
 		log404();
 	}
@@ -46,9 +43,7 @@
 		// No DB Record / Just static file
 		staticPath = "#staticDir##qStaticDir.name#/#params.id#.cfm";
 		staticPathFull = expandPath(staticPath);
-	}
-	else
-	{
+	} else {
 		// Find Static Page ie "14 - about us.cfm"
 		directory action="list" directory="#staticPathFull#" listinfo="name" name="qStaticPage" filter="#page.id#_*";
 
@@ -61,9 +56,7 @@
 		// Load Static Page
 		contentFor(staticPage = true);
 		include template="#staticPath#";
-	}
-	else
-	{
+	} else {
 		// Load DB Page
 		pageTemplate =
 			page.containsKey("template") AND page.template.trim().length() AND getThemeTemplate(page.template).trim().length() ?
@@ -72,15 +65,12 @@
 
 		page.content = processShortcodes(page.content);
 
-		if(len(pageTemplate))
-		{
+		if(len(pageTemplate)) {
 			pagetitle = capitalize(page.name);
 			subtitle = page.containsKey("subname") ? capitalize(page.subname) : "";
 			pagecontent = page.content;
 			include template="#pageTemplate#";
-		}
-		else
-		{
+		} else {
 			writeOutput('
 				<h1>#capitalize(page.name)#</h1>
 				<br class="clear">

@@ -6,8 +6,7 @@
 	<cfscript>
 		var loc = {};
 		$args(name="endFormTag", args=arguments);
-		if (StructKeyExists(request.wheels, "currentFormMethod"))
-		{
+		if (StructKeyExists(request.wheels, "currentFormMethod")) {
 			StructDelete(request.wheels, "currentFormMethod");
 		}
 		loc.rv = arguments.prepend & "</form>" & arguments.append;
@@ -39,8 +38,7 @@
 		request.wheels.currentFormMethod = arguments.method;
 
 		// set the form's action attribute to the URL that we want to send to
-		if (!ReFindNoCase("^https?:\/\/", arguments.action))
-		{
+		if (!ReFindNoCase("^https?:\/\/", arguments.action)) {
 			arguments.action = URLFor(argumentCollection=arguments);
 		}
 
@@ -48,30 +46,26 @@
 		arguments.action = toXHTML(arguments.action);
 
 		// deletes the action attribute and instead adds some tricky javascript spam protection to the onsubmit attribute
-		if (arguments.spamProtection)
-		{
+		if (arguments.spamProtection) {
 			loc.onsubmit = "this.action='#Left(arguments.action, int((Len(arguments.action)/2)))#'+'#Right(arguments.action, ceiling((Len(arguments.action)/2)))#';";
 			arguments.onsubmit = $addToJavaScriptAttribute(name="onsubmit", content=loc.onsubmit, attributes=arguments);
 			StructDelete(arguments, "action");
 		}
 
 		// set the form to be able to handle file uploads
-		if (!StructKeyExists(arguments, "enctype") && arguments.multipart)
-		{
+		if (!StructKeyExists(arguments, "enctype") && arguments.multipart) {
 			arguments.enctype = "multipart/form-data";
 		}
 
 		loc.skip = "multipart,spamProtection,route,controller,key,params,anchor,onlyPath,host,protocol,port,prepend,append";
 
 		// variables passed in as route arguments should not be added to the html element
-		if (Len(arguments.route))
-		{
+		if (Len(arguments.route)) {
 			loc.skip = ListAppend(loc.skip, $routeVariables(argumentCollection=arguments));
 		}
 
 		// need to re-add action here even if it was removed due to being a route variable above
-		if (ListFind(loc.skip, "action"))
-		{
+		if (ListFind(loc.skip, "action")) {
 			loc.skip = ListDeleteAt(loc.skip, ListFind(loc.skip, "action"));
 		}
 
@@ -91,18 +85,15 @@
 		$args(name="submitTag", reserved="type,src", args=arguments);
 		loc.rv = arguments.prepend;
 		loc.append = arguments.append;
-		if (Len(arguments.disable))
-		{
+		if (Len(arguments.disable)) {
 			loc.onclick = "this.disabled=true;";
-			if (!Len(arguments.image) && !IsBoolean(arguments.disable))
-			{
+			if (!Len(arguments.image) && !IsBoolean(arguments.disable)) {
 				loc.onclick &= "this.value='#JSStringFormat(arguments.disable)#';";
 			}
 			loc.onclick &= "this.form.submit();";
 			arguments.onclick = $addToJavaScriptAttribute(name="onclick", content=loc.onclick, attributes=arguments);
 		}
-		if (Len(arguments.image))
-		{
+		if (Len(arguments.image)) {
 			// create an img tag and then just replace "img" with "input"
 			arguments.type = "image";
 			arguments.source = arguments.image;
@@ -113,9 +104,7 @@
 			StructDelete(arguments, "prepend");
 			loc.rv &= imageTag(argumentCollection=arguments);
 			loc.rv = Replace(loc.rv, "<img", "<input");
-		}
-		else
-		{
+		} else {
 			arguments.type = "submit";
 			loc.rv &= $tag(name="input", close=true, skip="image,disable,append,prepend", attributes=arguments);
 		}
@@ -137,11 +126,9 @@
 		$args(name="buttonTag", args=arguments);
 
 		// add onclick attribute to disable the form button
-		if (Len(arguments.disable))
-		{
+		if (Len(arguments.disable)) {
 			loc.onclick = "this.disabled=true;";
-			if (!Len(arguments.image) && !IsBoolean(arguments.disable))
-			{
+			if (!Len(arguments.image) && !IsBoolean(arguments.disable)) {
 				loc.onclick &= "this.value='#JSStringFormat(arguments.disable)#';";
 			}
 			loc.onclick &= "this.form.submit();";
@@ -149,8 +136,7 @@
 		}
 
 		// if image is specified then use that as the content
-		if (Len(arguments.image))
-		{
+		if (Len(arguments.image)) {
 			loc.args = {};
 			loc.args.type = "image";
 			loc.args.source = arguments.image;
@@ -181,28 +167,20 @@
 	<cfargument name="applyHtmlEditFormat" type="boolean" required="false" default="true" />
 	<cfscript>
 		var loc = {};
-		if (IsStruct(arguments.objectName))
-		{
+		if (IsStruct(arguments.objectName)) {
 			loc.rv = arguments.objectName[arguments.property];
-		}
-		else
-		{
+		} else {
 			loc.object = $getObject(arguments.objectName);
-			if (get("showErrorInformation") && !IsObject(loc.object))
-			{
+			if (get("showErrorInformation") && !IsObject(loc.object)) {
 				$throw(type="Wheels.IncorrectArguments", message="The `#arguments.objectName#` variable is not an object.");
 			}
-			if (StructKeyExists(loc.object, arguments.property))
-			{
+			if (StructKeyExists(loc.object, arguments.property)) {
 				loc.rv = loc.object[arguments.property];
-			}
-			else
-			{
+			} else {
 				loc.rv = "";
 			}
 		}
-		if (arguments.applyHtmlEditFormat)
-		{
+		if (arguments.applyHtmlEditFormat) {
 			loc.rv = HTMLEditFormat(loc.rv);
 		}
 	</cfscript>
@@ -214,18 +192,14 @@
 	<cfargument name="property" type="string" required="true">
 	<cfscript>
 		var loc = {};
-		if (StructKeyExists(arguments, "maxlength"))
-		{
+		if (StructKeyExists(arguments, "maxlength")) {
 			loc.rv = arguments.maxlength;
 		}
-		else if (!IsStruct(arguments.objectName))
-		{
+		else if (!IsStruct(arguments.objectName)) {
 			loc.object = $getObject(arguments.objectName);
-			if (IsObject(loc.object))
-			{
+			if (IsObject(loc.object)) {
 				loc.propertyInfo = loc.object.$propertyInfo(arguments.property);
-				if (StructCount(loc.propertyInfo) && ListFindNoCase("cf_sql_char,cf_sql_varchar", loc.propertyInfo.type))
-				{
+				if (StructCount(loc.propertyInfo) && ListFindNoCase("cf_sql_char,cf_sql_varchar", loc.propertyInfo.type)) {
 					loc.rv = loc.propertyInfo.size;
 				}
 			}
@@ -242,15 +216,12 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = false;
-		if (!IsStruct(arguments.objectName))
-		{
+		if (!IsStruct(arguments.objectName)) {
 			loc.object = $getObject(arguments.objectName);
-			if (get("showErrorInformation") && !IsObject(loc.object))
-			{
+			if (get("showErrorInformation") && !IsObject(loc.object)) {
 				$throw(type="Wheels.IncorrectArguments", message="The `#arguments.objectName#` variable is not an object.");
 			}
-			if (ArrayLen(loc.object.errorsOn(arguments.property)))
-			{
+			if (ArrayLen(loc.object.errorsOn(arguments.property))) {
 				loc.rv = true;
 			}
 		}
@@ -267,15 +238,12 @@
 		var loc = {};
 		loc.rv = arguments.prependToLabel;
 		loc.attributes = {};
-		for (loc.key in arguments)
-		{
-			if (CompareNoCase(Left(loc.key, 5), "label") == 0 && Len(loc.key) > 5 && loc.key != "labelPlacement")
-			{
+		for (loc.key in arguments) {
+			if (CompareNoCase(Left(loc.key, 5), "label") == 0 && Len(loc.key) > 5 && loc.key != "labelPlacement") {
 				loc.attributes[ReplaceNoCase(loc.key, "label", "")] = arguments[loc.key];
 			}
 		}
-		if (StructKeyExists(arguments, "id"))
-		{
+		if (StructKeyExists(arguments, "id")) {
 			loc.attributes.for = arguments.id;
 		}
 		loc.rv &= $tag(name="label", attributes=loc.attributes);
@@ -300,26 +268,20 @@
 		var loc = {};
 		loc.rv = "";
 		arguments.label = $getFieldLabel(argumentCollection=arguments);
-		if ($formHasError(argumentCollection=arguments) && Len(arguments.errorElement))
-		{
+		if ($formHasError(argumentCollection=arguments) && Len(arguments.errorElement)) {
 			// the input has an error and should be wrapped in a tag so we need to start that wrapper tag
 			loc.rv &= $tag(name=arguments.errorElement, class=arguments.errorClass);
 		}
-		if (Len(arguments.label) && arguments.labelPlacement != "after")
-		{
+		if (Len(arguments.label) && arguments.labelPlacement != "after") {
 			loc.rv &= $createLabel(argumentCollection=arguments);
-			if (arguments.labelPlacement == "aroundRight")
-			{
+			if (arguments.labelPlacement == "aroundRight") {
 				// strip out both the label text and closing label tag since it will be placed after the form input
 				loc.rv = Replace(loc.rv, arguments.label & "</label>", "");
 			}
-			else if (arguments.labelPlacement == "before")
-			{
+			else if (arguments.labelPlacement == "before") {
 				// since the entire label is created we can append to it
 				loc.rv &= arguments.appendToLabel;
-			}
-			else
-			{
+			} else {
 				// the label argument is either "around" or "aroundLeft" so we only have to strip out the closing label tag
 				loc.rv = Replace(loc.rv, "</label>", "");
 			}
@@ -343,27 +305,21 @@
 		var loc = {};
 		loc.rv = arguments.append;
 		arguments.label = $getFieldLabel(argumentCollection=arguments);
-		if (Len(arguments.label) && arguments.labelPlacement != "before")
-		{
-			if (arguments.labelPlacement == "after")
-			{
+		if (Len(arguments.label) && arguments.labelPlacement != "before") {
+			if (arguments.labelPlacement == "after") {
 				// if the label should be placed after the tag we return the entire label tag
 				loc.rv &= $createLabel(argumentCollection=arguments);
 			}
-			else if (arguments.labelPlacement == "aroundRight")
-			{
+			else if (arguments.labelPlacement == "aroundRight") {
 				// if the text should be placed to the right of the form input we return both the text and the closing tag
 				loc.rv &= arguments.label & "</label>";
-			}
-			else
-			{
+			} else {
 				// the label argument is either "around" or "aroundLeft" so we only have to return the closing label tag
 				loc.rv &= "</label>";
 			}
 			loc.rv &= arguments.appendToLabel;
 		}
-		if ($formHasError(argumentCollection=arguments) && Len(arguments.errorElement))
-		{
+		if ($formHasError(argumentCollection=arguments) && Len(arguments.errorElement)) {
 			// the input has an error and is wrapped in a tag so we need to close that wrapper tag
 			loc.rv &= "</" & arguments.errorElement & ">";
 		}
@@ -378,23 +334,17 @@
 	<cfscript>
 		var loc = {};
 		loc.object = false;
-		if (Compare("false", arguments.label) == 0)
-		{
+		if (Compare("false", arguments.label) == 0) {
 			loc.rv = "";
-		}
-		else
-		{
-			if (arguments.label == "useDefaultLabel" && !IsStruct(arguments.objectName))
-			{
+		} else {
+			if (arguments.label == "useDefaultLabel" && !IsStruct(arguments.objectName)) {
 				loc.object = $getObject(arguments.objectName);
-				if (IsObject(loc.object))
-				{
+				if (IsObject(loc.object)) {
 					loc.rv = loc.object.$label(arguments.property);
 				}
 			}
 		}
-		if (!StructKeyExists(loc, "rv"))
-		{
+		if (!StructKeyExists(loc, "rv")) {
 			loc.rv = arguments.label;
 		}
 	</cfscript>

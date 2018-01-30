@@ -94,8 +94,7 @@ $(document).ready(function(){
 
 		e.preventDefault();
 
-		$("#nestable li").each(function(index)
-		{
+		$("#nestable li").each(function(index) {
 			currentObj = {
 				parentid	 : $($(this).find(".parentid")[0]).val(),
 				sortOrder	 : $($(this).find(".sortOrder")[0]).val(),
@@ -118,19 +117,16 @@ $(document).ready(function(){
 		$.post(
 			$("form").attr("action"),
 			{ data : jsonData },
-			function(data, textStatus, jqXHR)
-			{
+			function(data, textStatus, jqXHR) {
 				data = $.parseJSON(data);
 				console.log(data);
-				if(data.Success == true)
-				{
+				if(data.Success == true) {
 					location.reload();
 				} else {
 					alert("Update failed.");
 				}
 				$('.submitBtn').attr('disabled', false);
-			}).fail(function(jqXHR, textStatus, errorThrown)
-			{
+			}).fail(function(jqXHR, textStatus, errorThrown) {
 				alert("Error");
 				$('.submitBtn').attr('disabled', false);
 			}
@@ -172,8 +168,7 @@ function enableSaveAndUpdateOutput()
 	// Update parentid
 	$('ul#nestable li').each(function(idx) {
 		newParentId = $($(this).parent().closest('li').find(".sortOrder")[0]).val();
-		if(typeof newParentId == 'undefined')
-		{
+		if(typeof newParentId == 'undefined') {
 			newParentId = 0;
 		}
 		$(this).find(".parentid").val(newParentId);

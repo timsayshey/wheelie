@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Other
 			super.init();
 
@@ -22,13 +21,11 @@
 			beforeSave("sanitizeNameAndURLId");
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "categoryType='user'#wherePermission('Category','AND')#";
 		}
 
-		function categoryInfo()
-		{
+		function categoryInfo() {
 			return {
 				singular		= "User Tag",
 				plural			= "User Tags",
@@ -38,4 +35,3 @@
 		}
 	</cfscript>
 </cfcomponent>
-

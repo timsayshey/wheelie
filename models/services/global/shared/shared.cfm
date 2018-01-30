@@ -4,8 +4,7 @@
 	<cfargument name="formStruct">
 	<cfscript>
 		var formFields = StructKeyList(formStruct);
-		for (i=1; i lte listLen(formFields); i++)
-		{
+		for (i=1; i lte listLen(formFields); i++) {
 			FieldName = ListGetAt(formFields, i);
 			FieldValue = formStruct[FieldName];
 			var keywords = [
@@ -17,10 +16,8 @@
 				"http",
 				"vuitton"
 			];
-			for (j = 1; j LTE arrayLen(keywords); j++)
-			{
-				if(find(lcase(keywords[j]),lcase(FieldValue)))
-				{
+			for (j = 1; j LTE arrayLen(keywords); j++) {
+				if(find(lcase(keywords[j]),lcase(FieldValue))) {
 					return true;
 				}
 			}
@@ -73,12 +70,9 @@
 <cffunction name="isValidEmail">
 	<cfargument name="inputEmail">
 	<cfscript>
-		if(countOccurences(inputEmail,"@") eq 1)
-		{
+		if(countOccurences(inputEmail,"@") eq 1) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	</cfscript>
@@ -124,8 +118,7 @@
 
 <cffunction name="getSiteId">
 	<cfscript>
-		if(isNull(request.site.id))
-		{
+		if(isNull(request.site.id)) {
 			setSiteInfo();
 		}
 		return request.site.id;
@@ -174,8 +167,7 @@
 		var subdomainMode = false;
 
 		// Set site info
-		if(isNull(request.site.id))
-		{
+		if(isNull(request.site.id)) {
 			loc.domain = cgi.http_host;
 
 			if(subdomainMode) {
@@ -188,8 +180,7 @@
 					loc.domainName = loc.domain; // domain
 
 					request.site.domainNoSubdomain = loc.domain;
-				} else if(listlen(loc.domain,".") GT 2)
-				{
+				} else if(listlen(loc.domain,".") GT 2) {
 					loc.subdomain = ListGetAt(loc.domain,listlen(loc.domain,".") - 2,".");
 					loc.domainNameSingle = ListGetAt(loc.domain,listlen(loc.domain,".") - 1,"."); // domain
 					loc.domainExt  = ListGetAt(loc.domain,listlen(loc.domain,"."),"."); // .com
@@ -222,8 +213,7 @@
 				loc.siteResult = siteQuery(domain=loc.domain);
 			}
 
-			if(loc.siteResult.recordcount)
-			{
+			if(loc.siteResult.recordcount) {
 				request.site =
 				{
 					id 				= loc.siteResult.id,
@@ -243,9 +233,7 @@
 				};
 
 				structAppend(request.site,loc,false);
-			}
-			else
-			{
+			} else {
 				writeOutput("Sorry, this site is currently unavailable."); abort;
 			}
 		}
@@ -256,8 +244,7 @@
 
 	function forceNoWWW()
 	{
-		if(listfirst(cgi.server_name,".") == "www")
-		{
+		if(listfirst(cgi.server_name,".") == "www") {
 			redirectFullUrl(
 				"http://" &
 					ListDeleteAt(cgi.server_name,1,'.') &
@@ -285,8 +272,7 @@
 	function setUserInfo()
 	{
 		// Authenticate
-		if(StructKeyExists(session,"user"))
-		{
+		if(StructKeyExists(session,"user")) {
 			var user = model("UserGroupJoin").findOne(where="userid = '#session.user.id#'", include="User,UserGroup", returnAs="struct");
 			if(isBoolean(user)) {
 				structDelete(session, "user");
@@ -307,13 +293,11 @@
 
 			structAppend(session.user, userdata);
 
-			if(len(trim(user.role)))
-			{
+			if(len(trim(user.role))) {
 				session.user.role = user.role;
 			}
 
-			if(len(trim(session.user.id)) eq 0)
-			{
+			if(len(trim(session.user.id)) eq 0) {
 				flashInsert(error="There was an issue with your account. Try again.");
 				StructDelete(session,"user");
 			}
@@ -448,8 +432,7 @@
 			// DB
 			newErrorPath = "#cgi.path_info##len(cgi.query_string) ? "?" : ""##cgi.query_string#";
 			getError = model("NotFound").findAll(where="urlPath LIKE '#newErrorPath#'");
-			if(!getError.recordcount)
-			{
+			if(!getError.recordcount) {
 				notFound = model("NotFound").new(urlPath=newErrorPath, referrer=cgi.http_referrer);
 				notFound = notFound.save();
 			}

@@ -9,8 +9,7 @@ $(function() {
 
 		setListeners();
 
-		if($(".youtubeId").val().length > 0)
-		{
+		if($(".youtubeId").val().length > 0) {
 			$(".videoNotExists").hide();
 			$(".videoExists").show();
 		} else {

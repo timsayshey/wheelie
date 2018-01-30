@@ -1,25 +1,19 @@
 <cfoutput>
 
 	<script type="text/javascript">
-		function handleFieldtypeChange(currVal)
-		{
+		function handleFieldtypeChange(currVal) {
 			currVal = "f" + currVal;
 			console.log(currVal);
 			$(".fieldvalues,.contentblock,.codeblock,.wysiwygtoggle,.fcheckbox").hide();
-			if( $(".fieldvalues").hasClass( currVal ) )
-			{
+			if( $(".fieldvalues").hasClass( currVal ) ) {
 				$(".fieldvalues").show();
 			}
-			else if ( $(".contentblock").hasClass( currVal ) )
-			{
+			else if ( $(".contentblock").hasClass( currVal ) ) {
 				$(".contentblock").show();
 			}
-			else if (currVal == 'ftextarea')
-			{
+			else if (currVal == 'ftextarea') {
 				$(".wysiwygtoggle").show();
-			}
-			else
-			{
+			} else {
 				$("." + currVal).show(); console.log("works");
 			}
 		}

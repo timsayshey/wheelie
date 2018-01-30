@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Set
 			table("mediafiles");
 			property(name="mediafileType", defaultValue="panorama");
@@ -13,13 +12,11 @@
 			this.setWhere = setWhere;
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "mediafileType='panorama'#wherePermission('property','AND')#";
 		}
 
-		function mediafileInfo()
-		{
+		function mediafileInfo() {
 			return {
 				singular		= "Panorama",
 				plural			= "Panoramas",

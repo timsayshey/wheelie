@@ -6,14 +6,11 @@
 
 		// check if action should be cached and if so cache statically or set the time to use later when caching just the action
 		loc.cache = 0;
-		if (get("cacheActions") && $hasCachableActions() && flashIsEmpty() && StructIsEmpty(form))
-		{
+		if (get("cacheActions") && $hasCachableActions() && flashIsEmpty() && StructIsEmpty(form)) {
 			loc.cachableActions = $cachableActions();
 			loc.iEnd = ArrayLen(loc.cachableActions);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
-				if (loc.cachableActions[loc.i].action == params.action || loc.cachableActions[loc.i].action == "*")
-				{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+				if (loc.cachableActions[loc.i].action == params.action || loc.cachableActions[loc.i].action == "*") {
 					if (loc.cachableActions[loc.i].static)
 					{
 						loc.timeSpan = $timeSpanForCache(loc.cachableActions[loc.i].time);
@@ -22,9 +19,7 @@
 						{
 							$abort();
 						}
-					}
-					else
-					{
+					} else {
 						loc.cache = loc.cachableActions[loc.i].time;
 						loc.appendToKey = loc.cachableActions[loc.i].appendToKey;
 					}
@@ -33,8 +28,7 @@
 			}
 		}
 
-		if (get("showDebugInformation"))
-		{
+		if (get("showDebugInformation")) {
 			$debugPoint("beforeFilters");
 		}
 
@@ -42,21 +36,17 @@
 		$runVerifications(action=params.action, params=params);
 
 		// continue unless an abort is issued from a verification
-		if (!$abortIssued())
-		{
+		if (!$abortIssued()) {
 			// run before filters if they exist on the controller
 			$runFilters(type="before", action=params.action);
 
-			if (get("showDebugInformation"))
-			{
+			if (get("showDebugInformation")) {
 				$debugPoint("beforeFilters,action");
 			}
 
 			// only proceed to call the action if the before filter has not already rendered content
-			if (!$performedRenderOrRedirect())
-			{
-				if (loc.cache)
-				{
+			if (!$performedRenderOrRedirect()) {
+				if (loc.cache) {
 					// get content from the cache if it exists there and set it to the request scope, if not the $callActionAndAddToCache function will run, calling the controller action (which in turn sets the content to the request scope)
 					loc.category = "action";
 
@@ -89,24 +79,20 @@
 					loc.lockName = loc.category & loc.key & application.applicationName;
 					variables.$instance.response = $doubleCheckedLock(name=loc.lockName, condition="$getFromCache", execute="$callActionAndAddToCache", conditionArgs=loc.conditionArgs, executeArgs=loc.executeArgs);
 				}
-				if (!$performedRender())
-				{
+				if (!$performedRender()) {
 					// if we didn't render anything from a cached action we call the action here
 					$callAction(action=params.action);
 				}
 			}
 
 			// run after filters with surrounding debug points (don't run the filters if a delayed redirect will occur though)
-			if (get("showDebugInformation"))
-			{
+			if (get("showDebugInformation")) {
 				$debugPoint("action,afterFilters");
 			}
-			if (!$performedRedirect())
-			{
+			if (!$performedRedirect()) {
 				$runFilters(type="after", action=params.action);
 			}
-			if (get("showDebugInformation"))
-			{
+			if (get("showDebugInformation")) {
 				$debugPoint("afterFilters");
 			}
 		}
@@ -119,42 +105,32 @@
 	<cfargument name="action" type="string" required="true">
 	<cfscript>
 		var loc = {};
-		if (Left(arguments.action, 1) == "$" || ListFindNoCase(application.wheels.protectedControllerMethods, arguments.action))
-		{
+		if (Left(arguments.action, 1) == "$" || ListFindNoCase(application.wheels.protectedControllerMethods, arguments.action)) {
 			$throw(type="Wheels.ActionNotAllowed", message="You are not allowed to execute the `#arguments.action#` method as an action.", extendedInfo="Make sure your action does not have the same name as any of the built-in CFWheels functions.");
 		}
-		if (StructKeyExists(this, arguments.action) && IsCustomFunction(this[arguments.action]))
-		{
+		if (StructKeyExists(this, arguments.action) && IsCustomFunction(this[arguments.action])) {
 			$invoke(method=arguments.action);
 		}
-		else if (StructKeyExists(this, "onMissingMethod"))
-		{
+		else if (StructKeyExists(this, "onMissingMethod")) {
 			loc.invokeArgs = {};
 			loc.invokeArgs.missingMethodName = arguments.action;
 			loc.invokeArgs.missingMethodArguments = {};
 			$invoke(method="onMissingMethod", invokeArgs=loc.invokeArgs);
 		}
-		if (!$performedRenderOrRedirect())
-		{
+		if (!$performedRenderOrRedirect()) {
 			try
 			{
 				renderPage();
 			}
-			catch (any e)
-			{
+			catch (any e) {
 				loc.file = get("viewPath") & "/" & LCase(variables.$class.name) & "/" & LCase(arguments.action) & ".cfm";
-				if (FileExists(ExpandPath(loc.file)))
-				{
+				if (FileExists(ExpandPath(loc.file))) {
 					$throw(object=e);
-				}
-				else
-				{
+				} else {
 					if (get("showErrorInformation"))
 					{
 						$throw(type="Wheels.ViewNotFound", message="Could not find the view page for the `#arguments.action#` action in the `#variables.$class.name#` controller.", extendedInfo="Create a file named `#LCase(arguments.action)#.cfm` in the `views/#LCase(variables.$class.name)#` directory (create the directory as well if it doesn't already exist).");
-					}
-					else
-					{
+					} else {
 						$header(statusCode=404, statustext="Not Found");
 						loc.template = get("eventPath") & "/onmissingtemplate.cfm";
 						$includeAndOutput(template=loc.template);

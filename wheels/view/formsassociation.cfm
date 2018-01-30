@@ -16,12 +16,10 @@
 		loc.rv = "";
 		loc.value = $hasManyFormValue(argumentCollection=arguments);
 		loc.included = includedInObject(argumentCollection=arguments);
-		if (!loc.included)
-		{
+		if (!loc.included) {
 			loc.included = "";
 		}
-		if (loc.value == arguments.tagValue || (arguments.checkIfBlank && loc.value != arguments.tagValue))
-		{
+		if (loc.value == arguments.tagValue || (arguments.checkIfBlank && loc.value != arguments.tagValue)) {
 			loc.checked = true;
 		}
 		arguments.objectName = ListLast(arguments.objectName, ".");
@@ -51,8 +49,7 @@
 		loc.checked = true;
 		loc.rv = "";
 		loc.included = includedInObject(argumentCollection=arguments);
-		if (!loc.included)
-		{
+		if (!loc.included) {
 			loc.included = "";
 			loc.checked = false;
 		}
@@ -79,20 +76,16 @@
 		// clean up our key argument if there is a comma on the beginning or end
 		arguments.keys = REReplace(arguments.keys, "^,|,$", "", "all");
 
-		if (!StructKeyExists(loc.object, arguments.association) || !IsArray(loc.object[arguments.association]))
-		{
+		if (!StructKeyExists(loc.object, arguments.association) || !IsArray(loc.object[arguments.association])) {
 			return loc.rv;
 		}
-		if (!Len(arguments.keys))
-		{
+		if (!Len(arguments.keys)) {
 			return loc.rv;
 		}
 		loc.iEnd = ArrayLen(loc.object[arguments.association]);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.assoc = loc.object[arguments.association][loc.i];
-			if (IsObject(loc.assoc) && loc.assoc.key() == arguments.keys)
-			{
+			if (IsObject(loc.assoc) && loc.assoc.key() == arguments.keys) {
 				loc.rv = loc.i;
 				break;
 			}
@@ -112,20 +105,16 @@
 		var loc = {};
 		loc.rv = "";
 		loc.object = $getObject(arguments.objectName);
-		if (!StructKeyExists(loc.object, arguments.association) || !IsArray(loc.object[arguments.association]))
-		{
+		if (!StructKeyExists(loc.object, arguments.association) || !IsArray(loc.object[arguments.association])) {
 			return loc.rv;
 		}
-		if (!Len(arguments.keys))
-		{
+		if (!Len(arguments.keys)) {
 			return loc.rv;
 		}
 		loc.iEnd = ArrayLen(loc.object[arguments.association]);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.assoc = loc.object[arguments.association][loc.i];
-			if (isObject(loc.assoc) && loc.assoc.key() == arguments.keys && StructKeyExists(loc.assoc, arguments.property))
-			{
+			if (isObject(loc.assoc) && loc.assoc.key() == arguments.keys && StructKeyExists(loc.assoc, arguments.property)) {
 				loc.rv = loc.assoc[arguments.property];
 				break;
 			}

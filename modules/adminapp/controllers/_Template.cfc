@@ -23,8 +23,7 @@ component extends="_main" output="false"
 
 	function @lcaseSingular@()
 	{
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			@lcaseSingular@ = model("@lcaseSingular@").findAll(where="id = '#params.id#'");
 		}
 	}
@@ -33,14 +32,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			sortVal = orderValues[i];
 
 			sort@ucaseSingular@ = model("@ucaseSingular@").findOne(where="id = #sortVal.fieldId#");
 
-			if(isObject(sort@ucaseSingular@))
-			{
+			if(isObject(sort@ucaseSingular@)) {
 				sort@ucaseSingular@.update(sortorder=sortVal.newIndex);
 			}
 		}
@@ -51,8 +48,7 @@ component extends="_main" output="false"
 	{
 		sharedObjects(0);
 
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			@lcaseSingular@Category = model("@ucaseSingular@Category").findAll(where="urlid = '#params.id#'#wherePermission("@ucaseSingular@Category","AND")#");
 		} else {
 			// Get default category
@@ -61,8 +57,7 @@ component extends="_main" output="false"
 
 		@lcaseSingular@Categories = model("@ucaseSingular@Category").findAll(where="parentid = '#@lcaseSingular@Category.id#'#wherePermission("@ucaseSingular@Category","AND")#");
 
-		if(@lcaseSingular@Category.recordcount)
-		{
+		if(@lcaseSingular@Category.recordcount) {
 			q@ucasePlural@ = model("@ucaseSingular@").findAll(
 				where	= buildWhereStatement(modelName="@ucaseSingular@", prepend="categoryid = '#@lcaseSingular@Category.id#' AND"),
 				order	= "sortorder ASC",
@@ -103,30 +98,26 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 
 		// If oauth comes back to homepage
-		if(!isNull(params.token))
-		{
+		if(!isNull(params.token)) {
 			@lcaseSingular@ = model("@ucaseSingular@").findAll(where="id = #params.id#");
 		}
 	}
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			my@UcaseSingular@ = model("@ucaseSingular@").findAll(where="id = '#params.id#'#wherePermission("@ucaseSingular@","AND")#", maxRows=1, returnAs="Object");
 
-			if(ArrayLen(my@UcaseSingular@))
-			{
+			if(ArrayLen(my@UcaseSingular@)) {
 				my@UcaseSingular@ = my@UcaseSingular@[1];
 			}
 
 			photos = model("@ucaseSingular@Mediafile").findAll(where="modelid = '#params.id#' AND mediafileType = '@lcaseSingular@'",order="sortorder ASC");
 
 			// @ucaseSingular@ not found?
-			if (!IsObject(my@UcaseSingular@))
-			{
+			if (!IsObject(my@UcaseSingular@)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", controller="@lcasePlural@");
 			}
@@ -162,8 +153,7 @@ component extends="_main" output="false"
 	{
 		my@ucaseSingular@ = model("@ucaseSingular@").findByKey(params.id);
 
-		if(@lcaseSingular@.delete())
-		{
+		if(@lcaseSingular@.delete()) {
 			flashInsert(success="The @lcaseSingular@ was deleted successfully.");
 		} else
 		{
@@ -195,13 +185,11 @@ component extends="_main" output="false"
 		param name="params.@lcaseSingular@categories" default="";
 
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.@lcaseSingular@.status = handleSubmitType("@lcaseSingular@", params.submit);
 		}
 
-		if(!isNull(params.@lcaseSingular@.ownerid) AND isNumeric(params.@lcaseSingular@.ownerid))
-		{
+		if(!isNull(params.@lcaseSingular@.ownerid) AND isNumeric(params.@lcaseSingular@.ownerid)) {
 			params.@lcaseSingular@.createdby = params.@lcaseSingular@.ownerid;
 		} else {
 			params.@lcaseSingular@.ownerid = session.user.id;
@@ -212,8 +200,7 @@ component extends="_main" output="false"
 		}
 
 		// Get @lcaseSingular@ object
-		if(!isNull(params.@lcaseSingular@.id))
-		{
+		if(!isNull(params.@lcaseSingular@.id)) {
 			my@ucaseSingular@ = model("@ucaseSingular@").findByKey(params.@lcaseSingular@.id);
 			saveResult = @lcaseSingular@.update(params.@lcaseSingular@);
 
@@ -226,8 +213,7 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update @lcaseSingular@ object with @lcasePlural@
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Insert new @lcaseSingular@ category associations
 			for(id in ListToArray(params.@lcaseSingular@categories)) {
 				model("@lcaseSingular@CategoryJoin").create(categoryid = id, @lcaseSingular@id = @lcaseSingular@.id);
@@ -256,8 +242,7 @@ component extends="_main" output="false"
 
 	function deleteSelection()
 	{
-		for(var i=1; i LTE ListLen(params.deletelist); i++)
-		{
+		for(var i=1; i LTE ListLen(params.deletelist); i++) {
 			model("@ucaseSingular@").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
 
@@ -272,8 +257,7 @@ component extends="_main" output="false"
 
 	function setPerPage()
 	{
-		if(!isNull(params.id) AND IsNumeric(params.id))
-		{
+		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
 
@@ -296,58 +280,48 @@ component extends="_main" output="false"
 
 	function filterResults()
 	{
-		if(!isNull(params.filtertype) AND params.filtertype eq "clear")
-		{
+		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
-		}
-		else
-		{
+		} else {
 			// Get main query
 			qq@ucasePlural@ = q@ucasePlural@;
 			rememberParams = "";
 
 			// Set display type
-			if(!isNull(params.display))
-			{
+			if(!isNull(params.display)) {
 				session.display = params.display;
 			}
 
 			// Set sort
-			if(!isNull(params.sort))
-			{
+			if(!isNull(params.sort)) {
 				session.@lcasePlural@.sortby = params.sort;
 			}
 
 			// Set order
-			if(!isNull(params.order))
-			{
+			if(!isNull(params.order)) {
 				session.@lcasePlural@.order = params.order;
 			}
 
 			// Set "hosted" filter
-			if(!isNull(params.hosted))
-			{
+			if(!isNull(params.hosted)) {
 				session.@lcasePlural@.hosted = params.hosted;
 			}
 
 			// Apply "search" filter
-			if(!isNull(params.search) AND len(params.search))
-			{
+			if(!isNull(params.search) AND len(params.search)) {
 				rememberParams = ListAppend(rememberParams,"search=#params.search#","&");
 
 				// Break apart search string into a keyword where clause
 				var whereKeywords = [];
 				var keywords = listToArray(trim(params.search)," ");
-				for(keyword in keywords)
-				{
+				for(keyword in keywords) {
 					ArrayAppend(whereKeywords, "name LIKE '%#keyword#%'");
 					ArrayAppend(whereKeywords, "description LIKE '%#keyword#%'");
 				}
 
 				// Include permission check if defined
 				whereKeywords = ArrayToList(whereKeywords, " OR ");
-				if(len(wherePermission("@ucaseSingular@")))
-				{
+				if(len(wherePermission("@ucaseSingular@"))) {
 					whereClause = wherePermission("@ucaseSingular@") & " AND (" & whereKeywords & ")";
 				} else {
 					whereClause = whereKeywords;
@@ -362,14 +336,12 @@ component extends="_main" output="false"
 			}
 
 			// Apply "category" filter
-			if(!isNull(params.filtercategories) AND len(params.filtercategories))
-			{
+			if(!isNull(params.filtercategories) AND len(params.filtercategories)) {
 				rememberParams = ListAppend(rememberParams,"filtercategories=#params.filtercategories#","&");
 				var filtercategories = listToArray(params.filtercategories);
 				var whereCategories = [];
 
-				for(categoryid in filtercategories)
-				{
+				for(categoryid in filtercategories) {
 					ArrayAppend(whereCategories, "category_id = #categoryid#");
 				}
 
@@ -390,8 +362,7 @@ component extends="_main" output="false"
 
 			q@ucasePlural@ = qq@ucasePlural@;
 
-			if(len(rememberParams))
-			{
+			if(len(rememberParams)) {
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 

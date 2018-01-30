@@ -35,8 +35,7 @@
 		// clear current verification chain and then re-add from the passed in chain
 		variables.$class.verifications = [];
 		loc.iEnd = ArrayLen(arguments.chain);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			verifies(argumentCollection=arguments.chain[loc.i]);
 		}
 	</cfscript>
@@ -61,8 +60,7 @@
 			loc.sessionManagement = application.getApplicationSettings().sessionManagement;
 		}
 		catch (any e) {}
-		if (StructIsEmpty(arguments.sessionScope) && loc.sessionManagement)
-		{
+		if (StructIsEmpty(arguments.sessionScope) && loc.sessionManagement) {
 			arguments.sessionScope = session;
 		}
 
@@ -70,45 +68,33 @@
 		loc.$args = "only,except,post,get,ajax,cookie,session,params,cookieTypes,sessionTypes,paramsTypes,handler";
 		loc.abort = false;
 		loc.iEnd = ArrayLen(loc.verifications);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.element = loc.verifications[loc.i];
-			if ((!Len(loc.element.only) && !Len(loc.element.except)) || (Len(loc.element.only) && ListFindNoCase(loc.element.only, arguments.action)) || (Len(loc.element.except) && !ListFindNoCase(loc.element.except, arguments.action)))
-			{
-				if (IsBoolean(loc.element.post) && ((loc.element.post && !isPost()) || (!loc.element.post && isPost())))
-				{
+			if ((!Len(loc.element.only) && !Len(loc.element.except)) || (Len(loc.element.only) && ListFindNoCase(loc.element.only, arguments.action)) || (Len(loc.element.except) && !ListFindNoCase(loc.element.except, arguments.action))) {
+				if (IsBoolean(loc.element.post) && ((loc.element.post && !isPost()) || (!loc.element.post && isPost()))) {
 					loc.abort = true;
 				}
-				if (IsBoolean(loc.element.get) && ((loc.element.get && !isGet()) || (!loc.element.get && isGet())))
-				{
+				if (IsBoolean(loc.element.get) && ((loc.element.get && !isGet()) || (!loc.element.get && isGet()))) {
 					loc.abort = true;
 				}
-				if (IsBoolean(loc.element.ajax) && ((loc.element.ajax && !isAjax()) || (!loc.element.ajax && isAjax())))
-				{
+				if (IsBoolean(loc.element.ajax) && ((loc.element.ajax && !isAjax()) || (!loc.element.ajax && isAjax()))) {
 					loc.abort = true;
 				}
-				if (!$checkVerificationsVars(arguments.params, loc.element.params, loc.element.paramsTypes))
-				{
+				if (!$checkVerificationsVars(arguments.params, loc.element.params, loc.element.paramsTypes)) {
 					loc.abort = true;
 				}
-				if (!$checkVerificationsVars(arguments.sessionScope, loc.element.session, loc.element.sessionTypes))
-				{
+				if (!$checkVerificationsVars(arguments.sessionScope, loc.element.session, loc.element.sessionTypes)) {
 					loc.abort = true;
 				}
-				if (!$checkVerificationsVars(arguments.cookieScope, loc.element.cookie, loc.element.cookieTypes))
-				{
+				if (!$checkVerificationsVars(arguments.cookieScope, loc.element.cookie, loc.element.cookieTypes)) {
 					loc.abort = true;
 				}
 			}
-			if (loc.abort)
-			{
-				if (Len(loc.element.handler))
-				{
+			if (loc.abort) {
+				if (Len(loc.element.handler)) {
 					$invoke(method=loc.element.handler);
 					redirectTo(back="true");
-				}
-				else
-				{
+				} else {
 					// check to see if we should perform a redirect or abort completly
 					loc.redirectArgs = {};
 					for(loc.key in loc.element)
@@ -121,9 +107,7 @@
 					if (!StructIsEmpty(loc.redirectArgs))
 					{
 						redirectTo(argumentCollection=loc.redirectArgs);
-					}
-					else
-					{
+					} else {
 						variables.$instance.abort = true;
 					}
 				}
@@ -142,29 +126,24 @@
 		var loc = {};
 		loc.rv = true;
 		loc.iEnd = ListLen(arguments.vars);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.vars, loc.i);
-			if (!StructKeyExists(arguments.scope, loc.item))
-			{
+			if (!StructKeyExists(arguments.scope, loc.item)) {
 				loc.rv = false;
 				break;
 			}
-			if (Len(arguments.types))
-			{
+			if (Len(arguments.types)) {
 				loc.value = arguments.scope[loc.item];
 				loc.typeCheck = ListGetAt(arguments.types, loc.i);
 
 				// by default string aren't allowed to be blank
 				loc.typeAllowedBlank = false;
-				if (loc.typeCheck == "blank")
-				{
+				if (loc.typeCheck == "blank") {
 					loc.typeAllowedBlank = true;
 					loc.typeCheck = "string";
 				}
 
-				if (!IsValid(loc.typeCheck, loc.value) || (loc.typeCheck == "string" && !loc.typeAllowedBlank && !Len(Trim(loc.value))))
-				{
+				if (!IsValid(loc.typeCheck, loc.value) || (loc.typeCheck == "string" && !loc.typeAllowedBlank && !Len(Trim(loc.value)))) {
 					loc.rv = false;
 					break;
 				}

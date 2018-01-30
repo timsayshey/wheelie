@@ -28,20 +28,17 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			site = model("Site").findAll(where="id = '#params.id#'", maxRows=1, returnAs="Object");
 			siteOptions = model("option").findAll(where="siteid = '#params.id#'");
 
-			if(ArrayLen(site))
-			{
+			if(ArrayLen(site)) {
 				site = site[1];
 			}
 
 			// Site not found?
-			if (!IsObject(site))
-			{
+			if (!IsObject(site)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="sites");
 			}
@@ -59,8 +56,7 @@ component extends="_main" output="false"
 		}
 
 		// Get site object
-		if(!isNull(params.site.id))
-		{
+		if(!isNull(params.site.id)) {
 			site = model("Site").findByKey(params.site.id);
 			saveResult = site.update(params.site);
 		} else {
@@ -70,11 +66,9 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update site object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Save options
-			if(StructKeyExists(params,"options"))
-			{
+			if(StructKeyExists(params,"options")) {
 				model("Option").saveOptions(params.options, site.id);
 			}
 
@@ -94,8 +88,7 @@ component extends="_main" output="false"
 	{
 		sites = model("site").findByKey(params.id);
 
-		if(sites.delete())
-		{
+		if(sites.delete()) {
 			flashInsert(success="The Site was deleted successfully.");
 		} else
 		{

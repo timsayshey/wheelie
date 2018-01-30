@@ -24,8 +24,7 @@ component output="false" extends="controllers.Controller"
 	private function loggedOutOnly()
 	{
 		// Authenticate
-		if(!StructKeyExists(session,"user") && listfirst(cgi.server_name,".") != 'www' && request.site.subdomain != '')
-		{
+		if(!StructKeyExists(session,"user") && listfirst(cgi.server_name,".") != 'www' && request.site.subdomain != '') {
 			redirectTo(route="admin~action", controller="users", action="login");
 		}
 	}
@@ -34,26 +33,21 @@ component output="false" extends="controllers.Controller"
 	{
 		homeid = getOption(qOptions,'home_id').content;
 
-		if(!isNull(params.format))
-		{
+		if(!isNull(params.format)) {
 			if(params.format eq "modal") {
 				usesLayout("/layouts/layout.modal");
 			} else {
 				usesLayout("/themes/#request.site.theme#/layout");
 			}
-		}
-		else
-		{
+		} else {
 			usesLayout("/themes/#request.site.theme#/layout");
 		}
 
-		if(params.action eq "testerror")
-		{
+		if(params.action eq "testerror") {
 			request.testthis = "/themes/#request.site.theme#/layout";
 		}
 
-		if(!isNull(params.ajax))
-		{
+		if(!isNull(params.ajax)) {
 			isAjaxRequest = 1;
 			usesLayout("/layouts/layout.blank");
 		}

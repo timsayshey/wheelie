@@ -40,8 +40,7 @@
 		<cfargument name="scale" type="string" required="true">
 		<cfscript>
 			var loc = {};
-			switch (arguments.type)
-			{
+			switch (arguments.type) {
 				case "blob": case "bfile":
 					loc.rv = "cf_sql_blob";
 					break;
@@ -62,9 +61,7 @@
 					if (Val(arguments.scale) == 0)
 					{
 						loc.rv = "cf_sql_integer";
-					}
-					else
-					{
+					} else {
 						loc.rv = "cf_sql_float";
 					}
 					break;
@@ -93,8 +90,7 @@
 			arguments = $convertMaxRowsToLimit(arguments);
 			arguments.sql = $removeColumnAliasesInOrderClause(arguments.sql);
 			arguments.sql = $addColumnsToSelectAndGroupBy(arguments.sql);
-			if (arguments.limit > 0)
-			{
+			if (arguments.limit > 0) {
 				loc.select = ReplaceNoCase(ReplaceNoCase(arguments.sql[1], "SELECT DISTINCT ", ""), "SELECT ", "");
 				loc.select = $columnAlias(list=$tableName(list=loc.select, action="remove"), action="keep");
 				loc.beforeWhere = "SELECT #loc.select# FROM (SELECT * FROM (SELECT tmp.*, rownum rnum FROM (";
@@ -169,12 +165,10 @@
 		var loc = {};
 		loc.args = Duplicate(arguments);
 		StructDelete(loc.args, "table");
-		if (!Len(loc.args.username))
-		{
+		if (!Len(loc.args.username)) {
 			StructDelete(loc.args, "username");
 		}
-		if (!Len(loc.args.password))
-		{
+		if (!Len(loc.args.password)) {
 			StructDelete(loc.args, "password");
 		}
 		loc.args.name = "loc.rv";
@@ -226,12 +220,10 @@
 
 			// depending on the driver and engine used with oracle, timestamps can be returned as
 			// objects instead of strings.
-			if (StructKeyExists(arguments.results, "query"))
-			{
+			if (StructKeyExists(arguments.results, "query")) {
 				// look for all timestamp columns
 				loc.query = arguments.results.query;
-				if (loc.query.recordCount > 0)
-				{
+				if (loc.query.recordCount > 0) {
 					loc.metadata = GetMetaData(loc.query);
 					loc.columns = [];
 					loc.iEnd = ArrayLen(loc.metadata);

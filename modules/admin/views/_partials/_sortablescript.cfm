@@ -7,8 +7,7 @@
 	<cfscript>
 		// Returns rearrange button and script
 		returnHtml = "";
-		if(!isNull(params.rearrange) AND params.rearrange eq 1)
-		{
+		if(!isNull(params.rearrange) AND params.rearrange eq 1) {
 			returnHtml = returnHtml & linkTo(
 				text		= '<span class=''fa fa-arrow-left''></span> Go Back',
 				href		= 'javascript:window.history.back();',

@@ -5,14 +5,10 @@
 	<cfscript>
 		var loc = {};
 		loc.flash = $readFlash();
-		if (StructKeyExists(arguments, "key"))
-		{
-			if (flashKeyExists(key=arguments.key))
-			{
+		if (StructKeyExists(arguments, "key")) {
+			if (flashKeyExists(key=arguments.key)) {
 				loc.flash = loc.flash[arguments.key];
-			}
-			else
-			{
+			} else {
 				loc.flash = "";
 			}
 		}
@@ -54,8 +50,7 @@
 	<cfscript>
 		var loc = {};
 		loc.flash = $readFlash();
-		for (loc.key in arguments)
-		{
+		for (loc.key in arguments) {
 			StructInsert(loc.flash, loc.key, arguments[loc.key], true);
 		}
 		$writeFlash(loc.flash);
@@ -65,12 +60,9 @@
 <cffunction name="flashIsEmpty" returntype="boolean" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if (flashCount())
-		{
+		if (flashCount()) {
 			loc.rv = false;
-		}
-		else
-		{
+		} else {
 			loc.rv = true;
 		}
 	</cfscript>
@@ -101,17 +93,14 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = {};
-		if (!StructKeyExists(arguments, "$locked"))
-		{
+		if (!StructKeyExists(arguments, "$locked")) {
 			loc.lockName = "flashLock" & application.applicationName;
 			loc.rv = $simpleLock(name=loc.lockName, type="readonly", execute="$readFlash", executeArgs=arguments);
 		}
-		else if ($getFlashStorage() == "cookie" && StructKeyExists(cookie, "flash"))
-		{
+		else if ($getFlashStorage() == "cookie" && StructKeyExists(cookie, "flash")) {
 			loc.rv = DeSerializeJSON(cookie.flash);
 		}
-		else if ($getFlashStorage() == "session" && StructKeyExists(session, "flash"))
-		{
+		else if ($getFlashStorage() == "session" && StructKeyExists(session, "flash")) {
 			loc.rv = Duplicate(session.flash);
 		}
 	</cfscript>
@@ -122,20 +111,14 @@
 	<cfargument name="flash" type="struct" required="false" default="#StructNew()#">
 	<cfscript>
 		var loc = {};
-		if (!StructKeyExists(arguments, "$locked"))
-		{
+		if (!StructKeyExists(arguments, "$locked")) {
 			// the return is needed here because otherwise we get an abstracthttpconnection error in jetty (when running tests)
 			loc.lockName = "flashLock" & application.applicationName;
 			loc.rv = $simpleLock(name=loc.lockName, type="exclusive", execute="$writeFlash", executeArgs=arguments);
-		}
-		else
-		{
-			if ($getFlashStorage() == "cookie")
-			{
+		} else {
+			if ($getFlashStorage() == "cookie") {
 				cookie.flash = SerializeJSON(arguments.flash);
-			}
-			else
-			{
+			} else {
 				session.flash = arguments.flash;
 			}
 		}
@@ -150,8 +133,7 @@
 		var loc = {};
 
 		// only save the old flash if they want to keep anything
-		if (StructKeyExists(request.wheels, "flashKeep"))
-		{
+		if (StructKeyExists(request.wheels, "flashKeep")) {
 			loc.flash = $readFlash();
 		}
 
@@ -159,13 +141,10 @@
 		flashClear();
 
 		// see if they wanted to keep anything
-		if (StructKeyExists(loc, "flash"))
-		{
+		if (StructKeyExists(loc, "flash")) {
 			// delete any keys they don't want to keep
-			if (Len(request.wheels.flashKeep))
-			{
-				for (loc.key in loc.flash)
-				{
+			if (Len(request.wheels.flashKeep)) {
+				for (loc.key in loc.flash) {
 					if (!ListFindNoCase(request.wheels.flashKeep, loc.key))
 					{
 						StructDelete(loc.flash, loc.key);

@@ -18,8 +18,7 @@ component extends="_main" output="false"
 		param name="params.currPage" default="1";
 		posts = model("Post").findAll(where="#whereSiteid()# AND postType = 'post'", order="createdAt DESC", include="user");
 
-		if(listlen(cgi.PATH_INFO,"/") gt 1)
-		{
+		if(listlen(cgi.PATH_INFO,"/") gt 1) {
 			goHome();
 		}
 
@@ -31,8 +30,7 @@ component extends="_main" output="false"
 	function post()
 	{
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			parsedUrlId = ListLast(params.id,"/");
 			parsedUrlId = lcase(cleanUrlId(parsedUrlId));
@@ -40,8 +38,7 @@ component extends="_main" output="false"
 			post = model("Post").findAll(where="#whereSiteid()# AND postType = 'post' AND urlid = '#parsedUrlId#'", include="user");
 		}
 
-		if(isNull(post) OR !len(post.id))
-		{
+		if(isNull(post) OR !len(post.id)) {
 			post = {
 				name = "Post not found",
 				content = "We apologize for the inconvenience. Please try clicking the menu above to find the post you are looking for."
@@ -53,8 +50,7 @@ component extends="_main" output="false"
 
 	function goHome()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			post = model("Post").findAll(where="#whereSiteid()# AND postType = 'post' AND urlid = '#ListLast(params.id,"/")#'");
 			goLocation("/blog/post/#params.id#", false, 301);

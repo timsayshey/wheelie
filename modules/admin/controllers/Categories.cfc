@@ -9,8 +9,7 @@ component extends="_main" output="false"
 	function getCategoryType()
 	{
 		// model names in listfind must be lowercase
-		if(!isNull(application.info.validCategoryModelsList) AND ListFind("videocategory,usertag,#application.info.validCategoryModelsList#",LCase(params.modelName)))
-		{
+		if(!isNull(application.info.validCategoryModelsList) AND ListFind("videocategory,usertag,#application.info.validCategoryModelsList#",LCase(params.modelName))) {
 			return params.modelName;
 		} else {
 			throw("#params.modelName# not found in application.info.validCategoryModelsList!");
@@ -38,8 +37,7 @@ component extends="_main" output="false"
 		video = model(getCategoryType()).findByKey(params.id);
 
 		try {
-			if(video.delete())
-			{
+			if(video.delete()) {
 				writeOutput('{ "Message" : "", "Success" : true }');
 			} else {
 				writeOutput('{ "Message" : "", "Success" : false }');
@@ -54,12 +52,10 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			category = model(getCategoryType()).findAll(where="id = '#params.id#'#wherePermission("Video","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(category))
-			{
+			if(ArrayLen(category)) {
 				category = category[1];
 			}
 		}
@@ -82,14 +78,11 @@ component extends="_main" output="false"
 
 		loc.newOrder = DeserializeJSON(params.categoryOrder);
 
-		for(i=1; i LTE arrayLen(loc.newOrder); i++)
-		{
+		for(i=1; i LTE arrayLen(loc.newOrder); i++) {
 			loc.curr = loc.newOrder[i];
 
-			if(!isNull(loc.curr.item_id))
-			{
-				if(isNull(loc.curr.parent_id) OR !IsNumeric(loc.curr.parent_id))
-				{
+			if(!isNull(loc.curr.item_id)) {
+				if(isNull(loc.curr.parent_id) OR !IsNumeric(loc.curr.parent_id)) {
 					loc.curr.parent_id = 0;
 				}
 
@@ -109,8 +102,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Save
-		if(!isNull(params.category.id))
-		{
+		if(!isNull(params.category.id)) {
 			category = model(getCategoryType()).findOne(where="id = '#params.category.id#'#wherePermission("Category","AND")#");
 			saveResult = category.update(params.category);
 
@@ -120,27 +112,21 @@ component extends="_main" output="false"
 		}
 
 		// Redirect based on result
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Reset DefaultPublic
-			if(!isNull(category.defaultpublic) AND category.defaultpublic eq 1)
-			{
+			if(!isNull(category.defaultpublic) AND category.defaultpublic eq 1) {
 				model(getCategoryType()).updateAll(defaultpublic=0, where="defaultpublic = 1 AND id != '#category.id#'#wherePermission("Category","AND")#");
 			}
 
 			// Reset DefaultAdmin
-			if(!isNull(category.defaultadmin) AND category.defaultadmin eq 1)
-			{
+			if(!isNull(category.defaultadmin) AND category.defaultadmin eq 1) {
 				model(getCategoryType()).updateAll(defaultadmin=0, where="defaultadmin = 1 AND id != '#category.id#'#wherePermission("Category","AND")#");
 			}
 
-			if(isNull(isAjaxRequest))
-			{
+			if(isNull(isAjaxRequest)) {
 				flashInsert(success="Saved successfully.");
 				redirectTo(route="admin~Category", action="index", modelName=params.modelName);
-			}
-			else
-			{
+			} else {
 				json = SerializeJSON({
 					response = "success",
 					option = {
@@ -155,14 +141,11 @@ component extends="_main" output="false"
 
 		} else {
 
-			if(isNull(isAjaxRequest))
-			{
+			if(isNull(isAjaxRequest)) {
 				errorMessagesName = getCategoryType();
 				flashInsert(error="There was an error.");
 				redirectTo(route="admin~Category", action="editor", modelName=params.modelName);
-			}
-			else
-			{
+			} else {
 				json = SerializeJSON({
 					response = "error",
 					errors =

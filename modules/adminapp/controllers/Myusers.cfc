@@ -30,8 +30,7 @@ component extends="_main" output="false"
 	function toggleVendor(ownerid,enable){
 		user = model("User").findOne(where="id = '#ownerid#'");
 
-		if(isObject(user))
-		{
+		if(isObject(user)) {
 			enabledOrDisabled = arguments.enable ? 'enabled' : 'disabled';
 			user.update(market_enabled=arguments.enable,callbacks=false,validate=false);
 			// Send email

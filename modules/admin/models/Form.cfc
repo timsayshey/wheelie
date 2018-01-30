@@ -1,13 +1,11 @@
 <cfscript>
 	component extends="models.Model"
 	{
-		function init()
-		{
+		function init() {
 			super.init();
 			this.setWhere = setWhere;
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return wherePermission('Form');
 		}
 	}

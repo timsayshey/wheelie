@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// Set
 			table("metafields");
 			property(name="metafieldType", defaultValue="propertyfield");
@@ -26,23 +25,19 @@
 		}
 
 		// Clean strings
-		private function sanitizeIdentifier()
-		{
-			if(!isNull(this.identifier) AND len(this.identifier))
-			{
+		private function sanitizeIdentifier() {
+			if(!isNull(this.identifier) AND len(this.identifier)) {
 				this.identifier = lcase(cleanUrlId(this.identifier));
 			} else if (!isNull(this.name) AND len(this.name)) {
 				this.identifier = lcase(cleanUrlId(this.name));
 			}
 		}
 
-		function setWhere()
-		{
+		function setWhere() {
 			return "metafieldType='property'#wherePermission('Propertyfield','AND')#";
 		}
 
-		function metafieldInfo()
-		{
+		function metafieldInfo() {
 			return {
 				singular		= "Property",
 				plural			= "Propertys",

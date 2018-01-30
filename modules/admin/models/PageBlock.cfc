@@ -1,8 +1,7 @@
 <cfscript>
 	component extends="models.Model"
 	{
-		function init()
-		{
+		function init() {
 			// Properties
 			property(name="postType", defaultValue="pageblock");
 			this.setWhere = setWhere;
@@ -18,14 +17,11 @@
 			super.init();
 			beforeSave("sanitizeContentForMysql");
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return "postType='pageblock'#wherePermission('PageBlock','AND')#";
 		}
-		function sanitizeContentForMysql()
-		{
-			if(!isNull(this.content))
-			{
+		function sanitizeContentForMysql() {
+			if(!isNull(this.content)) {
 				this.content = CharsetDecode(this.content, "windows-1252");
 				this.content = CharsetEncode(this.content, "utf-8");
 				this.content = rereplace(this.content,"[^\x00-\x7F]","","all");

@@ -11,8 +11,7 @@ component extends="_main" output="false"
 		linebreak = Chr(13) & Chr(10);
 		todoArray = ListToArray(params.importlist,linebreak);
 
-		for(todo in todoArray)
-		{
+		for(todo in todoArray) {
 			savetodo = model("Todo").new({ name = todo });
 			saveResult = savetodo.save();
 		}
@@ -40,8 +39,7 @@ component extends="_main" output="false"
 			include "../views/todos/emailreview.cfm"
 		}
 
-		if(!isNull(params.emailto) AND Find("@",session.user.email))
-		{
+		if(!isNull(params.emailto) AND Find("@",session.user.email)) {
 			emailto = params.emailto;
 		} else {
 			emailto = session.user.email;
@@ -95,8 +93,7 @@ component extends="_main" output="false"
 		todo = model("Todo").findByKey(params.id);
 
 		try {
-			if(todo.delete())
-			{
+			if(todo.delete()) {
 				writeOutput('{ "Message" : "", "Success" : true }');
 			} else {
 				writeOutput('{ "Message" : "", "Success" : false }');
@@ -111,12 +108,10 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			todo = model("Todo").findAll(where="id = '#params.id#'#wherePermission("Todo","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(todo))
-			{
+			if(ArrayLen(todo)) {
 				todo = todo[1];
 			}
 		}
@@ -148,14 +143,11 @@ component extends="_main" output="false"
 
 		loc.newOrder = DeserializeJSON(params.todoOrder);
 
-		for(i=1; i LTE arrayLen(loc.newOrder); i++)
-		{
+		for(i=1; i LTE arrayLen(loc.newOrder); i++) {
 			loc.curr = loc.newOrder[i];
 
-			if(!isNull(loc.curr.item_id))
-			{
-				if(isNull(loc.curr.parent_id) OR !IsNumeric(loc.curr.parent_id))
-				{
+			if(!isNull(loc.curr.item_id)) {
+				if(isNull(loc.curr.parent_id) OR !IsNumeric(loc.curr.parent_id)) {
 					loc.curr.parent_id = 0;
 				}
 
@@ -176,8 +168,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Save
-		if(!isNull(params.todo.id) AND isNumeric(params.todo.id))
-		{
+		if(!isNull(params.todo.id) AND isNumeric(params.todo.id)) {
 			todo = model("Todo").findByKey(params.todo.id);
 			saveResult = todo.update(params.todo);
 
@@ -187,15 +178,11 @@ component extends="_main" output="false"
 		}
 
 		// Redirect based on result
-		if (saveResult)
-		{
-			if(isNull(isAjaxRequest))
-			{
+		if (saveResult) {
+			if(isNull(isAjaxRequest)) {
 				flashInsert(success="Saved successfully.");
 				redirectTo(route="admin~Todo", action="index", modelName=params.modelName);
-			}
-			else
-			{
+			} else {
 				json = SerializeJSON({
 					response = "success",
 					option = {
@@ -213,14 +200,11 @@ component extends="_main" output="false"
 
 		} else {
 
-			if(isNull(isAjaxRequest))
-			{
+			if(isNull(isAjaxRequest)) {
 				errorMessagesName = "Todo";
 				flashInsert(error="There was an error.");
 				redirectTo(route="admin~Todo", action="editor", modelName=params.modelName);
-			}
-			else
-			{
+			} else {
 				json = SerializeJSON({
 					response = "error",
 					errors =

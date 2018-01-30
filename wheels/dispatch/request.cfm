@@ -36,25 +36,21 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		for (loc.key in loc.rv)
-		{
-			if (Find("[", loc.key) && Right(loc.key, 1) == "]")
-			{
+		for (loc.key in loc.rv) {
+			if (Find("[", loc.key) && Right(loc.key, 1) == "]") {
 				// object form field
 				loc.name = SpanExcluding(loc.key, "[");
 
 				// we split the key into an array so the developer can have unlimited levels of params passed in
 				loc.nested = ListToArray(ReplaceList(loc.key, loc.name & "[,]", ""), "[", true);
-				if (!StructKeyExists(loc.rv, loc.name))
-				{
+				if (!StructKeyExists(loc.rv, loc.name)) {
 					loc.rv[loc.name] = {};
 				}
 
 				// we need a reference to the struct so we can nest other structs if needed
 				loc.struct = loc.rv[loc.name];
 				loc.iEnd = ArrayLen(loc.nested);
-				for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-				{
+				for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 					// looping over the array allows for infinite nesting
 					loc.item = loc.nested[loc.i];
 					if (!StructKeyExists(loc.struct, loc.item))
@@ -65,9 +61,7 @@
 					{
 						// pass the new reference (structs pass a reference instead of a copy) to the next iteration
 						loc.struct = loc.struct[loc.item];
-					}
-					else
-					{
+					} else {
 						loc.struct[loc.item] = loc.rv[loc.key];
 					}
 				}
@@ -84,31 +78,25 @@
 	<cfscript>
 		var loc = {};
 		loc.iEnd = ArrayLen(application.wheels.routes);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.format = "";
 			loc.route = application.wheels.routes[loc.i];
-			if (StructKeyExists(loc.route, "format"))
-			{
+			if (StructKeyExists(loc.route, "format")) {
 				loc.format = loc.route.format;
 			}
 			loc.currentRoute = loc.route.pattern;
-			if (loc.currentRoute == "*")
-			{
+			if (loc.currentRoute == "*") {
 				loc.rv = loc.route;
 				break;
 			}
-			else if (arguments.path == "" && loc.currentRoute == "")
-			{
+			else if (arguments.path == "" && loc.currentRoute == "") {
 				loc.rv = loc.route;
 				break;
 			}
-			else if (ListLen(arguments.path, "/") >= ListLen(loc.currentRoute, "/") && loc.currentRoute != "")
-			{
+			else if (ListLen(arguments.path, "/") >= ListLen(loc.currentRoute, "/") && loc.currentRoute != "") {
 				loc.match = true;
 				loc.jEnd = ListLen(loc.currentRoute, "/");
-				for (loc.j=1; loc.j <= loc.jEnd; loc.j++)
-				{
+				for (loc.j=1; loc.j <= loc.jEnd; loc.j++) {
 					loc.item = ListGetAt(loc.currentRoute, loc.j, "/");
 					loc.thisRoute = ReplaceList(loc.item, "[,]", "");
 					loc.thisUrl = ListFirst(ListGetAt(arguments.path, loc.j, "/"), ".");
@@ -117,8 +105,7 @@
 						loc.match = false;
 					}
 				}
-				if (loc.match)
-				{
+				if (loc.match) {
 					loc.rv = loc.route;
 					if (Len(loc.format))
 					{
@@ -131,8 +118,7 @@
 				}
 			}
 		}
-		if (!StructKeyExists(loc, "rv"))
-		{
+		if (!StructKeyExists(loc, "rv")) {
 			$throw(type="Wheels.RouteNotFound", message="CFWheels couldn't find a route that matched this request.", extendedInfo="Make sure there is a route setup in your `config/routes.cfm` file that matches the `#arguments.path#` request.");
 		}
 	</cfscript>
@@ -146,12 +132,9 @@
 		var loc = {};
 
 		// we want the path without the leading "/" so this is why we do some checking here
-		if (arguments.pathInfo == arguments.scriptName || arguments.pathInfo == "/" || arguments.pathInfo == "")
-		{
+		if (arguments.pathInfo == arguments.scriptName || arguments.pathInfo == "/" || arguments.pathInfo == "") {
 			loc.rv = "";
-		}
-		else
-		{
+		} else {
 			loc.rv = Right(arguments.pathInfo, Len(arguments.pathInfo)-1);
 		}
 	</cfscript>
@@ -163,8 +146,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = "";
-		if (Find(".", arguments.pathInfo))
-		{
+		if (Find(".", arguments.pathInfo)) {
 			loc.rv = ListLast(arguments.pathInfo, ".");
 		}
 	</cfscript>
@@ -178,8 +160,7 @@
 	<cfargument name="urlScope" type="struct" required="false" default="#url#">
 	<cfscript>
 		var loc = {};
-		if (get("showDebugInformation"))
-		{
+		if (get("showDebugInformation")) {
 			$debugPoint("setup");
 		}
 
@@ -188,8 +169,7 @@
 		// set params in the request scope as well so we can display it in the debug info outside of the dispatch / controller context
 		request.wheels.params = loc.params;
 
-		if (get("showDebugInformation"))
-		{
+		if (get("showDebugInformation")) {
 			$debugPoint("setup");
 		}
 
@@ -198,8 +178,7 @@
 		loc.controller.$processAction();
 
 		// if there is a delayed redirect pending we execute it here thus halting the rest of the request
-		if (loc.controller.$performedRedirect())
-		{
+		if (loc.controller.$performedRedirect()) {
 			$location(argumentCollection=loc.controller.$getRedirect());
 		}
 
@@ -246,16 +225,13 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		if (StructKeyExists(arguments.route, "format") && Len(arguments.route.format))
-		{
+		if (StructKeyExists(arguments.route, "format") && Len(arguments.route.format)) {
 			arguments.path = Reverse(ListRest(Reverse(arguments.path), "."));
 		}
 		loc.iEnd = ListLen(arguments.route.pattern, "/");
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.route.pattern, loc.i, "/");
-			if (Left(loc.item, 1) == "[")
-			{
+			if (Left(loc.item, 1) == "[") {
 				loc.key = ReplaceList(loc.item, "[,]", "");
 				loc.rv[loc.key] = ListGetAt(arguments.path, loc.i, "/");
 			}
@@ -269,12 +245,9 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		if (get("obfuscateUrls"))
-		{
-			for (loc.key in loc.rv)
-			{
-				if (loc.key != "controller" && loc.key != "action")
-				{
+		if (get("obfuscateUrls")) {
+			for (loc.key in loc.rv) {
+				if (loc.key != "controller" && loc.key != "action") {
 					try
 					{
 						loc.rv[loc.key] = deobfuscateParam(loc.rv[loc.key]);
@@ -292,14 +265,11 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		for (loc.key in loc.rv)
-		{
-			if (FindNoCase("($checkbox)", loc.key))
-			{
+		for (loc.key in loc.rv) {
+			if (FindNoCase("($checkbox)", loc.key)) {
 				// if no other form parameter exists with this name it means that the checkbox was left blank and therefore we force the value to the unchecked values for the checkbox (to get around the problem that unchecked checkboxes don't post at all)
 				loc.formParamName = ReplaceNoCase(loc.key, "($checkbox)", "");
-				if (!StructKeyExists(loc.rv, loc.formParamName))
-				{
+				if (!StructKeyExists(loc.rv, loc.formParamName)) {
 					loc.rv[loc.formParamName] = loc.rv[loc.key];
 				}
 				StructDelete(loc.rv, loc.key);
@@ -315,54 +285,41 @@
 		var loc = {};
 		loc.rv = arguments.params;
 		loc.dates = {};
-		for (loc.key in loc.rv)
-		{
-			if (REFindNoCase(".*\((\$year|\$month|\$day|\$hour|\$minute|\$second|\$ampm)\)$", loc.key))
-			{
+		for (loc.key in loc.rv) {
+			if (REFindNoCase(".*\((\$year|\$month|\$day|\$hour|\$minute|\$second|\$ampm)\)$", loc.key)) {
 				loc.temp = ListToArray(loc.key, "(");
 				loc.firstKey = loc.temp[1];
 				loc.secondKey = SpanExcluding(loc.temp[2], ")");
-				if (!StructKeyExists(loc.dates, loc.firstKey))
-				{
+				if (!StructKeyExists(loc.dates, loc.firstKey)) {
 					loc.dates[loc.firstKey] = {};
 				}
 				loc.dates[loc.firstKey][ReplaceNoCase(loc.secondKey, "$", "")] = loc.rv[loc.key];
 			}
 		}
-		for (loc.key in loc.dates)
-		{
-			if (!StructKeyExists(loc.dates[loc.key], "year"))
-			{
+		for (loc.key in loc.dates) {
+			if (!StructKeyExists(loc.dates[loc.key], "year")) {
 				loc.dates[loc.key].year = 1899;
 			}
-			if (!StructKeyExists(loc.dates[loc.key], "month"))
-			{
+			if (!StructKeyExists(loc.dates[loc.key], "month")) {
 				loc.dates[loc.key].month = 1;
 			}
-			if (!StructKeyExists(loc.dates[loc.key], "day"))
-			{
+			if (!StructKeyExists(loc.dates[loc.key], "day")) {
 				loc.dates[loc.key].day = 1;
 			}
-			if (!StructKeyExists(loc.dates[loc.key], "hour"))
-			{
+			if (!StructKeyExists(loc.dates[loc.key], "hour")) {
 				loc.dates[loc.key].hour = 0;
 			}
-			if (!StructKeyExists(loc.dates[loc.key], "minute"))
-			{
+			if (!StructKeyExists(loc.dates[loc.key], "minute")) {
 				loc.dates[loc.key].minute = 0;
 			}
-			if (!StructKeyExists(loc.dates[loc.key], "second"))
-			{
+			if (!StructKeyExists(loc.dates[loc.key], "second")) {
 				loc.dates[loc.key].second = 0;
 			}
-			if (StructKeyExists(loc.dates[loc.key], "ampm"))
-			{
-				if (loc.dates[loc.key].ampm == "am" && loc.dates[loc.key].hour == 12)
-				{
+			if (StructKeyExists(loc.dates[loc.key], "ampm")) {
+				if (loc.dates[loc.key].ampm == "am" && loc.dates[loc.key].hour == 12) {
 					loc.dates[loc.key].hour = 0;
 				}
-				else if (loc.dates[loc.key].ampm == "pm" && loc.dates[loc.key].hour != 12)
-				{
+				else if (loc.dates[loc.key].ampm == "pm" && loc.dates[loc.key].hour != 12) {
 					loc.dates[loc.key].hour += 12;
 				}
 			}
@@ -370,8 +327,7 @@
 			{
 				loc.rv[loc.key] = CreateDateTime(loc.dates[loc.key].year, loc.dates[loc.key].month, loc.dates[loc.key].day, loc.dates[loc.key].hour, loc.dates[loc.key].minute, loc.dates[loc.key].second);
 			}
-			catch (any e)
-			{
+			catch (any e) {
 				loc.rv[loc.key] = "";
 			}
 			StructDelete(loc.rv, loc.key & "($year)");
@@ -391,12 +347,10 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		if (!StructKeyExists(loc.rv, "controller"))
-		{
+		if (!StructKeyExists(loc.rv, "controller")) {
 			loc.rv.controller = arguments.route.controller;
 		}
-		if (!StructKeyExists(loc.rv, "action"))
-		{
+		if (!StructKeyExists(loc.rv, "action")) {
 			loc.rv.action = arguments.route.action;
 		}
 
@@ -417,8 +371,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		if (StructKeyExists(arguments.route, "formatVariable") && StructKeyExists(arguments.route, "format"))
-		{
+		if (StructKeyExists(arguments.route, "formatVariable") && StructKeyExists(arguments.route, "format")) {
 			loc.rv[arguments.route.formatVariable] = arguments.route.format;
 		}
 	</cfscript>
@@ -431,8 +384,7 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = arguments.params;
-		if (StructKeyExists(arguments.route, "name") && Len(arguments.route.name) && !StructKeyExists(loc.rv, "route"))
-		{
+		if (StructKeyExists(arguments.route, "name") && Len(arguments.route.name) && !StructKeyExists(loc.rv, "route")) {
 			loc.rv.route = arguments.route.name;
 		}
 	</cfscript>

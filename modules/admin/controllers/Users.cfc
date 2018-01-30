@@ -1,20 +1,16 @@
 <cfscript>
 	component extends="_main"
 	{
-		function init()
-		{
+		function init() {
 			super.init();
 		}
 
-		function requireEmailMatchDomain()
-		{
+		function requireEmailMatchDomain() {
 			var loc = {};
-			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired)
-			{
+			if(!isNull(params.user.email) AND request.site.emailMatchDomainRequired) {
 				loc.domain = ListLast(trim(params.user.email),"@");
 
-				if(loc.domain NEQ request.site.domain AND !ListFindNoCase(request.site.emailMatchOtherDomains,loc.domain))
-				{
+				if(loc.domain NEQ request.site.domain AND !ListFindNoCase(request.site.emailMatchOtherDomains,loc.domain)) {
 					flashInsert(error="Sorry, you entered an invalid email address. We only accept #request.site.domain# email addresses.");
 					if(!isNull(params.id) AND params.action eq "save")
 					{
@@ -26,31 +22,26 @@
 			}
 		}
 
-		function rearrange()
-		{
+		function rearrange() {
 			sortusers = model("User").findAll(where=wherePermission("User"),order="sortorder ASC");
 		}
 
-		function updateOrder()
-		{
+		function updateOrder() {
 			orderValues = DeserializeJSON(params.orderValues);
 
-			for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-			{
+			for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 				sortuserVal = orderValues[i];
 
 				sortuser = model("User").findOne(where="id = #sortuserVal.fieldId#");
 
-				if(isObject(sortuser))
-				{
+				if(isObject(sortuser)) {
 					sortuser.update(sortorder=sortuserVal.newIndex,validate=false);
 				}
 			}
 			abort;
 		}
 
-		function index()
-		{
+		function index() {
 
 			// if(!checkPermission("user_read_others")) location("/main/home");
 
@@ -66,14 +57,11 @@
 				whereType = "#whereType# status = 'published' AND";
 			}
 
-			if(isNull(params.rearrange))
-			{
+			if(isNull(params.rearrange)) {
 				statusTabs(modelname="UserGroupJoin",prepend=whereType,include="User,UserGroup");
 				qUsers = model("UserGroupJoin").findAll(where=buildWhereStatement("User",whereType), order=session.users.sortby & " " & session.users.order, include="User,UserGroup");
 				filterResults();
-			}
-			else
-			{
+			} else {
 				qUsers = model("User").findAll(
 					where	= buildWhereStatement("User"),
 					order	= "sortorder ASC"
@@ -86,23 +74,19 @@
 			paginator = pagination.getRenderedHTML();
 		}
 
-		function approval()
-		{
+		function approval() {
 			users = model("User").findAll(where="approval_flag = 1#wherePermission("User","AND")#");
 		}
 
-		function edit()
-		{
-			if(!isNull(params.id) AND isNumeric(params.id))
-			{
+		function edit() {
+			if(!isNull(params.id) AND isNumeric(params.id)) {
 				// Queries
 				user = model("User").findAll(where="id = '#params.id#'#wherePermission("User","AND")#", maxRows=1, returnAs="Object");
 				selectedusergroup = model("UserGroupJoin").findAll(
 					where	= "userid = '#params.id#'"
 				);
 
-				if(!selectedusergroup.recordcount)
-				{
+				if(!selectedusergroup.recordcount) {
 					model("UsergroupJoin").create(usergroupid = 1, userid = params.id);
 					selectedusergroup = model("UserGroupJoin").findAll(
 						where	= "userid = '#params.id#'"
@@ -125,14 +109,12 @@
 					order="sortorder ASC"
 				);*/
 
-				if(ArrayLen(user))
-				{
+				if(ArrayLen(user)) {
 					user = user[1];
 				}
 
 				// User not found?
-				if (!IsObject(user))
-				{
+				if (!IsObject(user)) {
 					flashInsert(error="Not found");
 					redirectTo(route="admin~Index", controller="users");
 				}
@@ -141,8 +123,7 @@
 			renderPage(action="editor");
 		}
 
-		function new()
-		{
+		function new() {
 			param name="selectedusergroup.usergroupid" default="0";
 			sharedObjects();
 
@@ -156,10 +137,8 @@
 			renderPage(action="editor");
 		}
 
-		function register()
-		{
-			if(request.site.registrationDisabled)
-			{
+		function register() {
+			if(request.site.registrationDisabled) {
 				redirectTo(route="admin~Index", controller="users"); abort;
 			}
 
@@ -167,20 +146,17 @@
 			user = model("User").new(colStruct("User"));
 		}
 
-		function registerPost()
-		{
+		function registerPost() {
 			params.isRegistration = true;
 			save();
 		}
 
-		function delete()
-		{
+		function delete() {
 			user = model("User").findByKey(params.id);
 
 			param name="params.currentGroup" default="staff";
 
-			if(user.delete())
-			{
+			if(user.delete()) {
 				flashInsert(success="The user was deleted successfully.");
 			} else
 			{
@@ -192,16 +168,13 @@
 			);
 		}
 
-		function uploadUserImage(field,user)
-		{
+		function uploadUserImage(field,user) {
 			var loc = {};
 			loc.user = arguments.user;
 
-			if(!isNull(loc.user.id))
-			{
+			if(!isNull(loc.user.id)) {
 				var approvalToggle = "_pending";
-				if(checkPermission("user_noApprovalNeeded") OR !isNull(loc.user.showOnSite) AND loc.user.showOnSite eq 0 OR !isNull(arguments.newUser))
-				{
+				if(checkPermission("user_noApprovalNeeded") OR !isNull(loc.user.showOnSite) AND loc.user.showOnSite eq 0 OR !isNull(arguments.newUser)) {
 					approvalToggle = "";
 				}
 
@@ -250,19 +223,16 @@
 			if(params.containsKey("redirectTo")) redirectTo(argumentCollection=params.redirectTo);
 		}
 
-		function login()
-		{
+		function login() {
 
 		}
 
-		function logout()
-		{
+		function logout() {
 			StructDelete(session,"user");
 			redirectTo(route="admin~Action", controller="users", action="login");
 		}
 
-		function loginPost()
-		{
+		function loginPost() {
 			param name="params.email" default="";
 
 			// Don't check siteId for main site (that way we can redirect them to their correct site)
@@ -276,8 +246,7 @@
 
 			var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#'");
 
-			if(user.recordcount AND user.securityApproval eq 1)
-			{
+			if(user.recordcount AND user.securityApproval eq 1) {
 				session.user.id = user.id;
 				setUserInfo();
 
@@ -317,16 +286,13 @@
 			return false;
 		}
 
-		function recovery()
-		{
+		function recovery() {
 
 		}
 
-		function sendLoginInfoToAllUsers()
-		{
+		function sendLoginInfoToAllUsers() {
 			var users = model("User").findAll(where="email = '#application.wheels.adminEmail#' AND #siteIdEqualsCheck()#");
-			for(user in users)
-			{
+			for(user in users) {
 				mailgun(
 					mailTo	= user.email,
 					bcc		= application.wheels.adminEmail,
@@ -358,14 +324,12 @@
 			abort;
 		}
 
-		function recoveryPost()
-		{
+		function recoveryPost() {
 			param name="params.email" default="";
 
 			var user = model("User").findAll(where="email = '#params.email#' AND #siteIdEqualsCheck()#");
 
-			if(user.recordcount)
-			{
+			if(user.recordcount) {
 				mailgun(
 					mailTo	= user.email,
 					bcc		= application.wheels.adminEmail,
@@ -387,18 +351,15 @@
 			}
 		}
 
-		function sharedObjects(userid=0)
-		{
+		function sharedObjects(userid=0) {
 			usStates = getStatesAndProvinces();
 			countries = getCountries();
 			usertags = model("UserTag").findAll(where="categoryType = 'user'#wherePermission("User","AND")#");
 			usergroups = model("Usergroup").findAll(wherePermission("User"));
 			selectedusertags = model("userTagJoin").findAll(where="userid = #arguments.userid##wherePermission("User","AND")#",include="User,UserTag");
 			selectedusertags = ValueList(selectedusertags.categoryid);
-			if(!isNull(params.currentGroup))
-			{
-				if(isNull(selectedusergroup.usergroupid))
-				{
+			if(!isNull(params.currentGroup)) {
+				if(isNull(selectedusergroup.usergroupid)) {
 					selectedusergroup.usergroupid = "";
 				}
 				usergroup = model("Usergroup").findAll(where="id = '#params.currentGroup#'");
@@ -408,10 +369,8 @@
 			}
 		}
 
-		function deleteSelection()
-		{
-			for(i=1; i LTE ListLen(params.deletelist); i++)
-			{
+		function deleteSelection() {
+			for(i=1; i LTE ListLen(params.deletelist); i++) {
 				model("User").findByKey(ListGetAt(params.deletelist,i)).delete();
 			}
 
@@ -422,10 +381,8 @@
 			);
 		}
 
-		function setPerPage()
-		{
-			if(!isNull(params.id) AND IsNumeric(params.id))
-			{
+		function setPerPage() {
+			if(!isNull(params.id) AND IsNumeric(params.id)) {
 				session.perPage = params.id;
 			}
 
@@ -434,43 +391,34 @@
 			);
 		}
 
-		function filterResults()
-		{
-			if(!isNull(params.filtertype) AND params.filtertype eq "clear")
-			{
+		function filterResults() {
+			if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 				resetIndexFilters();
-			}
-			else
-			{
+			} else {
 				rememberParams = "";
 
 				// Set display type
-				if(!isNull(params.display))
-				{
+				if(!isNull(params.display)) {
 					session.display = params.display;
 				}
 
 				// Set search query
-				if(!isNull(params.search))
-				{
+				if(!isNull(params.search)) {
 					params.search = params.search;
 				}
 
 				// Set sort by
-				if(!isNull(params.sort))
-				{
+				if(!isNull(params.sort)) {
 					session.users.sortby = params.sort;
 				}
 
 				// Set order
-				if(!isNull(params.order))
-				{
+				if(!isNull(params.order)) {
 					session.users.order = params.order;
 				}
 
 				// Apply "search" filter
-				if(!isNull(params.search) AND len(params.search))
-				{
+				if(!isNull(params.search) AND len(params.search)) {
 					rememberParams = ListAppend(rememberParams,"search=#params.search#","&");
 
 					// Break apart search string into a keyword where clause
@@ -508,8 +456,7 @@
 					order	= session.users.sortby & " " & session.users.order
 				);
 
-				if(len(rememberParams))
-				{
+				if(len(rememberParams)) {
 					pagination.setAppendToLinks("&#rememberParams#");
 				}
 
@@ -517,16 +464,13 @@
 			}
 		}
 
-		function verifyEmail()
-		{
-			if(!isNull(params.token))
-			{
+		function verifyEmail() {
+			if(!isNull(params.token)) {
 				decryptUserId = passcrypt(password=params.token, type="decrypt");
 
 				matchUser = model("user").findByKey(decryptUserId);
 				saveResult = matchUser.update(securityApproval=1,validate=false);
-				if(saveResult)
-				{
+				if(saveResult) {
 					flashInsert(success="Your email address has been verified. You can now login.");
 				} else {
 					flashInsert(error="There was an issue verifying your address. Please try again.");
@@ -535,8 +479,7 @@
 			redirectTo(route="admin~action", action="login", controller="users");
 		}
 
-		function importUserList()
-		{
+		function importUserList() {
 
 		}
 	}

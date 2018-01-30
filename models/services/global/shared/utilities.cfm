@@ -16,8 +16,7 @@
 		<cfscript>
 			var loc = {};
 			loc.thisfile = expandThis(arguments.filepath);
-			if(FileExists(loc.thisfile))
-			{
+			if(FileExists(loc.thisfile)) {
 				fileDelete(loc.thisfile);
 			}
 		</cfscript>

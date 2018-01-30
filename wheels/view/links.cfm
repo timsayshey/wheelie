@@ -17,23 +17,19 @@
 	<cfscript>
 		var loc = {};
 		$args(name="linkTo", args=arguments);
-		if (Len(arguments.confirm))
-		{
+		if (Len(arguments.confirm)) {
 			loc.onclick = "return confirm('#JSStringFormat(arguments.confirm)#');";
 			arguments.onclick = $addToJavaScriptAttribute(name="onclick", content=loc.onclick, attributes=arguments);
 		}
-		if (!StructKeyExists(arguments, "href"))
-		{
+		if (!StructKeyExists(arguments, "href")) {
 			arguments.href = URLFor(argumentCollection=arguments);
 		}
 		arguments.href = toXHTML(arguments.href);
-		if (!StructKeyExists(arguments, "text"))
-		{
+		if (!StructKeyExists(arguments, "text")) {
 			arguments.text = arguments.href;
 		}
 		loc.skip = "text,confirm,route,controller,action,key,params,anchor,onlyPath,host,protocol,port";
-		if (Len(arguments.route))
-		{
+		if (Len(arguments.route)) {
 			// variables passed in as route arguments should not be added to the html element
 			loc.skip = ListAppend(loc.skip, $routeVariables(argumentCollection=arguments));
 		}
@@ -63,8 +59,7 @@
 		arguments.action = URLFor(argumentCollection=arguments);
 		arguments.action = toXHTML(arguments.action);
 		arguments.method = "post";
-		if (Len(arguments.confirm))
-		{
+		if (Len(arguments.confirm)) {
 			loc.onsubmit = "return confirm('#JSStringFormat(arguments.confirm)#');";
 			arguments.onsubmit = $addToJavaScriptAttribute(name="onsubmit", content=loc.onsubmit, attributes=arguments);
 		}
@@ -74,8 +69,7 @@
 		loc.args.disable = arguments.disable;
 		loc.content = submitTag(argumentCollection=loc.args);
 		loc.skip = "disable,image,text,confirm,route,controller,key,params,anchor,onlyPath,host,protocol,port";
-		if (Len(arguments.route))
-		{
+		if (Len(arguments.route)) {
 			// variables passed in as route arguments should not be added to the html element
 			loc.skip = ListAppend(loc.skip, $routeVariables(argumentCollection=arguments));
 		}
@@ -92,22 +86,17 @@
 		var loc = {};
 		$args(name="mailTo", reserved="href", args=arguments);
 		arguments.href = "mailto:#arguments.emailAddress#";
-		if (Len(arguments.name))
-		{
+		if (Len(arguments.name)) {
 			loc.content = arguments.name;
-		}
-		else
-		{
+		} else {
 			loc.content = arguments.emailAddress;
 		}
 		loc.rv = $element(name="a", skip="emailAddress,name,encode", content=loc.content, attributes=arguments);
-		if (arguments.encode)
-		{
+		if (arguments.encode) {
 			loc.js = "document.write('#Trim(loc.rv)#');";
 			loc.encoded = "";
 			loc.iEnd = Len(loc.js);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 				loc.encoded &= "%" & Right("0" & FormatBaseN(Asc(Mid(loc.js,loc.i,1)),16),2);
 			}
 			loc.content = "eval(unescape('#loc.encoded#'))";
@@ -141,8 +130,7 @@
 		loc.skipArgs = "windowSize,alwaysShowAnchors,anchorDivider,linkToCurrentPage,prepend,append,prependToPage,prependOnFirst,prependOnAnchor,appendToPage,appendOnLast,appendOnAnchor,classForCurrent,handle,name,showSinglePage,pageNumberAsParam";
 		loc.linkToArguments = Duplicate(arguments);
 		loc.iEnd = ListLen(loc.skipArgs);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			StructDelete(loc.linkToArguments, ListGetAt(loc.skipArgs, loc.i));
 		}
 		loc.currentPage = pagination(arguments.handle).currentPage;
@@ -150,34 +138,26 @@
 		loc.start = "";
 		loc.middle = "";
 		loc.end = "";
-		if (StructKeyExists(arguments, "route"))
-		{
+		if (StructKeyExists(arguments, "route")) {
 			// when a route name is specified and the name argument is part
 			// of the route variables specified, we need to force the
 			// arguments.pageNumberAsParam to be false
 			loc.routeConfig = $findRoute(argumentCollection=arguments);
-			if (ListFindNoCase(loc.routeConfig.variables, arguments.name))
-			{
+			if (ListFindNoCase(loc.routeConfig.variables, arguments.name)) {
 				arguments.pageNumberAsParam = false;
 			}
 		}
-		if (arguments.showSinglePage || loc.totalPages > 1)
-		{
-			if (Len(arguments.prepend))
-			{
+		if (arguments.showSinglePage || loc.totalPages > 1) {
+			if (Len(arguments.prepend)) {
 				loc.start &= arguments.prepend;
 			}
-			if (arguments.alwaysShowAnchors)
-			{
-				if ((loc.currentPage - arguments.windowSize) > 1)
-				{
+			if (arguments.alwaysShowAnchors) {
+				if ((loc.currentPage - arguments.windowSize) > 1) {
 					loc.pageNumber = 1;
 					if (!arguments.pageNumberAsParam)
 					{
 						loc.linkToArguments[arguments.name] = loc.pageNumber;
-					}
-					else
-					{
+					} else {
 						loc.linkToArguments.params = arguments.name & "=" & loc.pageNumber;
 						if (StructKeyExists(arguments, "params"))
 						{
@@ -198,16 +178,12 @@
 				}
 			}
 			loc.middle = "";
-			for (loc.i=1; loc.i <= loc.totalPages; loc.i++)
-			{
-				if ((loc.i >= (loc.currentPage - arguments.windowSize) && loc.i <= loc.currentPage) || (loc.i <= (loc.currentPage + arguments.windowSize) && loc.i >= loc.currentPage))
-				{
+			for (loc.i=1; loc.i <= loc.totalPages; loc.i++) {
+				if ((loc.i >= (loc.currentPage - arguments.windowSize) && loc.i <= loc.currentPage) || (loc.i <= (loc.currentPage + arguments.windowSize) && loc.i >= loc.currentPage)) {
 					if (!arguments.pageNumberAsParam)
 					{
 						loc.linkToArguments[arguments.name] = loc.i;
-					}
-					else
-					{
+					} else {
 						loc.linkToArguments.params = arguments.name & "=" & loc.i;
 						if (StructKeyExists(arguments, "params"))
 						{
@@ -224,9 +200,7 @@
 					{
 						// allow the class attribute to be applied to the anchor tag if specified
 						loc.linkToArguments.class = arguments.class;
-					}
-					else
-					{
+					} else {
 						// clear the class argument if not provided
 						StructDelete(loc.linkToArguments, "class");
 					}
@@ -237,9 +211,7 @@
 					if (loc.currentPage != loc.i || arguments.linkToCurrentPage)
 					{
 						loc.middle &= linkTo(argumentCollection=loc.linkToArguments);
-					}
-					else
-					{
+					} else {
 						if (Len(arguments.classForCurrent))
 						{
 							loc.middle &= $element(name="span", content=NumberFormat(loc.i), class=arguments.classForCurrent);
@@ -255,16 +227,12 @@
 					}
 				}
 			}
-			if (arguments.alwaysShowAnchors)
-			{
-				if (loc.totalPages > (loc.currentPage + arguments.windowSize))
-				{
+			if (arguments.alwaysShowAnchors) {
+				if (loc.totalPages > (loc.currentPage + arguments.windowSize)) {
 					if (!arguments.pageNumberAsParam)
 					{
 						loc.linkToArguments[arguments.name] = loc.totalPages;
-					}
-					else
-					{
+					} else {
 						loc.linkToArguments.params = arguments.name & "=" & loc.totalPages;
 						if (StructKeyExists(arguments, "params"))
 						{
@@ -284,19 +252,15 @@
 					}
 				}
 			}
-			if (Len(arguments.append))
-			{
+			if (Len(arguments.append)) {
 				loc.end &= arguments.append;
 			}
 		}
-		if (Len(loc.middle))
-		{
-			if (Len(arguments.prependToPage) && !arguments.prependOnFirst)
-			{
+		if (Len(loc.middle)) {
+			if (Len(arguments.prependToPage) && !arguments.prependOnFirst) {
 				loc.middle = Mid(loc.middle, Len(arguments.prependToPage)+1, Len(loc.middle)-Len(arguments.prependToPage));
 			}
-			if (Len(arguments.appendToPage) && !arguments.appendOnLast)
-			{
+			if (Len(arguments.appendToPage) && !arguments.appendOnLast) {
 				loc.middle = Mid(loc.middle, 1, Len(loc.middle)-Len(arguments.appendToPage));
 			}
 		}

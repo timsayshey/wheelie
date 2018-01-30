@@ -26,8 +26,7 @@ component extends="_main" output="false"
 		video = model("Menu").findByKey(params.id);
 
 		try {
-			if(video.delete())
-			{
+			if(video.delete()) {
 				writeOutput('{ "Message" : "", "Success" : true }');
 			} else {
 				writeOutput('{ "Message" : "", "Success" : false }');
@@ -42,12 +41,10 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			menu = model("Menu").findAll(where="id = '#params.id#'#wherePermission("Menu","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(menu))
-			{
+			if(ArrayLen(menu)) {
 				menu = menu[1];
 			}
 		}
@@ -69,14 +66,11 @@ component extends="_main" output="false"
 
 		loc.newOrder = DeserializeJSON(params.menuOrder);
 
-		for(i=1; i LTE arrayLen(loc.newOrder); i++)
-		{
+		for(i=1; i LTE arrayLen(loc.newOrder); i++) {
 			loc.curr = loc.newOrder[i];
 
-			if(!isNull(loc.curr.item_id))
-			{
-				if(isNull(loc.curr.parent_id) OR !IsNumeric(loc.curr.parent_id))
-				{
+			if(!isNull(loc.curr.item_id)) {
+				if(isNull(loc.curr.parent_id) OR !IsNumeric(loc.curr.parent_id)) {
 					loc.curr.parent_id = 0;
 				}
 
@@ -95,22 +89,17 @@ component extends="_main" output="false"
 
 	function save()
 	{
-		if(params.menu.itemType eq "page")
-		{
+		if(params.menu.itemType eq "page") {
 			params.menu.itemId = params.menu.pageId;
 		}
-		else if(params.menu.itemType eq "post")
-		{
+		else if(params.menu.itemType eq "post") {
 			params.menu.itemId = params.menu.postId;
-		}
-		else
-		{
+		} else {
 			params.menu.itemId = "";
 		}
 
 		// Save
-		if(!isNull(params.menu.id))
-		{
+		if(!isNull(params.menu.id)) {
 			menu = model("Menu").findByKey(params.menu.id);
 			saveResult = menu.update(params.menu);
 
@@ -120,15 +109,11 @@ component extends="_main" output="false"
 		}
 
 		// Redirect based on result
-		if (saveResult)
-		{
-			if(isNull(isAjaxRequest))
-			{
+		if (saveResult) {
+			if(isNull(isAjaxRequest)) {
 				flashInsert(success="Saved successfully.");
 				redirectTo(route="admin~Menu", action="index", modelName=params.modelName);
-			}
-			else
-			{
+			} else {
 				json = SerializeJSON({
 					response = "success",
 					option = {
@@ -143,14 +128,11 @@ component extends="_main" output="false"
 
 		} else {
 
-			if(isNull(isAjaxRequest))
-			{
+			if(isNull(isAjaxRequest)) {
 				errorMessagesName = "Menu";
 				flashInsert(error="There was an error.");
 				redirectTo(route="admin~Menu", action="editor", modelName=params.modelName);
-			}
-			else
-			{
+			} else {
 				json = SerializeJSON({
 					response = "error",
 					errors =

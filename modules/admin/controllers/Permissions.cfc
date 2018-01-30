@@ -1,24 +1,19 @@
 <cfscript>
 	component extends="_main"
 	{
-		function init()
-		{
+		function init() {
 			super.init();
 		}
-		function index()
-		{
+		function index() {
 			permissions = model("Permission").findAll();
 			permissionCols = application.rbs.roleslist;
 		}
-		function permissionsSubmit()
-		{
+		function permissionsSubmit() {
 			permissions = model("Permission").findAll();
 			permissionCols = application.rbs.roleslist;
 
-			if(!isNull(params.permissions))
-			{
-				for(permission in permissions)
-				{
+			if(!isNull(params.permissions)) {
+				for(permission in permissions) {
 					if(!isNull(params.permissions[permission.id]) AND IsStruct(params.permissions[permission.id]))
 					{
 						model("Permission").

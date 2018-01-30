@@ -25,8 +25,7 @@ component extends="_main" output="false"
 		var metafieldArray = ListToArray(params.importlist,linebreak);
 
 		var sortorder = 1;
-		for(var metafield in metafieldArray)
-		{
+		for(var metafield in metafieldArray) {
 			if(len(metafield)) {
 				var typeCheck = left(metafield,1);
 
@@ -91,16 +90,12 @@ component extends="_main" output="false"
 		metafieldInfo = model(getMetafieldType()).metafieldInfo();
 		metafieldType = getMetafieldType();
 
-		if(!isNull(params.modelid))
-		{
+		if(!isNull(params.modelid)) {
 			buttonParams = "modelid=#params.modelid#";
 		}
-		else if (!isNull(params.id))
-		{
+		else if (!isNull(params.id)) {
 			buttonParams = "modelid=#params.id#";
-		}
-		else
-		{
+		} else {
 			buttonParams = "";
 		}
 	}
@@ -109,8 +104,7 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(!isNull(params.modelid))
-		{
+		if(!isNull(params.modelid)) {
 			metafields = model(getMetafieldType()).findAll(where="modelid = #params.modelid# AND metafieldType = '#getMetafieldType()#'", order="sortorder ASC");
 		}
 	}
@@ -119,14 +113,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			fieldValue = orderValues[i];
 
 			metaField = model(getMetafieldType()).findOne(where="id = #fieldValue.fieldId#");
 
-			if(isObject(metaField))
-			{
+			if(isObject(metaField)) {
 				metaField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
@@ -137,8 +129,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		metafields = model(getMetafieldType()).findByKey(params.id);
-		if(metafields[params.col] eq 1)
-		{
+		if(metafields[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -176,18 +167,15 @@ component extends="_main" output="false"
 	{
 		sharedData();
 
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			metafield = model(getMetafieldType()).findAll(where="id = '#params.id#'#wherePermission("Metafield","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(metafield))
-			{
+			if(ArrayLen(metafield)) {
 				metafield = metafield[1];
 			}
 
 			// meta not found?
-			if (!IsObject(metafield))
-			{
+			if (!IsObject(metafield)) {
 				flashInsert(error="Not found");
 				redirectTo(
 					route		= "admin~Field",
@@ -207,8 +195,7 @@ component extends="_main" output="false"
 		sharedData();
 
 		// Get metafield object
-		if(!isNull(params.metafield.id))
-		{
+		if(!isNull(params.metafield.id)) {
 			metafield = model(getMetafieldType()).findByKey(params.metafield.id);
 			saveResult = metafield.update(params.metafield);
 		} else {
@@ -218,8 +205,7 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update meta object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			flashInsert(success='Field saved.');
 			redirectTo(
 				route		= "admin~FieldId",
@@ -245,12 +231,10 @@ component extends="_main" output="false"
 
 		metafield = model(getMetafieldType()).findByKey(params.id);
 		// meta not found?
-		if (!IsObject(metafield))
-		{
+		if (!IsObject(metafield)) {
 			flashInsert(error="Not found");
 		}
-		else if(metafield.delete())
-		{
+		else if(metafield.delete()) {
 			flashInsert(success="The field was deleted successfully.");
 		} else
 		{

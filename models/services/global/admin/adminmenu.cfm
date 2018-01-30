@@ -94,8 +94,7 @@
 
 		// Create Children for People Menu
 		usergroupLinks = [];
-		for(usergroup in qUsergroups)
-		{
+		for(usergroup in qUsergroups) {
 			ArrayAppend(usergroupLinks,{
 				type	= 'link',
 				name	= pluralize(usergroup.groupname),
@@ -176,18 +175,15 @@
 		itemreturn = '';
 		menuitempermission = true;
 
-		if(!isNull(currMenuItem.permission))
-		{
+		if(!isNull(currMenuItem.permission)) {
 			menuitempermission = checkPermission(currMenuItem.permission);
 		}
 
-		if(!isNull(currMenuItem.type) AND menuitempermission)
-		{
+		if(!isNull(currMenuItem.type) AND menuitempermission) {
 			itemicon = '';
 			if(!isNull(currMenuItem.icon)) { itemicon = '<span class="fa #currMenuItem.icon#"></span> '; }
 
-			if(currMenuItem.type eq 'link' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url))
-			{
+			if(currMenuItem.type eq 'link' and !isNull(currMenuItem.name) and !isNull(currMenuItem.url)) {
 				itemreturn = itemreturn & '<li><a href="#currMenuItem.url#">#itemicon##currMenuItem.name#</a></li>';
 
 			} else if(currMenuItem.type eq 'divider') {
@@ -200,8 +196,7 @@
 				<a href="##" class="dropdown-toggle dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name# <span class="fa fa-caret-down"></span></a>
 				<ul class="dropdown-menu dropdown-menu">';
 
-				for(childitem in currMenuItem.children)
-				{
+				for(childitem in currMenuItem.children) {
 					itemreturn = itemreturn & formatAdminMenuItem(childitem);
 				}
 				itemreturn = itemreturn & '</ul></li>';
@@ -212,8 +207,7 @@
 				itemreturn = itemreturn & '<a href="#currMenuItem.url#" class="dropdown-toggle dropdown-toggle" data-toggle="dropdown">#itemicon##currMenuItem.name#  <span class="fa fa-caret-right"></span></a>
 				<ul class="dropdown-menu dropdown-menu">';
 
-				for(childitem in currMenuItem.children)
-				{
+				for(childitem in currMenuItem.children) {
 					itemreturn = itemreturn & formatAdminMenuItem(childitem);
 				}
 				itemreturn = itemreturn & '</ul></li>';

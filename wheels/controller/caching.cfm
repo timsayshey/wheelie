@@ -9,14 +9,12 @@
 		var loc = {};
 		$args(args=arguments, name="caches", combine="action/actions");
 		arguments.action = $listClean(arguments.action);
-		if (!Len(arguments.action))
-		{
+		if (!Len(arguments.action)) {
 			// since no actions were passed in we assume that all actions should be cachable and indicate this with a *
 			arguments.action = "*";
 		}
 		loc.iEnd = ListLen(arguments.action);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.action, loc.i);
 			loc.action = {action=loc.item, time=arguments.time, static=arguments.static, appendToKey=arguments.appendToKey};
 			$addCachableAction(loc.action);
@@ -57,12 +55,9 @@
 <cffunction name="$hasCachableActions" returntype="boolean" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if (ArrayIsEmpty($cachableActions()))
-		{
+		if (ArrayIsEmpty($cachableActions())) {
 			loc.rv = false;
-		}
-		else
-		{
+		} else {
 			loc.rv = true;
 		}
 	</cfscript>
@@ -76,10 +71,8 @@
 		loc.rv = false;
 		loc.cachableActions = $cachableActions();
 		loc.iEnd = ArrayLen(loc.cachableActions);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
-			if (loc.cachableActions[loc.i].action == arguments.action || loc.cachableActions[loc.i].action == "*")
-			{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+			if (loc.cachableActions[loc.i].action == arguments.action || loc.cachableActions[loc.i].action == "*") {
 				loc.rv = {};
 				loc.rv.time = loc.cachableActions[loc.i].time;
 				loc.rv.static = loc.cachableActions[loc.i].static;

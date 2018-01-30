@@ -118,12 +118,9 @@
 		arguments.property = arguments.name;
 		arguments.objectName = {};
 		arguments.tagValue = arguments.value;
-		if (arguments.checked)
-		{
+		if (arguments.checked) {
 			arguments.objectName[arguments.name] = arguments.value;
-		}
-		else
-		{
+		} else {
 			// space added to allow a blank value while still not having the form control checked
 			arguments.objectName[arguments.name] = " ";
 		}
@@ -152,21 +149,16 @@
 		arguments.checkedValue = arguments.value;
 		arguments.property = arguments.name;
 		arguments.objectName = {};
-		if (arguments.checked)
-		{
+		if (arguments.checked) {
 			arguments.objectName[arguments.name] = arguments.value;
-		}
-		else
-		{
+		} else {
 			// space added to allow a blank value while still not having the form control checked
 			arguments.objectName[arguments.name] = " ";
 		}
-		if (!StructKeyExists(arguments, "id"))
-		{
+		if (!StructKeyExists(arguments, "id")) {
 			loc.valueToAppend = LCase(Replace(ReReplaceNoCase(arguments.checkedValue, "[^a-z0-9- ]", "", "all"), " ", "-", "all"));
 			arguments.id = $tagId(arguments.objectName, arguments.property);
-			if (len(loc.valueToAppend))
-			{
+			if (len(loc.valueToAppend)) {
 				arguments.id &= "-" & loc.valueToAppend;
 			}
 		}

@@ -18,23 +18,18 @@
 			var fieldVal = arguments.objVal;
 			var pass = true;
 
-			if(type eq "required")
-			{
+			if(type eq "required") {
 				pass = isValidRequired(fieldVal);
 			}
 
-			if(len(fieldVal))
-			{
-				if (type eq "email")
-				{
+			if(len(fieldVal)) {
+				if (type eq "email") {
 					pass = isValidEmail(fieldVal);
 				}
-				else if (type eq "integer")
-				{
+				else if (type eq "integer") {
 					pass = isValidInteger(fieldVal);
 				}
-				else if (type eq "numeric")
-				{
+				else if (type eq "numeric") {
 					pass = isValidNumeric(fieldVal);
 				}
 			}

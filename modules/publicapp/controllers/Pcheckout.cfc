@@ -205,8 +205,7 @@ component extends="_main" output="false"
 	private function loggedOutOnly()
 	{
 		// Authenticate
-		if(!StructKeyExists(session,"user"))
-		{
+		if(!StructKeyExists(session,"user")) {
 			redirectTo(route="public~checkoutAction", action="login");
 		}
 	}
@@ -214,8 +213,7 @@ component extends="_main" output="false"
 	private function loggedInExcept()
 	{
 		// Authenticate
-		if(StructKeyExists(session,"user"))
-		{
+		if(StructKeyExists(session,"user")) {
 			redirectTo(route="public~checkoutAction", action="index");
 		}
 	}
@@ -235,8 +233,7 @@ component extends="_main" output="false"
 			globalized	= user.globalized
 		};
 
-		if(len(trim(user.role)))
-		{
+		if(len(trim(user.role))) {
 			session.user.role = user.role;
 		}
 	}
@@ -264,8 +261,7 @@ component extends="_main" output="false"
 		saveResult = user.save();
 
 		// Insert or update user object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#"); // wherePermission for siteid
 			model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
 			flashInsert(success="You signed up, you can now continue with checkout!");
@@ -280,8 +276,7 @@ component extends="_main" output="false"
 
 	function checkCartExists()
 	{
-		if(isNull(session.cart.items))
-		{
+		if(isNull(session.cart.items)) {
 			session.cart.items = {};
 		}
 	}

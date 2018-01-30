@@ -662,8 +662,7 @@ http://ffmpeg.gusari.org/static/
     }
 
 	// check file type
-	if (FindNoCase('Unknown format',ffmpegOut,1))
-		{ return VideoInfo; }
+	if (FindNoCase('Unknown format',ffmpegOut,1)) { return VideoInfo; }
 	//VideoInfo.format = ReFindNoCase('Input ##0, [[:alnum:],]+, from',ffmpegOut,1,1);
 	//VideoInfo.format = mid(ffmpegOut,VideoInfo.format.pos[1]+10,VideoInfo.format.len[1]-16);
 

@@ -29,8 +29,7 @@ function sendData2Master()
 	var destination = window.parent.parent ;
 	try
 	{
-		if ( destination.XDTMaster )
-		{
+		if ( destination.XDTMaster ) {
 			var t = destination.XDTMaster.read( [ gup( 'cmd' ), gup( 'data' ) ] ) ;
 			window.clearInterval( interval ) ;
 		}

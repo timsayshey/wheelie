@@ -14,8 +14,7 @@ component extends="_main" output="false"
 
 	function additem()
 	{
-		if(!isNull(params.id) AND !isNull(params.itemqty))
-		{
+		if(!isNull(params.id) AND !isNull(params.itemqty)) {
 			flashInsert(success=session.cart.items.containsKey(params.id) ? "Item updated!" : "Item added!");
 			session.cart.items[params.id] = ReReplaceNoCase(params.itemqty,"[^0-9]","","ALL");
 		}
@@ -33,8 +32,7 @@ component extends="_main" output="false"
 
 	function checkCartExists()
 	{
-		if(isNull(session.cart.items))
-		{
+		if(isNull(session.cart.items)) {
 			session.cart.items = {};
 		}
 	}

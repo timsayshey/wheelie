@@ -95,8 +95,7 @@ component extends="_main" output="false"
 
 		var getUser = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#'");
 
-		if(getUser.recordcount AND getUser.securityApproval eq 1)
-		{
+		if(getUser.recordcount AND getUser.securityApproval eq 1) {
 			session.user.id = getUser.id;
 			setUserInfo();
 			params.item = deserializeJSON(params.item);
@@ -164,14 +163,12 @@ component extends="_main" output="false"
 		item = model("Item").new(itemParams);
 		var saveResult = item.save();
 
-		if(isNull(item.id))
-		{
+		if(isNull(item.id)) {
 			errorMessagesName = "item";
 			flashInsert(error="There was an error.");
 			renderPage(route="public~Action", controller="pitems", action="itemPost");
 		} else {
-			if(uploadItemImage("photo",item.id))
-			{
+			if(uploadItemImage("photo",item.id)) {
 				params.item.photo = "";
 			}
 		}
@@ -187,8 +184,7 @@ component extends="_main" output="false"
 		saveResult = user.save();
 
 		// Insert or update user object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Default usergroup to staff ("1")
 			defaultUsergroup = model("Usergroup").findOne(where="defaultgroup = 1#wherePermission("Usergroup","AND")#");
 			model("UsergroupJoin").create(usergroupid = defaultUsergroup.id, userid = user.id);
@@ -205,9 +201,7 @@ component extends="_main" output="false"
 				redirectTo(route='public~itemPage', urlid=item.urlid, locationid=item.locationid);
 			}
 
-		}
-		else
-		{
+		} else {
 			item = deserializeJSON(params.item);
 			if(!isStruct(item)) {
 				item = deserializeJSON(item);
@@ -233,8 +227,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 
-		if(!isNull(arguments.filename) AND !isNull(params.item.photo) AND fileExists(expandPath(params.item.photo)))
-		{
+		if(!isNull(arguments.filename) AND !isNull(params.item.photo) AND fileExists(expandPath(params.item.photo))) {
 			var result.fileWasSaved = true;
 			var theFile = expandPath(params.item.photo);
 
@@ -243,8 +236,7 @@ component extends="_main" output="false"
 				var smFile = expandPath("/assets/uploads/items/sm/#arguments.filename#.jpg");
 				var mdFile = expandPath("/assets/uploads/items/md/#arguments.filename#.jpg");
 				var lgFile = expandPath("/assets/uploads/items/lg/#arguments.filename#.jpg");
-				if(!isImageFile(thefile))
-				{
+				if(!isImageFile(thefile)) {
 					fileDelete(theFile);
 					return false;
 				} else {

@@ -1,7 +1,6 @@
 <cfcomponent extends="models.Model">
 	<cfscript>
-		function init()
-		{
+		function init() {
 			// @ucasePlural@
 			table("@tableNamew@");
 			this.setWhere = setWhere;
@@ -19,14 +18,11 @@
 			// Other
 			super.init();
 		}
-		function setWhere()
-		{
+		function setWhere() {
 			return wherePermission('@ucaseSingular@');
 		}
-		function sanitizePrice()
-		{
-			if(!isNull(this.price))
-			{
+		function sanitizePrice() {
+			if(!isNull(this.price)) {
 				this.price = cleanNumber(this.price,true);
 				if(isNumeric(this.price)) {
 					this.price = NumberFormat(this.price,"0.00");
@@ -37,4 +33,3 @@
 		}
 	</cfscript>
 </cfcomponent>
-

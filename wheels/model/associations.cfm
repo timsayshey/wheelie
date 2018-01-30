@@ -72,14 +72,10 @@
 		StructDelete(arguments, "name");
 
 		// infer model name and foreign key from association name unless developer specified it already
-		if (!Len(arguments.modelName))
-		{
-			if (arguments.type == "hasMany")
-			{
+		if (!Len(arguments.modelName)) {
+			if (arguments.type == "hasMany") {
 				arguments.modelName = singularize(loc.associationName);
-			}
-			else
-			{
+			} else {
 				arguments.modelName = loc.associationName;
 			}
 		}
@@ -97,15 +93,12 @@
 	var loc = {};
 	for (loc.key in variables.wheels.class.associations)
 	{
-		if (ListFindNoCase("hasMany,hasOne", variables.wheels.class.associations[loc.key].type) && variables.wheels.class.associations[loc.key].dependent != false)
-		{
+		if (ListFindNoCase("hasMany,hasOne", variables.wheels.class.associations[loc.key].type) && variables.wheels.class.associations[loc.key].dependent != false) {
 			loc.all = "";
-			if (variables.wheels.class.associations[loc.key].type == "hasMany")
-			{
+			if (variables.wheels.class.associations[loc.key].type == "hasMany") {
 				loc.all = "All";
 			}
-			switch (variables.wheels.class.associations[loc.key].dependent)
-			{
+			switch (variables.wheels.class.associations[loc.key].dependent) {
 				case "delete":
 					loc.invokeArgs = {};
 					loc.invokeArgs.instantiate = true;

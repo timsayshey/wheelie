@@ -26,11 +26,9 @@
 	<cfscript>
 		var loc = {};
 		loc.iEnd = ListLen(arguments.property);
-		for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-		{
+		for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
 			loc.item = ListGetAt(arguments.property, loc.i);
-			if (!ListFindNoCase(variables.wheels.class.keys, loc.item))
-			{
+			if (!ListFindNoCase(variables.wheels.class.keys, loc.item)) {
 				variables.wheels.class.keys = ListAppend(variables.wheels.class.keys, loc.item);
 			}
 		}
@@ -55,19 +53,15 @@
 	<cfscript>
 		var loc = {};
 		$args(name="exists", args=arguments);
-		if (get("showErrorInformation") && StructKeyExists(arguments, "key") && StructKeyExists(arguments, "where"))
-		{
+		if (get("showErrorInformation") && StructKeyExists(arguments, "key") && StructKeyExists(arguments, "where")) {
 				$throw(type="Wheels.IncorrectArguments", message="You cannot pass in both `key` and `where`.");
 		}
 		arguments.select = primaryKey();
 		arguments.returnAs = "query";
 		arguments.callbacks = false;
-		if (StructKeyExists(arguments, "key"))
-		{
+		if (StructKeyExists(arguments, "key")) {
 			loc.rv = findByKey(argumentCollection=arguments).recordCount;
-		}
-		else
-		{
+		} else {
 			loc.rv = findOne(argumentCollection=arguments).recordCount;
 		}
 	</cfscript>
@@ -82,12 +76,9 @@
 	<cfargument name="position" type="numeric" required="false" default="0">
 	<cfscript>
 		var loc = {};
-		if (arguments.position > 0)
-		{
+		if (arguments.position > 0) {
 			loc.rv = ListGetAt(variables.wheels.class.keys, arguments.position);
-		}
-		else
-		{
+		} else {
 			loc.rv = variables.wheels.class.keys;
 		}
 	</cfscript>
@@ -116,13 +107,10 @@
 <cffunction name="isNew" returntype="boolean" access="public" output="false">
 	<cfscript>
 		var loc = {};
-		if (!StructKeyExists(variables, "$persistedProperties"))
-		{
+		if (!StructKeyExists(variables, "$persistedProperties")) {
 			// no values have been saved to the database so this object is new
 			loc.rv = true;
-		}
-		else
-		{
+		} else {
 			loc.rv = false;
 		}
 	</cfscript>

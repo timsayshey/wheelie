@@ -12,8 +12,7 @@ Bob	~	 Jim	~	bobjim@gmail.com
 
 		<cfscript>
 			usercheck = model("User").findAll(where="email LIKE '#email#'",includeSoftDeletes=true);
-			if(usercheck.recordcount eq 0)
-			{
+			if(usercheck.recordcount eq 0) {
 				userinfo = {
 					email = email,
 					firstname = fname,
@@ -26,8 +25,7 @@ Bob	~	 Jim	~	bobjim@gmail.com
 
 				user = model("User").new(userinfo);
 
-				if (user.save())
-				{
+				if (user.save()) {
 					model("UsergroupJoin").create(usergroupid = 1, userid = user.id);
 				}
 			}

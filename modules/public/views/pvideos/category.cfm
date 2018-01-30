@@ -7,9 +7,7 @@
 	{
 		contentFor(siteTitle = "#qCategoryOfVideos.name# | #getOption(qOptions,'seo_videos_title').label#");
 		contentFor(siteDescription = qCategoryOfVideos.description);
-	}
-	else
-	{
+	} else {
 		contentFor(siteTitle = "Videos | #getOption(qOptions,'seo_videos_title').label#");
 		contentFor(siteDescription = videoCategory.description);
 	}
@@ -98,4 +96,3 @@
 	</cfoutput>
 
 </cfif>
-

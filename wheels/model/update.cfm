@@ -19,32 +19,25 @@
 		arguments.properties = $setProperties(argumentCollection=arguments, filterList="where,include,properties,reload,parameterize,instantiate,validate,transaction,callbacks,includeSoftDeletes", setOnModel=false);
 
 		// find and instantiate each object and call its update function
-		if (arguments.instantiate)
-		{
+		if (arguments.instantiate) {
 			loc.rv = 0;
 			loc.objects = findAll(select=propertyNames(), where=arguments.where, include=arguments.include, reload=arguments.reload, parameterize=arguments.parameterize, callbacks=arguments.callbacks, includeSoftDeletes=arguments.includeSoftDeletes, returnIncluded=false, returnAs="objects");
 			loc.iEnd = ArrayLen(loc.objects);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
-				if (loc.objects[loc.i].update(properties=arguments.properties, parameterize=arguments.parameterize, transaction=arguments.transaction, callbacks=arguments.callbacks))
-				{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+				if (loc.objects[loc.i].update(properties=arguments.properties, parameterize=arguments.parameterize, transaction=arguments.transaction, callbacks=arguments.callbacks)) {
 					loc.rv++;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			arguments.sql = [];
 			ArrayAppend(arguments.sql, "UPDATE #tableName()# SET");
 			loc.pos = 0;
-			for (loc.key in arguments.properties)
-			{
+			for (loc.key in arguments.properties) {
 				loc.pos++;
 				ArrayAppend(arguments.sql, "#variables.wheels.class.properties[loc.key].column# = ");
 				loc.param = {value=arguments.properties[loc.key], type=variables.wheels.class.properties[loc.key].type, dataType=variables.wheels.class.properties[loc.key].dataType, scale=variables.wheels.class.properties[loc.key].scale, null=!Len(arguments.properties[loc.key])};
 				ArrayAppend(arguments.sql, loc.param);
-				if (StructCount(arguments.properties) > loc.pos)
-				{
+				if (StructCount(arguments.properties) > loc.pos) {
 					ArrayAppend(arguments.sql, ",");
 				}
 			}
@@ -90,12 +83,9 @@
 		loc.object = findOne(where=arguments.where, order=arguments.order, reload=arguments.reload, includeSoftDeletes=arguments.includeSoftDeletes);
 		StructDelete(arguments, "where");
 		StructDelete(arguments, "order");
-		if (IsObject(loc.object))
-		{
+		if (IsObject(loc.object)) {
 			loc.rv = loc.object.update(argumentCollection=arguments);
-		}
-		else
-		{
+		} else {
 			loc.rv = false;
 		}
 	</cfscript>
@@ -166,20 +156,16 @@
 	<cfargument name="reload" type="boolean" required="true">
 	<cfscript>
 		var loc = {};
-		if (hasChanged())
-		{
+		if (hasChanged()) {
 			// perform update since changes have been made
-			if (variables.wheels.class.timeStampingOnUpdate)
-			{
+			if (variables.wheels.class.timeStampingOnUpdate) {
 				$timestampProperty(property=variables.wheels.class.timeStampOnUpdateProperty);
 			}
 			loc.sql = [];
 			ArrayAppend(loc.sql, "UPDATE #tableName()# SET ");
-			for (loc.key in variables.wheels.class.properties)
-			{
+			for (loc.key in variables.wheels.class.properties) {
 				// include all changed non-key values in the update
-				if (StructKeyExists(this, loc.key) && !ListFindNoCase(primaryKeys(), loc.key) && hasChanged(loc.key))
-				{
+				if (StructKeyExists(this, loc.key) && !ListFindNoCase(primaryKeys(), loc.key) && hasChanged(loc.key)) {
 					ArrayAppend(loc.sql, "#variables.wheels.class.properties[loc.key].column# = ");
 					loc.param = $buildQueryParamValues(loc.key);
 					ArrayAppend(loc.sql, loc.param);
@@ -188,13 +174,11 @@
 			}
 
 			// only submit the update if we generated an sql set statement
-			if (ArrayLen(loc.sql) > 1)
-			{
+			if (ArrayLen(loc.sql) > 1) {
 				ArrayDeleteAt(loc.sql, ArrayLen(loc.sql));
 				loc.sql = $addKeyWhereClause(sql=loc.sql);
 				loc.upd = variables.wheels.class.adapter.$query(sql=loc.sql, parameterize=arguments.parameterize);
-				if (arguments.reload)
-				{
+				if (arguments.reload) {
 					this.reload();
 				}
 			}

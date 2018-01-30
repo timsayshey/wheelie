@@ -8,8 +8,7 @@ component extends="_main" output="false"
 
 	function index()
 	{
-		if(!isNull(params.id))
-		{
+		if(!isNull(params.id)) {
 			usergroupfields = model("UsergroupField").findAll(where="usergroupid = #params.id#", order="sortorder ASC");
 		}
 	}
@@ -18,14 +17,12 @@ component extends="_main" output="false"
 	{
 		orderValues = DeserializeJSON(params.orderValues);
 
-		for(i=1; i LTE ArrayLen(orderValues); i = i + 1)
-		{
+		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
 			fieldValue = orderValues[i];
 
 			UsergroupField = model("UsergroupField").findOne(where="id = #fieldValue.fieldId#");
 
-			if(isObject(UsergroupField))
-			{
+			if(isObject(UsergroupField)) {
 				UsergroupField.update(sortorder=fieldValue.newIndex,validate=false);
 			}
 		}
@@ -36,8 +33,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 		usergroupfields = model("UsergroupField").findByKey(params.id);
-		if(usergroupfields[params.col] eq 1)
-		{
+		if(usergroupfields[params.col] eq 1) {
 			loc.toggleValue = 0;
 		} else {
 			loc.toggleValue = 1;
@@ -65,18 +61,15 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			usergroupfield = model("UsergroupField").findAll(where="id = '#params.id#'#wherePermission("Usergroup","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(usergroupfield))
-			{
+			if(ArrayLen(usergroupfield)) {
 				usergroupfield = usergroupfield[1];
 			}
 
 			// Usergroup not found?
-			if (!IsObject(usergroupfield))
-			{
+			if (!IsObject(usergroupfield)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~id", module="admin", controller="UsergroupFields", action="index", id=params.usergroupid);
 			}
@@ -88,8 +81,7 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Get usergroup object
-		if(!isNull(params.usergroupfield.id))
-		{
+		if(!isNull(params.usergroupfield.id)) {
 			usergroupfield = model("UsergroupField").findByKey(params.usergroupfield.id);
 			saveResult = usergroupfield.update(params.usergroupfield);
 		} else {
@@ -99,8 +91,7 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update usergroup object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			flashInsert(success='Field saved.');
 			redirectTo(route="admin~Id", module="admin", controller="usergroupfields", action="edit", id=usergroupfield.id, params="usergroupid=#usergroupfield.usergroupid#");
 		} else {
@@ -117,8 +108,7 @@ component extends="_main" output="false"
 	{
 		usergroups = model("UsergroupField").findByKey(params.id);
 
-		if(usergroups.delete())
-		{
+		if(usergroups.delete()) {
 			flashInsert(success="The field was deleted successfully.");
 		} else
 		{

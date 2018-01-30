@@ -43,19 +43,16 @@ component extends="_main" output="false"
 
 	function edit()
 	{
-		if(isDefined("params.id"))
-		{
+		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
 			page = model("Page").findAll(where="id = '#params.id#'#wherePermission("Page","AND")#", maxRows=1, returnAs="Object");
-			if(ArrayLen(page))
-			{
+			if(ArrayLen(page)) {
 				page = page[1];
 			}
 
 			// Page not found?
-			if (!IsObject(page))
-			{
+			if (!IsObject(page)) {
 				flashInsert(error="Not found");
 				redirectTo(route="admin~Index", module="admin", controller="pages");
 			}
@@ -82,8 +79,7 @@ component extends="_main" output="false"
 	{
 		page = model("Page").findByKey(params.id);
 
-		if(page.delete())
-		{
+		if(page.delete()) {
 			flashInsert(success="The page was deleted successfully.");
 		} else
 		{
@@ -100,28 +96,24 @@ component extends="_main" output="false"
 	function save()
 	{
 		// Handle submit button type (publish,draft,trash,etc)
-		if(!isNull(params.submit))
-		{
+		if(!isNull(params.submit)) {
 			params.page.status = handleSubmitType("page", params.submit);
 		}
 
 		// Save homepage settings
-		if(StructKeyExists(params,"options") AND StructKeyExists(params,"isHome"))
-		{
+		if(StructKeyExists(params,"options") AND StructKeyExists(params,"isHome")) {
 			model("Option").saveOptions(params.options);
 		}
 
 		// Auto generate meta tags
-		if(StructKeyExists(params.page,"metagenerated") AND params.page.metagenerated eq 1)
-		{
+		if(StructKeyExists(params.page,"metagenerated") AND params.page.metagenerated eq 1) {
 			params.page.metatitle 		= generatePageTitle(params.page.name);
 			params.page.metadescription = generateMetaDescription(params.page.content);
 			params.page.metakeywords 	= generateMetaKeywords(params.page.content);
 		}
 
 		// Get page object
-		if(!isNull(params.page.id))
-		{
+		if(!isNull(params.page.id)) {
 			page = model("Page").findByKey(params.page.id);
 			saveResult = page.update(params.page);
 		} else {
@@ -130,25 +122,20 @@ component extends="_main" output="false"
 		}
 
 		// Insert or update page object with properties
-		if (saveResult)
-		{
+		if (saveResult) {
 			// Delete featuredImg
-			if(!isNull(params.featuredImg_delete))
-			{
+			if(!isNull(params.featuredImg_delete)) {
 				deleteThisFile("/assets/images/featured/feat-#page.id#.jpg");
 			}
 
 			// Save featuredImg
-			if(!isNull(form.featuredImg) AND len(form.featuredImg) AND FileExists(form.featuredImg))
-			{
-				if(uploadImage(field="featuredImg",filename='feat-#page.id#'))
-				{
+			if(!isNull(form.featuredImg) AND len(form.featuredImg) AND FileExists(form.featuredImg)) {
+				if(uploadImage(field="featuredImg",filename='feat-#page.id#')) {
 					user.featuredImg = "";
 				}
 			}
 
-			if(StructKeyExists(params,"isHome"))
-			{
+			if(StructKeyExists(params,"isHome")) {
 				option = model("Option").findOne(where="id = 'home_id'#wherePermission("option","AND")#");
 				option.update(content=page.id,validate=false);
 			}
@@ -171,8 +158,7 @@ component extends="_main" output="false"
 	{
 		var loc = {};
 
-		if(arguments.containsKey("filename"))
-		{
+		if(arguments.containsKey("filename")) {
 			var result = fileUpload(getTempDirectory(),arguments.field, "image/*", "makeUnique");
 
 			if(result.fileWasSaved) {
@@ -198,8 +184,7 @@ component extends="_main" output="false"
 
 	function deleteSelection()
 	{
-		for(i=1; i LTE ListLen(params.deletelist); i++)
-		{
+		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Page").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
 
@@ -214,8 +199,7 @@ component extends="_main" output="false"
 
 	function setPerPage()
 	{
-		if(!isNull(params.id) AND IsNumeric(params.id))
-		{
+		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
 
@@ -228,55 +212,45 @@ component extends="_main" output="false"
 
 	function filterResults()
 	{
-		if(!isNull(params.filtertype) AND params.filtertype eq "clear")
-		{
+		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
-		}
-		else
-		{
+		} else {
 			rememberParams = "";
 
 			// Set display type
-			if(!isNull(params.display))
-			{
+			if(!isNull(params.display)) {
 				session.display = params.display;
 			}
 
 			// Set search query
-			if(!isNull(params.search))
-			{
+			if(!isNull(params.search)) {
 				params.search = params.search;
 			}
 
 			// Set sort by
-			if(!isNull(params.sort))
-			{
+			if(!isNull(params.sort)) {
 				session.pages.sortby = params.sort;
 			}
 
 			// Set order
-			if(!isNull(params.order))
-			{
+			if(!isNull(params.order)) {
 				session.pages.order = params.order;
 			}
 
 			// Apply "search" filter
-			if(!isNull(params.search) AND len(params.search))
-			{
+			if(!isNull(params.search) AND len(params.search)) {
 				rememberParams = ListAppend(rememberParams,"search=#params.search#","&");
 
 				// Break apart search string into a keyword where clause
 				var whereKeywords = [];
 				var keywords = listToArray(trim(params.search)," ");
-				for(keyword in keywords)
-				{
+				for(keyword in keywords) {
 					ArrayAppend(whereKeywords, "name LIKE '%#keyword#%'");
 				}
 
 				// Include permission check if defined
 				whereKeywords = ArrayToList(whereKeywords, " OR ");
-				if(len(wherePermission("Page")))
-				{
+				if(len(wherePermission("Page"))) {
 					whereClause = wherePermission("Page") & " AND (" & whereKeywords & ")";
 				} else {
 					whereClause = whereKeywords;
@@ -294,8 +268,7 @@ component extends="_main" output="false"
 				order	= session.pages.sortby & " " & session.pages.order
 			);
 
-			if(len(rememberParams))
-			{
+			if(len(rememberParams)) {
 				pagination.setAppendToLinks("&#rememberParams#");
 			}
 

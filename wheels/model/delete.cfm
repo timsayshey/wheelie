@@ -15,21 +15,16 @@
 		$args(name="deleteAll", args=arguments);
 		arguments.include = $listClean(arguments.include);
 		arguments.where = $cleanInList(arguments.where);
-		if (arguments.instantiate)
-		{
+		if (arguments.instantiate) {
 			loc.rv = 0;
 			loc.objects = findAll(select=propertyNames(), where=arguments.where, include=arguments.include, reload=arguments.reload, parameterize=arguments.parameterize, includeSoftDeletes=arguments.includeSoftDeletes, returnIncluded=false, returnAs="objects");
 			loc.iEnd = ArrayLen(loc.objects);
-			for (loc.i=1; loc.i <= loc.iEnd; loc.i++)
-			{
-				if (loc.objects[loc.i].delete(parameterize=arguments.parameterize, transaction=arguments.transaction, callbacks=arguments.callbacks, softDelete=arguments.softDelete))
-				{
+			for (loc.i=1; loc.i <= loc.iEnd; loc.i++) {
+				if (loc.objects[loc.i].delete(parameterize=arguments.parameterize, transaction=arguments.transaction, callbacks=arguments.callbacks, softDelete=arguments.softDelete)) {
 					loc.rv++;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			arguments.sql = [];
 			arguments.sql = $addDeleteClause(sql=arguments.sql, softDelete=arguments.softDelete);
 			arguments.sql = $addWhereClause(sql=arguments.sql, where=arguments.where, include=arguments.include, includeSoftDeletes=arguments.includeSoftDeletes);
@@ -69,12 +64,9 @@
 		var loc = {};
 		$args(name="deleteOne", args=arguments);
 		loc.object = findOne(where=arguments.where, order=arguments.order, reload=arguments.reload, includeSoftDeletes=arguments.includeSoftDeletes);
-		if (IsObject(loc.object))
-		{
+		if (IsObject(loc.object)) {
 			loc.rv = loc.object.delete(transaction=arguments.transaction, callbacks=arguments.callbacks, softDelete=arguments.softDelete);
-		}
-		else
-		{
+		} else {
 			loc.rv = false;
 		}
 	</cfscript>
@@ -115,14 +107,12 @@
 	<cfscript>
 		var loc = {};
 		loc.rv = false;
-		if ($callback("beforeDelete", arguments.callbacks))
-		{
+		if ($callback("beforeDelete", arguments.callbacks)) {
 			// delete dependents before the main record in case of foreign key constraints
 			$deleteDependents();
 
 			loc.deleted = variables.wheels.class.adapter.$query(sql=arguments.sql, parameterize=arguments.parameterize);
-			if (loc.deleted.result.recordCount == 1 && $callback("afterDelete", arguments.callbacks))
-			{
+			if (loc.deleted.result.recordCount == 1 && $callback("afterDelete", arguments.callbacks)) {
 				loc.rv = true;
 			}
 		}

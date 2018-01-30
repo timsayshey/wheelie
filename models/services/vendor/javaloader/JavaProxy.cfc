@@ -57,8 +57,7 @@ Mark Mandel		27/08/2007		Created
 		var instance = 0;
 
 		//make sure we only ever have one instance
-		if(_hasClassInstance())
-		{
+		if(_hasClassInstance()) {
 			return _getClassInstance();
 		}
 
@@ -79,14 +78,10 @@ Mark Mandel		27/08/2007		Created
 	<cfscript>
 		var method = _findMethod(arguments.missingMethodName, arguments.missingMethodArguments);
 
-		if(_getModifier().isStatic(method.getModifiers()))
-		{
+		if(_getModifier().isStatic(method.getModifiers())) {
 			return method.invoke(JavaCast("null", 0), _buildArgumentArray(arguments.missingMethodArguments));
-		}
-		else
-		{
-			if(NOT _hasClassInstance())
-			{
+		} else {
+			if(NOT _hasClassInstance()) {
 				//run the default constructor, just like in normal CF, if there is no instance
 				init();
 			}
@@ -109,11 +104,9 @@ Mark Mandel		27/08/2007		Created
 		var len = ArrayLen(fields);
 		var field = 0;
 
-		for(; counter <= len; counter++)
-		{
+		for(; counter <= len; counter++) {
 			field = fields[counter];
-			if(_getModifier().isStatic(field.getModifiers()))
-			{
+			if(_getModifier().isStatic(field.getModifiers())) {
 				this[field.getName()] = field.get(JavaCast("null", 0));
 			}
 		}
@@ -128,8 +121,7 @@ Mark Mandel		27/08/2007		Created
 		var counter = 1;
 		var obj = 0;
 
-		for(; counter <= len; counter++)
-		{
+		for(; counter <= len; counter++) {
 			obj = arguments[counter];
 			_getArray().set(objArray, counter - 1, obj);
 		}
@@ -144,17 +136,13 @@ Mark Mandel		27/08/2007		Created
 	<cfscript>
 		var decision = 0;
 
-		if(StructKeyExists(_getMethodCollection(), arguments.methodName))
-		{
+		if(StructKeyExists(_getMethodCollection(), arguments.methodName)) {
 			decision = StructFind(_getMethodCollection(), arguments.methodName);
 
 			//if there is only one option, try it, it's only going to throw a runtime exception if it doesn't work.
-			if(ArrayLen(decision) == 1)
-			{
+			if(ArrayLen(decision) == 1) {
 				return decision[1];
-			}
-			else
-			{
+			} else {
 				return _resolveMethodByParams(arguments.methodName, decision, arguments.methodArgs);
 			}
 		}
@@ -179,18 +167,15 @@ Mark Mandel		27/08/2007		Created
 		var class = 0;
 		var found = true;
 
-		for(; counter <= decisionLen; counter++)
-		{
+		for(; counter <= decisionLen; counter++) {
 			method = arguments.decision[counter];
 			parameters = method.getParameterTypes();
 			paramLen = ArrayLen(parameters);
 
 			found = true;
 
-			if(argLen eq paramLen)
-			{
-				for(pCounter = 1; pCounter <= paramLen AND found; pCounter++)
-				{
+			if(argLen eq paramLen) {
+				for(pCounter = 1; pCounter <= paramLen AND found; pCounter++) {
 					param = parameters[pCounter];
 					class = _getClassMethod().invoke(arguments.methodArgs[pCounter], JavaCast("null", 0));
 
@@ -236,15 +221,12 @@ Mark Mandel		27/08/2007		Created
 						{
 							found = false;
 						}
-					}
-					else
-					{
+					} else {
 						found = false;
 					}
 				}
 
-				if(found)
-				{
+				if(found) {
 					return method;
 				}
 			}
@@ -263,12 +245,10 @@ Mark Mandel		27/08/2007		Created
 
 		_setMethodCollection(StructNew());
 
-		for(; counter <= len; counter++)
-		{
+		for(; counter <= len; counter++) {
 			method = methods[counter];
 
-			if(NOT StructKeyExists(_getMethodCollection(), method.getName()))
-			{
+			if(NOT StructKeyExists(_getMethodCollection(), method.getName())) {
 				StructInsert(_getMethodCollection(), method.getName(), ArrayNew(1));
 			}
 
