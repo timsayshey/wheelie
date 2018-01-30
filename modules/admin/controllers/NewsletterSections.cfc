@@ -1,24 +1,20 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(newsletterSectionid)
-	{
+	function sharedObjects(newsletterSectionid) {
 
 	}
 
-	function index()
-	{
+	function index() {
 		newsletter = model("Newsletter").findAll(where="id = '#params.id#'#wherePermission("User","AND")#", order="createdat DESC");
 		sections = model("NewsletterSection").findAll(where="newsletterid = '#params.id#'#wherePermission("User","AND")#", order="createdat DESC");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -42,8 +38,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		sharedObjects(0);
 		newsletterSection = model("NewsletterSection").new(colStruct("NewsletterSection"));
@@ -56,8 +51,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		newsletterSection = model("NewsletterSection").findByKey(params.id);
 
 		if(newsletterSection.delete()) {
@@ -75,8 +69,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		// Handle submit button type (publish,draft,trash,etc)
 		if(!isNull(params.submit)) {
 			params.newsletterSection.status = handleSubmitType("newsletterSection", params.submit);
@@ -113,8 +106,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function preHandler()
-	{
+	function preHandler() {
 		super.preHandler();
 	}
 }

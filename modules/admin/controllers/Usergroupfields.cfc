@@ -1,20 +1,17 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		if(!isNull(params.id)) {
 			usergroupfields = model("UsergroupField").findAll(where="usergroupid = #params.id#", order="sortorder ASC");
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -29,8 +26,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		usergroupfields = model("UsergroupField").findByKey(params.id);
 		if(usergroupfields[params.col] eq 1) {
@@ -47,8 +43,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="usergroups");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		usergroupfield = model("UsergroupField").new(colStruct("UsergroupField"));
 
@@ -59,8 +54,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			usergroupfield = model("UsergroupField").findAll(where="id = '#params.id#'#wherePermission("Usergroup","AND")#", maxRows=1, returnAs="Object");
@@ -78,8 +72,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		// Get usergroup object
 		if(!isNull(params.usergroupfield.id)) {
 			usergroupfield = model("UsergroupField").findByKey(params.usergroupfield.id);
@@ -104,8 +97,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		usergroups = model("UsergroupField").findByKey(params.id);
 
 		if(usergroups.delete()) {

@@ -1,30 +1,25 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		forms = model("form").findAll(order="name ASC");
 	}
 
-	function show()
-	{
+	function show() {
 		qform = model("form").findAll(where="id = '#params.id#'");
 		dataFields = model("FormField").findAll(where="metafieldType = 'formfield' AND modelid = '#params.id#'",order="sortorder ASC");
 	}
 
-	function formsubmissions()
-	{
+	function formsubmissions() {
 		qform = model("Form").findByKey(params.id);
 		formsubmissions = model("formsubmission").findAll(where="formid = '#qform.id#'",order="createdat DESC");
 	}
 
-	function formsubmission()
-	{
+	function formsubmission() {
 		formsubmission = model("formsubmission").findByKey(params.id);
 		qform = model("Form").findByKey(formsubmission.formid);
 
@@ -35,8 +30,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function formsubmissionSave()
-	{
+	function formsubmissionSave() {
 		if(params.containsKey("fielddata")) {
 
 			// Spam Checks
@@ -157,8 +151,7 @@ component extends="_main" output="false"
 		// route to response page with success or fail message
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		forms = model("form").findByKey(params.id);
 		if(forms[params.col] eq 1) {
@@ -175,8 +168,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="forms");
 	}
 
-	function new()
-	{
+	function new() {
 		sharedObjects();
 
 		// Queries
@@ -189,8 +181,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		sharedObjects(params.id);
 
 		metafields = model("formfield").findAll(where="modelid = #params.id# AND metafieldType = 'formfield'", order="sortorder ASC");
@@ -213,8 +204,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		// Get form object
 		if(!isNull(params.qform.id)) {
 			qform = model("form").findByKey(params.qform.id);
@@ -259,8 +249,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		forms = model("form").findByKey(params.id);
 
 		if(forms.delete()) {
@@ -273,8 +262,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="forms");
 	}
 
-	function sharedObjects(formid=0)
-	{
+	function sharedObjects(formid=0) {
 		formusers = model("User").findAll(where="#wherePermission("User")#");
 
 		selectedformusers = model("FormUserJoin").findAll(

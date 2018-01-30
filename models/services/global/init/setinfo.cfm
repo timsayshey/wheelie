@@ -41,15 +41,13 @@
 	info.fileVideoThumbs= fixFilePathSlashes("#fileroot##info.videoThumbPath#");
 	info.filemedia	 	= fixFilePathSlashes("#fileroot##info.mediaPath#");
 
-	if (isNull(Application.info) OR !isNull(url.reload))
-	{
+	if (isNull(Application.info) OR !isNull(url.reload)) {
 		Application.info = info; // Set for ckeditor filemanager
 	}
 
 	// Set Admin Filter Defaults
 
-	function filterDefaults()
-	{
+	function filterDefaults() {
 		// Filter defaults
 		param name="params.status" default="all";
 		param name="session.perPage" default="9";
@@ -93,8 +91,7 @@
 	}
 
 	// Usually called when a user clicks the clear button
-	function resetIndexFilters()
-	{
+	function resetIndexFilters() {
 		session.perPage = "10";
 		//session.display = "grid";
 		params.p = "1";

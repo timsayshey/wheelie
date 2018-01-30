@@ -3,8 +3,7 @@ $(function() {
 	selectVal = "";
 	url = "";
 
-	if(typeof $(".youtubeId").val() !== 'undefined')
-	{
+	if(typeof $(".youtubeId").val() !== 'undefined') {
 		loadYoutubeThumbs(selectVal);
 
 		setListeners();
@@ -77,8 +76,7 @@ function loadYoutubeThumbs()
 	var idFieldVal = $(".youtubeurl").val();
 	var ytParsedUrl;
 
-	if(typeof idFieldVal !== 'undefined')
-	{
+	if(typeof idFieldVal !== 'undefined') {
 		ytParsedUrl = $.parseParams( idFieldVal.split('?')[1] || '' );
 	} else {
 		ytParsedUrl = "";
@@ -86,20 +84,17 @@ function loadYoutubeThumbs()
 
 	$thumbChooser.html("");
 
-	if(typeof ytParsedUrl.p !== 'undefined')
-	{
+	if(typeof ytParsedUrl.p !== 'undefined') {
 		getPlaylistVideoThumbs(ytParsedUrl.p);
 		$(".youtubeId").val(ytParsedUrl.p);
 		$("#isPlaylist").val(1);
 	}
-	else if(typeof ytParsedUrl.list !== 'undefined')
-	{
+	else if(typeof ytParsedUrl.list !== 'undefined') {
 		getPlaylistVideoThumbs(ytParsedUrl.list);
 		$(".youtubeId").val(ytParsedUrl.list);
 		$("#isPlaylist").val(1);
 	}
-	else if(typeof ytParsedUrl.v !== 'undefined')
-	{
+	else if(typeof ytParsedUrl.v !== 'undefined') {
 		thumbLoader([ytParsedUrl.v]);
 		$(".youtubeId").val(ytParsedUrl.v);
 	}

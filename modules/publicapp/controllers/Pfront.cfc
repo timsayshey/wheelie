@@ -1,10 +1,8 @@
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
-	function index()
-	{
+	function index() {
 	}
 }

@@ -1,20 +1,17 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		if(!isNull(params.id)) {
 			@lcaseSingular@fields = model("@ucaseSingular@Field").findAll(where="@lcaseSingular@id = #params.id#", order="sortorder ASC");
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -29,8 +26,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		@lcaseSingular@fields = model("@ucaseSingular@Field").findByKey(params.id);
 		if(@lcaseSingular@fields[params.col] eq 1) {
@@ -47,8 +43,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="@lcaseSingular@s");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		@lcaseSingular@field = model("@ucaseSingular@Field").new(colStruct("@ucaseSingular@Field"));
 
@@ -59,8 +54,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			@lcaseSingular@field = model("@ucaseSingular@Field").findAll(where="id = '#params.id#'#wherePermission("@ucaseSingular@","AND")#", maxRows=1, returnAs="Object");
@@ -78,8 +72,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		// Get @lcaseSingular@ object
 		if(!isNull(params.@lcaseSingular@field.id)) {
 			@lcaseSingular@field = model("@ucaseSingular@Field").findByKey(params.@lcaseSingular@field.id);
@@ -104,8 +97,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		@lcaseSingular@s = model("@ucaseSingular@Field").findByKey(params.id);
 
 		if(@lcaseSingular@s.delete()) {

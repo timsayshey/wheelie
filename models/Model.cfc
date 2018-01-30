@@ -1,8 +1,7 @@
 <cfscript>
 component extends="Wheels"
 {
-	function init()
-	{
+	function init() {
 		logUserActions();
 
 		afterCreate('logCreate');
@@ -17,8 +16,7 @@ component extends="Wheels"
 		beforeSave("setSiteId");
 	}
 
-	function setSiteId()
-	{
+	function setSiteId() {
 		if(!isNull(request.site.id) AND isNumeric(request.site.id) AND isNull(this.siteid_override)) {
 			this.siteid = request.site.id;
 		} else if (!isNull(this.siteid_override) AND isNumeric(this.siteid_override)) {
@@ -27,8 +25,7 @@ component extends="Wheels"
 	}
 
 	// Set this.setWhere in Model to default where statement
-	function findAll()
-	{
+	function findAll() {
 		if(!isNull(this.setWhere) AND isCustomFunction(this.setWhere)) {
 			if(!StructKeyExists(arguments, "where") OR !Len(arguments.where)) {
 				//arguments.where = wherePermission(getModelName());
@@ -39,8 +36,7 @@ component extends="Wheels"
 	}
 
 	// Clean strings
-	private function sanitizeNameAndURLId()
-	{
+	private function sanitizeNameAndURLId() {
 		if(!isNull(this.urlid) AND !isNull(this.name)) {
 			this.urlid 	= lcase(cleanUrlId(this.urlid));
 			this.name 	= removehtml(this.name);
@@ -64,8 +60,7 @@ component extends="Wheels"
 		checkForPermission(type="delete", checkid=this.createdby);
 	}
 
-	private function checkForPermission(string type="", checkid="")
-	{
+	private function checkForPermission(string type="", checkid="") {
 		var permissionType = arguments.type;
 		variables.checkid = arguments.checkid;
 
@@ -90,8 +85,7 @@ component extends="Wheels"
 		}
 	}
 
-	private function getModelName()
-	{
+	private function getModelName() {
 		try {
 			return ListLast(getMetaData(this).fullname,".");
 		} catch(any e) {
@@ -101,23 +95,19 @@ component extends="Wheels"
 
 	// before save check if can insert
 
-	private function logCreate()
-	{
+	private function logCreate() {
 		logIt("Create");
 	}
 
-	private function logUpdate()
-	{
+	private function logUpdate() {
 		logIt("Update");
 	}
 
-	private function logDelete()
-	{
+	private function logDelete() {
 		logIt("Delete");
 	}
 
-	private function logIt(savetype)
-	{
+	private function logIt(savetype) {
 		var loc = {};
 		param name="this.id" default="";
 

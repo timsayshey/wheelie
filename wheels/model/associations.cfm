@@ -91,8 +91,7 @@
 <cffunction name="$deleteDependents" returntype="void" access="public" output="false">
 	<cfscript>
 	var loc = {};
-	for (loc.key in variables.wheels.class.associations)
-	{
+	for (loc.key in variables.wheels.class.associations) {
 		if (ListFindNoCase("hasMany,hasOne", variables.wheels.class.associations[loc.key].type) && variables.wheels.class.associations[loc.key].dependent != false) {
 			loc.all = "";
 			if (variables.wheels.class.associations[loc.key].type == "hasMany") {

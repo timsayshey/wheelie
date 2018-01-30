@@ -1,18 +1,15 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function getMediafileType()
-	{
+	function getMediafileType() {
 		return params.modelName;
 	}
 
-	function updateSorting()
-	{
+	function updateSorting() {
 		var sortOrder = 0;
 		for(var id in params.orderValues) {
 			var mediafile = model(getMediafileType()).findOne(where="fileid = '#id#'");
@@ -25,8 +22,7 @@ component extends="_main" output="false"
 		writeOutput(serializeJSON({"success":true})); abort;
 	}
 
-	function uploadMedia()
-	{
+	function uploadMedia() {
 		var data = {};
 
 		if(!isNull(form.file) AND len(form.file) AND FileExists(form.file)) {
@@ -49,8 +45,7 @@ component extends="_main" output="false"
 		writeOutput(serializeJSON({"success":true})); abort;
 	}
 
-	function uploadImage(field,filename,nonfieldpath)
-	{
+	function uploadImage(field,filename,nonfieldpath) {
 		var loc = {};
 
 		if(!isNull(arguments.filename)) {
@@ -110,8 +105,7 @@ component extends="_main" output="false"
 		return false;
 	}
 
-	function sharedData()
-	{
+	function sharedData() {
 		mediafileInfo = model(getMediafileType()).mediafileInfo();
 		mediafileType = getMediafileType();
 
@@ -125,8 +119,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		sharedData();
 
 		if(!isNull(params.modelid)) {
@@ -134,8 +127,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -150,8 +142,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		mediafiles = model(getMediafileType()).findByKey(params.id);
 		if(mediafiles[params.col] eq 1) {
@@ -174,8 +165,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function new()
-	{
+	function new() {
 		sharedData();
 
 		// Queries
@@ -188,8 +178,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		sharedData();
 
 		if(isDefined("params.id")) {
@@ -215,8 +204,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		sharedData();
 
 		// Get mediafile object
@@ -239,8 +227,7 @@ component extends="_main" output="false"
 		writeOutput(serializeJSON(response)); abort;
 	}
 
-	function delete()
-	{
+	function delete() {
 		var mediafile = model(getMediafileType()).findOne(where="fileid = '#params.fileid#'");
 		var response = {};
 

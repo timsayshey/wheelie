@@ -8,8 +8,7 @@
 
 	// Admin Routes
 	var adminUrlPaths = "#adminUrlPath#,/m/admin";
-	for (i=1; i lte listLen(adminUrlPaths); i++)
-	{
+	for (i=1; i lte listLen(adminUrlPaths); i++) {
 		thisAdminUrlPath = ListGetAt(adminUrlPaths, i);
 
 		addRoute(

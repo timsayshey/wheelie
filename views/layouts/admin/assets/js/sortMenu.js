@@ -84,8 +84,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$(document).on("click", ".submitBtn", function(e)
-	{
+	$(document).on("click", ".submitBtn", function(e) {
 		var jsonData,
 			finalData = {},
 			dataArray = [];

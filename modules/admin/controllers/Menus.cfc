@@ -1,19 +1,16 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedData()
-	{
+	function sharedData() {
 		pages = model("Page").findAll(order="name ASC");
 		posts = model("Post").findAll(order="name ASC");
 	}
 
-	function new()
-	{
+	function new() {
 		sharedData();
 
 		menu = model("Menu").new(colStruct("Menu"));
@@ -21,8 +18,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function delete()
-	{
+	function delete() {
 		video = model("Menu").findByKey(params.id);
 
 		try {
@@ -37,8 +33,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function edit()
-	{
+	function edit() {
 		sharedData();
 
 		if(isDefined("params.id")) {
@@ -53,15 +48,13 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function rearrange()
-	{
+	function rearrange() {
 		sharedData();
 
 		menus = model("Menu").findAll(order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder", distinct=true);
 	}
 
-	function saveRearrange()
-	{
+	function saveRearrange() {
 		var loc = {};
 
 		loc.newOrder = DeserializeJSON(params.menuOrder);
@@ -87,8 +80,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Menu", action="rearrange", modelName="Menu");
 	}
 
-	function save()
-	{
+	function save() {
 		if(params.menu.itemType eq "page") {
 			params.menu.itemId = params.menu.pageId;
 		}

@@ -1,18 +1,15 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		usergroups = model("usergroup").findAll();
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		usergroups = model("usergroup").findByKey(params.id);
 		if(usergroups[params.col] eq 1) {
@@ -29,8 +26,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="usergroups");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		usergroup = model("Usergroup").new(colStruct("Usergroup"));
 
@@ -41,8 +37,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			usergroup = model("Usergroup").findAll(where="id = '#params.id#'#wherePermission("Usergroup","AND")#", maxRows=1, returnAs="Object");
@@ -60,8 +55,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		// Get usergroup object
 		if(!isNull(params.usergroup.id)) {
 			usergroup = model("Usergroup").findByKey(params.usergroup.id);
@@ -91,8 +85,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		usergroups = model("usergroup").findByKey(params.id);
 
 		if(usergroups.delete()) {

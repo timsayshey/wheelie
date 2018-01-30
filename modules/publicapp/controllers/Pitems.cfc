@@ -1,8 +1,7 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
@@ -83,8 +82,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function loginPost()
-	{
+	function loginPost() {
 		param name="params.email" default="";
 
 		// Don't check siteId for main site (that way we can redirect them to their correct site)
@@ -174,8 +172,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function registerPost()
-	{
+	function registerPost() {
 		request.newRegistration = true;
 
 		// Save user
@@ -213,8 +210,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function vendors()
-	{
+	function vendors() {
 		qVendorWithItems = model("User").findAll(
 			where	= "ownerid IS NOT NULL AND hidden = 0 AND market_enabled = 1 AND #whereSiteid()#",
 			order	= "ownerid DESC, categoryid ASC",
@@ -223,8 +219,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function uploadItemImage(field,filename,nonfieldpath)
-	{
+	function uploadItemImage(field,filename,nonfieldpath) {
 		var loc = {};
 
 		if(!isNull(arguments.filename) AND !isNull(params.item.photo) AND fileExists(expandPath(params.item.photo))) {

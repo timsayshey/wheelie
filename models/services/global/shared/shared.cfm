@@ -242,8 +242,7 @@
 
 <cfscript>
 
-	function forceNoWWW()
-	{
+	function forceNoWWW() {
 		if(listfirst(cgi.server_name,".") == "www") {
 			redirectFullUrl(
 				"http://" &
@@ -255,8 +254,7 @@
 		}
 	}
 
-	function forceWWW()
-	{
+	function forceWWW() {
 		// Can't call pFront unless you're on WWW
 		if(listfirst(cgi.server_name,".") != 'www') {
 			redirectFullUrl(
@@ -269,8 +267,7 @@
 		}
 	}
 
-	function setUserInfo()
-	{
+	function setUserInfo() {
 		// Authenticate
 		if(StructKeyExists(session,"user")) {
 			var user = model("UserGroupJoin").findOne(where="userid = '#session.user.id#'", include="User,UserGroup", returnAs="struct");

@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(propertyid)
-	{
+	function sharedObjects(propertyid) {
 		userlist = model("User").findAll(order="email ASC");
 
 		propertycategories = model("PropertyCategory").findAll(where="categoryType = 'property'#wherePermission("PropertyCategory","AND")#");
@@ -21,8 +19,7 @@ component extends="_main" output="false"
 		dataFields = model("FormField").findAll(where="metafieldType = 'propertyfield' AND modelid = 3",order="sortorder ASC");
 	}
 
-	function property()
-	{
+	function property() {
 		if(!isNull(params.id)) {
 			property = model("property").findAll(where="id = '#params.id#'");
 		}
@@ -38,8 +35,7 @@ component extends="_main" output="false"
 		writeOutput("SUCCESS"); abort;
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -54,8 +50,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function category()
-	{
+	function category() {
 		sharedObjects(0);
 
 		if(!isNull(params.id)) {
@@ -82,8 +77,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		sharedObjects(0);
 		distinctPropertyColumns = "id, sortorder, name, description, status, createdat, updatedat";
 		propertyColumns = "#distinctPropertyColumns#, description, status, category_id";
@@ -112,8 +106,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -141,8 +134,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function panoedit()
-	{
+	function panoedit() {
 		if(isDefined("params.id")) {
 			property = model("Property").findAll(where="id = '#params.id#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
 			if(ArrayLen(property)) {
@@ -152,8 +144,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function panoeditor()
-	{
+	function panoeditor() {
 		if(isDefined("params.id")) {
 			property = model("Property").findAll(where="id = '#params.propertyid#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
 			if(ArrayLen(property)) {
@@ -165,16 +156,14 @@ component extends="_main" output="false"
 		}
 	}
 
-	function panoramas()
-	{
+	function panoramas() {
 		usesLayout("/layouts/layout.blank");
 		if(isDefined("params.id")) {
 			panoramas = model("PanoramaMediafile").findAll(where="modelid = '#params.id#' AND mediafileType = 'panorama'",order="sortorder ASC");
 		} else {abort;}
 	}
 
-	function addLink()
-	{
+	function addLink() {
 		mediafile = model("PanoramaMediafile").findByKey(key=params.parentid,reload=true);
 
 		if(isJson(mediafile.settings) AND isArray(deserializeJSON(mediafile.settings))) {
@@ -192,8 +181,7 @@ component extends="_main" output="false"
 		writeOutput(serializeJSON({"success":saveResult,"save":settings})); abort;
 	}
 
-	function removeLink()
-	{
+	function removeLink() {
 		mediafile = model("PanoramaMediafile").findByKey(key=params.parentid,reload=true);
 		if(isJson(mediafile.settings) AND isArray(deserializeJSON(mediafile.settings))) {
 			var settings = deserializeJSON(mediafile.settings);
@@ -220,14 +208,12 @@ component extends="_main" output="false"
 		}
 	}
 
-	function updateLink()
-	{
+	function updateLink() {
 		removeLink();
 		addLink();
 	}
 
-	function panoLinks()
-	{
+	function panoLinks() {
 		usesLayout("/layouts/layout.blank");
 
 		var mediafile = model("PanoramaMediafile").findByKey(params.id);
@@ -243,16 +229,14 @@ component extends="_main" output="false"
 		}
 	}
 
-	function photos()
-	{
+	function photos() {
 		usesLayout("/layouts/layout.blank");
 		if(isDefined("params.id")) {
 			photos = model("PropertyMediafile").findAll(where="modelid = '#params.id#' AND mediafileType = 'property'",order="sortorder ASC");
 		} else {abort;}
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		property = model("Property").new(colStruct("Property"));
 
@@ -268,8 +252,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		property = model("Property").findByKey(params.id);
 
 		if(property.delete()) {
@@ -286,8 +269,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		// Spam check
 		try {
 			http method="GET" url="http://ip-api.com/json/#getIpAddress()#" result="jsonResult";
@@ -364,8 +346,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function deleteSelection()
-	{
+	function deleteSelection() {
 		for(var i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Property").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
@@ -379,8 +360,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function setPerPage()
-	{
+	function setPerPage() {
 		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
@@ -392,8 +372,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function filterResults()
-	{
+	function filterResults() {
 		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
 		} else {

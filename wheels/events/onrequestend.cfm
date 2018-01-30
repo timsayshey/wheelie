@@ -2,8 +2,7 @@
 	var loc = {};
 	loc.lockName = "reloadLock" & application.applicationName;
 	$simpleLock(name=loc.lockName, execute="$runOnRequestEnd", executeArgs=arguments, type="readOnly", timeout=180);
-	if (application.wheels.showDebugInformation && StructKeyExists(request.wheels, "showDebugInformation") && request.wheels.showDebugInformation)
-	{
+	if (application.wheels.showDebugInformation && StructKeyExists(request.wheels, "showDebugInformation") && request.wheels.showDebugInformation) {
 		$includeAndOutput(template="wheels/events/onrequestend/debug.cfm");
 	}
 </cfscript></cffunction>

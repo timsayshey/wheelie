@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function getMetafieldType()
-	{
+	function getMetafieldType() {
 		return params.modelName;
 	}
 
@@ -19,8 +17,7 @@ component extends="_main" output="false"
 		return string;
 	}
 
-	function importlistSubmit()
-	{
+	function importlistSubmit() {
 		var linebreak = Chr(13) & Chr(10);
 		var metafieldArray = ListToArray(params.importlist,linebreak);
 
@@ -85,8 +82,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Field", controller="metafields", action="index", modelName="propertyfield", params="modelid=3");
 	}
 
-	function sharedData()
-	{
+	function sharedData() {
 		metafieldInfo = model(getMetafieldType()).metafieldInfo();
 		metafieldType = getMetafieldType();
 
@@ -100,8 +96,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		sharedData();
 
 		if(!isNull(params.modelid)) {
@@ -109,8 +104,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -125,8 +119,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		metafields = model(getMetafieldType()).findByKey(params.id);
 		if(metafields[params.col] eq 1) {
@@ -149,8 +142,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function new()
-	{
+	function new() {
 		sharedData();
 
 		// Queries
@@ -163,8 +155,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		sharedData();
 
 		if(isDefined("params.id")) {
@@ -190,8 +181,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		sharedData();
 
 		// Get metafield object
@@ -225,8 +215,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		sharedData();
 
 		metafield = model(getMetafieldType()).findByKey(params.id);

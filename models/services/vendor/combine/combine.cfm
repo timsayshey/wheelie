@@ -47,8 +47,7 @@ else
 	);
 
 	// cache the object in the application scope, if we have an application scope!
-	if(isDefined('application'))
-	{
+	if(isDefined('application')) {
 		application[variables.sKey] = variables.oCombine;
 	}
 }

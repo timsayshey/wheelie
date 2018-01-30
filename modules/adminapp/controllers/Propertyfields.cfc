@@ -1,20 +1,17 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		if(!isNull(params.id)) {
 			propertyfields = model("PropertyField").findAll(where="propertyid = #params.id#", order="sortorder ASC");
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -29,8 +26,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		propertyfields = model("PropertyField").findByKey(params.id);
 		if(propertyfields[params.col] eq 1) {
@@ -47,8 +43,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="propertys");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		propertyfield = model("PropertyField").new(colStruct("PropertyField"));
 
@@ -59,8 +54,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			propertyfield = model("PropertyField").findAll(where="id = '#params.id#'#wherePermission("Property","AND")#", maxRows=1, returnAs="Object");
@@ -78,8 +72,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		// Get property object
 		if(!isNull(params.propertyfield.id)) {
 			propertyfield = model("PropertyField").findByKey(params.propertyfield.id);
@@ -104,8 +97,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		propertys = model("PropertyField").findByKey(params.id);
 
 		if(propertys.delete()) {

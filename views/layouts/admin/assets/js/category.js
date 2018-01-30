@@ -61,8 +61,7 @@ function deleteCategory(deleteid,el)
 
 function modalCategoryLoader(type)
 {
-	if(type == "show")
-	{
+	if(type == "show") {
 		$("#addcategory .modalloader").show();
 		$("#addcategory #content").hide();
 	} else { // hide loader
@@ -87,8 +86,7 @@ function categoryForm(editid)
 	modalCategoryLoader("show");
 	$modal.modal('toggle');
 
-	if(typeof editid == 'undefined')
-	{
+	if(typeof editid == 'undefined') {
 		GetUrl = "/m/admin/categories/new/" + categoryInfo.model + "/" + "?ajax&type=" + categoryInfo.addType;
 		CrudType = "new";
 	} else {

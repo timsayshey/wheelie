@@ -1,14 +1,12 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function show()
-	{
+	function show() {
 		qform = model("form").findAll(where="id = '#params.id#'");
 		dataFields = model("FormField").findAll(where="metafieldType = 'formfield' AND modelid = '#params.id#'",order="sortorder ASC");
 	}
 
-	function formsubmissionSave()
-	{
+	function formsubmissionSave() {
 		qform = model("Form").findByKey(params.id);
 	}
 }

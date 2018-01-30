@@ -6,8 +6,7 @@ $(function() {
 	var uploader = new Array();
 
 	// Loop over to apply multiple btn selectors
-	for (var i=0; i<=1; i++)
-	{
+	for (var i=0; i<=1; i++) {
 		if(i == 0) {
 			btnId = 'uploadvideo';
 		} else {
@@ -137,8 +136,7 @@ function oAuthPopup(videoid)
 		centerOn: 'parent'
 	});
 
-	var tokenChecker = setInterval(function()
-	{
+	var tokenChecker = setInterval(function() {
 		oauth = {};
 		oauth.token = gup(oauthpopup.location.href, 'token');
 		oauth.name  = gup(oauthpopup.location.href, 'name');
@@ -222,8 +220,7 @@ function redirectAfterGoogleLogout() {
 
 	$("#modal_loader").fadeIn(100);
 
-	setTimeout(function()
-	{
+	setTimeout(function() {
 		if($("#oauthWindowType").val() == "popup") {
 			$('#youtubeconfirm').modal('hide');
 			if(typeof GLOBAL.videoid !== 'undefined') {

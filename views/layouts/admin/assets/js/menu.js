@@ -75,8 +75,7 @@ function deleteMenu(deleteid,el)
 
 function modalMenuLoader(type)
 {
-	if(type == "show")
-	{
+	if(type == "show") {
 		$("#addmenu .modalloader").show();
 		$("#addmenu #content").hide();
 	} else { // hide loader
@@ -101,8 +100,7 @@ function menuForm(editid)
 	modalMenuLoader("show");
 	$modal.modal('toggle');
 
-	if(typeof editid == 'undefined')
-	{
+	if(typeof editid == 'undefined') {
 		GetUrl = "/m/admin/menus/new/" + menuInfo.model + "/" + "?ajax&type=" + menuInfo.addType;
 		CrudType = "new";
 	} else {

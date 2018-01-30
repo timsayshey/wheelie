@@ -397,15 +397,13 @@
 <cffunction name="$setDefaultValues" returntype="any" access="public" output="false">
 	<cfscript>
 	var loc = {};
-	for (loc.key in variables.wheels.class.properties)
-	{
+	for (loc.key in variables.wheels.class.properties) {
 		if (StructKeyExists(variables.wheels.class.properties[loc.key], "defaultValue") && (!StructKeyExists(this, loc.key) || !Len(this[loc.key]))) {
 			// set the default value unless it is blank or a value already exists for that property on the object
 			this[loc.key] = variables.wheels.class.properties[loc.key].defaultValue;
 		}
 	}
-	for (loc.key in variables.wheels.class.mapping)
-	{
+	for (loc.key in variables.wheels.class.mapping) {
 		if (StructKeyExists(variables.wheels.class.mapping[loc.key], "defaultValue") && (!StructKeyExists(this, loc.key) || !Len(this[loc.key]))) {
 			// set the default value unless it is blank or a value already exists for that property on the object
 			this[loc.key] = variables.wheels.class.mapping[loc.key].defaultValue;

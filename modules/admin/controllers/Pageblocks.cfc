@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(pageblockid)
-	{
+	function sharedObjects(pageblockid) {
 		// Home PageBlock
 		currentPageBlockIsHome = model("option").findAll(where="id = 'home_id' AND content = '#pageblockid#'#wherePermission("option","AND")#");
 		currentPageBlockIsHome = currentPageBlockIsHome.recordcount ? true : false;
@@ -15,8 +13,7 @@ component extends="_main" output="false"
 		homeOptions = model("option").findAll(where="id LIKE 'home_%' AND (editContent = 1 OR editLabel = 1 OR editAttachment = 1)#wherePermission("option","AND")#");
 	}
 
-	function index()
-	{
+	function index() {
 		statusTabs("pageblock","postType = 'pageblock' AND");
 
 		qPageBlocks = model("PageBlock").findAll(where=buildWhereStatement(modelName="PageBlock",prepend="postType = 'pageblock' AND"), order=session.pageblocks.sortby & " " & session.pageblocks.order);
@@ -28,8 +25,7 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -48,8 +44,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		sharedObjects(0);
 		pageblock = model("PageBlock").new(colStruct("PageBlock"));
@@ -62,8 +57,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		pageblock = model("PageBlock").findByKey(params.id);
 
 		if(pageblock.delete()) {
@@ -80,8 +74,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		// Handle submit button type (publish,draft,trash,etc)
 		if(!isNull(params.submit)) {
 			params.pageblock.status = handleSubmitType("pageblock", params.submit);
@@ -129,8 +122,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function deleteSelection()
-	{
+	function deleteSelection() {
 		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("PageBlock").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
@@ -144,8 +136,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function setPerPage()
-	{
+	function setPerPage() {
 		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
@@ -157,8 +148,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function filterResults()
-	{
+	function filterResults() {
 		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
 		} else {
@@ -223,8 +213,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function preHandler()
-	{
+	function preHandler() {
 		super.preHandler();
 	}
 }

@@ -1,12 +1,10 @@
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		solditems = model('order').findAll(
 			order = "createdAt DESC",
 			include = "ordertransaction(user(UsergroupJoin(usergroup)))",
@@ -22,8 +20,7 @@ component extends="_main" output="false"
 		contentFor(headerTitle	= '<span class="elusive icon-shopping-cart"></span> My Orders');
 	}
 
-	function customers()
-	{
+	function customers() {
 		orders = model('order').findAll(
 			where="ownerid = '#session.user.id#'",
 			order="createdAt DESC",
@@ -33,8 +30,7 @@ component extends="_main" output="false"
 		contentFor(headerTitle	= '<span class="elusive icon-shopping-cart"></span> Customer Orders');
 	}
 
-	function details()
-	{
+	function details() {
 		orderitems = model('order').findAll(
 			where="id = '#params.id#'",
 			order="createdAt DESC",

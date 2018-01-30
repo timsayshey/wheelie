@@ -24,14 +24,12 @@ $(function() {
 		}
 	});
 
-	function setTrue(thisEl)
-	{
+	function setTrue(thisEl) {
 		$(thisEl).parent().find(".setFalse").attr('checked', false);
 		$(thisEl).parent().find(".setTrue").attr('checked', true);
 	}
 
-	function setFlase(thisEl)
-	{
+	function setFlase(thisEl) {
 		$(thisEl).parent().find(".setFalse").attr('checked', true);
 		$(thisEl).parent().find(".setTrue").attr('checked', false);
 	}

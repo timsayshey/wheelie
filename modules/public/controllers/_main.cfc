@@ -1,8 +1,7 @@
 <cfscript>
 component output="false" extends="controllers.Controller"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 
 		secureActions = "mailUs,jobapp,jobappSubmit,newsletter,newsletterSubmit,footerbar";
@@ -16,21 +15,18 @@ component output="false" extends="controllers.Controller"
 
 	}
 
-	private function customPublicAppFilters()
-	{
+	private function customPublicAppFilters() {
 		include "/modules/publicapp/publicfilters.cfm";
 	}
 
-	private function loggedOutOnly()
-	{
+	private function loggedOutOnly() {
 		// Authenticate
 		if(!StructKeyExists(session,"user") && listfirst(cgi.server_name,".") != 'www' && request.site.subdomain != '') {
 			redirectTo(route="admin~action", controller="users", action="login");
 		}
 	}
 
-	function preHandler()
-	{
+	function preHandler() {
 		homeid = getOption(qOptions,'home_id').content;
 
 		if(!isNull(params.format)) {

@@ -1,6 +1,5 @@
 <cfscript>
-	if (!isNull(page.quoteImg))
-	{
+	if (!isNull(page.quoteImg)) {
 		if (len(page.redirect)) {
 			location addtoken="no" url="#page.redirect#";
 		}
@@ -15,8 +14,7 @@
 		contentFor(siteDesc = page.metadescription);
 		contentFor(siteKeywords = page.metakeywords);
 	}
-	else if ( !isNull(params.format) AND !isNull(params.id) AND ListFind("jpg,pdf,mp3",lcase(params.format)) )
-	{
+	else if ( !isNull(params.format) AND !isNull(params.id) AND ListFind("jpg,pdf,mp3",lcase(params.format)) ) {
 		// For Old Files // Should Remove Later
 		header statuscode="301" statustext="Moved Permanently";
 		header name="Location" value="/assets/site/#params.id#.#params.format#";
@@ -38,8 +36,7 @@
 	staticPath = "#staticDir##qStaticDir.name#";
     staticPathFull = expandPath(staticPath);
 
-	if (isNull(page.id))
-	{
+	if (isNull(page.id)) {
 		// No DB Record / Just static file
 		staticPath = "#staticDir##qStaticDir.name#/#params.id#.cfm";
 		staticPathFull = expandPath(staticPath);
@@ -51,8 +48,7 @@
 		staticPathFull = expandPath(staticPath);
 	}
 
-	if (FileExists(staticPathFull))
-	{
+	if (FileExists(staticPathFull)) {
 		// Load Static Page
 		contentFor(staticPage = true);
 		include template="#staticPath#";

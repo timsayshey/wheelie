@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function video()
-	{
+	function video() {
 		if(!isNull(params.id)) {
 			video = model("Video").findAll(where="#whereSiteid()# AND urlid LIKE '#params.id#' AND onSite = 1");
 
@@ -20,8 +18,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function category()
-	{
+	function category() {
 		if(!isNull(params.id)) {
 			// Get single category
 			categoryWhere = "urlid = '#params.id#' AND #whereSiteid()#";

@@ -1,29 +1,24 @@
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 		filters(through="loggedOutOnly",except="login,loginPost,recovery,recoveryPost,signup,registerPost");
 	}
 
-	private function loggedOutOnly()
-	{
+	private function loggedOutOnly() {
 		if(StructKeyExists(session,"user")) {
 			redirectTo(route="public~itemsAction", action="index");
 		}
 	}
 
-	function index()
-	{
+	function index() {
 	}
 
-	function signup()
-	{
+	function signup() {
 		user = model("User").new(colStruct("User"));
 	}
 
-	function registerPost()
-	{
+	function registerPost() {
 		request.newRegistration = true;
 
 		// Sync Unapproved Fields

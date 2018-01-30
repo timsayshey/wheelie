@@ -1,14 +1,12 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 		filters(through="setCache");
 	}
 
-	function setCache()
-	{
+	function setCache() {
 		//caches(actions="page,geolanding,index", time=300);
 	}
 
@@ -20,8 +18,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		page = model("Page").findAll(where="#whereSiteid()# AND id = '#homeid#'");
 		shared();
 		if(!page.recordcount) {
@@ -31,8 +28,7 @@ component extends="_main" output="false"
 		home = true;
 	}
 
-	function page()
-	{
+	function page() {
 		footerPageBlock = '';
 
 		urlId = RemoveChars(cgi.path_info,1,1);
@@ -72,8 +68,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function geolanding()
-	{
+	function geolanding() {
 		gStateAbbr = "unknown";
 		gState = "unknown";
 		gCity = "unknown";

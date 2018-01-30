@@ -1,20 +1,17 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 		filters(through="setMenu");
 		caches(actions="index,post", time=300);
 	}
 
-	function setMenu()
-	{
+	function setMenu() {
 		request.overrideMenuId = 88;
 	}
 
-	function index()
-	{
+	function index() {
 		param name="params.currPage" default="1";
 		posts = model("Post").findAll(where="#whereSiteid()# AND postType = 'post'", order="createdAt DESC", include="user");
 
@@ -27,8 +24,7 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 	}
 
-	function post()
-	{
+	function post() {
 
 		if(isDefined("params.id")) {
 			// Queries
@@ -48,8 +44,7 @@ component extends="_main" output="false"
 
 	}
 
-	function goHome()
-	{
+	function goHome() {
 		if(isDefined("params.id")) {
 			// Queries
 			post = model("Post").findAll(where="#whereSiteid()# AND postType = 'post' AND urlid = '#ListLast(params.id,"/")#'");
@@ -61,8 +56,7 @@ component extends="_main" output="false"
 		goLocation("/blog", false, 301);
 	}
 
-	function setCache()
-	{
+	function setCache() {
 		request.cacheThis = true;
 	}
 }

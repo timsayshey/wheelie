@@ -160,8 +160,7 @@ CKEDITOR.on( 'instanceReady', function( ev )
 {
 	var writer = ev.editor.dataProcessor.writer;
  	var dtd = CKEDITOR.dtd;
-	for ( var e in CKEDITOR.tools.extend( {}, dtd.$block, dtd.$inline ) )
-	{
+	for ( var e in CKEDITOR.tools.extend( {}, dtd.$block, dtd.$inline ) ) {
 		ev.editor.dataProcessor.writer.setRules( e, {
 			breakBeforeOpen : true,
 			breakAfterOpen : true,
@@ -183,4 +182,3 @@ CKEDITOR.config.fillEmptyBlocks = function (element) {
 };
 // CKEDITOR.config.contentsCss = ['/assets/vendor/ckeditor/contents.css','/assets/css/ltc.css'];
 CKEDITOR.config.allowedContent = true; // don't filter my data
-

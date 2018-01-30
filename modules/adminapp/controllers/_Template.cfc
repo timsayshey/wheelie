@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(@lcaseSingular@id)
-	{
+	function sharedObjects(@lcaseSingular@id) {
 		userlist = model("User").findAll(order="email ASC");
 
 		@lcaseSingular@categories = model("@ucaseSingular@Category").findAll(where="categoryType = '@lcaseSingular@'#wherePermission("@ucaseSingular@Category","AND")#");
@@ -21,15 +19,13 @@ component extends="_main" output="false"
 		dataFields = model("FormField").findAll(where="metafieldType = '@lcaseSingular@field' AND modelid = 3",order="sortorder ASC");
 	}
 
-	function @lcaseSingular@()
-	{
+	function @lcaseSingular@() {
 		if(!isNull(params.id)) {
 			@lcaseSingular@ = model("@lcaseSingular@").findAll(where="id = '#params.id#'");
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -44,8 +40,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function category()
-	{
+	function category() {
 		sharedObjects(0);
 
 		if(!isNull(params.id)) {
@@ -71,8 +66,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		if(isNull(session.@lcasePlural@)) {
 			session.@lcasePlural@.sortby = "sortorder";
 			session.@lcasePlural@.order = "asc";
@@ -103,8 +97,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -132,8 +125,7 @@ component extends="_main" output="false"
 
 		renderPage(action="editor");
 	}
-	function new()
-	{
+	function new() {
 		// Queries
 		my@ucaseSingular@ = model("@ucaseSingular@").new(colStruct("@ucaseSingular@"));
 
@@ -149,8 +141,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		my@ucaseSingular@ = model("@ucaseSingular@").findByKey(params.id);
 
 		if(@lcaseSingular@.delete()) {
@@ -167,8 +158,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		// Spam check
 		try {
 			http method="GET" url="http://ip-api.com/json/#getIpAddress()#" result="jsonResult";
@@ -240,8 +230,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function deleteSelection()
-	{
+	function deleteSelection() {
 		for(var i=1; i LTE ListLen(params.deletelist); i++) {
 			model("@ucaseSingular@").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
@@ -255,8 +244,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function setPerPage()
-	{
+	function setPerPage() {
 		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
@@ -268,8 +256,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function photos()
-	{
+	function photos() {
 		usesLayout("/layouts/layout.blank");
 		if(isDefined("params.id")) {
 			photos = model("@ucaseSingular@Mediafile").findAll(where="modelid = '#params.id#' AND mediafileType = '@lcaseSingular@'",order="sortorder ASC");
@@ -278,8 +265,7 @@ component extends="_main" output="false"
 
 
 
-	function filterResults()
-	{
+	function filterResults() {
 		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
 		} else {

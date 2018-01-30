@@ -3,8 +3,7 @@ $(function() {
 
 	setListeners();
 
-	if($(".youtubeid").val().length > 0 || $(".vimeoid").val().length > 0)
-	{
+	if($(".youtubeid").val().length > 0 || $(".vimeoid").val().length > 0) {
 		$(".videoNotExists").hide();
 		$(".videoExists").show();
 	} else {

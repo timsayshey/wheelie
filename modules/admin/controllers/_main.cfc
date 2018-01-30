@@ -1,8 +1,7 @@
 <cfscript>
 component output="false" extends="controllers.Controller"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 
 		filters(through="loginServerUser,deleteEmptyPassword,customAdminAppFilters,checkUserSessionSite,preHandler,filterDefaults,handleRedirect");
@@ -11,21 +10,18 @@ component output="false" extends="controllers.Controller"
 		filters(through="setUserInfo");
 	}
 
-	private function deleteEmptyPassword()
-	{
+	private function deleteEmptyPassword() {
 		if(!isNull(params.user.password) AND !len(params.user.password) AND !isNull(params.user.passwordConfirmation)) {
 			StructDelete(params.user,"password");
 			StructDelete(params.user,"passwordConfirmation");
 		}
 	}
 
-	private function customAdminAppFilters()
-	{
+	private function customAdminAppFilters() {
 		include "/modules/adminapp/adminfilters.cfm";
 	}
 
-	private function checkUserSessionSite()
-	{
+	private function checkUserSessionSite() {
 		// Make sure user is on correct sitesession.user.globalized
 		if(!isNull(session.user.siteid) AND session.user.siteid neq request.site.id AND (!isNull(session.user.globalized) AND session.user.globalized eq 0)) {
 			StructDelete(session,"user");
@@ -34,8 +30,7 @@ component output="false" extends="controllers.Controller"
 		}
 	}
 
-	private function loginServerUser()
-	{
+	private function loginServerUser() {
 		if(FindNoCase("cfschedule",lcase(CGI.HTTP_USER_AGENT))) {
 			request.isScheduledTask = true;
 			session.user.id = 1;
@@ -48,8 +43,7 @@ component output="false" extends="controllers.Controller"
 		}
 	}
 
-	private function handleRedirect()
-	{
+	private function handleRedirect() {
 		if(isNull(params.redir) AND isNull(session.loginRedir) AND isNull(session.user.id) AND !find("user",lcase(cgi.PATH_INFO)) AND !find(lcase(params.action),"save") AND !find(lcase(params.action),"submit")) {
 			session.loginRedir = cgi.PATH_INFO;
 		}
@@ -65,8 +59,7 @@ component output="false" extends="controllers.Controller"
 		}
 	}
 
-	private function handleSubmitType(modelName,submitType)
-	{
+	private function handleSubmitType(modelName,submitType) {
 		// If submit button was trash then delete it
 		if(submitType eq "trash") {
 			params.id = params[modelName]["id"];
@@ -76,8 +69,7 @@ component output="false" extends="controllers.Controller"
 		}
 	}
 
-	private function statusTabs(modelName, prepend="", include="")
-	{
+	private function statusTabs(modelName, prepend="", include="") {
 		count = {};
 
 		count.published = model(arguments.modelName).
@@ -102,8 +94,7 @@ component output="false" extends="controllers.Controller"
 			).recordcount;
 	}
 
-	private function buildWhereStatement(modelName="", prepend="", status=params.status)
-	{
+	private function buildWhereStatement(modelName="", prepend="", status=params.status) {
 		loc = {};
 
 		loc.wherestatement = arguments.status EQ "all" ? wherePermission(arguments.modelName) : "status = '#arguments.status#'" & wherePermission(arguments.modelName,"AND");
@@ -118,24 +109,21 @@ component output="false" extends="controllers.Controller"
 		return loc.wherestatement;
 	}
 
-	private function loggedOutOnly()
-	{
+	private function loggedOutOnly() {
 		// Authenticate
 		if(!StructKeyExists(session,"user")) {
 			redirectTo(route="admin~Action", module="admin", controller="users", action="login");
 		}
 	}
 
-	private function loggedInExcept()
-	{
+	private function loggedInExcept() {
 		// Authenticate
 		if(StructKeyExists(session,"user")) {
 			redirectTo(route="admin~Action", module="admin", controller="main", action="home");
 		}
 	}
 
-	private function preHandler()
-	{
+	private function preHandler() {
 		usesLayout("/layouts/admin/layout");
 
 		if(request.site.enableAdminTheme) {

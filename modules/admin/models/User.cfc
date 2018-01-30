@@ -1,7 +1,6 @@
 component extends="models.Model"
 {
-	function init()
-	{
+	function init() {
 		// Before after save
 		beforeSave("sanitize,checkAndSecurePassword,preventRoleHacking");
 
@@ -41,27 +40,23 @@ component extends="models.Model"
 	}
 
 	// Permission Checks
-	private function checkForCreatePermission()
-	{
+	private function checkForCreatePermission() {
 		if(isNull(this.createdby)) {
 			this.createdby = 0;
 		}
 		checkForPermission(type="save", checkid=0 & "," & this.createdby); // Allow whoever created it or the owner to edit
 	}
 
-	private function checkForUpdatePermission()
-	{
+	private function checkForUpdatePermission() {
 		checkForPermission(type="save", checkid=this.id & "," & this.createdby);
 	}
 
-	private function checkForDeletePermission()
-	{
+	private function checkForDeletePermission() {
 		checkForPermission(type="delete", checkid=this.id & "," & this.createdby);
 	}
 
 	// Clean strings
-	private function sanitize()
-	{
+	private function sanitize() {
 		var propsToSanitize = "firstname,lastname,address1,address2,state,zip,country,phone";
 		for(var item in listToArray(propsToSanitize)) {
 			if(!isNull(this[item])) this[item] = htmlEditFormat(this[item]);
@@ -69,8 +64,7 @@ component extends="models.Model"
 	}
 
 	// Security
-	private function checkAndSecurePassword()
-	{
+	private function checkAndSecurePassword() {
 		if (StructKeyExists(this, "password") AND !len(this.password)) {
 			StructDelete(this,"password");
 		}
@@ -88,8 +82,7 @@ component extends="models.Model"
 		}
 	}
 
-	private function preventRoleHacking()
-	{
+	private function preventRoleHacking() {
 		if(StructKeyExists(this, "role") AND checkPermission("user_save_role")) {
 			if(!checkPermission("user_save_role_admin") AND ListFind("admin,editor",lcase(this.role))) {
 				StructDelete(this,"role");

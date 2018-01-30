@@ -1,18 +1,15 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		sites = model("site").findAll();
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		site = model("Site").new(colStruct("Site"));
 
@@ -26,8 +23,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			site = model("Site").findAll(where="id = '#params.id#'", maxRows=1, returnAs="Object");
@@ -47,8 +43,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		siteOptions = model("option").findAll(where="siteid = 0");
 
 		if(!params.site.containsKey("subdomin") || !len(trim(params.site.subdomain))) {
@@ -84,8 +79,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		sites = model("site").findByKey(params.id);
 
 		if(sites.delete()) {

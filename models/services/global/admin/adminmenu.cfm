@@ -1,7 +1,6 @@
 <cfscript>
 
-	function adminMenuDefaults()
-	{
+	function adminMenuDefaults() {
 		/*
 			Type:
 			divider
@@ -170,8 +169,7 @@
 		});
 
 	}
-	function formatAdminMenuItem(currMenuItem,parentClass="")
-	{
+	function formatAdminMenuItem(currMenuItem,parentClass="") {
 		itemreturn = '';
 		menuitempermission = true;
 
@@ -217,8 +215,7 @@
 		return itemreturn;
 	}
 
-	function renderAdminMenu(menuArray,parentClass="")
-	{
+	function renderAdminMenu(menuArray,parentClass="") {
 		menureturn = "";
 
 		for(curritem in menuArray)

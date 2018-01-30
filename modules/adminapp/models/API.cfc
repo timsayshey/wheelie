@@ -1,7 +1,6 @@
 component extends="models.Model" output="false"
 {
-	function init()
-	{
+	function init() {
 		table(false);
 	}
 

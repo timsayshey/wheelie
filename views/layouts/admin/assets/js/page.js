@@ -15,8 +15,7 @@ function toggleHomeOptions()
 {
 	$homeOptions = $("#homeOptions");
 
-	if($('#isHomeCheckbox').is(':checked'))
-	{
+	if($('#isHomeCheckbox').is(':checked')) {
 		$homeOptions.show();
 	} else {
 		$homeOptions.hide();
@@ -27,8 +26,7 @@ function toggleMetaOptions()
 {
 	$metaOptions = $("#metaOptions");
 
-	if($('#metagenerated').is(':checked'))
-	{
+	if($('#metagenerated').is(':checked')) {
 		$metaOptions.hide();
 	} else {
 		$metaOptions.show();

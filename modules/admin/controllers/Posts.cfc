@@ -1,18 +1,15 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(postid)
-	{
+	function sharedObjects(postid) {
 
 	}
 
-	function index()
-	{
+	function index() {
 		statusTabs("post","postType = 'post' AND");
 
 		qPosts = model("Post").findAll(where=buildWhereStatement(modelName="Post",prepend="postType = 'post' AND"), order=session.posts.sortby & " " & session.posts.order);
@@ -24,8 +21,7 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -44,8 +40,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		sharedObjects(0);
 		post = model("Post").new(colStruct("Post"));
@@ -58,8 +53,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		post = model("Post").findByKey(params.id);
 
 		if(post.delete()) {
@@ -76,8 +70,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		// Handle submit button type (publish,draft,trash,etc)
 		if(!isNull(params.submit)) {
 			params.post.status = handleSubmitType("post", params.submit);
@@ -115,8 +108,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function deleteSelection()
-	{
+	function deleteSelection() {
 		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Post").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
@@ -130,8 +122,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function setPerPage()
-	{
+	function setPerPage() {
 		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
@@ -143,8 +134,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function filterResults()
-	{
+	function filterResults() {
 		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
 		} else {
@@ -209,8 +199,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function preHandler()
-	{
+	function preHandler() {
 		super.preHandler();
 	}
 }

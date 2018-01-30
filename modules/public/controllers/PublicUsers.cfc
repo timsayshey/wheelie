@@ -1,17 +1,14 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 	}
 
-	function usertag()
-	{
+	function usertag() {
 		if(!isNull(params.id)) {
 			// Queries
 			usertag = model("UserTag").findAll(where="#whereSiteid()# AND urlid LIKE '#params.id#'");
@@ -31,8 +28,7 @@ component extends="_main" output="false"
 
 	}
 
-	function preHandler()
-	{
+	function preHandler() {
 		super.preHandler();
 		param name="params.context" default="";
 	}

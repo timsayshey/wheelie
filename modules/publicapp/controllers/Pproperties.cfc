@@ -1,11 +1,9 @@
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
-	function index()
-	{
+	function index() {
 		request.site.theme = "property-theme";
 		property = model("Property").findAll(where="id = '#params.id#'");
 		agent = model("User").findAll(where="id = '#property.createdby#'");

@@ -182,8 +182,7 @@ function deleteTodoDom(el,elid)
 
 function modalTodoLoader(type)
 {
-	if(type == "show")
-	{
+	if(type == "show") {
 		$("#addtodo .modalloader").show();
 		$("#addtodo #content").hide();
 	} else { // hide loader
@@ -208,8 +207,7 @@ function todoForm(editid)
 	modalTodoLoader("show");
 	$modal.modal('toggle');
 
-	if(typeof editid == 'undefined')
-	{
+	if(typeof editid == 'undefined') {
 		GetUrl = "/m/admin/todos/new/" + todoInfo.model + "/" + "?ajax&type=" + todoInfo.addType;
 		CrudType = "new";
 	} else {

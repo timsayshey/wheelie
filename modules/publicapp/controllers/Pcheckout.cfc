@@ -1,27 +1,23 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 		filters(through="loggedOutOnly",except="login,loginPost,registerPost");
 		filters(through="loggedInExcept",only="login,loginPost,registerPost");
 		filters(through="checkCartExists");
 	}
 
-	function index()
-	{
+	function index() {
 		qCart = getCartItems();
 	}
 
-	function login()
-	{
+	function login() {
 		user = model("User").new(colStruct("User"));
 		qCart = getCartItems();
 	}
 
-	function complete()
-	{
+	function complete() {
 		checkoutErrors = [];
 		orderFail = false;
 		var orderItemsResult = false;
@@ -202,24 +198,21 @@ component extends="_main" output="false"
 			}
 		}
 	}
-	private function loggedOutOnly()
-	{
+	private function loggedOutOnly() {
 		// Authenticate
 		if(!StructKeyExists(session,"user")) {
 			redirectTo(route="public~checkoutAction", action="login");
 		}
 	}
 
-	private function loggedInExcept()
-	{
+	private function loggedInExcept() {
 		// Authenticate
 		if(StructKeyExists(session,"user")) {
 			redirectTo(route="public~checkoutAction", action="index");
 		}
 	}
 
-	function loginUser(id)
-	{
+	function loginUser(id) {
 		var user = model("UserGroupJoin").findAll(where="userid = '#arguments.id#'", include="User,UserGroup");
 
 		session.user = {
@@ -238,8 +231,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function loginPost()
-	{
+	function loginPost() {
 		var user = model("User").findAll(where="email = '#params.email#' AND password = '#passcrypt(params.pass, "encrypt")#' AND #siteIdEqualsCheck()#");
 
 		if(user.recordcount) {
@@ -252,8 +244,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function registerPost()
-	{
+	function registerPost() {
 		request.newRegistration = true;
 
 		// Save user
@@ -274,8 +265,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function checkCartExists()
-	{
+	function checkCartExists() {
 		if(isNull(session.cart.items)) {
 			session.cart.items = {};
 		}

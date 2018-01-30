@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function getCategoryType()
-	{
+	function getCategoryType() {
 		// model names in listfind must be lowercase
 		if(!isNull(application.info.validCategoryModelsList) AND ListFind("videocategory,usertag,#application.info.validCategoryModelsList#",LCase(params.modelName))) {
 			return params.modelName;
@@ -17,13 +15,11 @@ component extends="_main" output="false"
 		}
 	}
 
-	function sharedData()
-	{
+	function sharedData() {
 		categoryInfo = model(getCategoryType()).categoryInfo();
 	}
 
-	function new()
-	{
+	function new() {
 		sharedData();
 
 		category = model(getCategoryType()).new();
@@ -32,8 +28,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function delete()
-	{
+	function delete() {
 		video = model(getCategoryType()).findByKey(params.id);
 
 		try {
@@ -48,8 +43,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function edit()
-	{
+	function edit() {
 		sharedData();
 
 		if(isDefined("params.id")) {
@@ -65,15 +59,13 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function rearrange()
-	{
+	function rearrange() {
 		sharedData();
 
 		categories = model(getCategoryType()).findAll(order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder", distinct=true);
 	}
 
-	function saveRearrange()
-	{
+	function saveRearrange() {
 		var loc = {};
 
 		loc.newOrder = DeserializeJSON(params.categoryOrder);
@@ -99,8 +91,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Category", action="rearrange", modelName=params.modelName);
 	}
 
-	function save()
-	{
+	function save() {
 		// Save
 		if(!isNull(params.category.id)) {
 			category = model(getCategoryType()).findOne(where="id = '#params.category.id#'#wherePermission("Category","AND")#");

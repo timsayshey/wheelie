@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function importlistSubmit()
-	{
+	function importlistSubmit() {
 		linebreak = Chr(13) & Chr(10);
 		todoArray = ListToArray(params.importlist,linebreak);
 
@@ -19,20 +17,17 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Todo", action="rearrange", modelName="Todo");
 	}
 
-	function sharedData()
-	{
+	function sharedData() {
 		//pages = model("Page").findAll(order="name ASC");
 		//posts = model("Post").findAll(order="name ASC");
 	}
 
-	function emailreview()
-	{
+	function emailreview() {
 		todos = model("Todo").findAll(order="isDone DESC, sortOrder ASC, name ASC", select="id, name, parentid, sortOrder, description, priority, duedate, isdone", distinct=true);
 		usesLayout("/layouts/layout.blank");
 	}
 
-	function emailreviewSend()
-	{
+	function emailreviewSend() {
 		todos = model("Todo").findAll(order="isDone DESC, sortOrder ASC, name ASC", select="id, name, parentid, sortOrder, description, priority, duedate, isdone", distinct=true);
 
 		savecontent variable="emailContent" {
@@ -54,8 +49,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function new()
-	{
+	function new() {
 		sharedData();
 
 		todo = model("Todo").new(colStruct("Todo"));
@@ -64,8 +58,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function markDone()
-	{
+	function markDone() {
 		todo = model("todo").findByKey(params.id);
 		todoresult = todo.update(isdone=now(),validate=false);
 		if(todoresult) {
@@ -76,8 +69,7 @@ component extends="_main" output="false"
 		writeOutput(json); abort;
 	}
 
-	function markNotDone()
-	{
+	function markNotDone() {
 		todo = model("todo").findByKey(params.id);
 		todoresult = todo.update(isdone="");
 		if(todoresult) {
@@ -88,8 +80,7 @@ component extends="_main" output="false"
 		writeOutput(json); abort;
 	}
 
-	function delete()
-	{
+	function delete() {
 		todo = model("Todo").findByKey(params.id);
 
 		try {
@@ -104,8 +95,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function edit()
-	{
+	function edit() {
 		sharedData();
 
 		if(isDefined("params.id")) {
@@ -121,15 +111,13 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function rearrange()
-	{
+	function rearrange() {
 		sharedData();
 
 		todos = model("Todo").findAll(where=buildWhereStatement("Todo"), order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder, description, priority, duedate, isdone", distinct=true);
 	}
 
-	function print()
-	{
+	function print() {
 		usesLayout("/layouts/layout.blank");
 
 		sharedData();
@@ -137,8 +125,7 @@ component extends="_main" output="false"
 		todos = model("Todo").findAll(where="isdone IS NULL#wherePermission("Todo","AND")#", order="sortOrder ASC, name ASC", select="id, name, parentid, sortOrder, description, priority, duedate, isdone", distinct=true);
 	}
 
-	function saveRearrange()
-	{
+	function saveRearrange() {
 		var loc = {};
 
 		loc.newOrder = DeserializeJSON(params.todoOrder);
@@ -165,8 +152,7 @@ component extends="_main" output="false"
 	}
 
 
-	function save()
-	{
+	function save() {
 		// Save
 		if(!isNull(params.todo.id) AND isNumeric(params.todo.id)) {
 			todo = model("Todo").findByKey(params.todo.id);

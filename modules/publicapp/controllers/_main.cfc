@@ -1,8 +1,7 @@
 <cfscript>
 component output="false" extends="modules.public.controllers._main"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 

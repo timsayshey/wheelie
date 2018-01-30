@@ -3,8 +3,7 @@
 	request.page.noBgImage = true;
 	request.video.hideSidebar = true;
 	request.video.hideFooterCallToAction = true;
-	if(isSingleCategory)
-	{
+	if(isSingleCategory) {
 		contentFor(siteTitle = "#qCategoryOfVideos.name# | #getOption(qOptions,'seo_videos_title').label#");
 		contentFor(siteDescription = qCategoryOfVideos.description);
 	} else {

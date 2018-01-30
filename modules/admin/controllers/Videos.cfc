@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(videoid)
-	{
+	function sharedObjects(videoid) {
 		videocategories = model("VideoCategory").findAll();
 		selectedvideocategories = model("VideoCategoryJoin").findAll(where="videoid = #arguments.videoid#",include="Video,VideoCategory");
 		selectedvideocategories = ValueList(selectedvideocategories.videocategoryid);
@@ -17,15 +15,13 @@ component extends="_main" output="false"
 		countries = getCountries();
 	}
 
-	function video()
-	{
+	function video() {
 		if(!isNull(params.id)) {
 			video = model("video").findAll(where="id = '#params.id#'");
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -40,8 +36,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function category()
-	{
+	function category() {
 		sharedObjects(0);
 
 		if(!isNull(params.id)) {
@@ -68,8 +63,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		sharedObjects(0);
 		distinctVideoColumns = "id, sortorder, name, description, youtubeid, status, createdat, updatedat";
 		videoColumns = "#distinctVideoColumns#, description, status, category_id";
@@ -105,8 +99,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -125,8 +118,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		video = model("Video").new(colStruct("Video"));
 
@@ -140,8 +132,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		video = model("Video").findByKey(params.id);
 
 		if(video.delete()) {
@@ -158,8 +149,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		param name="params.video.videofileid" default="";
 		param name="params.videocategories" default="";
 
@@ -229,8 +219,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function deleteSelection()
-	{
+	function deleteSelection() {
 		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Video").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
@@ -244,8 +233,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function setPerPage()
-	{
+	function setPerPage() {
 		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
@@ -257,8 +245,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function filterResults()
-	{
+	function filterResults() {
 		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
 		} else {
@@ -363,8 +350,7 @@ component extends="_main" output="false"
 			//renderPage(route="admin~Action", module="admin", controller="videos", action="index");
 		}
 	}
-	function uploadVideoImage(field,video)
-	{
+	function uploadVideoImage(field,video) {
 		var loc = {};
 		loc.video = arguments.video;
 

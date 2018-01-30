@@ -7,13 +7,11 @@ function initSortable(URLpath,selectWrap,selectElement)
 		return ui;
 	};
 
-	if(typeof selectWrap == 'undefined')
-	{
+	if(typeof selectWrap == 'undefined') {
 		selectWrap = $("#sortable tbody");
 	}
 
-	if(typeof selectElement == 'undefined')
-	{
+	if(typeof selectElement == 'undefined') {
 		selectElement = "tr";
 	}
 

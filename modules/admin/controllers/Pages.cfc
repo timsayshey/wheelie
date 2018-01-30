@@ -1,13 +1,11 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function sharedObjects(pageid)
-	{
+	function sharedObjects(pageid) {
 		// Home Page
 		currentPageIsHome = model("option").findAll(where="id = 'home_id' AND content = '#pageid#'#wherePermission("option","AND")#");
 		currentPageIsHome = currentPageIsHome.recordcount ? true : false;
@@ -28,8 +26,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function index()
-	{
+	function index() {
 		statusTabs("page","postType = 'page' AND");
 
 		qPages = model("Page").findAll(where=buildWhereStatement(modelName="Page",prepend="postType = 'page' AND"), order=session.pages.sortby & " " & session.pages.order);
@@ -41,8 +38,7 @@ component extends="_main" output="false"
 		paginator = pagination.getRenderedHTML();
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			sharedObjects(params.id);
@@ -61,8 +57,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		sharedObjects(0);
 		page = model("Page").new(colStruct("Page"));
@@ -75,8 +70,7 @@ component extends="_main" output="false"
 	}
 
 
-	function delete()
-	{
+	function delete() {
 		page = model("Page").findByKey(params.id);
 
 		if(page.delete()) {
@@ -93,8 +87,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function save()
-	{
+	function save() {
 		// Handle submit button type (publish,draft,trash,etc)
 		if(!isNull(params.submit)) {
 			params.page.status = handleSubmitType("page", params.submit);
@@ -154,8 +147,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function uploadImage(field,filename)
-	{
+	function uploadImage(field,filename) {
 		var loc = {};
 
 		if(arguments.containsKey("filename")) {
@@ -182,8 +174,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function deleteSelection()
-	{
+	function deleteSelection() {
 		for(i=1; i LTE ListLen(params.deletelist); i++) {
 			model("Page").findByKey(ListGetAt(params.deletelist,i)).delete();
 		}
@@ -197,8 +188,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function setPerPage()
-	{
+	function setPerPage() {
 		if(!isNull(params.id) AND IsNumeric(params.id)) {
 			session.perPage = params.id;
 		}
@@ -210,8 +200,7 @@ component extends="_main" output="false"
 		);
 	}
 
-	function filterResults()
-	{
+	function filterResults() {
 		if(!isNull(params.filtertype) AND params.filtertype eq "clear") {
 			resetIndexFilters();
 		} else {
@@ -276,8 +265,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function preHandler()
-	{
+	function preHandler() {
 		super.preHandler();
 	}
 }

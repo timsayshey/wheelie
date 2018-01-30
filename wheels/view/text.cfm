@@ -33,8 +33,7 @@
 	var loc = {};
 	$args(name="excerpt", args=arguments);
 	loc.pos = FindNoCase(arguments.phrase, arguments.text, 1);
-	if (loc.pos != 0)
-	{
+	if (loc.pos != 0) {
 		if ((loc.pos-arguments.radius) <= 1) {
 			loc.startPos = 1;
 			loc.truncateStart = "";
@@ -181,8 +180,7 @@
 	loc.punctuationRegEx = "([^\w\/-]+)$";
 	loc.startPosition = 1;
 	loc.match = ReFindNoCase(arguments.regex, arguments.text, loc.startPosition, true);
-	while (loc.match.pos[1] > 0)
-	{
+	while (loc.match.pos[1] > 0) {
 		loc.startPosition = loc.match.pos[1] + loc.match.len[1];
 		loc.str = Mid(arguments.text, loc.match.pos[1], loc.match.len[1]);
 		if (Left(loc.str, 2) != "<a") {

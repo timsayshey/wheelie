@@ -1,20 +1,17 @@
 <cfscript>
 component extends="_main" output="false"
 {
-	function init()
-	{
+	function init() {
 		super.init();
 	}
 
-	function index()
-	{
+	function index() {
 		if(!isNull(params.id)) {
 			formfields = model("formField").findAll(where="formid = #params.id#", order="sortorder ASC");
 		}
 	}
 
-	function updateOrder()
-	{
+	function updateOrder() {
 		orderValues = DeserializeJSON(params.orderValues);
 
 		for(i=1; i LTE ArrayLen(orderValues); i = i + 1) {
@@ -29,8 +26,7 @@ component extends="_main" output="false"
 		abort;
 	}
 
-	function toggleRecord()
-	{
+	function toggleRecord() {
 		var loc = {};
 		formfields = model("formField").findByKey(params.id);
 		if(formfields[params.col] eq 1) {
@@ -47,8 +43,7 @@ component extends="_main" output="false"
 		redirectTo(route="admin~Index", controller="forms");
 	}
 
-	function new()
-	{
+	function new() {
 		// Queries
 		formfield = model("formField").new(colStruct("formField"));
 
@@ -59,8 +54,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function edit()
-	{
+	function edit() {
 		if(isDefined("params.id")) {
 			// Queries
 			formfield = model("formField").findAll(where="id = '#params.id#'#wherePermission("form","AND")#", maxRows=1, returnAs="Object");
@@ -78,8 +72,7 @@ component extends="_main" output="false"
 		renderPage(action="editor");
 	}
 
-	function save()
-	{
+	function save() {
 		// Get form object
 		if(!isNull(params.formfield.id)) {
 			formfield = model("formField").findByKey(params.formfield.id);
@@ -104,8 +97,7 @@ component extends="_main" output="false"
 		}
 	}
 
-	function delete()
-	{
+	function delete() {
 		forms = model("formField").findByKey(params.id);
 
 		if(forms.delete()) {

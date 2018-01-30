@@ -18,8 +18,7 @@
 		session.referer = cgi.http_referer;
 	}
 
-	if(isNull(session.entryPage))
-	{
+	if(isNull(session.entryPage)) {
 		session.entryPage = cgi.path_info;
 	}
 

@@ -58,8 +58,7 @@ $(function() {
 		goAjax("#data");
 	});
 
-	function goAjax(selector)
-	{
+	function goAjax(selector) {
 		var ajaxPath = $('#searchbox').attr("data-ajaxpath");
 		var sSearch = $('#searchbox').val();
 		var sSort = $('#sortbox').val();
@@ -77,4 +76,3 @@ $(function() {
 	}
 
 });
-
