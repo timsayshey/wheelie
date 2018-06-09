@@ -1,29 +1,29 @@
 {
-    "name":"wheelie",
-    "force":true,
-    "web":{
-        "http":{
-            "enable":true,
-            "port":"8080"
+    "name": "wheelie",
+    "force": true,
+    "web": {
+        "http": {
+            "enable": true,
+            "port": "8080"
         },
-        "rewrites":{
-            "enable":true,
-            "config":"urlrewrite.xml"
+        "rewrites": {
+            "enable": "true",
+            "config": "urlrewrite.xml"
         },
-        "ssl":{
-            "enable":true,
-            "port":"8443"
+        "ssl": {
+            "enable": true,
+            "port": "8443"
         },
-        "host":"0.0.0.0"
+        "host": "0.0.0.0"
     },
-    "app":{
-        "cfengine":"lucee@5",
-        "serverHomeDirectory":"/root/serverHome"
+    "app": {
+        "cfengine": "lucee@5.2.1+9",
+        "serverHomeDirectory": "/root/serverHome"
     },
-    "openbrowser":"false",
-    "JVM":{
-        "args":"-Dcom.sun.net.ssl.enableECC=false",
-        "minHeapSize":"2048",
-        "heapSize":"2048"
+    "openbrowser": "false",
+    "JVM": {
+        "args": "-Dcom.sun.net.ssl.enableECC=false",
+        "minHeapSize": "2048",
+        "heapSize": "2048"
     }
 }

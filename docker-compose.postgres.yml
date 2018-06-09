@@ -1,43 +1,45 @@
 version: '2.1'
 
 services:
-  #wheelie Server
-  wheelie_demo_cfml:
-    build: .
+  wheelie_cfml:
+    image: ortussolutions/commandbox:latest
+    depends_on:
+      - wheelie_postgres
     environment:
       PORT: 8080
       SSL_PORT: 8443
-      CFENGINE: lucee@5
+      CFENGINE: lucee@5.2.1+9
       CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
       WHEELIE_ADMIN_USERNAME: admin
       WHEELIE_ADMIN_PASSWORD: admin
       WHEELIE_ADMINEMAIL: example@localhost.com
       WHEELIE_APPRELOADKEY: appreload
       WHEELIE_DATASOURCE: wheelie
-      WHEELIE_DATABASE: wheelie
+      WHEELIE_DATABASE: wheeliedb
       WHEELIE_DBTYPE: mysql
       WHEELIE_DBUSERNAME: root
       WHEELIE_DBPASSWORD: NOT_SECURE_CHANGE
-      WHEELIE_DBHOST: wheelie_demo_mysql
+      WHEELIE_DBHOST: wheelie_mysql
       WHEELIE_DBPORT: 3306
       WHEELIE_SITEIDINURLS: "false"
-      WHEELIE_INDEXFILEINURLS: "false"
-      LUCEE_JAVA_OPTS: "-Xms512m -Xmx1024m"
+      WHEELIE_INDEXFILEINURLS: "true"
+      WHEELIE_TESTBOX: "true"
     volumes:
-        - ../../../:/app
+        - .:/app
     ports:
         - "8080:8080"
 
-  #MySQL
-  wheelie_demo_mysql:
-    image: mysql:latest
+  #POSTGRES
+  wheelie_postgres:
+    image: postgres:latest
     environment:
-        MYSQL_ROOT_PASSWORD: NOT_SECURE_CHANGE
-        MYSQL_DATABASE: wheelie
+       POSTGRES_DB: wheeliedb
+       POSTGRES_USER: wheeliedb
+       POSTGRES_PASSWORD: NOT_SECURE_CHANGE
     volumes:
-        - wheelie_demo_mysql_data:/var/lib/mysql
+        - wheelie_postgres_data:/var/lib/postgresql/data
     ports:
-        - "55555:3306"
+        - "5432:5432"
 
 volumes:
-    wheelie_demo_mysql_data:
+    wheelie_postgres_data:

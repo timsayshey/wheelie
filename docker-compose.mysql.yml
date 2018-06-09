@@ -1,17 +1,13 @@
 version: '2.1'
 
 services:
-  wheelie_cfml2:
-    image: ortussolutions/commandbox:alpine
+  wheelie_cfml:
+    image: ortussolutions/commandbox:lucee5
     environment:
       PORT: 8080
       SSL_PORT: 8443
-
-      # Set your coldfusion setting here
-      CFENGINE: lucee@5.2.1+9
+      CFENGINE: lucee@5.2.4+37
       CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
-
-      # Set your wheelie config here
       WHEELIE_APPRELOADPASS: wheelie
       WHEELIE_DEFAULTEMAIL: default@getwheelie.com
       WHEELIE_NOREPLYEMAIL: noreply@getwheelie.com
@@ -23,17 +19,13 @@ services:
       WHEELIE_REWRITEFILE: index.cfm
       WHEELIE_PASSWORDSALT: OkIeKNKoIvbZMFPuMJ3EMQ==
       WHEELIE_ADMINURLPATH: /manager
-
-      # Set your database settings here
       WHEELIE_DATASOURCE: wheelie
       WHEELIE_DATABASE: wheeliedb
       WHEELIE_DBTYPE: mysql
       WHEELIE_DBUSERNAME: root
-      WHEELIE_DBPASSWORD: password
-      WHEELIE_DBHOST: 192.168.1.186
+      WHEELIE_DBPASSWORD: NOT_SECURE_CHANGE
+      WHEELIE_DBHOST: wheelie_mysql_db
       WHEELIE_DBPORT: 3306
-
-      # Set your email config here
       WHEELIE_SMTP_SERVER: smtp.sendgrid.net
       WHEELIE_SMTP_USERNAME: yoursendgridusername
       WHEELIE_SMTP_PASSWORD: sendgridpass
@@ -44,3 +36,32 @@ services:
     ports:
       - "80:8080"
       - "443:8443"
+    networks:
+      - dbnet
+    # depends_on:
+    #   mysql:
+    #       condition: service_healthy
+
+  wheelie_mysql_db:
+    image: mysql:latest
+    ports:
+      - "55555:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'NOT_SECURE_CHANGE'
+      MYSQL_DATABASE: wheeliedb
+      MYSQL_USER: 'wheelie'
+      MYSQL_PASSWORD: 'NOT_SECURE_CHANGE'
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin -h 'localhost' -u root -pB@nneroftruth1989 ping --silent"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - ./build/docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./build/docker/mysql/data:/var/lib/mysql
+    networks:
+      - dbnet
+
+networks:
+  dbnet:
+    driver: bridge

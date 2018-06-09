@@ -16,7 +16,13 @@ Start up a local instance pre-populated with content:
 ```
 git clone https://github.com/timsayshey/wheelie.git
 cd wheelie
-docker-compose -f config/docker/local-mysql/docker-compose.yml up
+```
+
+Open the docker-compose.yml file and update the database config to match yours. Mysql recommended. Then save.
+
+Now run docker compose.
+```
+docker-compose up
 ```
 
 Then access the application via:
