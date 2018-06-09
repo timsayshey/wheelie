@@ -14,7 +14,7 @@
 			return preserveSingleQuotes(arguments.str);
 		}
 	function setupDatabase() {
-
+		setting requesttimeout=99999;
 		cfdbinfo(name="dbtables",type="tables",datasource=application.wheels.dataSourceName);
 
 		var tableExists = false;
