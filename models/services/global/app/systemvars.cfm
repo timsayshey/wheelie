@@ -8,8 +8,10 @@
 
 			// Location to your properties file
 			var pFile = expandPath('config/system.properties');
+
 			// Init Props
 			var props = CreateObject("java","java.util.Properties").init();
+
 			// Load the file into the props
 			props.load( CreateObject("java","java.io.FileInputStream").init(pFile) );
 			props = Duplicate(props);
