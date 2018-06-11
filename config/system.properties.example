@@ -1,0 +1,17 @@
+
+s3Enabled=false
+s3accessKeyId=
+s3awsSecretKey=
+s3defaultLocation=us
+s3host=s3.amazonaws.com
+s3defaultBucket=
+
+youtubeDevKey=
+stripeKey=
+
+WHEELIE_DATASOURCE=wheelie
+WHEELIE_DATABASE=wheeliedb
+WHEELIE_DBUSERNAME=root
+WHEELIE_DBPASSWORD=password
+WHEELIE_DBHOST=localhost
+WHEELIE_DBPORT=3306
