@@ -30,7 +30,7 @@ services:
       WHEELIE_DBTYPE: mysql
       WHEELIE_DBUSERNAME: root
       WHEELIE_DBPASSWORD: password
-      WHEELIE_DBHOST: 192.168.1.186
+      WHEELIE_DBHOST: localhost
       WHEELIE_DBPORT: 3306
 
       # Set your email config here

@@ -15,7 +15,7 @@
 			props = Duplicate(props);
 
 			for(var key in listToArray(structKeyList(props))) application.runtimeconfig[key] = props[key];
-			structAppend(application.runtimeconfig, createObject('java','java.lang.System').getenv());
+			structAppend(application.runtimeconfig, createObject('java','java.lang.System').getenv(), false);
 		}
 		return application.runtimeconfig;
 	}
