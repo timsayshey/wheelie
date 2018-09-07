@@ -6,15 +6,23 @@
 		if(!application.containsKey("runtimeconfig") OR !isNull(url.reload)) {
 			application.runtimeconfig = {};
 
-			// Location to your properties file
-			var pFile = expandPath('config/system.properties');
-			// Init Props
-			var props = CreateObject("java","java.util.Properties").init();
-			// Load the file into the props
-			props.load( CreateObject("java","java.io.FileInputStream").init(pFile) );
-			props = Duplicate(props);
+			try {
+				// Location to your properties file
+				var pFile = expandPath('config/system.properties');
 
-			for(var key in listToArray(structKeyList(props))) application.runtimeconfig[key] = props[key];
+				// Init Props
+				var props = CreateObject("java","java.util.Properties").init();
+
+				// Load the file into the props
+				props.load( CreateObject("java","java.io.FileInputStream").init(pFile) );
+				props = Duplicate(props);
+
+				for(var key in listToArray(structKeyList(props))) application.runtimeconfig[key] = props[key];
+
+			} catch(any e) {
+				writeDump(var="system.properties file not found. moving on without it",output="console");
+			}
+
 			structAppend(application.runtimeconfig, createObject('java','java.lang.System').getenv(), false);
 		}
 		return application.runtimeconfig;

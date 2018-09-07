@@ -2,13 +2,13 @@ version: '2.1'
 
 services:
   wheelie_cfml2:
-    image: ortussolutions/commandbox:alpine
+    image: ortussolutions/commandbox:latest
     environment:
       PORT: 8080
       SSL_PORT: 8443
 
       # Set your coldfusion setting here
-      CFENGINE: lucee@5.2.1+9
+      CFENGINE: lucee@5.2.8.50
       CFCONFIG_ADMINPASSWORD: NOT_SECURE_CHANGE
 
       # Set your wheelie config here

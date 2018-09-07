@@ -77,9 +77,16 @@
 		try {
 			cfdbinfo(name="loc.info",type="version",datasource=arguments.datasourceName);
 		} catch(any e) {
+			// Notify dev that he needs to setup his Datasource
 			if(findNoCase("datasource",e.message)) {
 				include template="/views/setup/datasource.cfm"; abort;
 			}
+			// Notify dev that his Datasource can't connect to the DB
+			if(findNoCase("Communications link failure",e.message)) {
+				writeOutput("<h1 style='color:darkred'>DB Connection Failed!</h1><h3>There is likely an issue with your DB settings.<br><br> Please check the DB settings in your system.properties file or docker-compose.yml if you're using Docker.</h3>");
+				abort;
+			}
+			// Notify dev that this is something else
 			writeDump(e); abort;
 		}
 

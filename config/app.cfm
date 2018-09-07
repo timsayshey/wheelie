@@ -8,27 +8,26 @@
 	this.name 				= "Wheelie";
 	rootPath 				= getDirectoryFromPath(getBaseTemplatePath());
 
-	request.wheelieInDocker=len(getSiteSetting('WHEELIE_DATASOURCE')) && len(getSiteSetting('WHEELIE_DATABASE'));
-	if(request.wheelieInDocker){
+	request.wheelieInDocker = len(getSiteSetting('WHEELIE_DATASOURCE')) && len(getSiteSetting('WHEELIE_DATABASE'));
+	if(request.wheelieInDocker) {
 		// this.tag.mail.server=getSiteSetting('WHEELIE_SMTP_SERVER');
 		// this.tag.mail.username=getSiteSetting('WHEELIE_SMTP_USERNAME');
 		// this.tag.mail.password=getSiteSetting('WHEELIE_SMTP_PASSWORD');
 		// this.tag.mail.port=getSiteSetting('WHEELIE_SMTP_PORT');
 		// this.tag.mail.usetls=getSiteSetting('WHEELIE_SMTP_USETLS');
 
-
-		this.mailservers =[ {
-				host: getSiteSetting('WHEELIE_SMTP_SERVER')
-			, port: getSiteSetting('WHEELIE_SMTP_PORT')
-			, username: getSiteSetting('WHEELIE_SMTP_USERNAME')
-			, password: getSiteSetting('WHEELIE_SMTP_PASSWORD')
-			, ssl: false
-			, tls: getSiteSetting('WHEELIE_SMTP_USETLS')
-			, lifeTimespan: createTimeSpan(0,0,1,0)
-			, idleTimespan: createTimeSpan(0,0,0,10)
+		this.mailservers = [{
+			host: getSiteSetting('WHEELIE_SMTP_SERVER')
+			,port: getSiteSetting('WHEELIE_SMTP_PORT')
+			,username: getSiteSetting('WHEELIE_SMTP_USERNAME')
+			,password: getSiteSetting('WHEELIE_SMTP_PASSWORD')
+			,ssl: false
+			,tls: getSiteSetting('WHEELIE_SMTP_USETLS')
+			,lifeTimespan: createTimeSpan(0,0,1,0)
+			,idleTimespan: createTimeSpan(0,0,0,10)
 		}];
 
-	  if(server.coldfusion.productname == 'lucee'){
+	    if(server.coldfusion.productname == 'lucee'){
 			driverVarName='type';
 
 			switch(getSiteSetting('WHEELIE_DBTYPE')){
@@ -64,23 +63,29 @@
 			}
 		}
 
-		this.datasources={
+		// Point localhost to parent localhost
+		dbHost = getSiteSetting('WHEELIE_DBHOST');
+		if(dbHost == 'localhost' && request.wheelieInDocker) {
+			dbHost = server.os.name == 'linux' ? 'docker.for.mac.localhost' : 'docker.for.win.localhost';
+		}
+
+		this.datasources = {
 			'#getSiteSetting('WHEELIE_DATASOURCE')#' =  {
-						'#driverVarName#' = driverName
-					 , host = getSiteSetting('WHEELIE_DBHOST')
-					 , database = getSiteSetting('WHEELIE_DATABASE')
-					 , port = getSiteSetting('WHEELIE_DBPORT')
-					 , username = getSiteSetting('WHEELIE_DBUSERNAME')
-					 , password = getSiteSetting('WHEELIE_DBPASSWORD')
-				},
-				nodatabase=  {
-						'#driverVarName#' = driverName
-					 , host = getSiteSetting('WHEELIE_DBHOST')
-					 , database = ''
-					 , port = getSiteSetting('WHEELIE_DBPORT')
-					 , username = getSiteSetting('WHEELIE_DBUSERNAME')
-					 , password = getSiteSetting('WHEELIE_DBPASSWORD')
-				}
+				'#driverVarName#' = driverName
+				,host = dbHost
+				,database = getSiteSetting('WHEELIE_DATABASE')
+				,port = getSiteSetting('WHEELIE_DBPORT')
+				,username = getSiteSetting('WHEELIE_DBUSERNAME')
+				,password = getSiteSetting('WHEELIE_DBPASSWORD')
+			},
+			nodatabase=  {
+				'#driverVarName#' = driverName
+				,host = dbHost
+				,database = ''
+				,port = getSiteSetting('WHEELIE_DBPORT')
+				,username = getSiteSetting('WHEELIE_DBUSERNAME')
+				,password = getSiteSetting('WHEELIE_DBPASSWORD')
+			}
 		};
 
 		this.webadminpassword=getSiteSetting('WHEELIE_ADMIN_PASSWORD');
