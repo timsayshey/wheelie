@@ -10,13 +10,25 @@
 
 	request.wheelieInDocker=len(getSiteSetting('WHEELIE_DATASOURCE')) && len(getSiteSetting('WHEELIE_DATABASE'));
 	if(request.wheelieInDocker){
-		this.tag.mail.server=getSiteSetting('WHEELIE_SMTP_SERVER');
-	    this.tag.mail.username=getSiteSetting('WHEELIE_SMTP_USERNAME');
-	    this.tag.mail.password=getSiteSetting('WHEELIE_SMTP_PASSWORD');
-	    this.tag.mail.port=getSiteSetting('WHEELIE_SMTP_PORT');
-	    this.tag.mail.usetls=getSiteSetting('WHEELIE_SMTP_USETLS');
+		// this.tag.mail.server=getSiteSetting('WHEELIE_SMTP_SERVER');
+		// this.tag.mail.username=getSiteSetting('WHEELIE_SMTP_USERNAME');
+		// this.tag.mail.password=getSiteSetting('WHEELIE_SMTP_PASSWORD');
+		// this.tag.mail.port=getSiteSetting('WHEELIE_SMTP_PORT');
+		// this.tag.mail.usetls=getSiteSetting('WHEELIE_SMTP_USETLS');
 
-	    if(server.coldfusion.productname == 'lucee'){
+
+		this.mailservers =[ {
+				host: getSiteSetting('WHEELIE_SMTP_SERVER')
+			, port: getSiteSetting('WHEELIE_SMTP_PORT')
+			, username: getSiteSetting('WHEELIE_SMTP_USERNAME')
+			, password: getSiteSetting('WHEELIE_SMTP_PASSWORD')
+			, ssl: false
+			, tls: getSiteSetting('WHEELIE_SMTP_USETLS')
+			, lifeTimespan: createTimeSpan(0,0,1,0)
+			, idleTimespan: createTimeSpan(0,0,0,10)
+		}];
+
+	  if(server.coldfusion.productname == 'lucee'){
 			driverVarName='type';
 
 			switch(getSiteSetting('WHEELIE_DBTYPE')){
