@@ -68,7 +68,7 @@ Lucee 5 and MySQL/PostgreSQL
 * Other layouts and admin theme: `/views/layouts/..`
 * Static pages: `/views/static/.. (Override a DB page by placing a cfm file in a site folder with the following name pattern: id_whatever.cfm, ex 4_about.cfm)`
 * Shortcode functions: `/views/plugins/..`
-* Add your custom app code: `/modules/adminapp and /modules/publicapp - look at existing models and controllers to get an idea of what controllers and models to extend.`
+* Add your custom app code: `/modules/adminapp and /modules/publicapp  - look at existing models and controllers to get an idea of what controllers and models to extend.`
 
 ## Contribute
 
