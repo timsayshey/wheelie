@@ -4,7 +4,7 @@
 
 Wheelie is an open source content management system for CFML, created by [EiQ Interactive LLC](https://eiqinteractive.com). Wheelie was designed to be used by marketing departments, web designers and developers.
 
-##### Demo: [https://wheeliecms.herokuapp.com](https://wheeliecms.herokuapp.com)
+##### Demo: [![Video Demo](https://img.youtube.com/vi/7AAMkGP-y3E/0.jpg)](https://www.youtube.com/watch?v=7AAMkGP-y3E)
 ##### Note: If you get an "Application Error" message just hit refresh, that's a Heroku bug caused by sleep mode
 
 ## Getting started
