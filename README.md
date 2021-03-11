@@ -1,6 +1,6 @@
 # Wheelie CMS
 
-##### Built on CFWheels and Lucee 5 - Inspired by Wordpress and Xindi
+##### Built on CFWheels and Lucee 5 - Inspired by Wordpress
 
 Wheelie is an open source content management system for CFML, created by [EiQ Interactive LLC](https://eiqinteractive.com). Wheelie was designed to be used by marketing departments, web designers and developers.
 
